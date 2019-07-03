@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <property name="TEXTLOG_PATH" value="/usr/local/tomcat/logs" />
+    <property name="WEBLOG_PATH" value="/usr/local/tomcat/logs" />
+
+    <!-- PATH ANDRÉ -->
+    <if condition='property("HOSTNAME").contains("alphadesktop")'>
+        <then>
+            <property name="TEXTLOG_PATH" value="/home/andre/Projetos/logs" />
+            <property name="WEBLOG_PATH" value="/home/andre/Projetos/logs" />
+        </then>
+    </if>
+    <if condition='property("HOSTNAME").contains("alphaultra")'>
+        <then>
+            <property name="TEXTLOG_PATH" value="/home/andre/Projetos/logs" />
+            <property name="WEBLOG_PATH" value="/home/andre/Projetos/logs" />
+        </then>
+    </if>
+    <if condition='property("HOSTNAME").contains("alphadesktop-w10")'>
+        <then>
+            <property name="TEXTLOG_PATH" value="Z:\\Projetos\\logs" />
+            <property name="WEBLOG_PATH" value="Z:\\Projetos\\logs" />
+        </then>
+    </if>
+
+    <!-- Nome da aplicação -->
+    <contextName>Portal de Sistemas</contextName>
+
+    <!-- Log diário em arquivo texto -->
+    <appender name="DIARIO_TEXTO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <pattern>%d{"HH:mm:ss,SSS"} %mdc{IP} %mdc{USER:-Anônimo} %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${TEXTLOG_PATH}/${CONTEXT_NAME}/%d{yyyy-MM,aux}/%d{"d-EEE"}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Log diário em formato html -->
+    <!-- <appender name="DIARIO_WEB" class="ch.qos.logback.core.rolling.RollingFileAppender">
+       <prudent>true</prudent>
+       <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+          <layout class="ch.qos.logback.classic.html.HTMLLayout">
+             <pattern>%d{"dd/MM/yyyy HH:mm:ss,SSS"}%p%X{IP}%X{USER}%m</pattern>
+             <cssBuilder class="ch.qos.logback.classic.html.UrlCssBuilder">
+          </layout>
+       </encoder>
+       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <fileNamePattern>${WEBLOG_PATH}/${CONTEXT_NAME}/%d{yyyy-MM,aux}/%d{"d-EEE"}.html</fileNamePattern>
+       </rollingPolicy>
+    </appender> -->
+
+    <!-- Log para console -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%cyan(%d{"dd/MM/yyyy HH:mm:ss,SSS"}) %magenta(%contextName) %green(%.15mdc{IP}) %yellow(%mdc{USER:-Anônimo}) %highlight(%m) [%file:%line]%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Ativando as configurações de log -->
+    <logger name="br.unesp.fc" level="TRACE" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="DIARIO_TEXTO" />
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>
