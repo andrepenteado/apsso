@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso.integracao;
+package com.gitlab.andrepenteado.portal.integracao;
 
 import org.junit.After;
 import org.junit.Before;

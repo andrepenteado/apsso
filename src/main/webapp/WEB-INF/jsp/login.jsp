@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="dandelion" uri="http://github.com/dandelion" %>
 
-<dandelion:bundle includes="font-awesome5,jquery.validation"/>
+<dandelion:bundle includes="font-awesome,jquery.validation"/>
 
 <html>
 

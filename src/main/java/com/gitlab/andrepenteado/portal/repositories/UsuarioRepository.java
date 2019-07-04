@@ -1,6 +1,6 @@
-package com.gitlab.andrepenteado.sso.repositories;
+package com.gitlab.andrepenteado.portal.repositories;
 
-import com.gitlab.andrepenteado.sso.entities.Usuario;
+import com.gitlab.andrepenteado.portal.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

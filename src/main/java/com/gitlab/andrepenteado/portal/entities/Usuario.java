@@ -1,6 +1,6 @@
-package com.gitlab.andrepenteado.sso.entities;
+package com.gitlab.andrepenteado.portal.entities;
 
-import com.gitlab.andrepenteado.sso.entities.enums.Perfil;
+import com.gitlab.andrepenteado.portal.entities.enums.Perfil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

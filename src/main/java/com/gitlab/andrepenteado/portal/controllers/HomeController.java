@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso.controllers;
+package com.gitlab.andrepenteado.portal.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;

@@ -4,7 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://github.com/dandelion" prefix="dandelion"%>
 
-<dandelion:bundle includes="sweetalert2,font-awesome5" />
+<dandelion:bundle includes="sweetalert2,font-awesome" />
 
 <%-- Mensagem de Erro --%>
 <c:if test="${not empty mensagemErro}">

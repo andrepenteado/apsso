@@ -11,7 +11,7 @@
 
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://github.com/dandelion" prefix="dandelion"%>
-<dandelion:bundle includes="sweetalert2,font-awesome5" />
+<dandelion:bundle includes="sweetalert2,font-awesome" />
 
 <script type="text/javascript">
     function confirmarAlteracao(mensagem, url) {

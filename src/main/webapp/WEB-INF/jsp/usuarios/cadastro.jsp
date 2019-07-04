@@ -8,7 +8,7 @@
 <%@taglib uri="http://github.com/dandelion" prefix="dandelion"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<dandelion:bundle includes="font-awesome5,jquery.validation,jquery.inputmask,bootstrap4.datetimepicker"/>
+<dandelion:bundle includes="font-awesome,jquery.validation,jquery.inputmask,jquery.datetimepicker"/>
 
 <c:set var="actionGravar"><c:url value="/usuarios/gravar"/></c:set>
 

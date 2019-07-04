@@ -1,8 +1,8 @@
-package com.gitlab.andrepenteado.sso.controllers;
+package com.gitlab.andrepenteado.portal.controllers;
 
-import com.gitlab.andrepenteado.sso.entities.Usuario;
-import com.gitlab.andrepenteado.sso.entities.enums.Perfil;
-import com.gitlab.andrepenteado.sso.repositories.UsuarioRepository;
+import com.gitlab.andrepenteado.portal.entities.Usuario;
+import com.gitlab.andrepenteado.portal.entities.enums.Perfil;
+import com.gitlab.andrepenteado.portal.repositories.UsuarioRepository;
 
 import javax.validation.Valid;
 

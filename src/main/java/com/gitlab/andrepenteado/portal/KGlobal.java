@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso;
+package com.gitlab.andrepenteado.portal;
 
 public class KGlobal {
 

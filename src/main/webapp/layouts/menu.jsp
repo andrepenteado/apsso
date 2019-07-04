@@ -6,7 +6,7 @@
 
 <dandelion:bundle includes="font-awesome5"/>
 
-<sec:authorize access="hasAuthority(T(com.gitlab.andrepenteado.sso.KGlobal).K_PERFIL_ADMINISTRADOR)">
+<sec:authorize access="hasAuthority(T(com.gitlab.andrepenteado.portal.KGlobal).K_PERFIL_ADMINISTRADOR)">
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-desktop"></i> Configurações

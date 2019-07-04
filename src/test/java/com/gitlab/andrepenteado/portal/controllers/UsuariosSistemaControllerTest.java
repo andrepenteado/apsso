@@ -1,6 +1,6 @@
-package com.gitlab.andrepenteado.sso.controllers;
+package com.gitlab.andrepenteado.portal.controllers;
 
-import com.gitlab.andrepenteado.sso.entities.Usuario;
+import com.gitlab.andrepenteado.portal.entities.Usuario;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

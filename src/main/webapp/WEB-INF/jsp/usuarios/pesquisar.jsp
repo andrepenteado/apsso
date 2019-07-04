@@ -9,7 +9,7 @@
 <%@taglib prefix="datatables" uri="http://github.com/dandelion/datatables" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<dandelion:bundle includes="datatables.extended.bs4,floating.button"/>
+<dandelion:bundle includes="datatables.extended,floating.button"/>
 
 <c:set var="linkController"><c:url value="/usuarios"/></c:set>
 
@@ -38,7 +38,7 @@
         <i class='fas fa-trash-alt'></i>
       </a>
     </datatables:column>
-    <datatables:extraJs bundles="datatables.extended.bs4.config" placeholder="before_start_document_ready" />
+    <datatables:extraJs bundles="datatables.layout1.config" placeholder="before_start_document_ready" />
   </datatables:table>
 
 </body>
