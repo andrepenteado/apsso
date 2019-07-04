@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.portal;
+package com.gitlab.andrepenteado.sso;
 
 import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 import org.springframework.boot.SpringApplication;

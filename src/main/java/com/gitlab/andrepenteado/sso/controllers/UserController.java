@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.portal.controllers;
+package com.gitlab.andrepenteado.sso.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ import java.security.Principal;
 
 @RestController
 @Slf4j
-public class AuthController {
+public class UserController {
 
     @GetMapping("/user")
     public Principal user(Principal principal) {

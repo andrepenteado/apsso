@@ -24,7 +24,7 @@
       });
   </script>
 
-  <form name="form-login" id="form-login" method="POST" action="<c:url value='/home'/>">
+  <form name="form-login" id="form-login" method="POST" action="<c:url value='/login'/>">
 
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card">
