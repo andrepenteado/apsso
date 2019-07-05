@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  db-server:
+    image: postgres:11-alpine
+    environment:
+      - "POSTGRES_USER=sso-user"
+      - "POSTGRES_PASSWORD=sso-passwd"
+      - "POSTGRES_DB=sso-db"
+    volumes:
+      - sso-pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  sso-pgdata:

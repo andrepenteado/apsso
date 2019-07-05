@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  db-server:
+    image: postgres:11-alpine
+    environment:
+      - "POSTGRES_USER=sso-user"
+      - "POSTGRES_PASSWORD=sso-passwd"
+      - "POSTGRES_DB=sso-db"
+    volumes:
+      - sso-pgdata:/var/lib/postgresql/data
+  webapp:
+    image: registry.gitlab.com/andrepenteado/portal-sso-sistemas
+    ports:
+      - "30000:8080"
+volumes:
+  sso-pgdata:

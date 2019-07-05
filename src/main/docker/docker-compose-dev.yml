@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  db-server:
+    image: postgres:11-alpine
+    environment:
+      - "POSTGRES_USER=sso-user"
+      - "POSTGRES_PASSWORD=sso-passwd"
+      - "POSTGRES_DB=sso-db"
+    volumes:
+      - sso-pgdata:/var/lib/postgresql/data
+  webapp:
+    image: tomcat:9-jre11
+    environment:
+      - "JPDA_ADDRESS=*:8001"
+      - "JPDA_TRANSPORT=dt_socket"
+      - "CATALINA_OPTS=-Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.rmi.port=1099 -Djava.rmi.server.hostname=0.0.0.0"
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - "30000:8080"
+      - "28001:8001"
+      - "21099:1099"
+    entrypoint:
+      - "catalina.sh"
+      - "jpda"
+      - "run"
+    volumes:
+      - ../../../target/sso.war:/usr/local/tomcat/webapps/sso.war
+volumes:
+  sso-pgdata:
