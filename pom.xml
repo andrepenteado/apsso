@@ -12,6 +12,12 @@
     <name>Portal de Sistemas</name>
     <description>Portal de single sign on para autenticação de usuários e sistemas</description>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+    </properties>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
