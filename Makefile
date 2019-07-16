@@ -1,14 +1,14 @@
 build-push:
 	./mvnw clean package
-	docker build -f src/main/docker/Dockerfile -t registry.gitlab.com/andrepenteado/portal-sso-sistemas -t registry.gitlab.com/andrepenteado/portal-sso-sistemas:`mvn help:evaluate -Dexpression=project.version -q -DforceStdout` .
+	docker build -f src/main/docker/Dockerfile -t registry.gitlab.com/andrepenteado/ap-sso -t registry.gitlab.com/andrepenteado/ap-sso:`mvn help:evaluate -Dexpression=project.version -q -DforceStdout` .
 	docker login registry.gitlab.com
-	docker push registry.gitlab.com/andrepenteado/portal-sso-sistemas
-	docker push registry.gitlab.com/andrepenteado/portal-sso-sistemas:`mvn  help:evaluate -Dexpression=project.version -q -DforceStdout`
+	docker push registry.gitlab.com/andrepenteado/ap-sso
+	docker push registry.gitlab.com/andrepenteado/ap-sso:`mvn  help:evaluate -Dexpression=project.version -q -DforceStdout`
 	docker logout registry.gitlab.com
 
 run:
 	docker login registry.gitlab.com
-	docker pull registry.gitlab.com/andrepenteado/portal-sso-sistemas
+	docker pull registry.gitlab.com/andrepenteado/ap-sso
 	docker logout registry.gitlab.com
 	docker-compose -f src/main/docker/docker-compose.yml up
 
