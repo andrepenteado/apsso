@@ -24,6 +24,6 @@ services:
       - "jpda"
       - "run"
     volumes:
-      - ../../../target/sso.war:/usr/local/tomcat/webapps/sso.war
+      - ../../../target/sso.war:/usr/local/tomcat/webapps/ap-sso.war
 volumes:
   sso-pgdata:
