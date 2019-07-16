@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.gitlab.andrepenteado</groupId>
-    <artifactId>portal-sso-sistemas</artifactId>
+    <artifactId>ap-sso</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
 
@@ -34,6 +34,10 @@
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -9,7 +9,7 @@ services:
     volumes:
       - sso-pgdata:/var/lib/postgresql/data
   webapp:
-    image: registry.gitlab.com/andrepenteado/portal-sso-sistemas
+    image: registry.gitlab.com/andrepenteado/ap-sso
     ports:
       - "30000:8080"
 volumes:

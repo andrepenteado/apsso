@@ -17,16 +17,16 @@ import java.util.Locale;
 
 @SpringBootApplication
 @EnableResourceServer
-public class PortalSistemasApplication extends SpringBootServletInitializer {
+public class ApSsoApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(PortalSistemasApplication.class, args);
+        SpringApplication.run(ApSsoApplication.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         setRegisterErrorPageFilter(false);
-        return application.sources(PortalSistemasApplication.class);
+        return application.sources(ApSsoApplication.class);
     }
 
     @Bean
@@ -42,5 +42,10 @@ public class PortalSistemasApplication extends SpringBootServletInitializer {
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public HttpFirewall defaultHttpFirewall() {
+        return new DefaultHttpFirewall();
     }
 }

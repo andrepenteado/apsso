@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class ApSooAuthServer extends AuthorizationServerConfigurerAdapter {
 
     /*public static void main(String[] args) {
         System.out.println(new BCryptPasswordEncoder().encode("controle-secret"));

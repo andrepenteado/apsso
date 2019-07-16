@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @Order(1)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class ApSsoWebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.requestMatchers()
-                .antMatchers("/login", "/oauth/authorize")
+                .antMatchers("/index.jsp", "/login", "/oauth/authorize")
             .and()
                 .authorizeRequests()
                 .anyRequest()
