@@ -64,7 +64,7 @@
     </appender>
 
     <!-- Ativando as configurações de log -->
-    <logger name="br.unesp.fc" level="TRACE" additivity="false">
+    <logger name="com.gitlab.andrepenteado" level="TRACE" additivity="false">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="DIARIO_TEXTO" />
     </logger>

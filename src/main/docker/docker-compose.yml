@@ -1,16 +1,20 @@
 version: "3.7"
 services:
-  db-server:
+  apsso-dbserver:
     image: postgres:11-alpine
+    container_name: apsso-dbserver-container
     environment:
-      - "POSTGRES_USER=sso-user"
-      - "POSTGRES_PASSWORD=sso-passwd"
-      - "POSTGRES_DB=sso-db"
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
     volumes:
-      - sso-pgdata:/var/lib/postgresql/data
-  webapp:
+      - apsso-pgdata:/var/lib/postgresql/data
+    expose:
+      - "50000:5432"
+  apsso-webapp:
     image: registry.gitlab.com/andrepenteado/ap-sso
+    container_name: apsso-webapp-container
     ports:
       - "30000:8080"
 volumes:
-  sso-pgdata:
+  apsso-pgdata:

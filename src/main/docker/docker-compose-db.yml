@@ -1,14 +1,15 @@
 version: "3.7"
 services:
-  db-server:
+  apsso-dbserver:
     image: postgres:11-alpine
+    container_name: apsso-dbserver-container
     environment:
-      - "POSTGRES_USER=sso-user"
-      - "POSTGRES_PASSWORD=sso-passwd"
-      - "POSTGRES_DB=sso-db"
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
     volumes:
-      - sso-pgdata:/var/lib/postgresql/data
+      - apsso-pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "50000:5432"
 volumes:
-  sso-pgdata:
+  apsso-pgdata:
