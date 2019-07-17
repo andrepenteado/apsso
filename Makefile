@@ -17,4 +17,4 @@ run-dev:
 	docker-compose -f src/main/docker/docker-compose-dev.yml up
 
 run-db:
-	docker-compose -f src/main/docker/docker-compose-db.yml up
+	docker-compose -f src/main/docker/docker-compose.yml up apsso-dbserver

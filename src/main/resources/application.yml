@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://apsso-dbserver:5432/apsso-dbname?autoReconnect=true
+    url: jdbc:postgresql://localhost:50000/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver

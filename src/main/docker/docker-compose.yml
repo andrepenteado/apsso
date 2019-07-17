@@ -9,10 +9,16 @@ services:
       POSTGRES_DB: apsso-dbname
     volumes:
       - apsso-pgdata:/var/lib/postgresql/data
+    ports:
+      - "50000:5432"
   apsso-webapp:
     image: registry.gitlab.com/andrepenteado/ap-sso
     container_name: apsso-webapp-container
     ports:
       - "30000:8080"
+    extra_hosts:
+      - "host:127.0.0.1"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
 volumes:
   apsso-pgdata:
