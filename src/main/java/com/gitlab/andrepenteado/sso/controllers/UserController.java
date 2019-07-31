@@ -1,23 +1,25 @@
 package com.gitlab.andrepenteado.sso.controllers;
 
+import com.gitlab.andrepenteado.sso.UserLogin;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
 public class UserController {
 
     @GetMapping("/user")
-    public Principal user(Principal principal) {
-        log.info("Usuário requisitado: " + principal.getName());
-        return principal;
+    public UserLogin user(Authentication auth, HttpServletRequest request) {
+        UserLogin userLogin = new UserLogin();
+        userLogin.setUsername(auth.getName());
+        userLogin.setRole(auth.getAuthorities().stream().map(role -> role.getAuthority().toString()).collect(Collectors.joining()));
+        userLogin.setIp(request.getRemoteAddr());
+        log.info("Usuário requisitado: " + userLogin.getUsername());
+        return userLogin;
     }
-
 }
