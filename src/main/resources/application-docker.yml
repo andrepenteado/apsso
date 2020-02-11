@@ -1,3 +1,3 @@
 spring:
   datasource:
-    url: jdbc:postgresql://apsso-dbserver:5432/apsso-dbname?autoReconnect=true
+    url: jdbc:postgresql://dbserver:5432/apsso-dbname?autoReconnect=true

@@ -1,22 +1,24 @@
 version: "3.7"
 services:
-  apsso-dbserver:
+  dbserver:
     image: postgres:11-alpine
-    container_name: apsso-dbserver-container
+    container_name: apsso-dbserver
     environment:
       POSTGRES_USER: apsso-dbuser
       POSTGRES_PASSWORD: apsso-dbpasswd
       POSTGRES_DB: apsso-dbname
     volumes:
       - apsso-pgdata:/var/lib/postgresql/data
-  apsso-webapp:
+    ports:
+      - "50000:5432"
+  webapp:
     image: tomcat:9-jre11
-    container_name: apsso-webapp-container
+    container_name: apsso-webapp
     environment:
       - "JPDA_ADDRESS=*:8001"
       - "JPDA_TRANSPORT=dt_socket"
       - "CATALINA_OPTS=-Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.rmi.port=1099 -Djava.rmi.server.hostname=0.0.0.0"
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "SPRING_PROFILES_ACTIVE=docker"
     ports:
       - "30000:8080"
       - "28001:8001"
@@ -26,6 +28,6 @@ services:
       - "jpda"
       - "run"
     volumes:
-      - ../../../target/sso.war:/usr/local/tomcat/webapps/ap-sso.war
+      - ../../../target/ap-sso.war:/usr/local/tomcat/webapps/ap-sso.war
 volumes:
   apsso-pgdata:
