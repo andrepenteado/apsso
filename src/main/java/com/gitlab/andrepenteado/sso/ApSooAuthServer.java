@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 public class ApSooAuthServer extends AuthorizationServerConfigurerAdapter {
 
     /*public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("controle-secret"));
+        System.out.println(new BCryptPasswordEncoder().encode("apcontrole-secret"));
     }*/
 
     @Autowired

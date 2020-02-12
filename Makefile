@@ -20,7 +20,7 @@ run-cluster:
 	docker network create --driver overlay --opt encrypt rede-cluster-interna
 	docker network create --driver overlay --opt encrypt rede-cluster-externa
 	docker stack deploy -c src/main/docker/docker-compose.yml apsso
-	docker service logs -f apsso_webapp
+	docker service logs -f apsso_apsso-webapp
 	docker swarm leave --force
 
 run-dev:
@@ -28,4 +28,4 @@ run-dev:
 	docker-compose -f src/main/docker/docker-compose-dev.yml up
 
 run-db:
-	docker-compose -f src/main/docker/docker-compose.yml up dbserver
+	docker-compose -f src/main/docker/docker-compose.yml up apsso-dbserver
