@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso;
+package com.github.andrepenteado.sso;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

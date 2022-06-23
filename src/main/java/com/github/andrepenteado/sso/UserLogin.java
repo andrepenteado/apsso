@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso;
+package com.github.andrepenteado.sso;
 
 import lombok.Data;
 

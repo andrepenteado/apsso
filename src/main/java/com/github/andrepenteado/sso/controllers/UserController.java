@@ -1,10 +1,11 @@
-package com.gitlab.andrepenteado.sso.controllers;
+package com.github.andrepenteado.sso.controllers;
 
-import com.gitlab.andrepenteado.sso.UserLogin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.github.andrepenteado.sso.UserLogin;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso.controllers;
+package com.github.andrepenteado.sso.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

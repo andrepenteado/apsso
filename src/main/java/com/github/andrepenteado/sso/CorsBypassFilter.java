@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.sso;
+package com.github.andrepenteado.sso;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
