@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   apsso-dbserver:
-    image: postgres:11-alpine
+    image: postgres:14-alpine
     container_name: apsso-dbserver-container
     environment:
       POSTGRES_USER: apsso-dbuser
@@ -12,7 +12,7 @@ services:
     ports:
       - "50000:5432"
   apsso-webapp:
-    image: tomcat:9-jre11
+    image: tomcat:9-jre17
     container_name: apsso-webapp-container
     environment:
       - "JPDA_ADDRESS=*:8001"
