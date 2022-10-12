@@ -1,4 +1,4 @@
-FROM tomcat:9-jre11
+FROM tomcat:9-jre17
 
 # Timezone
 RUN echo "America/Sao_Paulo" > /etc/timezone              && \
