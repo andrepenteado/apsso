@@ -11,7 +11,7 @@ services:
     ports:
       - "50000:5432"
   apsso-webapp:
-    image: tomcat:9-jre17
+    image: tomcat:10-jre17
     container_name: apsso-webapp-container
     environment:
       - "JPDA_ADDRESS=*:8001"

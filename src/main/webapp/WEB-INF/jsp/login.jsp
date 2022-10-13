@@ -1,8 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/erro"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="dandelion" uri="http://github.com/dandelion" %>
-
-<dandelion:bundle includes="font-awesome,jquery.validation"/>
 
 <html>
 

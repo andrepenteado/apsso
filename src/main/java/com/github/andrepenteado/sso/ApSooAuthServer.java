@@ -1,59 +1,70 @@
 package com.github.andrepenteado.sso;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 
-import javax.sql.DataSource;
+import java.security.KeyStore;
+import java.time.Duration;
 
 @Configuration
-@EnableAuthorizationServer
-public class ApSooAuthServer extends AuthorizationServerConfigurerAdapter {
+public class ApSooAuthServer {
 
-    /*public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("apcontrole-secret"));
-    }*/
+    @Bean
+    public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+        RegisteredClient registeredClient = RegisteredClient
+            .withId("1")
+            .clientId("com.gitlab.andrepenteado.apcontrole")
+            .clientSecret("{noop}apcontrole-secret")
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .redirectUri("http://localhost:30001/ap-controle")
+            .scope("admin")
+            .scope("manager")
+            .scope("user")
+            .tokenSettings(TokenSettings.builder()
+                .accessTokenTimeToLive(Duration.ofMinutes(15))
+                .refreshTokenTimeToLive(Duration.ofDays(1))
+                .reuseRefreshTokens(false)
+                .build())
+            .clientSettings(ClientSettings.builder()
+                .requireAuthorizationConsent(true)
+                .build())
+            .build();
 
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    private AuthenticationManager authManager;
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
-    }
-
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource);
+        RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+        registeredClientRepository.save(registeredClient);
+        return registeredClientRepository;
     }
 
     @Bean
-    public TokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
+    public JWKSource<SecurityContext> jwkSource(ApSsoProperties properties) throws Exception {
+        final var jksProp = properties.getJks();
+        final var jksFile = new ClassPathResource(jksProp.getPath()).getInputStream();
+        final var keyStore = KeyStore.getInstance("JKS");
+
+        keyStore.load(jksFile, jksProp.getStorepass().toCharArray());
+        final var rsaKey = RSAKey.load(keyStore, jksProp.getAlias(), jksProp.getKeypass().toCharArray());
+
+        return (((jwkSelector, securityContext) -> jwkSelector.select(new JWKSet(rsaKey))));
     }
 
     @Bean
-    public DefaultTokenServices tokenServices() {
-        final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setAccessTokenValiditySeconds(-1);
-        defaultTokenServices.setTokenStore(tokenStore());
-        return defaultTokenServices;
+    public AuthorizationServerSettings authorizationServerSettings(ApSsoProperties properties) {
+        return AuthorizationServerSettings.builder().issuer(properties.getUri()).build();
     }
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(tokenStore()).authenticationManager(authManager);
-    }
 }
