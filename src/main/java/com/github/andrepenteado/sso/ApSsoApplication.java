@@ -13,9 +13,4 @@ public class ApSsoApplication extends SpringBootServletInitializer {
         SpringApplication.run(ApSsoApplication.class, args);
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
 }

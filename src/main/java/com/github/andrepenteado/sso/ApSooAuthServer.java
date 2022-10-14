@@ -6,32 +6,93 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.KeyStore;
 import java.time.Duration;
+import java.util.UUID;
 
 @Configuration
 public class ApSooAuthServer {
 
     @Bean
+    @Order(1)
+    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
+        throws Exception {
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        http
+            // Redirect to the login page when not authenticated from the
+            // authorization endpoint
+            .exceptionHandling((exceptions) -> exceptions
+                .authenticationEntryPoint(
+                    new LoginUrlAuthenticationEntryPoint("/login"))
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+        throws Exception {
+        http
+            .authorizeHttpRequests((authorize) -> authorize
+                .anyRequest().authenticated()
+            )
+            // Form login handles the redirect to the login page from the
+            // authorization server filter chain
+            .formLogin(form -> {
+                form
+                    .loginPage("/login")
+                    .permitAll();
+            });
+
+        return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails userDetails = User.withDefaultPasswordEncoder()
+            .username("admin")
+            .password("admin")
+            .roles("admin")
+            .build();
+
+        return new InMemoryUserDetailsManager(userDetails);
+    }
+
+    @Bean
     public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         RegisteredClient registeredClient = RegisteredClient
-            .withId("1")
+            .withId(UUID.randomUUID().toString())
             .clientId("com.gitlab.andrepenteado.apcontrole")
             .clientSecret("{noop}apcontrole-secret")
+            .clientName("Módulo de controle e gestão")
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .redirectUri("http://localhost:30001/ap-controle")
+            .redirectUri("https://oidcdebugger.com/debug")
             .scope("admin")
             .scope("manager")
             .scope("user")
@@ -41,7 +102,7 @@ public class ApSooAuthServer {
                 .reuseRefreshTokens(false)
                 .build())
             .clientSettings(ClientSettings.builder()
-                .requireAuthorizationConsent(true)
+                .requireAuthorizationConsent(false)
                 .build())
             .build();
 
