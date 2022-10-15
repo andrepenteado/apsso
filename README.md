@@ -1,2 +1,2 @@
 # Portal de Sistemas
-Portal de single sign on para autenticação de sistemas
+Portal de single sign on para autenticação de sistemas e usuários

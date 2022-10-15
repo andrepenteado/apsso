@@ -3,7 +3,7 @@
 <configuration>
 
     <!-- Nome da aplicação -->
-    <contextName>AP-sso</contextName>
+    <contextName>Portal de Sistemas</contextName>
 
     <!-- Log para console -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

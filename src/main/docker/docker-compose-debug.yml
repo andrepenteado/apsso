@@ -1,4 +1,5 @@
 services:
+
   apsso-dbserver:
     image: postgres:14-alpine
     container_name: apsso-dbserver-container
@@ -10,6 +11,7 @@ services:
       - apsso-pgdata:/var/lib/postgresql/data
     ports:
       - "50000:5432"
+
   apsso-webapp:
     image: tomcat:10-jre17
     container_name: apsso-webapp-container
@@ -19,7 +21,7 @@ services:
       - "CATALINA_OPTS=-Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.rmi.port=1099 -Djava.rmi.server.hostname=0.0.0.0"
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - "30000:8080"
+      - "8080:8080"
       - "28001:8001"
       - "21099:1099"
     entrypoint:
@@ -28,5 +30,6 @@ services:
       - "run"
     volumes:
       - ../../../target/ap-sso.war:/usr/local/tomcat/webapps/ap-sso.war
+
 volumes:
   apsso-pgdata:
