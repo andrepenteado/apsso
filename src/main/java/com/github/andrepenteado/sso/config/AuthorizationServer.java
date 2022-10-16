@@ -1,4 +1,4 @@
-package com.github.andrepenteado.sso;
+package com.github.andrepenteado.sso.config;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -10,9 +10,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -27,17 +24,14 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.KeyStore;
 import java.time.Duration;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
-public class ApSooAuthServer {
+public class AuthorizationServer {
 
     @Bean
     @Order(1)
@@ -74,17 +68,6 @@ public class ApSooAuthServer {
             });
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.withDefaultPasswordEncoder()
-            .username("admin")
-            .password("admin")
-            .roles("admin")
-            .build();
-
-        return new InMemoryUserDetailsManager(userDetails);
     }
 
     @Bean
@@ -128,7 +111,7 @@ public class ApSooAuthServer {
     }
 
     @Bean
-    public JWKSource<SecurityContext> jwkSource(ApSsoProperties properties) throws Exception {
+    public JWKSource<SecurityContext> jwkSource(GlobalProperties properties) throws Exception {
         final var jksProp = properties.getJks();
         final var jksFile = new ClassPathResource(jksProp.getPath()).getInputStream();
         final var keyStore = KeyStore.getInstance("JKS");
@@ -140,7 +123,7 @@ public class ApSooAuthServer {
     }
 
     @Bean
-    public AuthorizationServerSettings authorizationServerSettings(ApSsoProperties properties) {
+    public AuthorizationServerSettings authorizationServerSettings(GlobalProperties properties) {
         return AuthorizationServerSettings.builder().issuer(properties.getUri()).build();
     }
 

@@ -1,4 +1,4 @@
-package com.github.andrepenteado.sso;
+package com.github.andrepenteado.sso.config;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 @Component
 @Validated
 @ConfigurationProperties("apsso")
-public class ApSsoProperties {
+public class GlobalProperties {
 
     @Getter @Setter @NotBlank
     private String uri;
