@@ -29,6 +29,7 @@ import org.springframework.security.oauth2.server.authorization.settings.ClientS
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.KeyStore;
 import java.time.Duration;
@@ -41,18 +42,18 @@ public class ApSooAuthServer {
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http.cors().disable().csrf().disable());
-        return http.formLogin(withDefaults()).build();
-        /*OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         http
             // Redirect to the login page when not authenticated from the
             // authorization endpoint
+            .cors().disable()
+            .csrf().disable()
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
                     new LoginUrlAuthenticationEntryPoint("/login"))
             );
 
-        return http.build();*/
+        return http.build();
     }
 
     @Bean
@@ -66,11 +67,11 @@ public class ApSooAuthServer {
             .cors().disable()
             // Form login handles the redirect to the login page from the
             // authorization server filter chain
-            .formLogin(withDefaults()/*form -> {
+            .formLogin(form -> {
                 form
-                    .loginPage("/custom-login")
+                    .loginPage("/login")
                     .permitAll();
-            }*/);
+            });
 
         return http.build();
     }
