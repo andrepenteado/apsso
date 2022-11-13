@@ -6,18 +6,10 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.andrepenteado</groupId>
-    <artifactId>ap-sso</artifactId>
-    <version>2.0.0</version>
-    <packaging>war</packaging>
-
-    <name>Portal de Sistemas</name>
-    <description>Portal de single sign on para autenticação de usuários e sistemas</description>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0-RC1</version>
+        <version>3.0.0-RC2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -26,6 +18,27 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
     </properties>
+
+    <groupId>com.github.andrepenteado</groupId>
+    <artifactId>ap-sso</artifactId>
+    <version>2.0.0</version>
+    <packaging>war</packaging>
+
+    <name>Portal de Sistemas</name>
+    <description>Portal de single sign on para autenticação de usuários e sistemas</description>
+
+    <organization>
+        <name>APcode</name>
+        <url>http://www.apcode.com.br</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>André Penteado</name>
+            <email>andre.penteado@apcode.com.br</email>
+            <organization>APcode</organization>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>

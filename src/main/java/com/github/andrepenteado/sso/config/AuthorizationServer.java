@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.server.authorization.client.JdbcRegis
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
@@ -36,12 +38,15 @@ public class AuthorizationServer {
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        OAuth2AuthorizationServerConfiguration
+            .applyDefaultSecurity(http);
+
         http
-            // Redirect to the login page when not authenticated from the
-            // authorization endpoint
+            .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+            .oidc(Customizer.withDefaults());
+
+        http
             .cors().disable()
-            .csrf().disable()
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
                     new LoginUrlAuthenticationEntryPoint("/login"))
@@ -57,16 +62,12 @@ public class AuthorizationServer {
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().permitAll()
             )
-            .csrf().disable()
             .cors().disable()
-            // Form login handles the redirect to the login page from the
-            // authorization server filter chain
             .formLogin(form -> {
                 form
                     .loginPage("/login")
                     .permitAll();
             });
-
         return http.build();
     }
 
@@ -74,7 +75,7 @@ public class AuthorizationServer {
     public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         RegisteredClient registeredClient = RegisteredClient
             .withId("1")
-            .clientId("com.gitlab.andrepenteado.apcontrole")
+            .clientId("com.github.andrepenteado.apcontrole")
             .clientSecret("{noop}apcontrole-secret")
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
@@ -82,9 +83,9 @@ public class AuthorizationServer {
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .redirectUri("http://apcontrole-webapp:30001/login/oauth2/code/ap-controle-oidc")
             .redirectUri("http://apcontrole-webapp:30001/authorized")
-            .redirectUri("https://oidcdebugger.com/debug")
+            //.redirectUri("https://oidcdebugger.com/debug")
             .scope(OidcScopes.OPENID)
-            .scope("admin")
+            //.scope("admin")
             .tokenSettings(TokenSettings.builder()
                 .accessTokenTimeToLive(Duration.ofMinutes(15))
                 .refreshTokenTimeToLive(Duration.ofDays(1))

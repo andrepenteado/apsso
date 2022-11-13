@@ -45,6 +45,7 @@
               <%--<div><a class="logo" href="index.jsp"><img class="img-fluid for-light" src="assets/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt="looginpage"></a></div>--%>
               <div class="login-main"> 
                 <form class="theme-form" method="POST" action="<c:url value='/login'/>">
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                   <h4 class="text-uppercase"><i data-feather="database" style="margin-bottom: -4px;"></i> Portal de Sistemas</h4>
                   <p>Digite seu usuário e senha para entrar</p>
                   <c:if test="${param.error != null}">
