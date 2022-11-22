@@ -73,7 +73,10 @@ public class AuthorizationServer {
 
     @Bean
     public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
-        RegisteredClient registeredClient = RegisteredClient
+        RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+
+        // Sistema APcontrole
+        RegisteredClient apControle = RegisteredClient
             .withId("1")
             .clientId("com.github.andrepenteado.apcontrole")
             .clientSecret("{noop}apcontrole-secret")
@@ -81,8 +84,8 @@ public class AuthorizationServer {
             .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .redirectUri("http://apcontrole-webapp:30001/login/oauth2/code/ap-controle-oidc")
-            .redirectUri("http://apcontrole-webapp:30001/authorized")
+            .redirectUri("http://localhost:30001/login/oauth2/code/ap-controle-oidc")
+            .redirectUri("http://localhost:30001/authorized")
             //.redirectUri("https://oidcdebugger.com/debug")
             .scope(OidcScopes.OPENID)
             //.scope("admin")
@@ -95,9 +98,33 @@ public class AuthorizationServer {
                 .requireAuthorizationConsent(false)
                 .build())
             .build();
+        registeredClientRepository.save(apControle);
 
-        RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-        registeredClientRepository.save(registeredClient);
+        // Sistema AProove
+        RegisteredClient apRoove = RegisteredClient
+            .withId("2")
+            .clientId("com.github.andrepenteado.aproove")
+            .clientSecret("{noop}aproove-secret")
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+            .redirectUri("http://localhost:8080/login/oauth2/code/ap-roove-oidc")
+            .redirectUri("http://localhost:8080/authorized")
+            //.redirectUri("https://oidcdebugger.com/debug")
+            .scope(OidcScopes.OPENID)
+            //.scope("admin")
+            .tokenSettings(TokenSettings.builder()
+                .accessTokenTimeToLive(Duration.ofMinutes(15))
+                .refreshTokenTimeToLive(Duration.ofDays(1))
+                .reuseRefreshTokens(false)
+                .build())
+            .clientSettings(ClientSettings.builder()
+                .requireAuthorizationConsent(false)
+                .build())
+            .build();
+        registeredClientRepository.save(apRoove);
+
         return registeredClientRepository;
     }
 
