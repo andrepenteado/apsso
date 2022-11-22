@@ -30,7 +30,7 @@ server:
       
 # keytool.exe -genkeypair -alias ap-login -keyalg RSA -keypass passwebra -keystore ap-sso.jks -storepass passwebra
 apsso:
-  uri: "http://apsso-webapp:30000"
+  uri: "http://localhost:30000"
   jks:
     keypass: passwebra
     storepass: passwebra
