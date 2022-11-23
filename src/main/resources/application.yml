@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:50000/apsso-dbname?autoReconnect=true
+    url: jdbc:postgresql://apsso-db:50000/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver
@@ -30,7 +30,7 @@ server:
       
 # keytool.exe -genkeypair -alias ap-login -keyalg RSA -keypass passwebra -keystore ap-sso.jks -storepass passwebra
 apsso:
-  uri: "http://localhost:30000"
+  uri: "http://apsso:30000"
   jks:
     keypass: passwebra
     storepass: passwebra

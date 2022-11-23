@@ -20,7 +20,7 @@
     </properties>
 
     <groupId>com.github.andrepenteado</groupId>
-    <artifactId>ap-sso</artifactId>
+    <artifactId>apsso</artifactId>
     <version>2.0.0</version>
     <packaging>war</packaging>
 
@@ -87,7 +87,7 @@
     </dependencies>
 
     <build>
-        <finalName>ap-sso</finalName>
+        <finalName>apsso</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

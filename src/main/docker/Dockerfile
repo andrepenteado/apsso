@@ -10,6 +10,6 @@ RUN echo "America/Sao_Paulo" > /etc/timezone              && \
     apt-get clean
 
 #Deploy App
-COPY target/ap-sso.war /usr/local/tomcat/webapps
+COPY target/apsso.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
