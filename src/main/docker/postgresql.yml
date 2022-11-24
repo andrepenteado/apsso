@@ -1,0 +1,16 @@
+services:
+
+  apsso-db:
+    image: postgres:14.5
+    container_name: apsso-db
+    environment:
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
+    volumes:
+      - apsso-pgdata:/var/lib/postgresql/data
+    ports:
+      - "50000:5432"
+
+volumes:
+  apsso-pgdata:

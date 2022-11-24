@@ -1,7 +1,7 @@
 services:
 
   apsso-db:
-    image: postgres:14-alpine
+    image: postgres:14.5
     container_name: apsso-db
     environment:
       POSTGRES_USER: apsso-dbuser
@@ -14,7 +14,7 @@ services:
 
   apsso:
     image: tomcat:10-jre17
-    container_name: ap-sso
+    container_name: apsso
     environment:
       - "JPDA_ADDRESS=*:8001"
       - "JPDA_TRANSPORT=dt_socket"
@@ -29,7 +29,7 @@ services:
       - "jpda"
       - "run"
     volumes:
-      - ../../../target/ap-sso.war:/usr/local/tomcat/webapps/ROOT.war
+      - ../../../target/apsso.war:/usr/local/tomcat/webapps/ROOT.war
 
 volumes:
   apsso-pgdata:
