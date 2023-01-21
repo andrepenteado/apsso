@@ -29,3 +29,6 @@ nbactions.xml
 ### VS CODE ###
 .vscode
 .directory
+
+/src/main/docker/postgresql
+/src/main/docker/postgresql-apsso

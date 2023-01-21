@@ -1,5 +1,13 @@
 services:
 
+  apsso:
+    image: ghcr.io/andrepenteado/ap-sso/apsso
+    container_name: apsso
+    environment:
+      - CATALINA_OPTS=-Dserver.port=30000
+    ports:
+      - 30000:30000
+
   apsso-db:
     image: postgres:14.5
     container_name: apsso-db
@@ -8,29 +16,7 @@ services:
       POSTGRES_PASSWORD: apsso-dbpasswd
       POSTGRES_DB: apsso-dbname
     volumes:
-      - apsso-pgdata:/var/lib/postgresql/data
+      - ./postgresql-apsso/:/var/lib/postgresql/data/
     command: -p 50000
     ports:
       - 50000:50000
-
-  apsso:
-    image: tomcat:10-jre17
-    container_name: apsso
-    environment:
-      - "JPDA_ADDRESS=*:8001"
-      - "JPDA_TRANSPORT=dt_socket"
-      - "CATALINA_OPTS=-Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.rmi.port=1099 -Djava.rmi.server.hostname=0.0.0.0"
-      - "SPRING_PROFILES_ACTIVE=docker"
-    ports:
-      - 30000:8080
-      - 28001:8001
-      - 21099:1099
-    entrypoint:
-      - "catalina.sh"
-      - "jpda"
-      - "run"
-    volumes:
-      - ../../../target/apsso.war:/usr/local/tomcat/webapps/ROOT.war
-
-volumes:
-  apsso-pgdata:
