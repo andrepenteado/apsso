@@ -1,7 +1,7 @@
 services:
 
   apsso:
-    image: ghcr.io/andrepenteado/ap-sso/apsso
+    image: ghcr.io/andrepenteado/apsso/apsso
     container_name: apsso
     environment:
       - CATALINA_OPTS=-Dserver.port=30000

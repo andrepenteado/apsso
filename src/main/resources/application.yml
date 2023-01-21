@@ -29,11 +29,11 @@ server:
     whitelabel:
       enabled: false
       
-# keytool.exe -genkeypair -alias ap-login -keyalg RSA -keypass passwebra -keystore ap-sso.jks -storepass passwebra
+# keytool.exe -genkeypair -alias apsso -keyalg RSA -keypass passwebra -keystore apsso.jks -storepass passwebra
 apsso:
   uri: "http://apsso:30000"
   jks:
     keypass: passwebra
     storepass: passwebra
-    alias: ap-login
-    path: ap-sso.jks
+    alias: apsso
+    path: apsso.jks

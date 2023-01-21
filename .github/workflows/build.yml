@@ -33,9 +33,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build da imagem docker
-        run: docker build -f Dockerfile -t ghcr.io/andrepenteado/ap-sso/apsso:latest -t ghcr.io/andrepenteado/ap-sso/apsso:${{ env.VERSAO }} .
+        run: docker build -f Dockerfile -t ghcr.io/andrepenteado/apsso/apsso:latest -t ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }} .
 
       - name: Push da imagem docker
         run: |
-          docker push ghcr.io/andrepenteado/ap-sso/apsso:latest
-          docker push ghcr.io/andrepenteado/ap-sso/apsso:${{ env.VERSAO }}
+          docker push ghcr.io/andrepenteado/apsso/apsso:latest
+          docker push ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }}
