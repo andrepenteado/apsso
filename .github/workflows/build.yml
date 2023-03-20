@@ -22,6 +22,9 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
 
+      - name: Compilar e testar
+        run: mvn -B clean package
+
       - name: Buscar versão atual
         run: echo "VERSAO=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> $GITHUB_ENV
 
@@ -33,7 +36,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build da imagem docker
-        run: docker build -f Dockerfile -t ghcr.io/andrepenteado/apsso/apsso:latest -t ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }} .
+        run: docker build -f Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/apsso:latest -t ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }} .
 
       - name: Push da imagem docker
         run: |
