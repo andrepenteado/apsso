@@ -1,4 +1,5 @@
 spring:
+
   datasource:
     url: jdbc:postgresql://apsso-db:50000/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
@@ -6,6 +7,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     hikari:
       pool-name: apsso-pool
+
   jpa:
     show-sql: true
     open-in-view: false
@@ -14,6 +16,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         temp:
           use_jdbc_metadata_defaults: false
+
   mvc:
     view:
       prefix: /WEB-INF/jsp/

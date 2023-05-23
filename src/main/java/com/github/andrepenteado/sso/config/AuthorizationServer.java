@@ -73,7 +73,8 @@ public class AuthorizationServer {
 
     @Bean
     public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
-        RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+        return new JdbcRegisteredClientRepository(jdbcTemplate);
+        /*RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
 
         // Sistema APcontrole
         RegisteredClient apControle = RegisteredClient
@@ -88,7 +89,7 @@ public class AuthorizationServer {
             .redirectUri("http://apcontrole:30001/authorized")
             //.redirectUri("https://oidcdebugger.com/debug")
             .scope(OidcScopes.OPENID)
-            //.scope("admin")
+            //.scope("static")
             .tokenSettings(TokenSettings.builder()
                 .accessTokenTimeToLive(Duration.ofMinutes(15))
                 .refreshTokenTimeToLive(Duration.ofDays(1))
@@ -113,7 +114,7 @@ public class AuthorizationServer {
             .redirectUri("http://aproove:30002/authorized")
             //.redirectUri("https://oidcdebugger.com/debug")
             .scope(OidcScopes.OPENID)
-            //.scope("admin")
+            //.scope("static")
             .tokenSettings(TokenSettings.builder()
                 .accessTokenTimeToLive(Duration.ofMinutes(15))
                 .refreshTokenTimeToLive(Duration.ofDays(1))
@@ -125,7 +126,7 @@ public class AuthorizationServer {
             .build();
         registeredClientRepository.save(apRoove);
 
-        return registeredClientRepository;
+        return registeredClientRepository;*/
     }
 
     @Bean

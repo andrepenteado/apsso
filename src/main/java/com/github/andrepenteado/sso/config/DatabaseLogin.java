@@ -28,9 +28,9 @@ public class DatabaseLogin {
     @Bean
     public UserDetailsService userDetailsService(JdbcTemplate jdbcTemplate) {
         /*UserDetails userDetails = User.withDefaultPasswordEncoder()
-            .username("admin")
-            .password("admin")
-            .roles("admin")
+            .username("static")
+            .password("static")
+            .roles("static")
             .build();*/
 
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(jdbcTemplate.getDataSource());

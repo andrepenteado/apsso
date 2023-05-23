@@ -10,8 +10,8 @@
     <meta name="description" content="AP-code: Portal de single sign on para acessos aos sistemas">
     <meta name="keywords" content="apcode, ap-code, portal, acessos, sistemas, java, jsp, bootstrap, angular">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
     <title>Login :: Portal de Sistemas</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
