@@ -9,7 +9,7 @@
     <groupId>com.github.andrepenteado</groupId>
     <artifactId>apsso</artifactId>
     <version>2.0.0</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <name>Portal de Sistemas</name>
     <description>Portal de single sign on para autenticação de usuários e sistemas</description>
@@ -30,7 +30,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -40,20 +40,15 @@
         <java.version>17</java.version>
     </properties>
 
+    <modules>
+        <module>login</module>
+        <module>backend</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-authorization-server</artifactId>
-            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -81,15 +76,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>apsso</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

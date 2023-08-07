@@ -1,0 +1,32 @@
+<app-loader [show]="this.aguardar "></app-loader>
+<ap-floating-button (click)="incluir()"><i class="fa fa-plus fa-2x"></i></ap-floating-button>
+
+<app-breadcrumb [title]="'Pesquisar Sistemas'" [active_item]="'Sistemas'"></app-breadcrumb>
+
+<div class="col-12 col-md-12">
+  <div class="card border border-primary rounded shadow-lg">
+    <div class="card-body custom-datatable table-responsive table-border-radius">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-styling">
+        <thead>
+        <tr>
+          <th scope="col">Sigla</th>
+          <th scope="col">Descrição</th>
+          <th scope="col" class="text-center">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sistema of this.lista ">
+          <td>{{ sistema.id }}</td>
+          <td>{{ sistema.descricao }}</td>
+          <td class="text-center">
+            <button (click)="editar(sistema)"><i class="fa fa-pencil"></i></button>
+            <button (click)="excluir(sistema)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ap-exibe-mensagem #exibeMensagem></ap-exibe-mensagem>

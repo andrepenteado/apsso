@@ -1,0 +1,116 @@
+<app-loader [show]="this.aguardar "></app-loader>
+
+<app-breadcrumb
+  [title]="'Cadastro de Sistemas'"
+  [items]="[ ['Sistemas','/sistema/pesquisar'] ]"
+  [active_item]="'Cadastro'">
+</app-breadcrumb>
+
+<div class="d-flex">
+  <ul ngbNav #nav="ngbNav" animation="true" class="nav-pills" orientation="vertical">
+    <li ngbNavItem="dados-cadastrais">
+      <a ngbNavLink>Dados Cadastrais</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
+          <div class="col-12 col-md-12">
+            <div class="card border border-primary rounded shadow-lg">
+              <div class="card-header">
+                <h5>Dados Cadastrais</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-12 col-md-4">
+                    <label>* Sigla</label>
+                    <input type="text" name="id" formControlName="id" class="form-control" required="true">
+                    <div class="invalid-feedback">Campo sigla é obrigatório</div>
+                  </div>
+                  <div class="form-group col-12 col-md-8">
+                    <label>Descrição</label>
+                    <input type="text" name="descricao" formControlName="descricao" class="form-control">
+                    <div class="invalid-feedback">Campo descrição é obrigatório</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-12 col-md-6">
+                    <label>ClientID</label>
+                    <input type="text" name="clientId" formControlName="clientId" class="form-control">
+                  </div>
+                  <div class="form-group col-12 col-md-6">
+                    <label>URL de Entrada</label>
+                    <input type="text" name="urlEntrada" formControlName="urlEntrada" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-primary" (click)="gravar()"><i class="fa fa-save fa-lg"></i> Gravar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </li>
+    <li ngbNavItem="perfis" [disabled]="this.sistema == null">
+      <a ngbNavLink>Perfis</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="formPerfil" [ngClass]="{'was-validated': !formPerfil.valid && formPerfilEnviado}">
+          <div class="col-12 col-md-12">
+            <div class="card border border-primary rounded shadow-lg">
+              <div class="card-header">
+                <h5>Perfis</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-12 col-md-4">
+                    <label>* Nome</label>
+                    <input type="text" name="nomePerfil" formControlName="authority" class="form-control text-uppercase" required="true">
+                    <div class="invalid-feedback">Campo nome do perfil é obrigatório</div>
+                  </div>
+                  <div class="form-group col-12 col-md-8">
+                    <label>* Descrição</label>
+                    <input type="text" name="descricaoPerfil" formControlName="descricao" class="form-control" required="true">
+                    <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-primary" (click)="gravarPerfil()"><i class="fa fa-save fa-lg"></i> Adicionar</button>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-12 col-md-12 table-responsive">
+                    <table class="table table-sm table-bordered">
+                      <thead>
+                      <tr>
+                        <th class="fw-bold" scope="col">#</th>
+                        <th class="fw-bold" scope="col">Nome</th>
+                        <th class="fw-bold" scope="col">Descrição</th>
+                        <th class="fw-bold text-center" scope="col">Excluir?</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let perfil of this.perfis">
+                        <td>{{ perfil.id }}</td>
+                        <td>{{ perfil.authority }}</td>
+                        <td>{{ perfil.descricao }}</td>
+                        <td class="text-center">
+                          <a href="javascript:" (click)="$event.preventDefault();excluirPerfil(perfil)" class="text-danger"><i class="fa fa-trash"></i></a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="ms-4 col-10"></div>
+</div>
+
+<ap-exibe-mensagem #exibeMensagem></ap-exibe-mensagem>

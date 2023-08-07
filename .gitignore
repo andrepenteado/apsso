@@ -1,4 +1,3 @@
-/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -30,5 +29,10 @@ nbactions.xml
 .vscode
 .directory
 
-/src/main/docker/postgresql
-/src/main/docker/postgresql-apsso
+/login/target/
+/backend/target/
+/backend/src/main/resources/static/
+/backend/backend.iml
+/frontend/node_modules/
+/frontend/.angular/
+/frontend/frontend.iml
