@@ -15,6 +15,17 @@ jobs:
       - name: Checkout do projeto
         uses: actions/checkout@v3
 
+      - name: Usar Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Instalar pacotes do frontend do módulo administrativo
+        run: npm --prefix ./frontend install
+
+      - name: Buildar frontend do módulo administrativo
+        run: npm --prefix ./frontend run build --omit=dev
+
       - name: Usar JDK 17
         uses: actions/setup-java@v3
         with:
@@ -22,7 +33,7 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
 
-      - name: Compilar e testar
+      - name: Compilar e testar os módulos do projeto projeto
         run: mvn -B clean package
 
       - name: Buscar versão atual
@@ -35,10 +46,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build da imagem docker
+      - name: Build da imagem docker do login
         run: docker build -f .docker/Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/apsso:latest -t ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }} .
 
-      - name: Push da imagem docker
+      - name: Push da imagem docker do login
         run: |
           docker push ghcr.io/andrepenteado/apsso/apsso:latest
           docker push ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }}
+
+      - name: Build da imagem docker do backend do módulo administrativo
+        run: docker build -f .docker/Dockerfile.backend.pipeline -t ghcr.io/andrepenteado/apsso/apsso-backend:latest -t ghcr.io/andrepenteado/apsso/apsso-backend:${{ env.VERSAO }} .
+
+      - name: Push da imagem docker do backend do módulo administrativo
+        run: |
+          docker push ghcr.io/andrepenteado/apsso/apsso-backend:latest
+          docker push ghcr.io/andrepenteado/apsso/apsso-backend:${{ env.VERSAO }}
