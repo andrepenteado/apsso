@@ -24,19 +24,21 @@ export class CadastroComponent implements OnInit {
   formPerfilEnviado: boolean = false;
   sistema: Sistema;
   perfis: PerfilSistema[] = [];
-
+  dataCadastro: Date = new Date();
+  dataUltimaModificacao: Date = new Date();
 
   // Campos do formulário
   id = new FormControl(null, Validators.required);
   descricao = new FormControl(null, Validators.required);
   urlEntrada = new FormControl(null);
   clientId = new FormControl(null);
-
+  clientSecret = new FormControl({value: '', disabled: true});
   form = new FormGroup({
     id: this.id,
     descricao: this.descricao,
     urlEntrada: this.urlEntrada,
     clientId: this.clientId,
+    clientSecret: this.clientSecret
   });
 
   idPerfil = new FormControl(null);
@@ -69,11 +71,18 @@ export class CadastroComponent implements OnInit {
   pesquisar(id: string): void {
     this.sistemaService.buscar(id).subscribe(sistema => {
       this.sistema = sistema;
+      this.dataCadastro = new Date(sistema.dataCadastro);
+      this.dataUltimaModificacao = new Date(sistema.dataUltimaModificacao)
       this.form.patchValue(sistema);
+      this.form.controls['clientSecret'].setValue('');
       this.perfilSistemaService.listarPorSistema(id).subscribe(
         perfis => this.perfis = perfis
       );
     });
+  }
+
+  habilitarClientSecret(): void {
+    this.form.get('clientSecret').enable();
   }
 
   gravar(): void {
@@ -84,6 +93,8 @@ export class CadastroComponent implements OnInit {
           this.sistema = sistema;
           this.form.reset();
           this.form.patchValue(sistema);
+          this.form.controls['clientSecret'].setValue('');
+          this.form.controls['clientSecret'].disable();
           this.exibeMensagem.show(
               `Dados do sistema ${sistema.id} gravados com sucesso`,
               DecoracaoMensagem.SUCESSO,
