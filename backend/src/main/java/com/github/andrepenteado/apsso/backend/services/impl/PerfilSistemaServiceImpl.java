@@ -21,7 +21,7 @@ public class PerfilSistemaServiceImpl implements PerfilSistemaService {
 
     @Override
     public List<PerfilSistema> listar() {
-        return repository.findByOrderByAuthority();
+        return repository.findByOrderBySistemaId();
     }
 
     @Override

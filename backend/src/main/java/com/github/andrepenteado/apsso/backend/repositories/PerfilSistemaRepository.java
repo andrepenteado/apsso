@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface PerfilSistemaRepository extends JpaRepository<PerfilSistema, Long> {
 
-    List<PerfilSistema> findByOrderByAuthority();
+    List<PerfilSistema> findByOrderBySistemaId();
 
     List<PerfilSistema> findBySistemaIdOrderByAuthority(String idSistema);
 

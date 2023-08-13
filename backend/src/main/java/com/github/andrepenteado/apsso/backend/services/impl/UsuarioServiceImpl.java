@@ -42,7 +42,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 
         if (buscar(usuario.getUsername()).isPresent())
-            throw new ResponseStatusException(HttpStatus.FOUND, String.format("Usuário %n já está cadastrado", usuario.getUsername()));
+            throw new ResponseStatusException(HttpStatus.FOUND, String.format("Usuário %s já está cadastrado", usuario.getUsername()));
 
         if (usuario.getPassword() != null)
             usuario.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));
@@ -61,12 +61,12 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 
         Usuario usuarioAlterar = buscar(username)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %n não encontrado", username)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %s não encontrado", username)));
 
         BeanUtils.copyProperties(usuario, usuarioAlterar);
 
         if (!Objects.equals(usuarioAlterar.getUsername(), username))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Solicitado alterar usuário %n, porém enviado dados do usuário %n", username, usuarioAlterar.getUsername()));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Solicitado alterar usuário %s, porém enviado dados do usuário %s", username, usuarioAlterar.getUsername()));
 
         if (usuario.getPassword() != null)
             usuario.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));

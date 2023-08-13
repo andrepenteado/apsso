@@ -40,7 +40,7 @@ public class SistemaResource {
         try {
             return sistemaService.buscar(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("Sistema de ID %n não encontrado", id)));
+                String.format("Sistema de ID %s não encontrado", id)));
         }
         catch (ResponseStatusException rsex) {
             throw rsex;

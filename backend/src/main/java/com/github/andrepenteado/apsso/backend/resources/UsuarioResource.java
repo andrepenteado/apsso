@@ -1,6 +1,8 @@
 package com.github.andrepenteado.apsso.backend.resources;
 
+import com.github.andrepenteado.apsso.backend.models.PerfilUsuario;
 import com.github.andrepenteado.apsso.backend.models.Usuario;
+import com.github.andrepenteado.apsso.backend.services.PerfilUsuarioService;
 import com.github.andrepenteado.apsso.backend.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UsuarioResource {
 
     private final UsuarioService usuarioService;
+
+    private final PerfilUsuarioService perfilUsuarioService;
 
     @GetMapping
     public List<Usuario> listar() {
@@ -37,7 +41,7 @@ public class UsuarioResource {
         try {
             return usuarioService.buscar(username)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Usuário ID %n não encontrado", username)));
+                    String.format("Usuário ID %s não encontrado", username)));
         }
         catch (ResponseStatusException rsex) {
             throw rsex;
@@ -78,11 +82,56 @@ public class UsuarioResource {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{username}")
     public void excluir(@PathVariable String username) {
         log.info("Excluir usuário " + username);
         try {
             usuarioService.excluir(username);
+        }
+        catch (ResponseStatusException rsex) {
+            throw rsex;
+        }
+        catch (Exception ex) {
+            log.error("Erro no processamento", ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
+        }
+    }
+
+    @GetMapping("/{username}/perfis")
+    public List<PerfilUsuario> listarPerfisPorUsuario(@PathVariable String username){
+        log.info("Listar perfis do usuário " + username);
+        try {
+            return perfilUsuarioService.listarPorUsuario(username);
+        }
+        catch (Exception ex) {
+            log.error("Erro no processamento", ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
+        }
+    }
+
+    @PostMapping("/perfil")
+    public PerfilUsuario incluirPerfil(@RequestBody PerfilUsuario perfilUsuario, BindingResult validacao) {
+        log.info(String.format("Incluir perfil %s ao usuário %s", perfilUsuario.getAuthority(), perfilUsuario.getUsername()));
+        try {
+            return perfilUsuarioService.incluir(perfilUsuario, validacao);
+        }
+        catch (ResponseStatusException rsex) {
+            throw rsex;
+        }
+        catch (Exception ex) {
+            log.error("Erro no processamento", ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
+        }
+    }
+
+    @DeleteMapping("/{username}/{perfil}")
+    public void excluirPerfil(@PathVariable String username, @PathVariable String perfil) {
+        log.info(String.format("Excluir perfil %s do usuário %s", perfil, username));
+        try {
+            PerfilUsuario perfilUsuario = new PerfilUsuario();
+            perfilUsuario.setUsername(username);
+            perfilUsuario.setAuthority(perfil);
+            perfilUsuarioService.excluir(perfilUsuario);
         }
         catch (ResponseStatusException rsex) {
             throw rsex;

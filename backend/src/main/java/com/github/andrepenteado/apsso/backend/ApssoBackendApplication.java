@@ -19,8 +19,7 @@ public class ApssoBackendApplication {
     public static String validateModel(BindingResult validacao) {
         String result = null;
         if (validacao.hasErrors()) {
-            var erros = new StringBuilder();
-            final StringBuilder errosFinal = erros;
+            final StringBuilder errosFinal = new StringBuilder();
             validacao.getFieldErrors().forEach(msg -> {
                 errosFinal.append(msg.getDefaultMessage());
             });
