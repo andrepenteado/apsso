@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { SistemaRoutingModule } from './sistema-routing.module';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
-import { SharedModule } from "../../shared/shared.module";
-import { CoreModule } from "../core/core.module";
-import { DataTablesModule } from "angular-datatables";
+import { SharedModule } from '../../shared/shared.module';
+import { CoreModule } from '../core/core.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({

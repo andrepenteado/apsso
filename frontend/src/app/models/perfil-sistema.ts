@@ -1,4 +1,4 @@
-import {Sistema} from "./sistema";
+import {Sistema} from './sistema';
 
 export class PerfilSistema {
 

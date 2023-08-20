@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DecoracaoMensagem, ExibeMensagemComponent} from "../../core/components/exibe-mensagem.component";
-import {Sistema} from "../../../models/sistema";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
-import {SistemaService} from "../../../services/sistema.service";
-import {PerfilSistemaService} from "../../../services/perfil-sistema.service";
-import {PerfilSistema} from "../../../models/perfil-sistema";
-import Swal from "sweetalert2";
+import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';
+import {Sistema} from '../../../models/sistema';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {SistemaService} from '../../../services/sistema.service';
+import {PerfilSistemaService} from '../../../services/perfil-sistema.service';
+import {PerfilSistema} from '../../../models/perfil-sistema';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cadastro',
@@ -19,9 +19,9 @@ export class CadastroComponent implements OnInit {
   @ViewChild('exibeMensagem')
   exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
 
-  aguardar: boolean = true;
-  formEnviado: boolean = false;
-  formPerfilEnviado: boolean = false;
+  aguardar = true;
+  formEnviado = false;
+  formPerfilEnviado = false;
   sistema: Sistema;
   perfis: PerfilSistema[] = [];
   dataCadastro: Date = new Date();
@@ -60,7 +60,7 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.activedRoute.params.subscribe(params => {
-      const id: string = params.id
+      const id: string = params.id;
       if (id) {
         this.pesquisar(id);
       }
@@ -72,9 +72,9 @@ export class CadastroComponent implements OnInit {
     this.sistemaService.buscar(id).subscribe(sistema => {
       this.sistema = sistema;
       this.dataCadastro = new Date(sistema.dataCadastro);
-      this.dataUltimaModificacao = new Date(sistema.dataUltimaModificacao)
+      this.dataUltimaModificacao = new Date(sistema.dataUltimaModificacao);
       this.form.patchValue(sistema);
-      this.form.controls['clientSecret'].setValue('');
+      this.form.controls.clientSecret.setValue('');
       this.perfilSistemaService.listarPorSistema(id).subscribe(
         perfis => this.perfis = perfis
       );
@@ -93,8 +93,8 @@ export class CadastroComponent implements OnInit {
           this.sistema = sistema;
           this.form.reset();
           this.form.patchValue(sistema);
-          this.form.controls['clientSecret'].setValue('');
-          this.form.controls['clientSecret'].disable();
+          this.form.controls.clientSecret.setValue('');
+          this.form.controls.clientSecret.disable();
           this.exibeMensagem.show(
               `Dados do sistema ${sistema.id} gravados com sucesso`,
               DecoracaoMensagem.SUCESSO,

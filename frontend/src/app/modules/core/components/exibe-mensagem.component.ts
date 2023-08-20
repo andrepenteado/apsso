@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 export enum DecoracaoMensagem {
-  SUCESSO = "bg-success",
-  INFO = "bg-info",
-  ERRO = "bg-danger",
-  ATENCAO = "bg-warning",
-  PRIMARIO = "bg-primary",
-  SECUNDARIO = "bg-secondary",
-  DIA = "bg-light",
-  NOITE = "bg-dark",
-  SIMPLES = ""
-};
+  SUCESSO = 'bg-success',
+  INFO = 'bg-info',
+  ERRO = 'bg-danger',
+  ATENCAO = 'bg-warning',
+  PRIMARIO = 'bg-primary',
+  SECUNDARIO = 'bg-secondary',
+  DIA = 'bg-light',
+  NOITE = 'bg-dark',
+  SIMPLES = ''
+}
 
 @Component({
   selector: 'ap-exibe-mensagem',
@@ -24,11 +24,11 @@ export enum DecoracaoMensagem {
 })
 export class ExibeMensagemComponent implements OnInit {
 
-  titulo: string = "Informação";
+  titulo = 'Informação';
 
-  exibir: boolean = false;
+  exibir = false;
 
-  mensagem: string = "";
+  mensagem = '';
 
   decoracao: DecoracaoMensagem;
 
@@ -41,15 +41,17 @@ export class ExibeMensagemComponent implements OnInit {
     this.exibir = false;
   }
 
-  //show(mensagem: string): void;
-  //show(mensagem: string, titulo: string): void;
+  // show(mensagem: string): void;
+  // show(mensagem: string, titulo: string): void;
   show(mensagem: string, decoracao?: DecoracaoMensagem, titulo?: string): void {
     this.mensagem = mensagem;
     this.exibir = true;
-    if (decoracao != null)
+    if (decoracao != null) {
       this.decoracao = decoracao;
-    if (titulo != null)
+    }
+    if (titulo != null) {
       this.titulo = titulo;
+    }
     console.log(this.decoracao);
   }
 

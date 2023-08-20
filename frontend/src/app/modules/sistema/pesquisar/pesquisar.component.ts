@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Core} from '../../../config/core';
 import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';
-import {Sistema} from "../../../models/sistema";
-import {Subject} from "rxjs";
-import {SistemaService} from "../../../services/sistema.service";
-import {Router} from "@angular/router";
+import {Sistema} from '../../../models/sistema';
+import {Subject} from 'rxjs';
+import {SistemaService} from '../../../services/sistema.service';
+import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,12 +13,12 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class PesquisarComponent implements OnInit {
+export class PesquisarComponent implements OnInit, OnDestroy {
 
   @ViewChild('exibeMensagem')
   exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
 
-  aguardar: boolean = true;
+  aguardar = true;
 
   dtOptions: DataTables.Settings = Core.DATATABLES_OPTIONS;
   dtTrigger: Subject<any> = new Subject<any>();

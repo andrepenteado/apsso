@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from "@angular/router";
-import { UsuarioService } from "../../../services/usuario.service";
-import { Usuario } from "../../../models/usuario";
-import { Core } from "../../../config/core";
-import { Subject } from "rxjs";
-import {DecoracaoMensagem, ExibeMensagemComponent} from "../../core/components/exibe-mensagem.component";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Router } from '@angular/router';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuario } from '../../../models/usuario';
+import { Core } from '../../../config/core';
+import { Subject } from 'rxjs';
+import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,12 +13,12 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class PesquisarComponent implements OnInit {
+export class PesquisarComponent implements OnInit, OnDestroy {
 
   @ViewChild('exibeMensagem')
   exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
 
-  aguardar: boolean = true;
+  aguardar = true;
 
   dtOptions: DataTables.Settings = Core.DATATABLES_OPTIONS;
   dtTrigger: Subject<any> = new Subject<any>();
@@ -53,7 +53,7 @@ export class PesquisarComponent implements OnInit {
             'Erro no processamento'
         );
       }
-    })
+    });
   }
 
   incluir(): void {

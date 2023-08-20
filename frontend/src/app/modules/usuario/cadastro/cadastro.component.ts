@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DecoracaoMensagem, ExibeMensagemComponent} from "../../core/components/exibe-mensagem.component";
-import {Usuario} from "../../../models/usuario";
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
-import {UsuarioService} from "../../../services/usuario.service";
-import {PerfilSistema} from "../../../models/perfil-sistema";
-import {PerfilSistemaService} from "../../../services/perfil-sistema.service";
-import {finalize} from "rxjs";
-import {PerfilUsuarioService} from "../../../services/perfil-usuario.service";
-import {PerfilUsuario} from "../../../models/perfil-usuario";
+import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';
+import {Usuario} from '../../../models/usuario';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {UsuarioService} from '../../../services/usuario.service';
+import {PerfilSistema} from '../../../models/perfil-sistema';
+import {PerfilSistemaService} from '../../../services/perfil-sistema.service';
+import {finalize, lastValueFrom} from 'rxjs';
+import {PerfilUsuarioService} from '../../../services/perfil-usuario.service';
+import {PerfilUsuario} from '../../../models/perfil-usuario';
 
 @Component({
   selector: 'app-cadastro',
@@ -21,9 +21,9 @@ export class CadastroComponent implements OnInit {
   @ViewChild('exibeMensagem')
   exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
 
-  aguardar: boolean = true;
-  incluir: boolean = true;
-  formEnviado: boolean = false;
+  aguardar = true;
+  incluir = true;
+  formEnviado = false;
   usuario: Usuario;
   listaPerfis: PerfilSistema[] = [];
   listaPerfisUsuario: PerfilUsuario[] = [];
@@ -44,7 +44,7 @@ export class CadastroComponent implements OnInit {
     perfis: new FormArray([])
   });
 
-  arrayPerfis = this.formPerfis.get("perfis") as FormArray;
+  arrayPerfis = this.formPerfis.get('perfis') as FormArray;
 
   constructor(
       private activedRoute: ActivatedRoute,
@@ -55,45 +55,46 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.activedRoute.params.subscribe(params => {
-      const username: string = params.username
-      if (username) {
-        this.pesquisar(username);
-        this.incluir = false;
-      }
+      const username: string = params.username;
+      this.pesquisar(username);
     });
-    this.pesquisarPerfis();
     this.aguardar = false;
   }
 
-  pesquisar(username: string): void {
-    this.usuarioService.buscar(username).subscribe(usuario => {
-      this.usuario = usuario;
-      this.dataCadastro = new Date(usuario.dataCadastro);
-      this.dataUltimaModificacao = new Date(usuario.dataUltimaModificacao)
-      this.formUsuario.patchValue(usuario);
-      this.formUsuario.controls['password'].setValue('');
-    });
-  }
+  async pesquisar(username: string): Promise<void> {
+    if (username) {
+      // Sync
+      const usuario$ = this.usuarioService.buscar(username);
+      this.usuario = await lastValueFrom(usuario$);
+      this.incluir = false;
+    }
+    else {
+      this.usuario = new Usuario();
+    }
 
-  pesquisarPerfis(): void {
-    this.perfilSistemaService.listar()
-      .pipe(finalize(() => {
-        for (let i = 0; i < this.listaPerfis.length; i++) {
-          let perfilForm = new FormControl(false);
-          this.arrayPerfis.push(perfilForm);
+    this.dataCadastro = new Date(this.usuario.dataCadastro);
+    this.dataUltimaModificacao = new Date(this.usuario.dataUltimaModificacao);
+    this.formUsuario.patchValue(this.usuario);
+    this.formUsuario.controls.password.setValue('');
+
+    // Sync
+    const perfisUsuario$ = this.perfilUsuarioService.listarPorUsuario(this.usuario.username);
+    this.listaPerfisUsuario = await lastValueFrom(perfisUsuario$);
+
+    // Sync
+    const perfisSistema$ = this.perfilSistemaService.listar();
+    this.listaPerfis = await lastValueFrom(perfisSistema$);
+
+    for (const perfilSistema of this.listaPerfis) {
+      let ativo = false;
+      for (const perfilUsuario of this.listaPerfisUsuario) {
+        if (perfilUsuario.authority === perfilSistema.authority) {
+          ativo = true;
+          break;
         }
-      }))
-      .subscribe(
-        listaPerfis => this.listaPerfis = listaPerfis
-      );
-    if (this.usuario != null) {
-      this.perfilUsuarioService.listarPorUsuario(this.usuario.username)
-        .pipe(finalize(() => {
-          // @TODO Habilitar perfis já cadastrados
-        }))
-        .subscribe(
-          listaPerfisUsuario => this.listaPerfisUsuario = listaPerfisUsuario
-        );
+      }
+      const perfilForm = new FormControl(ativo);
+      this.arrayPerfis.push(perfilForm);
     }
   }
 
@@ -108,9 +109,12 @@ export class CadastroComponent implements OnInit {
         next: usuario => {
           this.usuario = usuario;
           this.formUsuario.reset();
+          this.dataCadastro = new Date(this.usuario.dataCadastro);
+          this.dataUltimaModificacao = new Date(this.usuario.dataUltimaModificacao);
           this.formUsuario.patchValue(usuario);
-          this.formUsuario.controls['password'].setValue('');
-          this.formUsuario.controls['password'].disable();
+          this.formUsuario.controls.password.setValue('');
+          this.formUsuario.controls.password.disable();
+          this.incluir = false;
           this.exibeMensagem.show(
               `Dados do usuário ${usuario.nome} gravados com sucesso`,
               DecoracaoMensagem.SUCESSO,
@@ -124,7 +128,7 @@ export class CadastroComponent implements OnInit {
               'Erro de processamento'
           );
         }
-      })
+      });
     }
     else {
       this.exibeMensagem.show(
@@ -137,13 +141,15 @@ export class CadastroComponent implements OnInit {
 
   gravarPerfis(): void {
     for (let i = 0; i < this.formPerfis.value.perfis.length; i++) {
-      let perfilUsuario = new PerfilUsuario();
+      const perfilUsuario = new PerfilUsuario();
       perfilUsuario.username = this.usuario.username;
       perfilUsuario.authority = this.listaPerfis[i].authority;
-      if (this.formPerfis.value.perfis[i])
+      if (this.formPerfis.value.perfis[i]) {
         this.perfilUsuarioService.incluir(perfilUsuario).subscribe();
-      else
+      }
+      else {
         this.perfilUsuarioService.excluir(perfilUsuario).subscribe();
+      }
     }
     this.exibeMensagem.show(
         `Permissões do usuário atualizadas com sucesso`,
