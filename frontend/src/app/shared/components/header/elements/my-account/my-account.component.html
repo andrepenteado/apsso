@@ -1,13 +1,13 @@
 <div class="d-flex profile-media">
-  <img class="b-r-10" src="assets/images/dashboard/profile.jpg" alt="">
-  <div class="media-body"><span>Emay Walter</span>
-    <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+  <img class="b-r-10" src="assets/images/user/user.png" alt="">
+  <div class="media-body"><span>{{ usuario.nome }}</span>
+    <p class="mb-0 font-roboto">{{ nomePerfil() }} <i class="middle fa fa-angle-down"></i></p>
   </div>
 </div>
 <ul class="profile-dropdown onhover-show-div">
-  <li><a href="#"><app-feather-icons [icon]="'user'"></app-feather-icons><span>Account </span></a></li>
+  <!--<li><a href="#"><app-feather-icons [icon]="'user'"></app-feather-icons><span>Account </span></a></li>
   <li><a href="#"><app-feather-icons [icon]="'mail'"></app-feather-icons><span>Inbox</span></a></li>
   <li><a href="#"><app-feather-icons [icon]="'file-text'"></app-feather-icons><span>Taskboard</span></a></li>
-  <li><a href="#"><app-feather-icons [icon]="'settings'"></app-feather-icons><span>Settings</span></a></li>
-  <li><a href="#"><app-feather-icons [icon]="'log-in'"></app-feather-icons><span>Log in</span></a></li>
+  <li><a href="#"><app-feather-icons [icon]="'settings'"></app-feather-icons><span>Settings</span></a></li>-->
+  <li><a href="#" (click)="logout()"><app-feather-icons [icon]="'log-in'"></app-feather-icons><span>Logout</span></a></li>
 </ul>

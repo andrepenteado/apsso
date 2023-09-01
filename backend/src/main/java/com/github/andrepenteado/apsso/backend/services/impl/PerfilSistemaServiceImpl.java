@@ -47,4 +47,9 @@ public class PerfilSistemaServiceImpl implements PerfilSistemaService {
         }
     }
 
+    @Override
+    public PerfilSistema buscar(String authority) {
+        return repository.findByAuthority(authority);
+    }
+
 }

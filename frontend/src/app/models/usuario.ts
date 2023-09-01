@@ -1,3 +1,5 @@
+import {PerfilUsuario} from "./perfil-usuario";
+
 export class Usuario {
 
     username: string;
@@ -6,5 +8,6 @@ export class Usuario {
     dataCadastro: Date;
     dataUltimaModificacao: Date;
     enabled: boolean;
+    perfis: PerfilUsuario[];
 
 }

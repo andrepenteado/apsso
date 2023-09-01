@@ -15,4 +15,6 @@ public interface PerfilSistemaService {
 
     void excluir(Long id);
 
+    PerfilSistema buscar(String authority);
+
 }

@@ -24,6 +24,9 @@ public class PerfilUsuario {
     @NotNull(message = "Perfil do sistema é um campo obrigatório")
     private String authority;
 
+    @Transient
+    private PerfilSistema perfilSistema;
+
     @Embeddable
     @Data
     public static class IdPerfilUsuario implements Serializable {

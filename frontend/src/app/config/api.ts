@@ -4,4 +4,6 @@ export class Api {
 
     static readonly USUARIOS: string = '/usuarios';
 
+    static readonly AUTH: string = '/auth';
+
 }
