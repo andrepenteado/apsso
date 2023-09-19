@@ -34,13 +34,14 @@ public class PerfilSistemaServiceImpl implements PerfilSistemaService {
         String erros = ApssoBackendApplication.validateModel(validacao);
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
+
         return repository.save(perfilSistema);
     }
 
     @Override
-    public void excluir(Long id) {
+    public void excluir(String authority) {
         try {
-            repository.deleteById(id);
+            repository.deleteById(authority);
         }
         catch (EmptyResultDataAccessException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

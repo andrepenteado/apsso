@@ -1,0 +1,35 @@
+<dataset>
+
+    <users
+        username="teste01"
+        password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
+        enabled="true"
+        nome="Teste 01"
+        data_ultima_modificacao="[now]" />
+
+    <perfil_sistema
+        authority="ROLE_APsso_Teste01"
+        id_oauth2_registered_client="APsso"
+        descricao="Perfil 01" />
+
+    <authorities
+        username="teste01"
+        authority="ROLE_APsso_Teste01" />
+
+    <users
+        username="teste02"
+        password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
+        enabled="true"
+        nome="Teste 02"
+        data_ultima_modificacao="[now]" />
+
+    <perfil_sistema
+        authority="ROLE_APsso_Teste02"
+        id_oauth2_registered_client="APsso"
+        descricao="Perfil 02" />
+
+    <authorities
+        username="teste02"
+        authority="ROLE_APsso_Teste02" />
+
+</dataset>

@@ -1,14 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';
-import {Usuario} from '../../../models/usuario';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {UsuarioService} from '../../../services/usuario.service';
-import {PerfilSistema} from '../../../models/perfil-sistema';
-import {PerfilSistemaService} from '../../../services/perfil-sistema.service';
-import {finalize, lastValueFrom} from 'rxjs';
-import {PerfilUsuarioService} from '../../../services/perfil-usuario.service';
-import {PerfilUsuario} from '../../../models/perfil-usuario';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DecoracaoMensagem, ExibeMensagemComponent } from '../../core/components/exibe-mensagem.component';
+import { Usuario } from '../../../models/usuario';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { UsuarioService } from '../../../services/usuario.service';
+import { PerfilSistema } from '../../../models/perfil-sistema';
+import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro',
@@ -26,7 +24,6 @@ export class CadastroComponent implements OnInit {
   formEnviado = false;
   usuario: Usuario;
   listaPerfis: PerfilSistema[] = [];
-  listaPerfisUsuario: PerfilUsuario[] = [];
   dataCadastro: Date = new Date();
   dataUltimaModificacao: Date = new Date();
 
@@ -49,8 +46,7 @@ export class CadastroComponent implements OnInit {
   constructor(
       private activedRoute: ActivatedRoute,
       private usuarioService: UsuarioService,
-      private perfilSistemaService: PerfilSistemaService,
-      private perfilUsuarioService: PerfilUsuarioService
+      private perfilSistemaService: PerfilSistemaService
   ) { }
 
   ngOnInit(): void {
@@ -78,16 +74,12 @@ export class CadastroComponent implements OnInit {
     this.formUsuario.controls.password.setValue('');
 
     // Sync
-    const perfisUsuario$ = this.perfilUsuarioService.listarPorUsuario(this.usuario.username);
-    this.listaPerfisUsuario = await lastValueFrom(perfisUsuario$);
-
-    // Sync
     const perfisSistema$ = this.perfilSistemaService.listar();
     this.listaPerfis = await lastValueFrom(perfisSistema$);
 
     for (const perfilSistema of this.listaPerfis) {
       let ativo = false;
-      for (const perfilUsuario of this.listaPerfisUsuario) {
+      for (const perfilUsuario of this.usuario.perfis) {
         if (perfilUsuario.authority === perfilSistema.authority) {
           ativo = true;
           break;
@@ -141,20 +133,10 @@ export class CadastroComponent implements OnInit {
 
   gravarPerfis(): void {
     for (let i = 0; i < this.formPerfis.value.perfis.length; i++) {
-      const perfilUsuario = new PerfilUsuario();
-      perfilUsuario.username = this.usuario.username;
-      perfilUsuario.authority = this.listaPerfis[i].authority;
       if (this.formPerfis.value.perfis[i]) {
-        this.perfilUsuarioService.incluir(perfilUsuario).subscribe();
-      }
-      else {
-        this.perfilUsuarioService.excluir(perfilUsuario).subscribe();
+        this.usuario.perfis.unshift(this.formPerfis.value.perfis[i]);
       }
     }
-    this.exibeMensagem.show(
-        `Permissões do usuário atualizadas com sucesso`,
-        DecoracaoMensagem.SUCESSO,
-        'Gravar Permissões'
-    );
+    this.gravar();
   }
 }

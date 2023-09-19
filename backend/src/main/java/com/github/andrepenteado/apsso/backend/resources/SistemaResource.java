@@ -4,6 +4,7 @@ import com.github.andrepenteado.apsso.backend.models.PerfilSistema;
 import com.github.andrepenteado.apsso.backend.models.Sistema;
 import com.github.andrepenteado.apsso.backend.services.PerfilSistemaService;
 import com.github.andrepenteado.apsso.backend.services.SistemaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -52,7 +53,7 @@ public class SistemaResource {
     }
 
     @PostMapping
-    public Sistema incluir(@RequestBody Sistema sistema, BindingResult validacao) {
+    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao) {
         log.info("Incluir/Alterar sistema " + sistema);
         try {
             return sistemaService.incluirOuAlterar(sistema, validacao);
@@ -106,7 +107,7 @@ public class SistemaResource {
     }
 
     @PostMapping("/perfil")
-    public PerfilSistema incluirPerfil(@RequestBody PerfilSistema perfilSistema, BindingResult validacao) {
+    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao) {
         log.info("Incluir novo perfil de sistema " + perfilSistema);
         try {
             return perfilSistemaService.incluir(perfilSistema, validacao);
@@ -120,11 +121,11 @@ public class SistemaResource {
         }
     }
 
-    @DeleteMapping("/perfil/{id}")
-    public void excluirPerfil(@PathVariable Long id) {
-        log.info("Excluir perfil de sistema de ID #" + id);
+    @DeleteMapping("/perfil/{authority}")
+    public void excluirPerfil(@PathVariable String authority) {
+        log.info("Excluir perfil de sistema " + authority);
         try {
-            perfilSistemaService.excluir(id);
+            perfilSistemaService.excluir(authority);
         }
         catch (ResponseStatusException rsex) {
             throw rsex;

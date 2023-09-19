@@ -31,8 +31,8 @@ export class UsuarioService {
     }
   }
 
-  public excluir(id: number): Observable<any> {
-    return this.http.delete(`${environment.backendURL}${Api.USUARIOS}/${id}`);
+  public excluir(username: string): Observable<any> {
+    return this.http.delete(`${environment.backendURL}${Api.USUARIOS}/${username}`);
   }
 
 }

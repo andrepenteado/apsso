@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../../../services/auth.service";
-import {Usuario} from "../../../../../models/usuario";
-import {PerfilUsuario} from "../../../../../models/perfil-usuario";
+import { AuthService } from "../../../../../services/auth.service";
+import { Usuario } from "../../../../../models/usuario";
 
 @Component({
   selector: 'app-my-account',
@@ -24,13 +23,10 @@ export class MyAccountComponent implements OnInit {
 
   nomePerfil(): string {
     for (let i=0; i < this.usuario.perfis.length; i++) {
-      let perfilUsuario = this.usuario.perfis[i];
-      if (perfilUsuario.authority.startsWith('ROLE_APsso_'))
-        return perfilUsuario.perfilSistema.descricao;
+      let perfilSistema = this.usuario.perfis[i];
+      if (perfilSistema.authority.startsWith('ROLE_APsso_'))
+        return perfilSistema.descricao;
     }
   }
 
-  logout() {
-    this.authService.logout();
-  }
 }

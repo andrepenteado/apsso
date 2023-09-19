@@ -1,10 +1,7 @@
 package com.github.andrepenteado.apsso.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +20,7 @@ public class Usuario {
     @Id
     private String username;
 
+    @NotNull(message = "Senha é um campo obrigatório")
     private String password;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -36,6 +34,9 @@ public class Usuario {
 
     private Boolean enabled;
 
-    @Transient
-    private List<PerfilUsuario> perfis;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "authorities",
+               joinColumns = { @JoinColumn(name = "username") },
+               inverseJoinColumns = { @JoinColumn(name = "authority") })
+    private List<PerfilSistema> perfis;
 }

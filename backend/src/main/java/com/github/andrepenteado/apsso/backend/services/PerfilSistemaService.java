@@ -13,7 +13,7 @@ public interface PerfilSistemaService {
 
     PerfilSistema incluir(PerfilSistema perfilSistema, BindingResult validacao);
 
-    void excluir(Long id);
+    void excluir(String authority);
 
     PerfilSistema buscar(String authority);
 

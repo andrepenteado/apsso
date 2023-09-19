@@ -18,15 +18,4 @@ export class AuthService {
     return this.http.get<Usuario>(`${environment.backendURL}${Api.AUTH}/usuario`);
   }
 
-  logout() {
-    let headers = new HttpHeaders({
-      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'});
-
-    this.http.post('auth/refresh/revoke', {}, { headers: headers })
-      .subscribe({
-        next: data => {
-          window.location.href = `${environment.backendURL}`;
-        }
-      });
-  }
 }

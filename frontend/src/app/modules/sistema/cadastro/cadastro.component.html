@@ -1,4 +1,4 @@
-<app-loader [show]="this.aguardar "></app-loader>
+<app-loader [show]="this.aguardar"></app-loader>
 
 <app-breadcrumb
   [title]="'Cadastro de Sistemas'"
@@ -98,7 +98,6 @@
                     <table class="table table-sm table-bordered">
                       <thead>
                       <tr>
-                        <th class="fw-bold" scope="col">#</th>
                         <th class="fw-bold" scope="col">Nome</th>
                         <th class="fw-bold" scope="col">Descrição</th>
                         <th class="fw-bold text-center" scope="col">Excluir?</th>
@@ -106,7 +105,6 @@
                       </thead>
                       <tbody>
                       <tr *ngFor="let perfil of this.perfis">
-                        <td>{{ perfil.id }}</td>
                         <td>{{ perfil.authority }}</td>
                         <td>{{ perfil.descricao }}</td>
                         <td class="text-center">

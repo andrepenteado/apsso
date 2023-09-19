@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PerfilSistemaRepository extends JpaRepository<PerfilSistema, Long> {
+public interface PerfilSistemaRepository extends JpaRepository<PerfilSistema, String> {
 
     List<PerfilSistema> findByOrderBySistemaId();
 

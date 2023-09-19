@@ -1,4 +1,4 @@
-import {PerfilUsuario} from "./perfil-usuario";
+import { PerfilSistema } from "./perfil-sistema";
 
 export class Usuario {
 
@@ -8,6 +8,6 @@ export class Usuario {
     dataCadastro: Date;
     dataUltimaModificacao: Date;
     enabled: boolean;
-    perfis: PerfilUsuario[];
+    perfis: PerfilSistema[];
 
 }

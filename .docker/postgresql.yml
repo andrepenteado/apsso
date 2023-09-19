@@ -12,5 +12,18 @@ services:
     ports:
       - "50000:5432"
 
+  apsso-db-test:
+    image: postgres:15.2
+    container_name: apsso-db-test
+    environment:
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
+    volumes:
+      - apsso-test-pgdata:/var/lib/postgresql/data
+    ports:
+      - "54320:5432"
+
 volumes:
   apsso-pgdata:
+  apsso-test-pgdata:

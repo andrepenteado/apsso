@@ -69,12 +69,12 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Solicitado alterar usuário %s, porém enviado dados do usuário %s", username, usuarioAlterar.getUsername()));
 
         if (usuario.getPassword() != null)
-            usuario.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));
+            usuarioAlterar.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));
 
-        usuario.setDataUltimaModificacao(LocalDateTime.now());
-        usuario.setEnabled(true);
+        usuarioAlterar.setDataUltimaModificacao(LocalDateTime.now());
+        usuarioAlterar.setEnabled(true);
 
-        return usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuarioAlterar);
     }
 
     @Override

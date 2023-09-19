@@ -26,8 +26,8 @@ export class PerfilSistemaService {
     return this.http.post<PerfilSistema>(`${environment.backendURL}${Api.SISTEMAS}/perfil`, perfilSistema);
   }
 
-  public excluir(id: number): Observable<any> {
-    return this.http.delete(`${environment.backendURL}${Api.SISTEMAS}/perfil/${id}`);
+  public excluir(authority: string): Observable<any> {
+    return this.http.delete(`${environment.backendURL}${Api.SISTEMAS}/perfil/${authority}`);
   }
 
 }

@@ -1,0 +1,52 @@
+<dataset>
+
+    <oauth2_registered_client
+        id="Sistema01"
+        client_id="ID01"
+        client_id_issued_at="[now]"
+        client_name="Sistema 01"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX" />
+    <oauth2_registered_client
+        id="Sistema02"
+        client_id="ID02"
+        client_id_issued_at="[now]"
+        client_name="Sistema 02"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX" />
+    <oauth2_registered_client
+        id="Sistema03"
+        client_id="ID03"
+        client_id_issued_at="[now]"
+        client_name="Sistema 03"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX" />
+
+    <perfil_sistema
+        authority="ROLE_Sistema01_A"
+        id_oauth2_registered_client="Sistema01"
+        descricao="Perfil A" />
+    <perfil_sistema
+        authority="ROLE_Sistema01_B"
+        id_oauth2_registered_client="Sistema01"
+        descricao="Perfil B" />
+
+    <perfil_sistema
+        authority="ROLE_Sistema02_X"
+        id_oauth2_registered_client="Sistema02"
+        descricao="Perfil X" />
+    <perfil_sistema
+        authority="ROLE_Sistema01_Y"
+        id_oauth2_registered_client="Sistema02"
+        descricao="Perfil Y" />
+
+</dataset>
