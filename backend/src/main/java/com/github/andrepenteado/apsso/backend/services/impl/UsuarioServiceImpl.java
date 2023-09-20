@@ -46,6 +46,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         if (usuario.getPassword() != null)
             usuario.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));
+        else
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Senha é um campo obrigatório");
 
         usuario.setDataCadastro(LocalDateTime.now());
         usuario.setEnabled(true);
@@ -63,14 +65,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuarioAlterar = buscar(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %s não encontrado", username)));
 
+        String password = usuarioAlterar.getPassword();
+        if (usuario.getPassword() != null && !usuario.getPassword().isBlank())
+            password = "{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword());
+
+        if (password == null || password.isBlank())
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Senha é um campo obrigatório");
+
         BeanUtils.copyProperties(usuario, usuarioAlterar);
 
         if (!Objects.equals(usuarioAlterar.getUsername(), username))
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Solicitado alterar usuário %s, porém enviado dados do usuário %s", username, usuarioAlterar.getUsername()));
 
-        if (usuario.getPassword() != null)
-            usuarioAlterar.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));
-
+        usuarioAlterar.setPassword(password);
         usuarioAlterar.setDataUltimaModificacao(LocalDateTime.now());
         usuarioAlterar.setEnabled(true);
 

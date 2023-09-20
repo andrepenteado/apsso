@@ -20,7 +20,6 @@ public class Usuario {
     @Id
     private String username;
 
-    @NotNull(message = "Senha é um campo obrigatório")
     private String password;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -34,7 +33,7 @@ public class Usuario {
 
     private Boolean enabled;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(name = "authorities",
                joinColumns = { @JoinColumn(name = "username") },
                inverseJoinColumns = { @JoinColumn(name = "authority") })
