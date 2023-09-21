@@ -97,7 +97,14 @@ export class CadastroComponent implements OnInit {
   gravar(): void {
     this.formEnviado = true;
     if (this.formUsuario.valid) {
-      this.usuarioService.gravar(this.formUsuario.value, this.incluir).subscribe({
+      this.usuario = Object.assign(this.usuario, this.formUsuario.value);
+      this.usuario.perfis = [];
+      for (let i = 0; i < this.formPerfis.value.perfis.length; i++) {
+        if (this.formPerfis.value.perfis[i]) {
+          this.usuario.perfis.push(this.listaPerfis[i]);
+        }
+      }
+      this.usuarioService.gravar(this.usuario, this.incluir).subscribe({
         next: usuario => {
           this.usuario = usuario;
           this.formUsuario.reset();
@@ -129,14 +136,5 @@ export class CadastroComponent implements OnInit {
           'Dados Obrigatórios'
       );
     }
-  }
-
-  gravarPerfis(): void {
-    for (let i = 0; i < this.formPerfis.value.perfis.length; i++) {
-      if (this.formPerfis.value.perfis[i]) {
-        this.usuario.perfis.unshift(this.formPerfis.value.perfis[i]);
-      }
-    }
-    this.gravar();
   }
 }

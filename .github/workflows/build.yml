@@ -10,6 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     name: Buildar, testar e gerar imagem
 
+    services:
+      apsso-db-test:
+        image: postgres:15.2
+        env:
+          POSTGRES_DB: apsso-dbname
+          POSTGRES_USER: apsso-dbuser
+          POSTGRES_PASSWORD: apsso-dbpasswd
+        ports:
+          - 54320:5432
+
     steps:
 
       - name: Checkout do projeto
