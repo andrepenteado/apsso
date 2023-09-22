@@ -43,7 +43,7 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
 
-      - name: Compilar e testar os módulos do projeto projeto
+      - name: Compilar e testar os módulos do projeto
         run: mvn -B clean package
 
       - name: Buscar versão atual

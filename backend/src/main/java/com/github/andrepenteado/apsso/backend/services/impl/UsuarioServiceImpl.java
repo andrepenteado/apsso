@@ -66,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %s não encontrado", username)));
 
         String password = usuarioAlterar.getPassword();
-        if (usuario.getPassword() != null && !usuario.getPassword().isBlank())
+        if (usuario.getPassword() != null && !usuario.getPassword().isBlank() && !usuario.getPassword().startsWith("{bcrypt}"))
             password = "{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword());
 
         if (password == null || password.isBlank())

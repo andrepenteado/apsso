@@ -13,5 +13,3 @@ FROM tomcat:10-jdk21-openjdk
 COPY --from=build /apsso/login/target/login.war /usr/local/tomcat/webapps/ROOT.war
 RUN sed -i 's/port="8080"/port="30000"/' ${CATALINA_HOME}/conf/server.xml
 EXPOSE 30000
-
-{bcrypt}$2a$10$DrggBKNTQujqeW2xPABOEuM1GgL.6VvdiZAP/hzChWxTj6TiWyLym
