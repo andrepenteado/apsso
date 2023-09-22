@@ -12,5 +12,5 @@ RUN mvn --projects backend -U clean package --file /apsso/pom.xml -DskipTests
 FROM amazoncorretto:21
 WORKDIR /backend
 COPY --from=build /apsso/backend/target/backend.jar /backend/backend.jar
-ENTRYPOINT [ "java", "-jar", "/backend/backend.jar" ]
+ENTRYPOINT [ "java", "-jar", "-Dserver.port=30001", "/backend/backend.jar" ]
 EXPOSE 30001
