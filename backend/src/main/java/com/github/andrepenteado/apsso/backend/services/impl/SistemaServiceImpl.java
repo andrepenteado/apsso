@@ -48,8 +48,10 @@ public class SistemaServiceImpl implements SistemaService {
                 sistema.getUrlEntrada(), sistema.getUrlEntrada(), sistema.getId().toLowerCase()));
         sistemaAlterar.setUrlEntrada(sistema.getUrlEntrada());
 
-        if (sistema.getClientSecret() != null)
+        if (sistema.getClientSecret() != null && !sistema.getClientSecret().startsWith("{bcrypt}"))
             sistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(sistema.getClientSecret()));
+        else
+            sistemaAlterar.setClientSecret(sistema.getClientSecret());
 
         return sistemaRepository.save(sistemaAlterar);
     }
