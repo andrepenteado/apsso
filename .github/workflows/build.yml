@@ -36,10 +36,10 @@ jobs:
       - name: Buildar frontend do módulo administrativo
         run: npm --prefix ./frontend run build --omit=dev
 
-      - name: Usar JDK 17
+      - name: Usar JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'corretto'
           cache: 'maven'
 

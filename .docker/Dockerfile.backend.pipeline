@@ -1,3 +1,5 @@
-FROM tomcat:10-jre17
-COPY backend/target/backend.war /usr/local/tomcat/webapps/ROOT.war
-RUN sed -i 's/port="8080"/port="30001"/' ${CATALINA_HOME}/conf/server.xml
+FROM amazoncorretto:21
+WORKDIR /backend
+COPY backend/target/backend.jar /backend/backend.jar
+ENTRYPOINT [ "java", "-jar", "/backend/backend.jar" ]
+EXPOSE 30001

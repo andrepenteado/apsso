@@ -14,7 +14,7 @@ services:
       - 50000:50000
 
   apsso:
-    image: tomcat:10-jre17
+    image: tomcat:10-jdk21-openjdk
     container_name: apsso
     environment:
       - "JPDA_ADDRESS=*:8001"

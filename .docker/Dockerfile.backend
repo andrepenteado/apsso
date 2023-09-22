@@ -1,6 +1,6 @@
 # Stage 1
 # Build
-FROM maven:3-openjdk-17 AS build
+FROM maven:3-amazoncorretto-21-debian AS build
 WORKDIR /apsso/
 COPY pom.xml /apsso/
 COPY /login/pom.xml /apsso/login/
@@ -9,6 +9,8 @@ RUN mvn --projects backend -U clean package --file /apsso/pom.xml -DskipTests
 
 # Stage 2
 # Deploy
-FROM tomcat:10-jre17
-COPY --from=build /apsso/backend/target/backend.war /usr/local/tomcat/webapps/ROOT.war
-RUN sed -i 's/port="8080"/port="30001"/' ${CATALINA_HOME}/conf/server.xml
+FROM amazoncorretto:21
+WORKDIR /backend
+COPY --from=build /apsso/backend/target/backend.jar /backend/backend.jar
+ENTRYPOINT [ "java", "-jar", "/backend/backend.jar" ]
+EXPOSE 30001
