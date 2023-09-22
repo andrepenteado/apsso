@@ -3,20 +3,30 @@ services:
   apsso:
     image: ghcr.io/andrepenteado/apsso/apsso
     container_name: apsso
-    environment:
-      - CATALINA_OPTS=-Dserver.port=30000
+    hostname: appsso
     ports:
       - 30000:30000
+
+  apsso-backend:
+    image: ghcr.io/andrepenteado/apsso/apsso-backend
+    container_name: apsso-backend
+    hostname: apsso-backend
+    ports:
+      - 30001:30001
 
   apsso-db:
     image: postgres:15.2
     container_name: apsso-db
+    hostname: apsso-db
     environment:
       POSTGRES_USER: apsso-dbuser
       POSTGRES_PASSWORD: apsso-dbpasswd
       POSTGRES_DB: apsso-dbname
     volumes:
-      - ./postgresql-apsso/:/var/lib/postgresql/data/
+      - apsso-pgdata:/var/lib/postgresql/data/
     command: -p 50000
     ports:
       - 50000:50000
+
+volumes:
+  apsso-pgdata:

@@ -13,9 +13,9 @@ services:
     ports:
       - 50000:50000
 
-  apsso:
+  apsso-login:
     image: tomcat:10-jdk21-openjdk
-    container_name: apsso
+    container_name: apsso-login
     environment:
       - "JPDA_ADDRESS=*:8001"
       - "JPDA_TRANSPORT=dt_socket"

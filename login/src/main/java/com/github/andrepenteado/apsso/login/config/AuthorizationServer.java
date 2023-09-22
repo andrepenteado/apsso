@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
 
 import java.security.KeyStore;
 
@@ -39,7 +40,10 @@ public class AuthorizationServer {
             .oidc(Customizer.withDefaults());
 
         http
-            .cors((cors) -> cors.disable())
+            .cors(httpSecurityCorsConfigurer ->
+                httpSecurityCorsConfigurer.configurationSource(request ->
+                    new CorsConfiguration().applyPermitDefaultValues()
+                ))
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
                     new LoginUrlAuthenticationEntryPoint("/login"))

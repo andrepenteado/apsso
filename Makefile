@@ -23,9 +23,7 @@ build-backend:
 	docker logout ghcr.io
 
 build-backend-pipeline:
-	cd frontend
-	ng build --aot --build-optimizer --optimization --delete-output-path
-	cd ..
+	npm --prefix ./frontend run build --omit=dev
 	mvn -U clean package --projects backend -DskipTests
 	docker build -f .docker/Dockerfile.backend.pipeline -t ghcr.io/andrepenteado/apsso/apsso-backend -t ghcr.io/andrepenteado/apsso/apsso-backend:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin

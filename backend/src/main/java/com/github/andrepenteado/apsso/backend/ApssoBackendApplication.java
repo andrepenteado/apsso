@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.cors.CorsConfiguration;
 
 @SpringBootApplication
 public class ApssoBackendApplication {
@@ -37,7 +38,11 @@ public class ApssoBackendApplication {
                 authorize.anyRequest().authenticated()
             )
             .oauth2Login(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable);
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(httpSecurityCorsConfigurer ->
+                httpSecurityCorsConfigurer.configurationSource(request ->
+                    new CorsConfiguration().applyPermitDefaultValues()
+                ));
 
         return http.build();
     }
