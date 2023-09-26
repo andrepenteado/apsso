@@ -59,7 +59,10 @@ public class AuthorizationServer {
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().permitAll()
             )
-            .cors((cors) -> cors.disable())
+            .cors(httpSecurityCorsConfigurer ->
+                httpSecurityCorsConfigurer.configurationSource(request ->
+                    new CorsConfiguration().applyPermitDefaultValues()
+                ))
             .formLogin(form -> {
                 form
                     .loginPage("/login")
