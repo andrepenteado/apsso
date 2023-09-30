@@ -1,4 +1,4 @@
-package com.github.andrepenteado.apsso.backend.models;
+package com.github.andrepenteado.apsso.services.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

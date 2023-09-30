@@ -41,6 +41,7 @@
     </properties>
 
     <modules>
+        <module>services</module>
         <module>login</module>
         <module>backend</module>
     </modules>
@@ -49,6 +50,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -2,8 +2,10 @@ package com.github.andrepenteado.apsso.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -11,24 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.cors.CorsConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.github.andrepenteado.apsso")
+@EntityScan(basePackages = "com.github.andrepenteado.apsso")
+@EnableJpaRepositories(basePackages = "com.github.andrepenteado.apsso")
 public class ApssoBackendApplication {
     
     public static void main(String[] args) {
 		SpringApplication.run(ApssoBackendApplication.class, args);
 	}
-
-    public static String validateModel(BindingResult validacao) {
-        String result = null;
-        if (validacao.hasErrors()) {
-            final StringBuilder errosFinal = new StringBuilder();
-            validacao.getFieldErrors().forEach(msg -> {
-                errosFinal.append(msg.getDefaultMessage());
-            });
-            result = errosFinal.toString();
-        }
-        return result;
-    }
 
     @Bean
     @Profile("!test")

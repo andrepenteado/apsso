@@ -1,4 +1,4 @@
-package com.github.andrepenteado.apsso.backend.models;
+package com.github.andrepenteado.apsso.services.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

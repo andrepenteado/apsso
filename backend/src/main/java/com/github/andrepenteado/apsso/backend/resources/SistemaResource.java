@@ -1,9 +1,9 @@
 package com.github.andrepenteado.apsso.backend.resources;
 
-import com.github.andrepenteado.apsso.backend.models.PerfilSistema;
-import com.github.andrepenteado.apsso.backend.models.Sistema;
-import com.github.andrepenteado.apsso.backend.services.PerfilSistemaService;
-import com.github.andrepenteado.apsso.backend.services.SistemaService;
+import com.github.andrepenteado.apsso.services.PerfilSistemaService;
+import com.github.andrepenteado.apsso.services.SistemaService;
+import com.github.andrepenteado.apsso.services.models.PerfilSistema;
+import com.github.andrepenteado.apsso.services.models.Sistema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

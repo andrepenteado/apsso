@@ -1,6 +1,6 @@
-package com.github.andrepenteado.apsso.backend.repositories;
+package com.github.andrepenteado.apsso.services.repositories;
 
-import com.github.andrepenteado.apsso.backend.models.PerfilSistema;
+import com.github.andrepenteado.apsso.services.models.PerfilSistema;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

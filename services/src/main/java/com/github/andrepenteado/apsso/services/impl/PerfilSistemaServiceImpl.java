@@ -1,9 +1,9 @@
-package com.github.andrepenteado.apsso.backend.services.impl;
+package com.github.andrepenteado.apsso.services.impl;
 
-import com.github.andrepenteado.apsso.backend.ApssoBackendApplication;
-import com.github.andrepenteado.apsso.backend.models.PerfilSistema;
-import com.github.andrepenteado.apsso.backend.repositories.PerfilSistemaRepository;
-import com.github.andrepenteado.apsso.backend.services.PerfilSistemaService;
+import com.github.andrepenteado.apsso.services.repositories.PerfilSistemaRepository;
+import com.github.andrepenteado.apsso.services.Util;
+import com.github.andrepenteado.apsso.services.models.PerfilSistema;
+import com.github.andrepenteado.apsso.services.PerfilSistemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class PerfilSistemaServiceImpl implements PerfilSistemaService {
 
     @Override
     public PerfilSistema incluir(PerfilSistema perfilSistema, BindingResult validacao) {
-        String erros = ApssoBackendApplication.validateModel(validacao);
+        String erros = Util.validateModel(validacao);
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 

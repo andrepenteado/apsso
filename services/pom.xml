@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.andrepenteado.sso</groupId>
+    <artifactId>services</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Biblioteca de Serviços</name>
+    <description>Biblioteca compartilhada de serviços dos módulos</description>
+
+    <organization>
+        <name>APcode</name>
+        <url>http://www.apcode.com.br</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>André Penteado</name>
+            <email>andre.penteado@apcode.com.br</email>
+            <organization>APcode</organization>
+        </developer>
+    </developers>
+
+    <parent>
+        <groupId>com.github.andrepenteado</groupId>
+        <artifactId>apsso</artifactId>
+        <version>2.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

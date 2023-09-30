@@ -28,6 +28,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.andrepenteado.sso</groupId>
+            <artifactId>services</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- Testes -->
         <dependency>
