@@ -11,6 +11,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
@@ -23,15 +26,18 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.KeyStore;
+import java.util.Arrays;
 
 @Configuration
 public class AuthorizationServer {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration
             .applyDefaultSecurity(http);
 
@@ -40,13 +46,12 @@ public class AuthorizationServer {
             .oidc(Customizer.withDefaults());
 
         http
-            .cors(httpSecurityCorsConfigurer ->
-                httpSecurityCorsConfigurer.configurationSource(request ->
-                    new CorsConfiguration().applyPermitDefaultValues()
-                ))
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
                     new LoginUrlAuthenticationEntryPoint("/login"))
+            )
+            .oauth2ResourceServer(
+                oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults())
             );
 
         return http.build();
@@ -54,15 +59,13 @@ public class AuthorizationServer {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
+            .cors(CorsConfigurer::disable)
+            .csrf(CsrfConfigurer::disable)
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().permitAll()
             )
-            .cors(httpSecurityCorsConfigurer ->
-                httpSecurityCorsConfigurer.configurationSource(request ->
-                    new CorsConfiguration().applyPermitDefaultValues()
-                ))
             .formLogin(form -> {
                 form
                     .loginPage("/login")
@@ -72,11 +75,11 @@ public class AuthorizationServer {
     }
 
     @Bean
-    public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+    RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         return new JdbcRegisteredClientRepository(jdbcTemplate);
         /*RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
 
-        // Sistema APcontrole
+        // Sistema APsso
         RegisteredClient apSSO = RegisteredClient
             .withId("1")
             .clientId("com.github.andrepenteado.apsso")
@@ -87,6 +90,7 @@ public class AuthorizationServer {
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .redirectUri("http://apsso-backend:30001/login/oauth2/code/apsso-oidc")
             .redirectUri("http://apsso-backend:30001/authorized")
+            .postLogoutRedirectUri("http://apsso-backend:30001/logout")
             //.redirectUri("https://oidcdebugger.com/debug")
             .scope(OidcScopes.OPENID)
             //.scope("static")
@@ -112,6 +116,7 @@ public class AuthorizationServer {
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .redirectUri("http://aproove:30002/login/oauth2/code/aproove-oidc")
             .redirectUri("http://aproove:30002/authorized")
+            .postLogoutRedirectUri("http://aproove:30002/logout")
             //.redirectUri("https://oidcdebugger.com/debug")
             .scope(OidcScopes.OPENID)
             //.scope("static")
@@ -130,17 +135,22 @@ public class AuthorizationServer {
     }
 
     @Bean
-    public OAuth2AuthorizationService oAuth2AuthorizationService(JdbcTemplate jdbcTemplate) {
+    JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+    }
+
+    @Bean
+    OAuth2AuthorizationService oAuth2AuthorizationService(JdbcTemplate jdbcTemplate) {
         return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository(jdbcTemplate));
     }
 
     @Bean
-    public OAuth2AuthorizationConsentService oAuth2AuthorizationConsentService(JdbcTemplate jdbcTemplate) {
+    OAuth2AuthorizationConsentService oAuth2AuthorizationConsentService(JdbcTemplate jdbcTemplate) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository(jdbcTemplate));
     }
 
     @Bean
-    public JWKSource<SecurityContext> jwkSource(GlobalProperties properties) throws Exception {
+    JWKSource<SecurityContext> jwkSource(GlobalProperties properties) throws Exception {
         final var jksProp = properties.getJks();
         final var jksFile = new ClassPathResource(jksProp.getPath()).getInputStream();
         final var keyStore = KeyStore.getInstance("JKS");
@@ -152,8 +162,20 @@ public class AuthorizationServer {
     }
 
     @Bean
-    public AuthorizationServerSettings authorizationServerSettings(GlobalProperties properties) {
+    AuthorizationServerSettings authorizationServerSettings(GlobalProperties properties) {
         return AuthorizationServerSettings.builder().issuer(properties.getUri()).build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+        //
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        return urlBasedCorsConfigurationSource;
     }
 
 }

@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @SpringBootApplication(scanBasePackages = "com.github.andrepenteado.apsso")
 @EntityScan(basePackages = "com.github.andrepenteado.apsso")
@@ -24,19 +26,26 @@ public class ApssoBackendApplication {
 
     @Bean
     @Profile("!test")
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http
             .authorizeHttpRequests((authorize) ->
-                authorize.anyRequest().authenticated()
+                authorize
+                    .requestMatchers("/", "/home", "/index", "/logout").permitAll()
+                    .anyRequest().authenticated()
             )
             .oauth2Login(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(httpSecurityCorsConfigurer ->
-                httpSecurityCorsConfigurer.configurationSource(request ->
-                    new CorsConfiguration().applyPermitDefaultValues()
-                ));
+            .oauth2Client(Customizer.withDefaults())
+            .logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository)))
+            .csrf(CsrfConfigurer::disable)
+            .cors(CorsConfigurer::disable);
 
         return http.build();
+    }
+
+    private LogoutSuccessHandler oidcLogoutSuccessHandler(ClientRegistrationRepository clientRegistrationRepository) {
+        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/logout");
+        return oidcLogoutSuccessHandler;
     }
 
 }
