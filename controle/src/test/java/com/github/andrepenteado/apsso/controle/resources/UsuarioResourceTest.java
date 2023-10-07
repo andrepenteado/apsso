@@ -1,4 +1,4 @@
-package com.github.andrepenteado.apsso.backend.resources;
+package com.github.andrepenteado.apsso.controle.resources;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Testes do resource {@link com.github.andrepenteado.apsso.backend.resources.UsuarioResource}
+ * Testes do resource {@link com.github.andrepenteado.apsso.controle.resources.UsuarioResource}
  */
 @SpringBootTest
 @AutoConfigureMockMvc

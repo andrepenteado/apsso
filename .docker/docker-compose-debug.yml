@@ -30,7 +30,7 @@ services:
       - "jpda"
       - "run"
     volumes:
-      - ../../../target/apsso.war:/usr/local/tomcat/webapps/ROOT.war
+      - ../../../target/apsso.war:/usr/local/tomcat/webapps/sso.war
 
 volumes:
   apsso-pgdata:

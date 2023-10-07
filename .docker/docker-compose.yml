@@ -8,9 +8,9 @@ services:
       - 30000:30000
 
   apsso-backend:
-    image: ghcr.io/andrepenteado/apsso/apsso-backend
-    container_name: apsso-backend
-    hostname: apsso-backend
+    image: ghcr.io/andrepenteado/apsso/apsso-controle
+    container_name: apsso-controle
+    hostname: apsso-controle
     ports:
       - 30001:30001
 

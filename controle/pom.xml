@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.andrepenteado.sso</groupId>
-    <artifactId>backend</artifactId>
+    <artifactId>controle</artifactId>
     <packaging>jar</packaging>
 
     <name>Backend do Módulo Administrativo</name>

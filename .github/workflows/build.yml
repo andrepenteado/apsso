@@ -34,7 +34,7 @@ jobs:
         run: npm --prefix ./frontend install
 
       - name: Buildar frontend do módulo administrativo
-        run: npm --prefix ./frontend run build --omit=dev
+        run: npm --prefix ./frontend run build --omit=dev --base-href=/controle/
 
       - name: Usar JDK 21
         uses: actions/setup-java@v3
@@ -64,10 +64,10 @@ jobs:
           docker push ghcr.io/andrepenteado/apsso/apsso:latest
           docker push ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }}
 
-      - name: Build da imagem docker do backend do módulo administrativo
-        run: docker build -f .docker/Dockerfile.backend.pipeline -t ghcr.io/andrepenteado/apsso/apsso-backend:latest -t ghcr.io/andrepenteado/apsso/apsso-backend:${{ env.VERSAO }} .
+      - name: Build da imagem docker do controle do módulo administrativo
+        run: docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/apsso-controle:latest -t ghcr.io/andrepenteado/apsso/apsso-controle:${{ env.VERSAO }} .
 
-      - name: Push da imagem docker do backend do módulo administrativo
+      - name: Push da imagem docker do controle do módulo administrativo
         run: |
           docker push ghcr.io/andrepenteado/apsso/apsso-backend:latest
           docker push ghcr.io/andrepenteado/apsso/apsso-backend:${{ env.VERSAO }}

@@ -27,7 +27,7 @@ export class AuthService {
 
   public logout(): void {
     localStorage.clear();
-    window.location.href = '/logout';
+    window.location.href = '/controle/logout';
   }
 
 }

@@ -43,7 +43,7 @@
     <modules>
         <module>services</module>
         <module>login</module>
-        <module>backend</module>
+        <module>controle</module>
     </modules>
 
     <dependencies>

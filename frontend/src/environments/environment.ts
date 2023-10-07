@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendURL: 'http://apsso-backend:30001'
+  backendURL: 'http://localhost:30001/controle'
 };
 /*
  * For easier debugging in development mode, you can import the following file

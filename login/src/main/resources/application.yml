@@ -6,7 +6,7 @@ spring:
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver
     hikari:
-      pool-name: apsso-pool
+      pool-name: sso-pool
 
   jpa:
     show-sql: true
@@ -28,13 +28,16 @@ spring:
     exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
 server:
+  port: 30000
   error:
     whitelabel:
       enabled: false
-      
+  servlet:
+    context-path: /sso
+
 # keytool.exe -genkeypair -alias apsso -keyalg RSA -keypass passwebra -keystore apsso.jks -storepass passwebra
 apsso:
-  uri: "http://apsso:30000"
+  uri: "http://localhost:30000/sso"
   jks:
     keypass: passwebra
     storepass: passwebra

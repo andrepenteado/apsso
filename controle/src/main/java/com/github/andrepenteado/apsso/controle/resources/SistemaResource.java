@@ -1,4 +1,4 @@
-package com.github.andrepenteado.apsso.backend.resources;
+package com.github.andrepenteado.apsso.controle.resources;
 
 import com.github.andrepenteado.apsso.services.PerfilSistemaService;
 import com.github.andrepenteado.apsso.services.SistemaService;

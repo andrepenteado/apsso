@@ -30,9 +30,9 @@ nbactions.xml
 .directory
 
 /login/target/
-/backend/target/
-/backend/src/main/resources/static/
-/backend/backend.iml
+/controle/target/
+/controle/src/main/resources/static/
+/controle/controle.iml
 /frontend/node_modules/
 /frontend/.angular/
 /frontend/frontend.iml

@@ -1,4 +1,4 @@
-package com.github.andrepenteado.apsso.backend;
+package com.github.andrepenteado.apsso.controle;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendURL: 'http://apsso-backend:30001'
+  backendURL: 'http://localhost:30001/controle'
 };
