@@ -20,14 +20,14 @@ export class AuthService {
       const usuario$ = this.http.get<Usuario>(`${environment.backendURL}${Api.AUTH}/usuario`);
       usuario = await lastValueFrom(usuario$);
       localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-      console.log("Incluindo na sessão");
-      console.log(JSON.stringify(usuario));
       return usuario;
-    } else {
-      console.log("Buscando da sessão");
-      console.log(usuario);
     }
     return usuario;
+  }
+
+  public logout(): void {
+    localStorage.clear();
+    window.location.href = '/logout';
   }
 
 }

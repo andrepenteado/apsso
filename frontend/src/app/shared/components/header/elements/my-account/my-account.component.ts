@@ -28,8 +28,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.clear();
-    window.location.href = '/logout';
+    this.authService.logout();
   }
 
 }
