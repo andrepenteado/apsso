@@ -15,10 +15,8 @@ export class MyAccountComponent implements OnInit {
       private authService: AuthService
   ) { }
 
-  ngOnInit() {
-    this.authService.usuarioLogado().subscribe({
-      next: usuario => this.usuario = usuario
-    });
+  async ngOnInit() {
+    this.usuario = await this.authService.usuarioLogado();
   }
 
   nomePerfil(): string {
@@ -27,6 +25,11 @@ export class MyAccountComponent implements OnInit {
       if (perfilSistema.authority.startsWith('ROLE_APsso_'))
         return perfilSistema.descricao;
     }
+  }
+
+  logout(): void {
+    localStorage.clear();
+    window.location.href = '/logout';
   }
 
 }
