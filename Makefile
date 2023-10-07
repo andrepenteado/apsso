@@ -1,34 +1,34 @@
 VERSAO_APP := $(shell mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
 
 build-login:
-	docker build -f .docker/Dockerfile -t ghcr.io/andrepenteado/apsso/apsso -t ghcr.io/andrepenteado/apsso/apsso:$(VERSAO_APP) .
+	docker build -f .docker/Dockerfile -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	docker push ghcr.io/andrepenteado/apsso/apsso
-	docker push ghcr.io/andrepenteado/apsso/apsso:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/login
+	docker push ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP)
 	docker logout ghcr.io
 
 build-login-pipeline:
 	mvn -U clean package --projects login
-	docker build -f .docker/Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/apsso -t ghcr.io/andrepenteado/apsso/apsso:$(VERSAO_APP) .
+	docker build -f .docker/Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	docker push ghcr.io/andrepenteado/apsso/apsso
-	docker push ghcr.io/andrepenteado/apsso/apsso:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/login
+	docker push ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP)
 	docker logout ghcr.io
 
-build-backend:
-	docker build -f .docker/Dockerfile.backend -t ghcr.io/andrepenteado/apsso/apsso-backend -t ghcr.io/andrepenteado/apsso/apsso-backend:$(VERSAO_APP) .
+build-controle:
+	docker build -f .docker/Dockerfile.controle -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	docker push ghcr.io/andrepenteado/apsso/apsso-backend
-	docker push ghcr.io/andrepenteado/apsso/apsso-backend:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/controle
+	docker push ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP)
 	docker logout ghcr.io
 
-build-backend-pipeline:
+build-controle-pipeline:
 	npm --prefix ./frontend run build --omit=dev
-	mvn -U clean package --projects backend -DskipTests
-	docker build -f .docker/Dockerfile.backend.pipeline -t ghcr.io/andrepenteado/apsso/apsso-backend -t ghcr.io/andrepenteado/apsso/apsso-backend:$(VERSAO_APP) .
+	mvn -U clean package --projects controle -DskipTests
+	docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	docker push ghcr.io/andrepenteado/apsso/apsso-backend
-	docker push ghcr.io/andrepenteado/apsso/apsso-backend:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/controle
+	docker push ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP)
 	docker logout ghcr.io
 
 start:
@@ -44,8 +44,8 @@ update:
 	$(MAKE) stop
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
 	docker image pull postgres:15.2
-	docker image pull ghcr.io/andrepenteado/apsso/apsso
-	docker image pull ghcr.io/andrepenteado/apsso/apsso-backend
+	docker image pull ghcr.io/andrepenteado/apsso/login
+	docker image pull ghcr.io/andrepenteado/apsso/controle
 	docker logout ghcr.io
 	$(MAKE) start
 

@@ -3,7 +3,7 @@
 FROM maven:3-amazoncorretto-21-debian AS build
 WORKDIR /apsso/
 COPY pom.xml /apsso/
-COPY /backend/pom.xml /apsso/backend/
+COPY /controle/pom.xml /apsso/controle/
 COPY /login/ /apsso/login/
 RUN mvn --projects login -U clean package --file /apsso/pom.xml -DskipTests
 

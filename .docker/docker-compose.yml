@@ -1,20 +1,20 @@
 services:
 
-  apsso:
-    image: ghcr.io/andrepenteado/apsso/apsso
+  login:
+    image: ghcr.io/andrepenteado/apsso/login
     container_name: apsso
     hostname: appsso
     ports:
       - 30000:30000
 
-  apsso-backend:
-    image: ghcr.io/andrepenteado/apsso/apsso-controle
+  controle:
+    image: ghcr.io/andrepenteado/apsso/controle
     container_name: apsso-controle
     hostname: apsso-controle
     ports:
       - 30001:30001
 
-  apsso-db:
+  postgresql:
     image: postgres:15.2
     container_name: apsso-db
     hostname: apsso-db

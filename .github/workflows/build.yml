@@ -30,10 +30,10 @@ jobs:
         with:
           node-version: 16
 
-      - name: Instalar pacotes do frontend do módulo administrativo
+      - name: Instalar pacotes do frontend do módulo de controle
         run: npm --prefix ./frontend install
 
-      - name: Buildar frontend do módulo administrativo
+      - name: Buildar frontend do módulo de controle
         run: npm --prefix ./frontend run build --omit=dev --base-href=/controle/
 
       - name: Usar JDK 21
@@ -64,10 +64,10 @@ jobs:
           docker push ghcr.io/andrepenteado/apsso/apsso:latest
           docker push ghcr.io/andrepenteado/apsso/apsso:${{ env.VERSAO }}
 
-      - name: Build da imagem docker do controle do módulo administrativo
+      - name: Build da imagem docker do controle do módulo de controle
         run: docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/apsso-controle:latest -t ghcr.io/andrepenteado/apsso/apsso-controle:${{ env.VERSAO }} .
 
-      - name: Push da imagem docker do controle do módulo administrativo
+      - name: Push da imagem docker do controle do módulo de controle
         run: |
           docker push ghcr.io/andrepenteado/apsso/apsso-backend:latest
           docker push ghcr.io/andrepenteado/apsso/apsso-backend:${{ env.VERSAO }}

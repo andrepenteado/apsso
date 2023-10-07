@@ -1,5 +1,5 @@
 FROM amazoncorretto:21
-WORKDIR /backend
-COPY backend/target/backend.jar /backend/backend.jar
-ENTRYPOINT [ "java", "-jar", "-Dserver.port=30001", "/backend/backend.jar" ]
+WORKDIR /controle
+COPY controle/target/controle.jar /controle/controle.jar
+ENTRYPOINT [ "java", "-jar", "-Dserver.port=30001", "/controle/controle.jar" ]
 EXPOSE 30001

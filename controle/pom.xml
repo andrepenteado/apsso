@@ -10,7 +10,7 @@
     <artifactId>controle</artifactId>
     <packaging>jar</packaging>
 
-    <name>Backend do Módulo Administrativo</name>
+    <name>Backend do Módulo de Controle</name>
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
@@ -61,7 +61,7 @@
     </dependencies>
 
     <build>
-        <finalName>backend</finalName>
+        <finalName>controle</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
