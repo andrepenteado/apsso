@@ -43,6 +43,8 @@ public class Sistema {
 
     private String redirectUris;
 
+    private String postLogoutRedirectUris;
+
     private String clientAuthenticationMethods;
 
     private String authorizationGrantTypes;

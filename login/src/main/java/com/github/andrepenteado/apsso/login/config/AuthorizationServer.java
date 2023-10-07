@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -61,8 +62,6 @@ public class AuthorizationServer {
     @Order(2)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(CorsConfigurer::disable)
-            .csrf(CsrfConfigurer::disable)
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().permitAll()
             )
@@ -71,67 +70,13 @@ public class AuthorizationServer {
                     .loginPage("/login")
                     .permitAll();
             });
+
         return http.build();
     }
 
     @Bean
     RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         return new JdbcRegisteredClientRepository(jdbcTemplate);
-        /*RegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-
-        // Sistema APsso
-        RegisteredClient apSSO = RegisteredClient
-            .withId("1")
-            .clientId("com.github.andrepenteado.apsso")
-            .clientSecret("{noop}apsso-secret")
-            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .redirectUri("http://apsso-backend:30001/login/oauth2/code/apsso-oidc")
-            .redirectUri("http://apsso-backend:30001/authorized")
-            .postLogoutRedirectUri("http://apsso-backend:30001/logout")
-            //.redirectUri("https://oidcdebugger.com/debug")
-            .scope(OidcScopes.OPENID)
-            //.scope("static")
-            .tokenSettings(TokenSettings.builder()
-                .accessTokenTimeToLive(Duration.ofMinutes(15))
-                .refreshTokenTimeToLive(Duration.ofDays(1))
-                .reuseRefreshTokens(false)
-                .build())
-            .clientSettings(ClientSettings.builder()
-                .requireAuthorizationConsent(false)
-                .build())
-            .build();
-        registeredClientRepository.save(apSSO);
-
-        // Sistema AProove
-        RegisteredClient apRoove = RegisteredClient
-            .withId("2")
-            .clientId("com.github.andrepenteado.aproove")
-            .clientSecret("{noop}aproove-secret")
-            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .redirectUri("http://aproove:30002/login/oauth2/code/aproove-oidc")
-            .redirectUri("http://aproove:30002/authorized")
-            .postLogoutRedirectUri("http://aproove:30002/logout")
-            //.redirectUri("https://oidcdebugger.com/debug")
-            .scope(OidcScopes.OPENID)
-            //.scope("static")
-            .tokenSettings(TokenSettings.builder()
-                .accessTokenTimeToLive(Duration.ofMinutes(15))
-                .refreshTokenTimeToLive(Duration.ofDays(1))
-                .reuseRefreshTokens(false)
-                .build())
-            .clientSettings(ClientSettings.builder()
-                .requireAuthorizationConsent(false)
-                .build())
-            .build();
-        registeredClientRepository.save(apRoove);
-
-        return registeredClientRepository;*/
     }
 
     @Bean
@@ -164,18 +109,6 @@ public class AuthorizationServer {
     @Bean
     AuthorizationServerSettings authorizationServerSettings(GlobalProperties properties) {
         return AuthorizationServerSettings.builder().issuer(properties.getUri()).build();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
-        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-        //
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-        return urlBasedCorsConfigurationSource;
     }
 
 }

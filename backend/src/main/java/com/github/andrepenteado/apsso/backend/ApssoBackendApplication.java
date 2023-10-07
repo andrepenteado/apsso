@@ -29,9 +29,7 @@ public class ApssoBackendApplication {
     SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http
             .authorizeHttpRequests((authorize) ->
-                authorize
-                    .requestMatchers("/", "/home", "/index", "/logout").permitAll()
-                    .anyRequest().authenticated()
+                authorize.anyRequest().authenticated()
             )
             .oauth2Login(Customizer.withDefaults())
             .oauth2Client(Customizer.withDefaults())

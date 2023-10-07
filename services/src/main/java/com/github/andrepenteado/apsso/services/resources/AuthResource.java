@@ -1,4 +1,4 @@
-package com.github.andrepenteado.apsso.backend.resources;
+package com.github.andrepenteado.apsso.services.resources;
 
 import com.github.andrepenteado.apsso.services.UsuarioService;
 import com.github.andrepenteado.apsso.services.models.Usuario;
@@ -18,11 +18,10 @@ public class AuthResource {
     private final UsuarioService usuarioService;
 
     @GetMapping("/usuario")
-    public Usuario usuario(Authentication authentication/*, @AuthenticationPrincipal Jwt jwt, @AuthenticationPrincipal OidcUser user*/) {
+    public Usuario usuario(Authentication authentication) {
         String username = authentication.getName();
         log.info("Buscar usuário logado " + username);
-        Usuario usuario = usuarioService.buscar(username).get();
-        return usuario;
+        return usuarioService.buscar(username).get();
     }
 
 }
