@@ -10,7 +10,7 @@
     <artifactId>controle</artifactId>
     <packaging>jar</packaging>
 
-    <name>Backend do Módulo de Controle</name>
+    <name>Módulo de Controle</name>
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
