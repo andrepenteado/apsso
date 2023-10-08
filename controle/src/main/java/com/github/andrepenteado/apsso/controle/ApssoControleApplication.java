@@ -18,10 +18,10 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @SpringBootApplication(scanBasePackages = "com.github.andrepenteado.apsso")
 @EntityScan(basePackages = "com.github.andrepenteado.apsso")
 @EnableJpaRepositories(basePackages = "com.github.andrepenteado.apsso")
-public class ApssoBackendApplication {
+public class ApssoControleApplication {
     
     public static void main(String[] args) {
-		SpringApplication.run(ApssoBackendApplication.class, args);
+		SpringApplication.run(ApssoControleApplication.class, args);
 	}
 
     @Bean

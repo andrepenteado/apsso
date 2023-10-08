@@ -2,22 +2,26 @@ services:
 
   login:
     image: ghcr.io/andrepenteado/apsso/login
-    container_name: apsso
-    hostname: appsso
+    container_name: login
+    hostname: login
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
     ports:
       - 30000:30000
 
   controle:
     image: ghcr.io/andrepenteado/apsso/controle
-    container_name: apsso-controle
-    hostname: apsso-controle
+    container_name: controle
+    hostname: controle
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
     ports:
       - 30001:30001
 
   postgresql:
     image: postgres:15.2
-    container_name: apsso-db
-    hostname: apsso-db
+    container_name: postgresql
+    hostname: postgresql
     environment:
       POSTGRES_USER: apsso-dbuser
       POSTGRES_PASSWORD: apsso-dbpasswd

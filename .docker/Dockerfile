@@ -4,8 +4,9 @@ FROM maven:3-amazoncorretto-21-debian AS build
 WORKDIR /apsso/
 COPY pom.xml /apsso/
 COPY /controle/pom.xml /apsso/controle/
+COPY /services/ /apsso/services/
 COPY /login/ /apsso/login/
-RUN mvn --projects login -U clean package --file /apsso/pom.xml -DskipTests
+RUN mvn --projects services,login -U clean package --file /apsso/pom.xml -DskipTests
 
 # Stage 2
 # Deploy

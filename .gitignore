@@ -33,7 +33,7 @@ nbactions.xml
 /controle/target/
 /controle/src/main/resources/static/
 /controle/controle.iml
-/frontend/node_modules/
-/frontend/.angular/
-/frontend/frontend.iml
+/controle/src/main/angular/node_modules/
+/controle/src/main/angular/.angular/
+/controle/src/main/angular/frontend.iml
 /services/target/

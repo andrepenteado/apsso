@@ -23,7 +23,7 @@ build-controle:
 	docker logout ghcr.io
 
 build-controle-pipeline:
-	npm --prefix ./frontend run build --omit=dev
+	npm --prefix ./controle/src/main/angular run build --omit=dev --base-href=/controle
 	mvn -U clean package --projects controle -DskipTests
 	docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
@@ -51,4 +51,4 @@ update:
 
 start-backend-dev:
 	docker compose -f .docker/postgresql.yml up -d
-	mvn -f backend/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev
+	mvn -f controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev

@@ -1,16 +1,22 @@
-# Stage 1
-# Build
+# Stage 1 - Angular
+FROM node:16 AS angular
+WORKDIR /frontend
+COPY /controle/src/main/angular/ /frontend/controle/src/main/angular/
+RUN npm --prefix ./controle/src/main/angular run build --omit=dev --base-href=/controle
+
+# Stage 2 - Build
 FROM maven:3-amazoncorretto-21-debian AS build
 WORKDIR /apsso/
 COPY pom.xml /apsso/
 COPY /login/pom.xml /apsso/login/
+COPY /services/ /apsso/services/
 COPY /controle/ /apsso/controle/
-RUN mvn --projects backend -U clean package --file /apsso/pom.xml -DskipTests
+COPY --from=angular /frontend/controle/src/main/resources/static/ /apsso/controle/src/main/resources/static/
+RUN mvn --projects services,controle -U clean package --file /apsso/pom.xml -DskipTests
 
-# Stage 2
-# Deploy
+# Stage 3 - Deploy
 FROM amazoncorretto:21
-WORKDIR /backend
-COPY --from=build /apsso/controle/target/backend.jar /controle/controle.jar
+WORKDIR /controle
+COPY --from=build /apsso/controle/target/controle.jar /controle/controle.jar
 ENTRYPOINT [ "java", "-jar", "-Dserver.port=30001", "/controle/controle.jar" ]
 EXPOSE 30001
