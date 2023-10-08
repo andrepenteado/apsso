@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik
+    hostname: traefik
+    command:
+      - "--log.level=INFO"
+      - "--api=false"
+      - "--api.dashboard=false"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.network=rede-swarm-apsso"
+      - "--entrypoints.web.address=:80"
+      - "--metrics.prometheus=false"
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.entrada-web.rule=hostregexp(`{host:.+}`)
+        - traefik.http.routers.entrada-web.entrypoints=web
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - rede-swarm-apsso
+
+networks:
+  rede-swarm-apsso:
+    external: true

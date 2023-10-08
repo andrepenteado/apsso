@@ -1,0 +1,83 @@
+version: "3.9"
+
+services:
+
+  login:
+    image: ghcr.io/andrepenteado/apsso/login
+    hostname: login
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      rollback_config:
+        order: start-first
+      update_config:
+        failure_action: rollback
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.login.rule=PathPrefix(`/sso`)
+        - traefik.http.routers.login.entrypoints=web
+        - traefik.http.routers.login.tls=false
+        - traefik.http.services.login.loadbalancer.server.port=30000
+        - traefik.http.services.login.loadbalancer.sticky=true
+        - traefik.http.services.login.loadbalancer.sticky.cookie.name=login-server
+        - traefik.http.services.login.loadbalancer.sticky.cookie.httpOnly=true
+    environment:
+      CATALINA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - rede-swarm-apsso
+      - rede-swarm-postgresql
+
+  controle:
+    image: ghcr.io/andrepenteado/apsso/controle
+    hostname: controle
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      rollback_config:
+        order: start-first
+      update_config:
+        failure_action: rollback
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.controle.rule=PathPrefix(`/controle`)
+        - traefik.http.routers.controle.entrypoints=web
+        - traefik.http.routers.controle.tls=false
+        - traefik.http.services.controle.loadbalancer.server.port=30001
+        - traefik.http.services.controle.loadbalancer.sticky=true
+        - traefik.http.services.controle.loadbalancer.sticky.cookie.name=controle-server
+        - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
+    environment:
+      JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - rede-swarm-apsso
+      - rede-swarm-postgresql
+
+  postgresql:
+    image: postgres:15.2
+    hostname: postgresql
+    environment:
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
+    volumes:
+      - ./postgresql/:/var/lib/postgresql/data/
+      - /etc/localtime:/etc/localtime:ro
+    command: -p 50000
+    networks:
+      - rede-swarm-postgresql
+
+networks:
+  rede-swarm-apsso:
+    external: true
+  rede-swarm-postgresql:
+    external: true

@@ -37,3 +37,4 @@ nbactions.xml
 /controle/src/main/angular/.angular/
 /controle/src/main/angular/frontend.iml
 /services/target/
+.ansible/ansible.log

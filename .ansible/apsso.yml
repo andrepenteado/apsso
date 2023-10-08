@@ -1,0 +1,58 @@
+- name: Instalar APsso e seus componentes
+  hosts: localhost
+  vars:
+    diretorio:
+      raiz: /home/andrepenteado
+
+  tasks:
+  - name: Criar diretório do traefik
+    ansible.builtin.file:
+      path: "{{ diretorio.raiz }}/traefik"
+      state: directory
+
+  - name: Copiar docker-compose do traefik
+    ansible.builtin.copy:
+      src: docker-compose-traefik.yml
+      dest: "{{ diretorio.raiz }}/traefik/docker-compose.yml"
+
+  - name: Baixar imagem do traefik
+    community.docker.docker_image:
+      name: traefik
+      source: pull
+
+  - name: Criar diretório do APsso
+    ansible.builtin.file:
+      path: "{{ diretorio.raiz }}/apsso"
+      state: directory
+
+  - name: Copiar Makefile
+    ansible.builtin.copy:
+      src: Makefile
+      dest: "{{ diretorio.raiz }}/apsso/"
+
+  - name: Criar diretório de dados do postgresql
+    ansible.builtin.file:
+      path: "{{ diretorio.raiz }}/apsso/postgresql"
+      state: directory
+
+  - name: Copiar docker-compose do APsso para diretório de stacks de serviços
+    ansible.builtin.copy:
+      src: docker-compose-apsso.yml
+      dest: "{{ diretorio.raiz }}/apsso/docker-compose.yml"
+
+  - name: Criar rede interna docker
+    community.docker.docker_network:
+      name: rede-swarm-apsso
+      driver: overlay
+      attachable: yes
+
+  - name: Criar rede interna docker para o postgresql
+    community.docker.docker_network:
+      name: rede-swarm-postgresql
+      driver: overlay
+      attachable: yes
+
+  - name: Baixar imagem do postgresql
+    community.docker.docker_image:
+      name: postgres:15.2
+      source: pull
