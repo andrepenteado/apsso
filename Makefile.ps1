@@ -31,7 +31,7 @@ switch($exec) {
     }
     "build-controle-pipeline" {
         $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
-        npm --prefix ./controle/src/main/angular run build --omit=dev --base-href=/controle
+        npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/controle/"
         mvn -U clean package --projects services,controle -DskipTests
         docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
         Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin

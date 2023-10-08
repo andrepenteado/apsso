@@ -34,7 +34,7 @@ jobs:
         run: npm --prefix ./controle/src/main/angular install
 
       - name: Buildar frontend do módulo de controle
-        run: npm --prefix ./controle/src/main/angular run build --omit=dev --base-href=/controle/
+        run: npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/controle/"
 
       - name: Usar JDK 21
         uses: actions/setup-java@v3

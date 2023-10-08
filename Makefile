@@ -8,7 +8,7 @@ build-login:
 	docker logout ghcr.io
 
 build-login-pipeline:
-	mvn -U clean package --projects login
+	mvn -U clean package --projects services,login
 	docker build -f .docker/Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
 	docker push ghcr.io/andrepenteado/apsso/login
@@ -23,8 +23,8 @@ build-controle:
 	docker logout ghcr.io
 
 build-controle-pipeline:
-	npm --prefix ./controle/src/main/angular run build --omit=dev --base-href=/controle
-	mvn -U clean package --projects controle -DskipTests
+	npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/controle/"
+	mvn -U clean package --projects services,controle -DskipTests
 	docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
 	docker push ghcr.io/andrepenteado/apsso/controle
