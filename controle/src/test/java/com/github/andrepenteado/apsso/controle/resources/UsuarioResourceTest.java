@@ -66,11 +66,11 @@ class UsuarioResourceTest {
         usuario.setPerfis(new ArrayList<>());
 
         Sistema sistema = new Sistema();
-        sistema.setId("APsso");
-        sistema.setDescricao("APsso Sistema");
+        sistema.setId("Sistema01");
+        sistema.setDescricao("Sistema Sistema01");
 
         PerfilSistema perfilSistema = new PerfilSistema();
-        perfilSistema.setAuthority("ROLE_APsso_Perfil01");
+        perfilSistema.setAuthority("ROLE_Sistema01_Perfil01");
         perfilSistema.setSistema(sistema);
         perfilSistema.setDescricao("Perfil Teste");
 

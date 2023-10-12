@@ -1,5 +1,16 @@
 <dataset>
 
+    <oauth2_registered_client
+        id="Sistema01"
+        client_id="ID01"
+        client_id_issued_at="[now]"
+        client_name="Sistema 01"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX" />
+
     <users
         username="teste01"
         password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
@@ -8,13 +19,13 @@
         data_ultima_modificacao="[now]" />
 
     <perfil_sistema
-        authority="ROLE_APsso_Teste01"
-        id_oauth2_registered_client="APsso"
+        authority="ROLE_Sistema01_Teste01"
+        id_oauth2_registered_client="Sistema01"
         descricao="Perfil 01" />
 
     <authorities
         username="teste01"
-        authority="ROLE_APsso_Teste01" />
+        authority="ROLE_Sistema01_Teste01" />
 
     <users
         username="teste02"
@@ -24,12 +35,12 @@
         data_ultima_modificacao="[now]" />
 
     <perfil_sistema
-        authority="ROLE_APsso_Teste02"
-        id_oauth2_registered_client="APsso"
+        authority="ROLE_Sistema01_Teste02"
+        id_oauth2_registered_client="Sistema01"
         descricao="Perfil 02" />
 
     <authorities
         username="teste02"
-        authority="ROLE_APsso_Teste02" />
+        authority="ROLE_Sistema01_Teste02" />
 
 </dataset>
