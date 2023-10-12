@@ -62,6 +62,36 @@ services:
       - rede-swarm-apsso
       - rede-swarm-postgresql
 
+  portal:
+    image: ghcr.io/andrepenteado/apsso/portal
+    hostname: portal
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      rollback_config:
+        order: start-first
+      update_config:
+        failure_action: rollback
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.controle.rule=PathPrefix(`/portal`)
+        - traefik.http.routers.controle.entrypoints=web
+        - traefik.http.routers.controle.tls=false
+        - traefik.http.services.controle.loadbalancer.server.port=30003
+        - traefik.http.services.controle.loadbalancer.sticky=true
+        - traefik.http.services.controle.loadbalancer.sticky.cookie.name=portal-server
+        - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
+    environment:
+      JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - rede-swarm-apsso
+      - rede-swarm-postgresql
+
   postgresql:
     image: postgres:15.2
     hostname: postgresql

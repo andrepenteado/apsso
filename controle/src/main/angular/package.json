@@ -1,6 +1,6 @@
 {
-  "name": "apsso",
-  "version": "1.0.0",
+  "name": "controle",
+  "version": "2.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

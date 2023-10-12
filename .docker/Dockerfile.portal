@@ -1,0 +1,24 @@
+# Stage 1 - Angular
+FROM node:16 AS angular
+WORKDIR /frontend
+COPY /portal/src/main/angular/ /frontend/portal/src/main/angular/
+RUN npm --prefix ./portal/src/main/angular install
+RUN npm --prefix ./portal/src/main/angular run build --omit=dev --base-href=/portal
+
+# Stage 2 - Build
+FROM maven:3-amazoncorretto-21-debian AS build
+WORKDIR /apsso/
+COPY pom.xml /apsso/
+COPY /login/pom.xml /apsso/login/
+COPY /controle/pom.xml /apsso/controle/
+COPY /services/ /apsso/services/
+COPY /portal/ /apsso/portal/
+COPY --from=angular /frontend/portal/src/main/resources/static/ /apsso/portal/src/main/resources/static/
+RUN mvn --projects services,portal -U clean package --file /apsso/pom.xml -DskipTests
+
+# Stage 3 - Deploy
+FROM amazoncorretto:21
+WORKDIR /portal
+COPY --from=build /apsso/portal/target/portal.jar /portal/portal.jar
+ENTRYPOINT [ "java", "-jar", "-Dserver.port=30003", "/portal/portal.jar" ]
+EXPOSE 30003

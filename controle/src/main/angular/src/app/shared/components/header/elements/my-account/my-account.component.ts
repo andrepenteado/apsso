@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../../../services/auth.service";
 import { Usuario } from "../../../../../models/usuario";
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-my-account',
@@ -29,6 +30,11 @@ export class MyAccountComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  public voltarAoPortal(): void {
+    localStorage.clear();
+    window.location.href = environment.portalURL;
   }
 
 }

@@ -31,6 +31,22 @@ build-controle-pipeline:
 	docker push ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP)
 	docker logout ghcr.io
 
+build-portal:
+	docker build -f .docker/Dockerfile.portal -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP) .
+	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
+	docker push ghcr.io/andrepenteado/apsso/portal
+	docker push ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP)
+	docker logout ghcr.io
+
+build-portal-pipeline:
+	npm --prefix ./portal/src/main/angular run build --omit=dev -- "--base-href=/portal/" "-c=production"
+	mvn -U clean package --projects services,portal -DskipTests
+	docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP) .
+	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
+	docker push ghcr.io/andrepenteado/apsso/portal
+	docker push ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP)
+	docker logout ghcr.io
+
 start:
 	docker compose -f .docker/docker-compose.yml up -d
 

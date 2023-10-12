@@ -3,25 +3,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.andrepenteado.sso</groupId>
+    <groupId>com.github.andrepenteado.apsso</groupId>
     <artifactId>services</artifactId>
     <packaging>jar</packaging>
 
     <name>Biblioteca de Serviços</name>
     <description>Biblioteca compartilhada de serviços dos módulos</description>
-
-    <organization>
-        <name>APcode</name>
-        <url>http://www.apcode.com.br</url>
-    </organization>
-
-    <developers>
-        <developer>
-            <name>André Penteado</name>
-            <email>andre.penteado@apcode.com.br</email>
-            <organization>APcode</organization>
-        </developer>
-    </developers>
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
@@ -38,6 +25,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

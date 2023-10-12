@@ -1,0 +1,11 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://postgresql:50000/apsso-dbname?autoReconnect=true
+
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://login:30000/sso

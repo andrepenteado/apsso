@@ -10,6 +10,7 @@ FROM maven:3-amazoncorretto-21-debian AS build
 WORKDIR /apsso/
 COPY pom.xml /apsso/
 COPY /login/pom.xml /apsso/login/
+COPY /portal/pom.xml /appso/portal/
 COPY /services/ /apsso/services/
 COPY /controle/ /apsso/controle/
 COPY --from=angular /frontend/controle/src/main/resources/static/ /apsso/controle/src/main/resources/static/

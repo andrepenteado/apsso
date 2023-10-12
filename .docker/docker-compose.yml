@@ -18,6 +18,15 @@ services:
     ports:
       - 30001:30001
 
+  portal:
+    image: ghcr.io/andrepenteado/apsso/portal
+    container_name: portal
+    hostname: portal
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - 30003:30003
+
   postgresql:
     image: postgres:15.2
     container_name: postgresql

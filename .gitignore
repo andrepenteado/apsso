@@ -32,9 +32,15 @@ nbactions.xml
 /login/target/
 /controle/target/
 /controle/src/main/resources/static/
-/controle/controle.iml
+/controle/*.iml
 /controle/src/main/angular/node_modules/
 /controle/src/main/angular/.angular/
-/controle/src/main/angular/frontend.iml
+/controle/src/main/angular/*.iml
+/portal/target/
+/portal/src/main/resources/static/
+/portal/*.iml
+/portal/src/main/angular/node_modules/
+/portal/src/main/angular/.angular/
+/portal/src/main/angular/*.iml
 /services/target/
 .ansible/ansible.log

@@ -39,6 +39,24 @@ switch($exec) {
         docker push ghcr.io/andrepenteado/apsso/controle:$VERSAO
         docker logout ghcr.io
     }
+    "build-portal" {
+        $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
+        docker build -f .docker/Dockerfile.portal -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
+        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        docker push ghcr.io/andrepenteado/apsso/portal
+        docker push ghcr.io/andrepenteado/apsso/portal:$VERSAO
+        docker logout ghcr.io
+    }
+    "build-portal-pipeline" {
+        $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
+        npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/portal/" "-c=production"
+        mvn -U clean package --projects services,portal -DskipTests
+        docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
+        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        docker push ghcr.io/andrepenteado/apsso/portal
+        docker push ghcr.io/andrepenteado/apsso/portal:$VERSAO
+        docker logout ghcr.io
+    }
     "start" {
         docker compose -f .docker/docker-compose.yml up -d
     }
