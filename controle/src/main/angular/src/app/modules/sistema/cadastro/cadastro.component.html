@@ -12,52 +12,50 @@
       <a ngbNavLink>Dados Cadastrais</a>
       <ng-template ngbNavContent>
         <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
-          <div class="col-12 col-md-12">
-            <div class="card border border-primary rounded shadow-lg">
-              <div class="card-header">
-                <h5 class="card-title">Dados Cadastrais</h5>
-                <span>{{ dataCadastro | date: "'Cadastrado desde ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}</span>
-                <span>{{ dataUltimaModificacao | date: "'Modificado em ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}</span>
+          <div class="card border border-primary rounded shadow-lg">
+            <div class="card-header">
+              <h5 class="card-title">Dados Cadastrais</h5>
+              <span>{{ dataCadastro | date: "'Cadastrado desde ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}</span>
+              <span>{{ dataUltimaModificacao | date: "'Modificado em ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col-12 col-md-4">
+                  <label>* Sigla</label>
+                  <input type="text" name="id" formControlName="id" class="form-control" required="true">
+                  <div class="invalid-feedback">Campo sigla é obrigatório</div>
+                </div>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-12 col-md-4">
-                    <label>* Sigla</label>
-                    <input type="text" name="id" formControlName="id" class="form-control" required="true">
-                    <div class="invalid-feedback">Campo sigla é obrigatório</div>
-                  </div>
+              <div class="row">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Descrição</label>
+                  <input type="text" name="descricao" formControlName="descricao" class="form-control" required="true">
+                  <div class="invalid-feedback">Campo descrição é obrigatório</div>
                 </div>
-                <div class="row">
-                  <div class="form-group col-12 col-md-6">
-                    <label>* Descrição</label>
-                    <input type="text" name="descricao" formControlName="descricao" class="form-control" required="true">
-                    <div class="invalid-feedback">Campo descrição é obrigatório</div>
-                  </div>
-                  <div class="form-group col-12 col-md-6">
-                    <label>URL de Entrada</label>
-                    <input type="text" name="urlEntrada" formControlName="urlEntrada" class="form-control">
-                  </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>URL de Entrada</label>
+                  <input type="text" name="urlEntrada" formControlName="urlEntrada" class="form-control">
                 </div>
-                <div class="row">
-                  <div class="form-group col-12 col-md-6">
-                    <label>Client ID</label>
-                    <input type="text" name="clientId" formControlName="clientId" class="form-control">
-                  </div>
-                  <div class="form-group col-12 col-md-6">
-                    <label>Client Secret</label>
-                    <div class="input-group">
-                      <input type="password" name="clientSecret" formControlName="clientSecret" class="form-control" required="true" disabled>
-                      <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarClientSecret()"><i class="fa fa-unlock-alt fa-lg"></i></button>
-                      <div class="invalid-feedback">Client Secret é obrigatório</div>
-                    </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-12 col-md-6">
+                  <label>Client ID</label>
+                  <input type="text" name="clientId" formControlName="clientId" class="form-control">
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>Client Secret</label>
+                  <div class="input-group">
+                    <input type="password" name="clientSecret" formControlName="clientSecret" class="form-control" required="true" disabled>
+                    <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarClientSecret()"><i class="fa fa-unlock-alt fa-lg"></i></button>
+                    <div class="invalid-feedback">Client Secret é obrigatório</div>
                   </div>
                 </div>
               </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-12 text-center">
-                    <button class="btn btn-primary" (click)="gravar()"><i class="fa fa-save fa-lg"></i> Gravar</button>
-                  </div>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="fa fa-save fa-lg"></i> Gravar</button>
                 </div>
               </div>
             </div>
