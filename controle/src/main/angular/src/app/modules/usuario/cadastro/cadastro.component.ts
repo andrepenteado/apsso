@@ -50,10 +50,11 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let paramUsername: string;
     this.activedRoute.params.subscribe(params => {
-      const username: string = params.username;
-      this.pesquisar(username);
+      paramUsername = params.username;
     });
+    this.pesquisar(paramUsername);
     this.aguardar = false;
   }
 
@@ -79,10 +80,12 @@ export class CadastroComponent implements OnInit {
 
     for (const perfilSistema of this.listaPerfis) {
       let ativo = false;
-      for (const perfilUsuario of this.usuario.perfis) {
-        if (perfilUsuario.authority === perfilSistema.authority) {
-          ativo = true;
-          break;
+      if (this.usuario.perfis != null && this.usuario.perfis.length > 0) {
+        for (const perfilUsuario of this.usuario.perfis) {
+          if (perfilUsuario.authority === perfilSistema.authority) {
+            ativo = true;
+            break;
+          }
         }
       }
       const perfilForm = new FormControl(ativo);

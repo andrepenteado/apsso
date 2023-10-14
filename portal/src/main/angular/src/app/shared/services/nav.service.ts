@@ -85,7 +85,7 @@ export class NavService implements OnDestroy {
 			headTitle1: 'Menu de Opções', headTitle2: 'Selecione uma das opções abaixo.',
 		},
 		{ path: '/home', title: 'Início', icon: 'home', type: 'link', active: true },
-		{ path: '/listar-sistemas', title: 'Sistemas', icon: 'layout', type: 'link', active: true }
+		{ path: '/listar-sistemas', title: 'Acessar', icon: 'log-in', type: 'link', active: false }
 	];
 
 	MEGAMENUITEMS: Menu[] = [
