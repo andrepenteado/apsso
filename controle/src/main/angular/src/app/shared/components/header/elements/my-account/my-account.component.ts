@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../../../../../services/auth.service";
-import { Usuario } from "../../../../../models/usuario";
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from "../../../../../services/auth.service";
 import {environment} from "../../../../../../environments/environment";
+import {UserLogin} from "../../../../../dto/user-login";
 
 @Component({
   selector: 'app-my-account',
@@ -10,22 +10,22 @@ import {environment} from "../../../../../../environments/environment";
 })
 export class MyAccountComponent implements OnInit {
 
-  usuario: Usuario;
+  userLogin: UserLogin;
 
   constructor(
       private authService: AuthService
   ) { }
 
   async ngOnInit() {
-    this.usuario = await this.authService.usuarioLogado();
+    this.userLogin = await this.authService.usuarioLogado();
   }
 
   nomePerfil(): string {
-    for (let i=0; i < this.usuario.perfis.length; i++) {
-      let perfilSistema = this.usuario.perfis[i];
-      if (perfilSistema.authority.startsWith('ROLE_APsso_'))
-        return perfilSistema.descricao;
+    for (const nome of Object.keys(this.userLogin.perfis)) {
+      if (nome.startsWith("ROLE_APcontrole_"))
+        return this.userLogin.perfis[nome];
     }
+    return "Usuário";
   }
 
   logout(): void {

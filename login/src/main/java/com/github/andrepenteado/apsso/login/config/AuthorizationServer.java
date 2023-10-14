@@ -1,9 +1,13 @@
 package com.github.andrepenteado.apsso.login.config;
 
+import com.github.andrepenteado.apsso.services.UsuarioService;
+import com.github.andrepenteado.apsso.services.models.PerfilSistema;
+import com.github.andrepenteado.apsso.services.models.Usuario;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,9 +15,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
@@ -24,17 +28,21 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.KeyStore;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
+@RequiredArgsConstructor
 public class AuthorizationServer {
+
+    private final UsuarioService usuarioService;
 
     @Bean
     @Order(1)
@@ -80,6 +88,11 @@ public class AuthorizationServer {
     }
 
     @Bean
+    public UserDetailsService userDetailsService(JdbcTemplate jdbcTemplate) {
+        return new JdbcUserDetailsManager(jdbcTemplate.getDataSource());
+    }
+
+    @Bean
     JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
@@ -109,6 +122,25 @@ public class AuthorizationServer {
     @Bean
     AuthorizationServerSettings authorizationServerSettings(GlobalProperties properties) {
         return AuthorizationServerSettings.builder().issuer(properties.getUri()).build();
+    }
+
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {
+        return (context) -> {
+            Authentication auth = context.getPrincipal();
+            if (auth.getPrincipal() instanceof User user) {
+                final Usuario userEntity = usuarioService.buscar(user.getUsername()).orElseThrow();
+
+                Map<String, String> perfis = new HashMap<>();
+                for (PerfilSistema perfil : userEntity.getPerfis()) {
+                    perfis.put(perfil.getAuthority(), perfil.getDescricao());
+                }
+
+                context.getClaims().claim("login", userEntity.getUsername());
+                context.getClaims().claim("nome", userEntity.getNome());
+                context.getClaims().claim("perfis", perfis);
+            }
+        };
     }
 
 }

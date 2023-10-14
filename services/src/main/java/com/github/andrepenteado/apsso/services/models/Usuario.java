@@ -33,7 +33,7 @@ public class Usuario {
 
     private Boolean enabled;
 
-    @ManyToMany(cascade = { CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities",
                joinColumns = { @JoinColumn(name = "username") },
                inverseJoinColumns = { @JoinColumn(name = "authority") })

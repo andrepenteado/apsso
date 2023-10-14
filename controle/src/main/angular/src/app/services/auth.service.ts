@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from '../../environments/environment';
 import {Api} from "../config/api";
-import {Usuario} from "../models/usuario";
 import {lastValueFrom} from "rxjs";
+import {UserLogin} from "../dto/user-login";
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,15 @@ export class AuthService {
       private http: HttpClient
   ) { }
 
-  public async usuarioLogado(): Promise<Usuario> {
-    let usuario = JSON.parse(localStorage.getItem("usuarioLogado")) as Usuario;
-    if (usuario == null) {
-      const usuario$ = this.http.get<Usuario>(`${environment.backendURL}${Api.AUTH}/usuario`);
-      usuario = await lastValueFrom(usuario$);
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-      return usuario;
+  public async usuarioLogado(): Promise<UserLogin> {
+    let userLogin = JSON.parse(localStorage.getItem("usuarioLogado")) as UserLogin;
+    if (userLogin == null) {
+      const userLogin$ = this.http.get<UserLogin>(`${environment.backendURL}${Api.AUTH}/usuario`);
+      userLogin = await lastValueFrom(userLogin$);
+      localStorage.setItem("usuarioLogado", JSON.stringify(userLogin));
+      return userLogin;
     }
-    return usuario;
+    return userLogin;
   }
 
   public logout(): void {
