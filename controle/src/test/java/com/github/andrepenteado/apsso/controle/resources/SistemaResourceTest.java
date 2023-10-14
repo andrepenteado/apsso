@@ -2,17 +2,22 @@ package com.github.andrepenteado.apsso.controle.resources;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.andrepenteado.apsso.controle.services.PermissaoService;
 import com.github.andrepenteado.apsso.services.entities.PerfilSistema;
 import com.github.andrepenteado.apsso.services.entities.Sistema;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -20,10 +25,16 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,6 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DatabaseSetup("/datasets/sistema.xml")
 @Transactional
 @ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 public class SistemaResourceTest {
 
     @Autowired
@@ -76,10 +88,18 @@ public class SistemaResourceTest {
         return objectMapper.writeValueAsString(getPerfilSistema(id));
     }
 
+    private Map<String, String> getPerfil() {
+        Map<String, String> perfil = new HashMap<>();
+        perfil.put("ROLE_Controle_ARQUITETO", "Arquiteto do Sistema");
+        return perfil;
+    }
+
     @Test
     @DisplayName("Listar todos sistemas")
     void testListar() throws Exception {
         String json = mockMvc.perform(get("/sistemas")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -93,9 +113,13 @@ public class SistemaResourceTest {
     @DisplayName("Buscar sistema por ID")
     void testBuscar() throws Exception {
         mockMvc.perform(get("/sistemas/Sistema01")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
         mockMvc.perform(get("/sistemas/SistemaNaoExiste")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -104,6 +128,8 @@ public class SistemaResourceTest {
     @DisplayName("Incluir ou alterar sistema")
     void testIncluirOuAlterar() throws Exception {
         String json = mockMvc.perform(post("/sistemas")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonSistema(ID_SISTEMA)))
@@ -116,6 +142,8 @@ public class SistemaResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/sistemas")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Sistema())))
@@ -127,6 +155,8 @@ public class SistemaResourceTest {
     @DisplayName("Excluir sistema existente")
     void testExcluir() throws Exception {
         mockMvc.perform(delete("/sistemas/Sistema02")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
@@ -139,6 +169,8 @@ public class SistemaResourceTest {
     @DisplayName("Listar perfis de todos sistemas")
     void testListarPerfis() throws Exception {
         String json = mockMvc.perform(get("/sistemas/perfis")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -152,6 +184,8 @@ public class SistemaResourceTest {
     @DisplayName("Incluir perfil de sistema")
     void testIncluirPerfil() throws Exception {
         String json = mockMvc.perform(post("/sistemas/perfil")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonPerfilSistema(-1L)))
@@ -164,6 +198,8 @@ public class SistemaResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/sistemas/perfil")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new PerfilSistema())))
@@ -175,6 +211,8 @@ public class SistemaResourceTest {
     @DisplayName("Excluir perfil de sistema existente")
     void testExcluirPerfil() throws Exception {
         mockMvc.perform(delete("/sistemas/perfil/ROLE_Sistema01_A")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());

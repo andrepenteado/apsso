@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,7 +27,7 @@ public class UsuarioResource {
     private final PermissaoService permissaoService;
 
     @GetMapping
-    public List<Usuario> listar(@AuthenticationPrincipal DefaultOidcUser principal) {
+    public List<Usuario> listar(@AuthenticationPrincipal OidcUser principal) {
         log.info("Listar usuários");
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -44,7 +44,7 @@ public class UsuarioResource {
     }
 
     @GetMapping("/{username}")
-    public Usuario buscar(@PathVariable String username, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public Usuario buscar(@PathVariable String username, @AuthenticationPrincipal OidcUser principal) {
         log.info("Buscar usuário " + username);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -63,7 +63,7 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal OidcUser principal) {
         log.info("Incluir novo usuário " + usuario);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -80,7 +80,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{username}")
-    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal OidcUser principal) {
         log.info("Alterar dados do usuário " + usuario);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -97,7 +97,7 @@ public class UsuarioResource {
     }
 
     @DeleteMapping("/{username}")
-    public void excluir(@PathVariable String username, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public void excluir(@PathVariable String username, @AuthenticationPrincipal OidcUser principal) {
         log.info("Excluir usuário " + username);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))

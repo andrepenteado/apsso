@@ -23,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,10 +86,18 @@ class UsuarioResourceTest {
         return objectMapper.writeValueAsString(getUsuario(username));
     }
 
+    private Map<String, String> getPerfil() {
+        Map<String, String> perfil = new HashMap<>();
+        perfil.put("ROLE_Controle_ARQUITETO", "Arquiteto do Sistema");
+        return perfil;
+    }
+
     @Test
     @DisplayName("Listar todos usuários")
     void testListar() throws Exception {
         String json = mockMvc.perform(get("/usuarios")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -100,6 +111,8 @@ class UsuarioResourceTest {
     @DisplayName("Buscar usuário por username")
     void testBuscar() throws Exception {
         String json = mockMvc.perform(get("/usuarios/teste01")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -107,7 +120,10 @@ class UsuarioResourceTest {
             .getContentAsString();
         Usuario usuario = objectMapper.readValue(json, new TypeReference<Usuario>() {});
         assertEquals(usuario.getPerfis().size(), 1);
+
         mockMvc.perform(get("/usuarios/usuarioNaoExiste")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -116,6 +132,8 @@ class UsuarioResourceTest {
     @DisplayName("Incluir usuário")
     void testIncluir() throws Exception {
         String json = mockMvc.perform(post("/usuarios")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario(USERNAME)))
@@ -128,6 +146,8 @@ class UsuarioResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/usuarios")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Usuario())))
@@ -139,6 +159,8 @@ class UsuarioResourceTest {
     @DisplayName("Alterar usuário")
     void testAlterar() throws Exception {
         String json = mockMvc.perform(put("/usuarios/teste01")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario("teste01")))
@@ -150,6 +172,8 @@ class UsuarioResourceTest {
         assertEquals(usuarioAlterado.getNome(), NOME);
 
         mockMvc.perform(put("/usuarios/naoExiste")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario("naoExiste")))
@@ -157,6 +181,8 @@ class UsuarioResourceTest {
             .andExpect(ex -> assertTrue(ex.getResolvedException().getMessage().contains("não encontrado")));
 
         mockMvc.perform(put("/usuarios/dadosIncompletos")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Usuario())))
@@ -168,6 +194,8 @@ class UsuarioResourceTest {
     @DisplayName("Excluir usuário")
     void testExcluir() throws Exception {
         mockMvc.perform(delete("/usuarios/teste02")
+                .with(oidcLogin()
+                    .idToken(token -> token.claim("perfis", getPerfil())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());

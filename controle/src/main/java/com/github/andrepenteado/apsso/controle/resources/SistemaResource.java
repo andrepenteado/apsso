@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,7 +31,7 @@ public class SistemaResource {
     private final PermissaoService permissaoService;
 
     @GetMapping
-    public List<Sistema> listar(@AuthenticationPrincipal DefaultOidcUser principal) {
+    public List<Sistema> listar(@AuthenticationPrincipal OidcUser principal) {
         log.info("Listar sistemas");
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -48,7 +48,7 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}")
-    public Sistema buscar(@PathVariable  String id, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public Sistema buscar(@PathVariable  String id, @AuthenticationPrincipal OidcUser principal) {
         log.info("Buscar sistema de ID: #" + id);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -67,7 +67,7 @@ public class SistemaResource {
     }
 
     @PostMapping
-    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao, @AuthenticationPrincipal OidcUser principal) {
         log.info("Incluir/Alterar sistema " + sistema);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -84,7 +84,7 @@ public class SistemaResource {
     }
 
     @DeleteMapping("/{id}")
-    public void excluir(@PathVariable String id, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public void excluir(@PathVariable String id, @AuthenticationPrincipal OidcUser principal) {
         log.info("Excluir sistema de ID #" + id);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -101,7 +101,7 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}/perfis")
-    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id, @AuthenticationPrincipal OidcUser principal) {
         log.info("Listar perfis do sistema " + id);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -115,7 +115,7 @@ public class SistemaResource {
     }
 
     @GetMapping("/perfis")
-    public List<PerfilSistema> listarPerfis(@AuthenticationPrincipal DefaultOidcUser principal) {
+    public List<PerfilSistema> listarPerfis(@AuthenticationPrincipal OidcUser principal) {
         log.info("Listar perfis de sistemas");
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -129,7 +129,7 @@ public class SistemaResource {
     }
 
     @PostMapping("/perfil")
-    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao, @AuthenticationPrincipal OidcUser principal) {
         log.info("Incluir novo perfil de sistema " + perfilSistema);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
@@ -146,7 +146,7 @@ public class SistemaResource {
     }
 
     @DeleteMapping("/perfil/{authority}")
-    public void excluirPerfil(@PathVariable String authority, @AuthenticationPrincipal DefaultOidcUser principal) {
+    public void excluirPerfil(@PathVariable String authority, @AuthenticationPrincipal OidcUser principal) {
         log.info("Excluir perfil de sistema " + authority);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
