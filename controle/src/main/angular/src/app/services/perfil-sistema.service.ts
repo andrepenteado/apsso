@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PerfilSistema} from '../models/perfil-sistema';
+import {PerfilSistema} from '../entities/perfil-sistema';
 import {environment} from '../../environments/environment';
 import {Api} from '../config/api';
 

@@ -2,8 +2,8 @@ package com.github.andrepenteado.apsso.controle.resources;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.andrepenteado.apsso.services.models.PerfilSistema;
-import com.github.andrepenteado.apsso.services.models.Sistema;
+import com.github.andrepenteado.apsso.services.entities.PerfilSistema;
+import com.github.andrepenteado.apsso.services.entities.Sistema;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.DisplayName;

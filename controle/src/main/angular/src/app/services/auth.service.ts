@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import { Api } from "../config/api";
 import { lastValueFrom } from "rxjs";
-import { UserLogin } from "../models/dto/user-login";
+import { UserLogin } from "../entities/dto/user-login";
 import { Router } from "@angular/router";
 
 @Injectable({

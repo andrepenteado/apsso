@@ -1,8 +1,8 @@
 package com.github.andrepenteado.apsso.login.config;
 
 import com.github.andrepenteado.apsso.services.UsuarioService;
-import com.github.andrepenteado.apsso.services.models.PerfilSistema;
-import com.github.andrepenteado.apsso.services.models.Usuario;
+import com.github.andrepenteado.apsso.services.entities.PerfilSistema;
+import com.github.andrepenteado.apsso.services.entities.Usuario;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;

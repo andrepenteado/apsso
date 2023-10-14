@@ -2,7 +2,7 @@ package com.github.andrepenteado.apsso.controle.resources;
 
 import com.github.andrepenteado.apsso.controle.services.PermissaoService;
 import com.github.andrepenteado.apsso.services.UsuarioService;
-import com.github.andrepenteado.apsso.services.models.Usuario;
+import com.github.andrepenteado.apsso.services.entities.Usuario;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

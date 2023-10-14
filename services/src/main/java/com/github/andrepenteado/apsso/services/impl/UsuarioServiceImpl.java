@@ -2,7 +2,7 @@ package com.github.andrepenteado.apsso.services.impl;
 
 import com.github.andrepenteado.apsso.services.repositories.UsuarioRepository;
 import com.github.andrepenteado.apsso.services.Util;
-import com.github.andrepenteado.apsso.services.models.Usuario;
+import com.github.andrepenteado.apsso.services.entities.Usuario;
 import com.github.andrepenteado.apsso.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;

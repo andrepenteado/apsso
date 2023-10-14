@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from '../../../models/usuario';
+import { Usuario } from '../../../entities/usuario';
 import { Core } from '../../../config/core';
 import { Subject } from 'rxjs';
 import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';

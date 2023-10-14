@@ -2,7 +2,7 @@ package com.github.andrepenteado.apsso.services.impl;
 
 import com.github.andrepenteado.apsso.services.repositories.SistemaRepository;
 import com.github.andrepenteado.apsso.services.Util;
-import com.github.andrepenteado.apsso.services.models.Sistema;
+import com.github.andrepenteado.apsso.services.entities.Sistema;
 import com.github.andrepenteado.apsso.services.SistemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;

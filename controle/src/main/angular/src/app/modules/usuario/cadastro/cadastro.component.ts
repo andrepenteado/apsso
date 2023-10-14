@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DecoracaoMensagem, ExibeMensagemComponent } from '../../core/components/exibe-mensagem.component';
-import { Usuario } from '../../../models/usuario';
+import { Usuario } from '../../../entities/usuario';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { PerfilSistema } from '../../../models/perfil-sistema';
+import { PerfilSistema } from '../../../entities/perfil-sistema';
 import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
 import { lastValueFrom } from 'rxjs';
 

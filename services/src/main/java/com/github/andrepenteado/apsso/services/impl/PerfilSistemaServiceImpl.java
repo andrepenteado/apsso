@@ -2,7 +2,7 @@ package com.github.andrepenteado.apsso.services.impl;
 
 import com.github.andrepenteado.apsso.services.repositories.PerfilSistemaRepository;
 import com.github.andrepenteado.apsso.services.Util;
-import com.github.andrepenteado.apsso.services.models.PerfilSistema;
+import com.github.andrepenteado.apsso.services.entities.PerfilSistema;
 import com.github.andrepenteado.apsso.services.PerfilSistemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;

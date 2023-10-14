@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sistema } from "../../../models/sistema";
+import { Sistema } from "../../../entities/sistema";
 import { SistemaService } from "../../../services/sistema.service";
 import { Router } from "@angular/router";
 

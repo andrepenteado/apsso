@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Sistema } from '../models/sistema';
+import { Sistema } from '../entities/sistema';
 import { Api } from '../config/api';
 import { environment } from '../../environments/environment';
 

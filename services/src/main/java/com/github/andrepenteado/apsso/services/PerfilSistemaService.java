@@ -1,7 +1,6 @@
 package com.github.andrepenteado.apsso.services;
 
-import com.github.andrepenteado.apsso.services.models.PerfilSistema;
-import org.springframework.stereotype.Service;
+import com.github.andrepenteado.apsso.services.entities.PerfilSistema;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;

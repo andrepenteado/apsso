@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Core } from '../../../config/core';
 import { DecoracaoMensagem, ExibeMensagemComponent } from '../../core/components/exibe-mensagem.component';
-import { Sistema } from '../../../models/sistema';
+import { Sistema } from '../../../entities/sistema';
 import { Subject } from 'rxjs';
 import { SistemaService } from '../../../services/sistema.service';
 import { Router } from '@angular/router';

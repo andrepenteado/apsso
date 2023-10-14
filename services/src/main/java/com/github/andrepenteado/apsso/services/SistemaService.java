@@ -1,7 +1,6 @@
 package com.github.andrepenteado.apsso.services;
 
-import com.github.andrepenteado.apsso.services.models.Sistema;
-import org.springframework.stereotype.Service;
+import com.github.andrepenteado.apsso.services.entities.Sistema;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
