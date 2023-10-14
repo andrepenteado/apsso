@@ -8,7 +8,7 @@ import java.util.Map;
 public class PermissaoService {
 
     public boolean isPermitido(Map<String, String> perfis) {
-        return perfis.containsKey("ROLE_APportal_USUARIO");
+        return perfis.containsKey("ROLE_Portal_USUARIO");
     }
 
 }

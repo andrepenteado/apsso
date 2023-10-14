@@ -29,8 +29,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   public voltarAoPortal(): void {
-    sessionStorage.clear();
-    window.location.href = environment.portalURL;
+    this.authService.voltarAoPortal();
   }
 
 }

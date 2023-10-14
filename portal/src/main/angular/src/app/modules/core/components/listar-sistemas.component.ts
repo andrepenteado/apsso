@@ -6,10 +6,13 @@ import { Router } from "@angular/router";
 @Component({
   selector: 'app-listar-sistemas',
   template: `
+      <br>
+      <br>
+      <br>
       <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
           <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
               <a href="javascript:void(0)" (click)="acessar(sistema.urlEntrada)" itemprop="contentUrl">
-                  <img src="assets/images/sistema.png" class="img-fluid"/>
+                  <img src="assets/images/sistemas/{{ sistema.id }}.png" class="img-fluid" width="100"/>
                   <div class="caption">
                       <h4>{{ sistema.id }}</h4>
                       <p>{{ sistema.descricao }}</p>

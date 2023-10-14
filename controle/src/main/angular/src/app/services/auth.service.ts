@@ -34,9 +34,14 @@ export class AuthService {
     window.location.href = '/controle/logout';
   }
 
+  public voltarAoPortal(): void {
+    sessionStorage.clear();
+    window.location.href = environment.portalURL;
+  }
+
   public nomePerfil(userLogin: UserLogin): string {
     for (const nome of Object.keys(userLogin.perfis)) {
-      if (nome.startsWith("ROLE_APcontrole_"))
+      if (nome.startsWith("ROLE_Controle_"))
         return userLogin.perfis[nome];
     }
     return "Sem Perfil";
