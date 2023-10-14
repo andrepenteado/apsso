@@ -47,11 +47,16 @@ export class PesquisarComponent implements OnInit, OnDestroy {
         this.aguardar = false;
       },
       error: objetoErro => {
-        this.exibeMensagem.show(
+        if (objetoErro.error.status == "403") {
+          this.router.navigate(["/pages/acesso-negado"]);
+        }
+        else {
+          this.exibeMensagem.show(
             `${objetoErro.error.message}`,
             DecoracaoMensagem.ERRO,
             'Erro no processamento'
-        );
+          );
+        }
       }
     });
   }

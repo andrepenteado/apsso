@@ -83,10 +83,6 @@
       </SHUTDOWN>
     </ConfigurationWrapper>
     <method v="2">
-      <option name="BuildArtifacts" enabled="true">
-        <artifact name="apsso:war exploded" />
-        <artifact name="login:war exploded" />
-      </option>
       <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean package --projects services,login -DskipTests" />
     </method>
   </configuration>

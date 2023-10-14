@@ -1,5 +1,6 @@
 package com.github.andrepenteado.apsso.controle.resources;
 
+import com.github.andrepenteado.apsso.controle.services.PermissaoService;
 import com.github.andrepenteado.apsso.services.PerfilSistemaService;
 import com.github.andrepenteado.apsso.services.SistemaService;
 import com.github.andrepenteado.apsso.services.models.PerfilSistema;
@@ -8,11 +9,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/sistemas")
@@ -21,13 +25,21 @@ import java.util.List;
 public class SistemaResource {
 
     private final SistemaService sistemaService;
+
     private final PerfilSistemaService perfilSistemaService;
 
+    private final PermissaoService permissaoService;
+
     @GetMapping
-    public List<Sistema> listar() {
+    public List<Sistema> listar(@AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Listar sistemas");
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.listar();
+        }
+        catch (ResponseStatusException rsex) {
+            throw rsex;
         }
         catch (Exception ex) {
             log.error("Erro no processamento", ex);
@@ -36,9 +48,11 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}")
-    public Sistema buscar(@PathVariable  String id) {
+    public Sistema buscar(@PathVariable  String id, @AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Buscar sistema de ID: #" + id);
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.buscar(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("Sistema de ID %s não encontrado", id)));
@@ -53,9 +67,11 @@ public class SistemaResource {
     }
 
     @PostMapping
-    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao) {
+    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao, @AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Incluir/Alterar sistema " + sistema);
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.incluirOuAlterar(sistema, validacao);
         }
         catch (ResponseStatusException rsex) {
@@ -68,9 +84,11 @@ public class SistemaResource {
     }
 
     @DeleteMapping("/{id}")
-    public void excluir(@PathVariable String id) {
+    public void excluir(@PathVariable String id, @AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Excluir sistema de ID #" + id);
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new Exception("Permissão negada");
             sistemaService.excluir(id);
         }
         catch (ResponseStatusException rsex) {
@@ -83,9 +101,11 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}/perfis")
-    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id) {
+    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id, @AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Listar perfis do sistema " + id);
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new Exception("Permissão negada");
             return perfilSistemaService.listarPorSistema(id);
         }
         catch (Exception ex) {
@@ -95,9 +115,11 @@ public class SistemaResource {
     }
 
     @GetMapping("/perfis")
-    public List<PerfilSistema> listarPerfis() {
+    public List<PerfilSistema> listarPerfis(@AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Listar perfis de sistemas");
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new Exception("Permissão negada");
             return perfilSistemaService.listar();
         }
         catch (Exception ex) {
@@ -107,9 +129,11 @@ public class SistemaResource {
     }
 
     @PostMapping("/perfil")
-    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao) {
+    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao, @AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Incluir novo perfil de sistema " + perfilSistema);
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new Exception("Permissão negada");
             return perfilSistemaService.incluir(perfilSistema, validacao);
         }
         catch (ResponseStatusException rsex) {
@@ -122,9 +146,11 @@ public class SistemaResource {
     }
 
     @DeleteMapping("/perfil/{authority}")
-    public void excluirPerfil(@PathVariable String authority) {
+    public void excluirPerfil(@PathVariable String authority, @AuthenticationPrincipal DefaultOidcUser principal) {
         log.info("Excluir perfil de sistema " + authority);
         try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new Exception("Permissão negada");
             perfilSistemaService.excluir(authority);
         }
         catch (ResponseStatusException rsex) {

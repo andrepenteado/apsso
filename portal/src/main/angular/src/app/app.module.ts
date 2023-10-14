@@ -14,8 +14,6 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 // for Core import:
 import { LoadingBarModule } from '@ngx-loading-bar/core';
-
-import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
 import '@angular/common/locales/global/pt';

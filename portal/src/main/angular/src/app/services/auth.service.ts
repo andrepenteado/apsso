@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from '../../environments/environment';
-import {Api} from "../config/api";
-import {Usuario} from "../models/usuario";
-import {lastValueFrom} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { environment } from '../../environments/environment';
+import { Api } from "../config/api";
+import { lastValueFrom } from "rxjs";
+import { UserLogin } from "../models/dto/user-login";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +12,45 @@ import {lastValueFrom} from "rxjs";
 export class AuthService {
 
   constructor(
-      private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
-  public async usuarioLogado(): Promise<Usuario> {
-    let usuario = JSON.parse(localStorage.getItem("usuarioLogado")) as Usuario;
-    if (usuario == null) {
-      const usuario$ = this.http.get<Usuario>(`${environment.backendURL}${Api.AUTH}/usuario`);
-      usuario = await lastValueFrom(usuario$);
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-      return usuario;
+  public async usuarioLogado(): Promise<UserLogin> {
+    let userLogin = JSON.parse(sessionStorage.getItem("usuarioLogado")) as UserLogin;
+    if (userLogin == null) {
+      const userLogin$ = this.http.get<UserLogin>(`${environment.backendURL}${Api.AUTH}/usuario`);
+      userLogin = await lastValueFrom(userLogin$);
+      console.log(userLogin);
+      if (userLogin != null)
+        sessionStorage.setItem("usuarioLogado", JSON.stringify(userLogin));
     }
-    return usuario;
+    if (!this.isPermitido(userLogin))
+      await this.router.navigate(["/pages/acesso-negado"]);
+    return userLogin;
   }
 
   public logout(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     window.location.href = '/portal/logout';
+  }
+
+  public nomePerfil(userLogin: UserLogin): string {
+    for (const nome of Object.keys(userLogin.perfis)) {
+      if (nome.startsWith("ROLE_APportal_"))
+        return userLogin.perfis[nome];
+    }
+    return "Sem Perfil";
+  }
+
+  isPermitido(userLogin: UserLogin): boolean {
+    if (userLogin == null)
+      return false;
+    if (userLogin.perfis == null || userLogin.perfis.size < 1)
+      return false;
+    if (this.nomePerfil(userLogin) == "Sem Perfil")
+      return false;
+    return true;
   }
 
 }

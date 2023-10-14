@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../../../services/auth.service";
-import { Usuario } from "../../../../../models/usuario";
+import { UserLogin } from "../../../../../models/dto/user-login";
 
 @Component({
   selector: 'app-my-account',
@@ -9,14 +9,18 @@ import { Usuario } from "../../../../../models/usuario";
 })
 export class MyAccountComponent implements OnInit {
 
-  usuario: Usuario;
+  userLogin: UserLogin;
 
   constructor(
       private authService: AuthService
   ) { }
 
   async ngOnInit() {
-    this.usuario = await this.authService.usuarioLogado();
+    this.userLogin = await this.authService.usuarioLogado();
+  }
+
+  nomePerfil(): string {
+    return this.authService.nomePerfil(this.userLogin);
   }
 
   logout(): void {

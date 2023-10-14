@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
     <br>
     <div class="text-center">
       <h2 class="display-4"><i class="fa fa-home"></i> Página Inicial</h2>
-      <p class="lead">Você está conectado em <strong>Portal de Sistemas</strong></p>
+      <p class="lead">Você está conectado em <strong>Módulo de Controle</strong></p>
     </div>
   `,
   styles: [

@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../../../services/auth.service";
-import {environment} from "../../../../../../environments/environment";
-import {UserLogin} from "../../../../../dto/user-login";
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from "../../../../../services/auth.service";
+import { environment } from "../../../../../../environments/environment";
+import { UserLogin } from "../../../../../models/dto/user-login";
 
 @Component({
   selector: 'app-my-account',
@@ -21,11 +21,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   nomePerfil(): string {
-    for (const nome of Object.keys(this.userLogin.perfis)) {
-      if (nome.startsWith("ROLE_APcontrole_"))
-        return this.userLogin.perfis[nome];
-    }
-    return "Usuário";
+    return this.authService.nomePerfil(this.userLogin);
   }
 
   logout(): void {
@@ -33,7 +29,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   public voltarAoPortal(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     window.location.href = environment.portalURL;
   }
 
