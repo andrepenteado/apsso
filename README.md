@@ -37,14 +37,22 @@ A partir do diretório raíz do projeto, basta executar:
 docker compose -f .docker/docker-compose.yml up -d
 ```
 ### Deploy com Ansible
-A outra forma de execução é fazendo o deploy em um servidor com `docker swarm`
-executando, utilizando _Ansible_ para automatizar. Nesse deploy, além dos 
-componentes do projeto, também é feito deploy do proxy reverso _Traefik_ 
-para acesso às APIs.
+Em um ambiente de produção, é possível automatizar o processo de deploy com _Ansible_
+
+#### Docker Swarm
+Em um servidor com `docker swarm`, além dos componentes do projeto,
+também é feito deploy do proxy reverso _Traefik_ para acesso às APIs.
 
 A partir do diretório raíz, acesse a pasta `.ansible/` e configure a pasta
-de instalação editando o arquivo `apsso.yml`. Feito isso, basta executar:
+de instalação editando o arquivo `docker-swarm.yml`. Feito isso, basta executar:
 
 ```shell
-ansible-playbook apsso.yml
+ansible-playbook docker-swarm.yml
+```
+
+#### Kubernetes
+Em uma máquina onde é possível acessar um servidor com `kubernetes`, basta executar: 
+
+```shell
+ansible-playbook kubernetes.yml
 ```

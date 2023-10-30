@@ -1,7 +1,7 @@
 VERSAO_APP := $(shell mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
 
 build-login:
-	docker build -f .docker/Dockerfile -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
+	docker build -f .docker/Dockerfile.login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
 	docker push ghcr.io/andrepenteado/apsso/login
 	docker push ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP)
@@ -9,7 +9,7 @@ build-login:
 
 build-login-pipeline:
 	mvn -U clean package --projects services,login
-	docker build -f .docker/Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
+	docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
 	docker push ghcr.io/andrepenteado/apsso/login
 	docker push ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP)

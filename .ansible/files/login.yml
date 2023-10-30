@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login
+  namespace: apsso
+  labels:
+    app: login
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login
+  template:
+    metadata:
+      name: login
+      labels:
+        app: login
+    spec:
+      containers:
+        - image: ghcr.io/andrepenteado/apsso/login
+          name: login
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30000
+              name: p30000
+          env:
+            - name: CATALINA_OPTIONS
+              value: "-Duser.language=pt -Duser.country=BR -Dfile.encoding=UTF-8"
+      imagePullSecrets:
+      - name: github-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: login
+  namespace: apsso
+  labels:
+    app: login
+spec:
+  ports:
+    - name: p30000
+      port: 30000
+      targetPort: p30000
+  selector:
+    app: login
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: login-ingress
+  namespace: apsso
+  labels:
+    app: login
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: login
+                port:
+                  name: p30000

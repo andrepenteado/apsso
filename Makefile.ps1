@@ -6,7 +6,7 @@ param(
 switch($exec) {
     "build-login" {
         $VERSAO = mvn help:evaluate `-Dexpression=project.version -q `-DforceStdout
-        docker build -f .docker/Dockerfile -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+        docker build -f .docker/Dockerfile.login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
         Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
@@ -15,7 +15,7 @@ switch($exec) {
     "build-login-pipeline" {
         $VERSAO = mvn help:evaluate `-Dexpression=project.version -q `-DforceStdout
         mvn -U clean package --projects login
-        docker build -f .docker/Dockerfile.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+        docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
         Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
