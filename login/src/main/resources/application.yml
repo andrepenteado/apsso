@@ -1,7 +1,7 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://localhost:50000/apsso-dbname?autoReconnect=true
+    url: jdbc:postgresql://${DB_SERVER}/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver
@@ -28,16 +28,13 @@ spring:
     exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
 server:
-  port: 30000
   error:
     whitelabel:
       enabled: false
-  servlet:
-    context-path: /sso
 
 # keytool.exe -genkeypair -alias apsso -keyalg RSA -keypass passwebra -keystore apsso.jks -storepass passwebra
 apsso:
-  uri: "http://localhost:30000/sso"
+  uri: ${LOGIN_SERVER}
   jks:
     keypass: passwebra
     storepass: passwebra

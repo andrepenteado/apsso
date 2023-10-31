@@ -1,0 +1,47 @@
+services:
+
+  local.login.apcode.com.br:
+    image: ghcr.io/andrepenteado/apsso/login
+    container_name: login
+    hostname: login
+    environment:
+      LOGIN_SERVER: http://local.login.apcode.com.br:30000
+      DB_SERVER: local.db.apcode.com.br
+    ports:
+      - 30000:30000
+
+  local.controle.apcode.com.br:
+    image: ghcr.io/andrepenteado/apsso/controle
+    container_name: controle
+    hostname: controle
+    environment:
+      LOGIN_SERVER: http://local.login.apcode.com.br:30000
+      DB_SERVER: local.db.apcode.com.br
+    ports:
+      - 30001:30001
+
+  local.portal.apcode.com.br:
+    image: ghcr.io/andrepenteado/apsso/portal
+    container_name: portal
+    hostname: portal
+    environment:
+      LOGIN_SERVER: http://local.login.apcode.com.br:30000
+      DB_SERVER: local.db.apcode.com.br
+    ports:
+      - 30002:30002
+
+  local.db.apcode.com.br:
+    image: postgres:16
+    container_name: postgresql
+    hostname: postgresql
+    environment:
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
+    volumes:
+      - apsso-pgdata:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+volumes:
+  apsso-pgdata:

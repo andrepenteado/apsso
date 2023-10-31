@@ -16,7 +16,7 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.login.rule=PathPrefix(`/sso`)
+        - traefik.http.routers.login.rule=Host(`login.apcode.com.br`)
         - traefik.http.routers.login.entrypoints=web
         - traefik.http.routers.login.tls=false
         - traefik.http.services.login.loadbalancer.server.port=30000
@@ -25,12 +25,12 @@ services:
         - traefik.http.services.login.loadbalancer.sticky.cookie.httpOnly=true
     environment:
       CATALINA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
-      SPRING_PROFILES_ACTIVE: docker
+      LOGIN_SERVER: http://login.apcode.com.br
+      DB_SERVER: db.apcode.com.br
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - rede-swarm-apsso
-      - rede-swarm-postgresql
 
   controle:
     image: ghcr.io/andrepenteado/apsso/controle
@@ -46,21 +46,21 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.controle.rule=PathPrefix(`/controle`)
+        - traefik.http.routers.controle.rule=Host(`controle.apcode.com.br`)
         - traefik.http.routers.controle.entrypoints=web
         - traefik.http.routers.controle.tls=false
-        - traefik.http.services.controle.loadbalancer.server.port=30001
+        - traefik.http.services.controle.loadbalancer.server.port=8080
         - traefik.http.services.controle.loadbalancer.sticky=true
         - traefik.http.services.controle.loadbalancer.sticky.cookie.name=controle-server
         - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
     environment:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
-      SPRING_PROFILES_ACTIVE: docker
+      LOGIN_SERVER: http://login.apcode.com.br
+      DB_SERVER: db.apcode.com.br
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - rede-swarm-apsso
-      - rede-swarm-postgresql
 
   portal:
     image: ghcr.io/andrepenteado/apsso/portal
@@ -76,38 +76,22 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.controle.rule=PathPrefix(`/portal`)
+        - traefik.http.routers.controle.rule=Host(`portal.apcode.com.br`)
         - traefik.http.routers.controle.entrypoints=web
         - traefik.http.routers.controle.tls=false
-        - traefik.http.services.controle.loadbalancer.server.port=30003
+        - traefik.http.services.controle.loadbalancer.server.port=8080
         - traefik.http.services.controle.loadbalancer.sticky=true
         - traefik.http.services.controle.loadbalancer.sticky.cookie.name=portal-server
         - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
     environment:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
-      SPRING_PROFILES_ACTIVE: docker
+      LOGIN_SERVER: http://login.apcode.com.br
+      DB_SERVER: db.apcode.com.br
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - rede-swarm-apsso
-      - rede-swarm-postgresql
-
-  postgresql:
-    image: postgres:15.2
-    hostname: postgresql
-    environment:
-      POSTGRES_USER: apsso-dbuser
-      POSTGRES_PASSWORD: apsso-dbpasswd
-      POSTGRES_DB: apsso-dbname
-    volumes:
-      - ./postgresql/:/var/lib/postgresql/data/
-      - /etc/localtime:/etc/localtime:ro
-    command: -p 50000
-    networks:
-      - rede-swarm-postgresql
 
 networks:
   rede-swarm-apsso:
-    external: true
-  rede-swarm-postgresql:
     external: true

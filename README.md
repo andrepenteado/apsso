@@ -34,7 +34,7 @@ A maneira mais simples é utilizando o comando `docker compose`.
 A partir do diretório raíz do projeto, basta executar:
 
 ```shell
-docker compose -f .docker/docker-compose.yml up -d
+docker compose -f .ansible/files/docker-compose.yml up -d
 ```
 ### Deploy com Ansible
 Em um ambiente de produção, é possível automatizar o processo de deploy com _Ansible_

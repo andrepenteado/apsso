@@ -1,7 +1,7 @@
 services:
 
-  apsso-db:
-    image: postgres:15.2
+  local.db.apcode.com.br:
+    image: postgres:16
     container_name: apsso-db
     hostname: apsso-db
     environment:
@@ -11,10 +11,10 @@ services:
     volumes:
       - apsso-pgdata:/var/lib/postgresql/data
     ports:
-      - "50000:5432"
+      - 5432:5432
 
-  apsso-db-test:
-    image: postgres:15.2
+  local.db-test.apcode.com.br:
+    image: postgres:16
     container_name: apsso-db-test
     hostname: apsso-db-test
     environment:

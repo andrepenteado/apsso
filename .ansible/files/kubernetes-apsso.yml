@@ -39,12 +39,10 @@ spec:
           ports:
             - containerPort: 30000
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "docker"
-      hostAliases:
-        - ip: 200.145.157.33
-          hostnames:
-            - postgresql
+            - name: LOGIN_SERVER
+              value: "http://login.apcode.com.br"
+            - name: DB_SERVER
+              value: "db.apcode.com.br"
       imagePullSecrets:
       - name: github-secret
 
@@ -73,12 +71,13 @@ metadata:
   namespace: apsso
 spec:
   rules:
-    - http:
+    - host: login.apcode.com.br
+      http:
         paths:
-          - path: /sso
-            pathType: Prefix
-            backend:
-              service:
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: appso-login
+              port:
                 name: appso-login
-                port:
-                  name: appso-login

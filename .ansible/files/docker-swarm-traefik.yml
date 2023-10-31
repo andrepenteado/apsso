@@ -8,6 +8,7 @@ services:
       - "--log.level=INFO"
       - "--api=false"
       - "--api.dashboard=false"
+      - "--api.insecure=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.swarmMode=true"
       - "--providers.docker.network=rede-swarm-apsso"
