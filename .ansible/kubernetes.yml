@@ -5,9 +5,6 @@
 
 - name: Fazer deploy do sistema no kubernetes
   hosts: localhost
-  vars:
-    diretorio:
-      raiz: /home/andrepenteado
 
   tasks:
   - name: Criar namespace do sistema
@@ -20,7 +17,7 @@
       state: present
       src: secret.yml
 
-  - name: Deploy do módulo de login
+  - name: Deploy dos módulos do sistema
     kubernetes.core.k8s:
       state: present
-      src: login.yml
+      src: kubernetes-apsso.yml

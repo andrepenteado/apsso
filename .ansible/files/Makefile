@@ -4,9 +4,6 @@ start:
 stop:
 	docker stack rm apsso
 
-log:
-	docker service logs -f
-
 update:
 	$(MAKE) stop
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin

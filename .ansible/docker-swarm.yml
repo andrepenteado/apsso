@@ -12,7 +12,7 @@
 
   - name: Copiar docker-compose do traefik
     ansible.builtin.copy:
-      src: docker-compose-traefik.yml
+      src: docker-swarm-traefik.yml
       dest: "{{ diretorio.raiz }}/traefik/docker-compose.yml"
 
   - name: Baixar imagem do traefik
@@ -37,7 +37,7 @@
 
   - name: Copiar docker-compose do APsso para diretório de stacks de serviços
     ansible.builtin.copy:
-      src: docker-compose-apsso.yml
+      src: docker-swarm-apsso.yml
       dest: "{{ diretorio.raiz }}/apsso/docker-compose.yml"
 
   - name: Criar rede interna docker
