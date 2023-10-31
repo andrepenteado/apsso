@@ -1,5 +1,7 @@
-# Instalar os módulos ansible para kubernetes
+# Instalar os dependências para usar os módulos ansible para kubernetes
+#
 # ansible-galaxy collection install kubernetes.core
+# Ter instalado o python-kubernetes (ou pip install kubernetes)
 
 - name: Fazer deploy do sistema no kubernetes
   hosts: localhost

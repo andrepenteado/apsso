@@ -23,10 +23,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 30000
-              name: p30000
           env:
-            - name: CATALINA_OPTIONS
-              value: "-Duser.language=pt -Duser.country=BR -Dfile.encoding=UTF-8"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
+      hostAliases:
+        - ip: 200.145.157.33
+          hostnames:
+            - postgresql
       imagePullSecrets:
       - name: github-secret
 
@@ -39,10 +42,11 @@ metadata:
   labels:
     app: login
 spec:
+  type: LoadBalancer
   ports:
     - name: p30000
       port: 30000
-      targetPort: p30000
+      targetPort: 30000
   selector:
     app: login
 
