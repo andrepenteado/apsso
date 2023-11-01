@@ -11,7 +11,7 @@ jobs:
     name: Buildar, testar e gerar imagem
 
     services:
-      local.db-test.apcode.com.br:
+      dev.db-test.apcode.com.br:
         image: postgres:16
         env:
           POSTGRES_DB: apsso-dbname

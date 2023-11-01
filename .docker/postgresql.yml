@@ -1,6 +1,6 @@
 services:
 
-  local.db.apcode.com.br:
+  dev.db.apcode.com.br:
     image: postgres:16
     container_name: apsso-db
     hostname: apsso-db
@@ -13,7 +13,7 @@ services:
     ports:
       - 5432:5432
 
-  local.db-test.apcode.com.br:
+  dev.db-test.apcode.com.br:
     image: postgres:16
     container_name: apsso-db-test
     hostname: apsso-db-test

@@ -1,36 +1,38 @@
 services:
 
-  local.login.apcode.com.br:
+  dev.login.apcode.com.br:
     image: ghcr.io/andrepenteado/apsso/login
     container_name: login
     hostname: login
     environment:
-      LOGIN_SERVER: http://local.login.apcode.com.br:30000
-      DB_SERVER: local.db.apcode.com.br
+      LOGIN_SERVER: http://dev.login.apcode.com.br:30000
+      DB_SERVER: dev.db.apcode.com.br
     ports:
       - 30000:30000
 
-  local.controle.apcode.com.br:
+  dev.controle.apcode.com.br:
     image: ghcr.io/andrepenteado/apsso/controle
     container_name: controle
     hostname: controle
     environment:
-      LOGIN_SERVER: http://local.login.apcode.com.br:30000
-      DB_SERVER: local.db.apcode.com.br
+      LOGIN_SERVER: http://dev.login.apcode.com.br:30000
+      DB_SERVER: dev.db.apcode.com.br
+      CLIENT_ID: DEV.com.github.andrepenteado.apsso.controle
     ports:
       - 30001:30001
 
-  local.portal.apcode.com.br:
+  dev.portal.apcode.com.br:
     image: ghcr.io/andrepenteado/apsso/portal
     container_name: portal
     hostname: portal
     environment:
-      LOGIN_SERVER: http://local.login.apcode.com.br:30000
-      DB_SERVER: local.db.apcode.com.br
+      LOGIN_SERVER: http://dev.login.apcode.com.br:30000
+      DB_SERVER: dev.db.apcode.com.br
+      CLIENT_ID: DEV.com.github.andrepenteado.apsso.portal
     ports:
       - 30002:30002
 
-  local.db.apcode.com.br:
+  dev.db.apcode.com.br:
     image: postgres:16
     container_name: postgresql
     hostname: postgresql

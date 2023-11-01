@@ -24,7 +24,7 @@ spring:
         registration:
           portal-oidc:
             provider: spring
-            client-id: com.github.andrepenteado.apsso.portal
+            client-id: ${CLIENT_ID}
             client-secret: portal-secret
             client-authentication-method: client_secret_basic
             authorization-grant-type: authorization_code

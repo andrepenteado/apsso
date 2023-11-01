@@ -1,9 +1,24 @@
+# Namespace
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: apsso
 
+# Configurações
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-config
+  namespace: apsso
+data:
+  LOGIN_SERVER: "http://login.apcode.com.br"
+  DB_SERVER: "db.apcode.com.br"
+  CLIENT_ID_CONTROLE: "com.github.andrepenteado.apsso.controle"
+  CLIENT_ID_PORTAL: "com.github.andrepenteado.apsso.portal"
+
+# Secret para baixar imagens do github
 ---
 apiVersion: v1
 kind: Secret
@@ -14,55 +29,200 @@ data:
   .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJnaGNyLmlvIjogewoJCQkiYXV0aCI6ICJZVzVrY21Wd1pXNTBaV0ZrYnpwbmFIQmZORTgxVmtWWlIzZGhkbUo1VjJOcE1uQlhWV2MxV21ad1IyeEZibXR6TURkWWJEaEgiCgkJfQoJfSwKCSJhbGlhc2VzIjogewoJCSJidWlsZGVyIjogImJ1aWxkeCIKCX0KfQ==
 type: kubernetes.io/dockerconfigjson
 
+# Interface de Login
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: appso-login
+  name: &name apsso-login
   namespace: apsso
-  labels:
-    apsso.apcode.com.br/modulo: login
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: login
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      apsso.apcode.com.br/modulo: login
+      <<: *selector
   template:
     metadata:
       labels:
-        apsso.apcode.com.br/modulo: login
+        <<: *selector
     spec:
       containers:
-        - name: appso-login
+        - name: *name
           image: ghcr.io/andrepenteado/apsso/login
           imagePullPolicy: Always
           ports:
             - containerPort: 30000
           env:
-            - name: LOGIN_SERVER
-              value: "http://login.apcode.com.br"
-            - name: DB_SERVER
-              value: "db.apcode.com.br"
+          - name: LOGIN_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: server-config
+                key: LOGIN_SERVER
+          - name: DB_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: server-config
+                key: DB_SERVER
       imagePullSecrets:
-      - name: github-secret
-
+        - name: github-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: appso-login
+  name: apsso-login
   namespace: apsso
-  labels:
-    apsso.apcode.com.br/modulo: login
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: login
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
 spec:
   type: LoadBalancer
   ports:
-    - name: appso-login
+    - name: apsso-login
       port: 30000
       targetPort: 30000
   selector:
-    apsso.apcode.com.br/modulo: login
+    <<: *selector
 
+# Módulo de Controle
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-controle
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: controle
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/controle
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30001
+          env:
+            - name: LOGIN_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: LOGIN_SERVER
+            - name: DB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: DB_SERVER
+            - name: CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: CLIENT_ID_CONTROLE
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &name apsso-controle
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: controle
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: *name
+      port: 30001
+      targetPort: 30001
+  selector:
+    <<: *selector
+
+# Portal de Sistemas
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-portal
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: portal
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/portal
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30002
+          env:
+            - name: LOGIN_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: LOGIN_SERVER
+            - name: DB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: DB_SERVER
+            - name: CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: CLIENT_ID_PORTAL
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &name apsso-portal
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: portal
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: *name
+      port: 30002
+      targetPort: 30002
+  selector:
+    <<: *selector
+
+# Proxy
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -74,10 +234,30 @@ spec:
     - host: login.apcode.com.br
       http:
         paths:
-        - pathType: Prefix
-          path: /
-          backend:
-            service:
-              name: appso-login
-              port:
-                name: appso-login
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-login
+                port:
+                  name: apsso-login
+    - host: controle.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-controle
+                port:
+                  name: apsso-controle
+    - host: portal.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-portal
+                port:
+                  name: apsso-portal

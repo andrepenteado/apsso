@@ -57,6 +57,7 @@ services:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
       LOGIN_SERVER: http://login.apcode.com.br
       DB_SERVER: db.apcode.com.br
+      CLIENT_ID: com.github.andrepenteado.apsso.controle
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
@@ -87,6 +88,7 @@ services:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
       LOGIN_SERVER: http://login.apcode.com.br
       DB_SERVER: db.apcode.com.br
+      CLIENT_ID: com.github.andrepenteado.apsso.portal
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
