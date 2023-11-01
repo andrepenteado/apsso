@@ -7,15 +7,6 @@
   hosts: localhost
 
   tasks:
-  - name: Criar namespace do sistema
-    kubernetes.core.k8s:
-      state: present
-      src: namespace.yml
-
-  - name: Criar secret do github
-    kubernetes.core.k8s:
-      state: present
-      src: secret.yml
 
   - name: Deploy dos módulos do sistema
     kubernetes.core.k8s:
