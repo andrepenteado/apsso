@@ -19,7 +19,7 @@ services:
       DB_SERVER: dev.db.apcode.com.br
       CLIENT_ID: DEV.com.github.andrepenteado.apsso.controle
     ports:
-      - 30001:30001
+      - 30001:8080
 
   dev.portal.apcode.com.br:
     image: ghcr.io/andrepenteado/apsso/portal
@@ -30,7 +30,7 @@ services:
       DB_SERVER: dev.db.apcode.com.br
       CLIENT_ID: DEV.com.github.andrepenteado.apsso.portal
     ports:
-      - 30002:30002
+      - 30002:8080
 
   dev.db.apcode.com.br:
     image: postgres:16

@@ -36,6 +36,5 @@ spring:
             issuer-uri: ${LOGIN_SERVER}
 
 server:
-  port: 30001
   error:
     include-message: always

@@ -1,5 +1,5 @@
 FROM amazoncorretto:21
 WORKDIR /controle
 COPY controle/target/controle.jar /controle/controle.jar
-ENTRYPOINT [ "java", "-jar", "-Dserver.port=30001", "/controle/controle.jar" ]
-EXPOSE 30001
+ENTRYPOINT [ "java", "-jar", "/controle/controle.jar" ]
+EXPOSE 8080

@@ -7,6 +7,7 @@
     </envs>
     <module name="portal" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.apsso.portal.PortalApplication" />
+    <option name="VM_PARAMETERS" value="-Dserver.port=30002" />
     <method v="2">
       <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean package --projects services,portal -DskipTests" />
     </method>

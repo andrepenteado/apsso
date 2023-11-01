@@ -20,5 +20,5 @@ RUN mvn --projects services,controle -U clean package --file /apsso/pom.xml -Dsk
 FROM amazoncorretto:21
 WORKDIR /controle
 COPY --from=build /apsso/controle/target/controle.jar /controle/controle.jar
-ENTRYPOINT [ "java", "-jar", "-Dserver.port=30001", "/controle/controle.jar" ]
-EXPOSE 30001
+ENTRYPOINT [ "java", "-jar", "/controle/controle.jar" ]
+EXPOSE 8080

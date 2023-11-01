@@ -4,15 +4,22 @@ param(
 )
 
 switch($exec) {
-    "build-login" {
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        docker build -f .docker/Dockerfile.login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+    "build-all" {
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
+        mvn -U clean package -DskipTests
+        docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+        docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
+        docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/controle
+        docker push ghcr.io/andrepenteado/apsso/controle:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/portal
+        docker push ghcr.io/andrepenteado/apsso/portal:$VERSAO
         docker logout ghcr.io
     }
-    "build-login-pipeline" {
+    "build-login" {
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         mvn -U clean package --projects services,login
         docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
@@ -23,14 +30,6 @@ switch($exec) {
     }
     "build-controle" {
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        docker build -f .docker/Dockerfile.controle -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        docker push ghcr.io/andrepenteado/apsso/controle
-        docker push ghcr.io/andrepenteado/apsso/controle:$VERSAO
-        docker logout ghcr.io
-    }
-    "build-controle-pipeline" {
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
         mvn -U clean package --projects services,controle -DskipTests
         docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
@@ -40,14 +39,6 @@ switch($exec) {
         docker logout ghcr.io
     }
     "build-portal" {
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        docker build -f .docker/Dockerfile.portal -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        docker push ghcr.io/andrepenteado/apsso/portal
-        docker push ghcr.io/andrepenteado/apsso/portal:$VERSAO
-        docker logout ghcr.io
-    }
-    "build-portal-pipeline" {
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
         mvn -U clean package --projects services,portal -DskipTests

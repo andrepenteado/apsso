@@ -1,5 +1,5 @@
 FROM amazoncorretto:21
 WORKDIR /portal
 COPY portal/target/portal.jar /portal/portal.jar
-ENTRYPOINT [ "java", "-jar", "-Dserver.port=30002", "/portal/portal.jar" ]
-EXPOSE 30002
+ENTRYPOINT [ "java", "-jar", "/portal/portal.jar" ]
+EXPOSE 8080
