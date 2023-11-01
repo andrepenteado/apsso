@@ -28,6 +28,7 @@ spring:
     exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
 server:
+  forward-headers-strategy: framework
   error:
     whitelabel:
       enabled: false

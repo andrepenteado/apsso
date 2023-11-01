@@ -240,9 +240,6 @@ kind: Ingress
 metadata:
   name: apsso
   namespace: apsso
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   tls:
     - secretName: certificado-ssl

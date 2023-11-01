@@ -36,5 +36,6 @@ spring:
             issuer-uri: ${LOGIN_SERVER}
 
 server:
+  forward-headers-strategy: framework
   error:
     include-message: always
