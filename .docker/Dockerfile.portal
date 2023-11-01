@@ -3,7 +3,7 @@ FROM node:16 AS angular
 WORKDIR /frontend
 COPY /portal/src/main/angular/ /frontend/portal/src/main/angular/
 RUN npm --prefix ./portal/src/main/angular install
-RUN npm --prefix ./portal/src/main/angular run build --omit=dev --base-href=/portal
+RUN npm --prefix ./portal/src/main/angular run build --omit=dev
 
 # Stage 2 - Build
 FROM maven:3-amazoncorretto-21-debian AS build

@@ -5,75 +5,76 @@ param(
 
 switch($exec) {
     "build-login" {
-        $VERSAO = mvn help:evaluate `-Dexpression=project.version -q `-DforceStdout
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         docker build -f .docker/Dockerfile.login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
         docker logout ghcr.io
     }
     "build-login-pipeline" {
-        $VERSAO = mvn help:evaluate `-Dexpression=project.version -q `-DforceStdout
-        mvn -U clean package --projects login
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
+        mvn -U clean package --projects services,login
         docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
         docker logout ghcr.io
     }
     "build-controle" {
-        $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         docker build -f .docker/Dockerfile.controle -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/controle
         docker push ghcr.io/andrepenteado/apsso/controle:$VERSAO
         docker logout ghcr.io
     }
     "build-controle-pipeline" {
-        $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
-        npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/controle/" "-c=production"
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
+        npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
         mvn -U clean package --projects services,controle -DskipTests
         docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/controle
         docker push ghcr.io/andrepenteado/apsso/controle:$VERSAO
         docker logout ghcr.io
     }
     "build-portal" {
-        $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         docker build -f .docker/Dockerfile.portal -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/portal
         docker push ghcr.io/andrepenteado/apsso/portal:$VERSAO
         docker logout ghcr.io
     }
     "build-portal-pipeline" {
-        $VERSAO = mvn help:evaluate `-Dexpression = project.version -q `-DforceStdout
-        npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/portal/" "-c=production"
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
+        npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
         mvn -U clean package --projects services,portal -DskipTests
         docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/portal
         docker push ghcr.io/andrepenteado/apsso/portal:$VERSAO
         docker logout ghcr.io
     }
     "start" {
-        docker compose -f .docker/docker-compose.yml up -d
+        docker compose -f .ansible/files/docker-compose.yml up -d
     }
     "stop" {
-        docker compose -f .docker/docker-compose.yml down
+        docker compose -f .ansible/files/docker-compose.yml down
     }
     "log" {
-        docker compose -f .docker/docker-compose.yml logs -f
+        docker compose -f .ansible/files/docker-compose.yml logs -f
     }
     "update" {
-        docker compose -f .docker/docker-compose.yml down
-        Get-Content $GITHUB_TOKEN | docker login ghcr.io --username andrepenteado --password-stdin
+        docker compose -f .ansible/files/docker-compose.yml down
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker image pull postgres:16
         docker image pull ghcr.io/andrepenteado/apsso/login
         docker image pull ghcr.io/andrepenteado/apsso/controle
+        docker image pull ghcr.io/andrepenteado/apsso/portal
         docker logout ghcr.io
-        docker compose -f .docker/docker-compose.yml up -d
+        docker compose -f .ansible/files/docker-compose.yml up -d
     }
     "start-backend-dev" {
         docker compose -f .docker/postgresql.yml up -d

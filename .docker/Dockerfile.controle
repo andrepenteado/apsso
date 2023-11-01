@@ -3,7 +3,7 @@ FROM node:16 AS angular
 WORKDIR /frontend
 COPY /controle/src/main/angular/ /frontend/controle/src/main/angular/
 RUN npm --prefix ./controle/src/main/angular install
-RUN npm --prefix ./controle/src/main/angular run build --omit=dev --base-href=/controle
+RUN npm --prefix ./controle/src/main/angular run build --omit=dev
 
 # Stage 2 - Build
 FROM maven:3-amazoncorretto-21-debian AS build

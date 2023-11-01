@@ -2,6 +2,10 @@
   <configuration default="false" name="Controle UP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ALTERNATIVE_JRE_PATH" value="Amazon Corretto JDK 21" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="DB_SERVER" value="local.db.apcode.com.br" />
+      <env name="LOGIN_SERVER" value="http://local.login.apcode.com.br:30000" />
+    </envs>
     <module name="controle" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.apsso.controle.ControleApplication" />
     <method v="2">

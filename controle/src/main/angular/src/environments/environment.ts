@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  backendURL:  window.location.protocol + '//' + window.location.host + '/controle',
-  portalURL: 'http://localhost:30003/portal'
+  backendURL:  window.location.protocol + '//' + window.location.host,
+  portalURL: 'http://local.portal.apcode.com.br:30002'
 };
 /*
  * For easier debugging in development mode, you can import the following file

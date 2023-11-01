@@ -23,7 +23,7 @@ build-controle:
 	docker logout ghcr.io
 
 build-controle-pipeline:
-	npm --prefix ./controle/src/main/angular run build --omit=dev -- "--base-href=/controle/" "-c=production"
+	npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
 	mvn -U clean package --projects services,controle -DskipTests
 	docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
@@ -39,7 +39,7 @@ build-portal:
 	docker logout ghcr.io
 
 build-portal-pipeline:
-	npm --prefix ./portal/src/main/angular run build --omit=dev -- "--base-href=/portal/" "-c=production"
+	npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
 	mvn -U clean package --projects services,portal -DskipTests
 	docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP) .
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
@@ -48,13 +48,13 @@ build-portal-pipeline:
 	docker logout ghcr.io
 
 start:
-	docker compose -f .docker/docker-compose.yml up -d
+	docker compose -f .ansible/files/docker-compose.yml up -d
 
 stop:
-	docker compose -f .docker/docker-compose.yml down
+	docker compose -f .ansible/files/docker-compose.yml down
 
 log:
-	docker compose -f .docker/docker-compose.yml logs -f
+	docker compose -f .ansible/files/docker-compose.yml logs -f
 
 update:
 	$(MAKE) stop
@@ -62,6 +62,7 @@ update:
 	docker image pull postgres:16
 	docker image pull ghcr.io/andrepenteado/apsso/login
 	docker image pull ghcr.io/andrepenteado/apsso/controle
+	docker image pull ghcr.io/andrepenteado/apsso/portal
 	docker logout ghcr.io
 	$(MAKE) start
 

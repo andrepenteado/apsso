@@ -31,7 +31,7 @@ export class AuthService {
 
   public logout(): void {
     sessionStorage.clear();
-    window.location.href = '/controle/logout';
+    window.location.href = '/logout';
   }
 
   public voltarAoPortal(): void {

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendURL:  window.location.protocol + '//' + window.location.host + '/portal'
+  backendURL:  window.location.protocol + '//' + window.location.host
 };
 /*
  * For easier debugging in development mode, you can import the following file

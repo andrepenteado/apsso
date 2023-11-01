@@ -32,7 +32,7 @@ export class AuthService {
 
   public logout(): void {
     sessionStorage.clear();
-    window.location.href = '/portal/logout';
+    window.location.href = '/logout';
   }
 
   public nomePerfil(userLogin: UserLogin): string {
