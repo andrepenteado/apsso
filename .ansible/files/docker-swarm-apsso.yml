@@ -49,7 +49,7 @@ services:
         - traefik.http.routers.controle.rule=Host(`controle.apcode.com.br`)
         - traefik.http.routers.controle.entrypoints=web
         - traefik.http.routers.controle.tls=false
-        - traefik.http.services.controle.loadbalancer.server.port=8080
+        - traefik.http.services.controle.loadbalancer.server.port=30001
         - traefik.http.services.controle.loadbalancer.sticky=true
         - traefik.http.services.controle.loadbalancer.sticky.cookie.name=controle-server
         - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
@@ -76,13 +76,13 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.controle.rule=Host(`portal.apcode.com.br`)
-        - traefik.http.routers.controle.entrypoints=web
-        - traefik.http.routers.controle.tls=false
-        - traefik.http.services.controle.loadbalancer.server.port=8080
-        - traefik.http.services.controle.loadbalancer.sticky=true
-        - traefik.http.services.controle.loadbalancer.sticky.cookie.name=portal-server
-        - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
+        - traefik.http.routers.portal.rule=Host(`portal.apcode.com.br`)
+        - traefik.http.routers.portal.entrypoints=web
+        - traefik.http.routers.portal.tls=false
+        - traefik.http.services.portal.loadbalancer.server.port=30002
+        - traefik.http.services.portal.loadbalancer.sticky=true
+        - traefik.http.services.portal.loadbalancer.sticky.cookie.name=portal-server
+        - traefik.http.services.portal.loadbalancer.sticky.cookie.httpOnly=true
     environment:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
       LOGIN_SERVER: http://login.apcode.com.br

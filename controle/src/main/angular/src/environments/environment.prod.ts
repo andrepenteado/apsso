@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   backendURL:  window.location.protocol + '//' + window.location.host,
-  portalURL: 'http://portal.apcode.com.br:30002'
+  portalURL: window.location.protocol + '//' + window.location.host.replace('controle.', 'portal.').replace('30001','30002')
 };
