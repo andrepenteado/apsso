@@ -8,12 +8,28 @@
     <!-- Log para console -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%cyan(%d{"dd/MM/yyyy HH:mm:ss,SSS"}) %highlight(%m) [%file:%line]%n</pattern>
+            <pattern>%cyan(%d{"dd/MM/yyyy HH:mm:ss,SSS"}) %magenta(portal) %green(%X{IP:-0.0.0.0}) %yellow(%X{USUARIO:-anônimo}) %highlight(%level %msg) %ex %class %n</pattern>
         </encoder>
+    </appender>
+
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>http://cluster.apcode.com.br:3100/loki/api/v1/push</url>
+        </http>
+        <format>
+            <label>
+                <pattern>app=apsso,module=portal,host=${HOSTNAME},level=%level,class=%class,user=%X{USUARIO:-anônimo}</pattern>
+            </label>
+            <message>
+                <pattern>%magenta(portal) %green(%X{IP:-0.0.0.0}) %yellow(%X{USUARIO:-anônimo}) %highlight(%level %msg) %ex %class</pattern>
+            </message>
+            <sortByTime>true</sortByTime>
+        </format>
     </appender>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOKI" />
     </root>
 
 </configuration>
