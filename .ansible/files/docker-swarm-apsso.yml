@@ -58,6 +58,7 @@ services:
       LOGIN_SERVER: http://login.apcode.com.br
       DB_SERVER: db.apcode.com.br
       CLIENT_ID: com.github.andrepenteado.apsso.controle
+      ZIPKIN_SERVER: http://cluster.apcode.com.br
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:

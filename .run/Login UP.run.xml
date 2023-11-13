@@ -47,6 +47,11 @@
         <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
         <option name="IS_PREDEFINED" value="false" />
       </EnvironmentVariables>
+      <EnvironmentVariables>
+        <option name="NAME" value="ZIPKIN_SERVER" />
+        <option name="VALUE" value="http://cluster.apcode.com.br" />
+        <option name="IS_PREDEFINED" value="false" />
+      </EnvironmentVariables>
     </ConfigurationWrapper>
     <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
       <option name="USE_ENV_VARIABLES" value="true" />
@@ -70,6 +75,11 @@
       <EnvironmentVariables>
         <option name="NAME" value="LOGIN_SERVER" />
         <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
+        <option name="IS_PREDEFINED" value="false" />
+      </EnvironmentVariables>
+      <EnvironmentVariables>
+        <option name="NAME" value="ZIPKIN_SERVER" />
+        <option name="VALUE" value="http://cluster.apcode.com.br" />
         <option name="IS_PREDEFINED" value="false" />
       </EnvironmentVariables>
     </ConfigurationWrapper>
@@ -97,6 +107,11 @@
         <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
         <option name="IS_PREDEFINED" value="false" />
       </EnvironmentVariables>
+      <EnvironmentVariables>
+        <option name="NAME" value="ZIPKIN_SERVER" />
+        <option name="VALUE" value="http://cluster.apcode.com.br" />
+        <option name="IS_PREDEFINED" value="false" />
+      </EnvironmentVariables>
     </ConfigurationWrapper>
     <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
       <option name="USE_ENV_VARIABLES" value="true" />
@@ -120,6 +135,11 @@
       <EnvironmentVariables>
         <option name="NAME" value="LOGIN_SERVER" />
         <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
+        <option name="IS_PREDEFINED" value="false" />
+      </EnvironmentVariables>
+      <EnvironmentVariables>
+        <option name="NAME" value="ZIPKIN_SERVER" />
+        <option name="VALUE" value="http://cluster.apcode.com.br" />
         <option name="IS_PREDEFINED" value="false" />
       </EnvironmentVariables>
     </ConfigurationWrapper>

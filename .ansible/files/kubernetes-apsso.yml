@@ -17,6 +17,7 @@ data:
   DB_SERVER: "db.apcode.com.br"
   CLIENT_ID_CONTROLE: "com.github.andrepenteado.apsso.controle"
   CLIENT_ID_PORTAL: "com.github.andrepenteado.apsso.portal"
+  ZIPKIN_SERVER: "http://cluster.apcode.com.br"
 
 # Secret para baixar imagens do github
 ---
@@ -79,6 +80,11 @@ spec:
               configMapKeyRef:
                 name: server-config
                 key: DB_SERVER
+          - name: ZIPKIN_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: server-config
+                key: ZIPKIN_SERVER
       imagePullSecrets:
         - name: github-secret
 ---
@@ -145,6 +151,11 @@ spec:
                 configMapKeyRef:
                   name: server-config
                   key: CLIENT_ID_CONTROLE
+            - name: ZIPKIN_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: ZIPKIN_SERVER
       imagePullSecrets:
         - name: github-secret
 ---
@@ -211,6 +222,11 @@ spec:
                 configMapKeyRef:
                   name: server-config
                   key: CLIENT_ID_PORTAL
+            - name: ZIPKIN_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: ZIPKIN_SERVER
       imagePullSecrets:
         - name: github-secret
 ---

@@ -1,5 +1,8 @@
 spring:
 
+  application:
+    name: controle
+
   datasource:
     url: jdbc:postgresql://${DB_SERVER}/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
@@ -39,3 +42,15 @@ server:
   forward-headers-strategy: framework
   error:
     include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_SERVER}

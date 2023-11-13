@@ -3,7 +3,7 @@
 <configuration>
 
     <!-- Nome da aplicação -->
-    <contextName>Portal de Sistemas</contextName>
+    <contextName>portal</contextName>
 
     <!-- Log para console -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,7 +18,7 @@
         </http>
         <format>
             <label>
-                <pattern>app=apsso,module=portal,host=${HOSTNAME},level=%level,class=%class,user=%X{USUARIO:-anônimo}</pattern>
+                <pattern>app=apsso,module=portal,host=${HOSTNAME},level=%level,class=%class,user=%X{USUARIO:-anônimo},traceId=%X{traceId:-},spanId=%X{spanId:-}</pattern>
             </label>
             <message>
                 <pattern>%magenta(portal) %green(%X{IP:-0.0.0.0}) %yellow(%X{USUARIO:-anônimo}) %highlight(%level %msg) %ex %class</pattern>
