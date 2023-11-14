@@ -3,6 +3,7 @@ package com.github.andrepenteado.apsso.portal.resources;
 import com.github.andrepenteado.apsso.portal.services.PermissaoService;
 import com.github.andrepenteado.apsso.services.SistemaService;
 import com.github.andrepenteado.apsso.services.entities.Sistema;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/sistemas")
 @RequiredArgsConstructor
+@Observed
 @Slf4j
 public class SistemaResource {
 

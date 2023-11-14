@@ -3,6 +3,7 @@ package com.github.andrepenteado.apsso.controle.resources;
 import com.github.andrepenteado.apsso.controle.services.PermissaoService;
 import com.github.andrepenteado.apsso.services.UsuarioService;
 import com.github.andrepenteado.apsso.services.entities.Usuario;
+import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
+@Observed
 @Slf4j
 public class UsuarioResource {
 
