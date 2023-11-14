@@ -28,8 +28,10 @@ public class PortalApplication {
     @Profile("!test")
     SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http
-            .authorizeHttpRequests((authorize) ->
-                authorize.anyRequest().authenticated()
+            .authorizeHttpRequests(authorize ->
+                authorize
+                    .requestMatchers("/actuator/**").permitAll()
+                    .anyRequest().authenticated()
             )
             .oauth2Login(Customizer.withDefaults())
             .oauth2Client(Customizer.withDefaults())
