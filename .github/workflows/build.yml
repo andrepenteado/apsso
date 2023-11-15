@@ -49,6 +49,15 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
 
+      - uses: s4u/maven-settings-action@v2.8.0
+        with:
+          servers: |
+            [{
+                "id": "github-apcode",
+                "username": "${{ github.actor }}",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]
+
       - name: Compilar e testar os módulos do projeto
         run: mvn -B clean package
         env:
