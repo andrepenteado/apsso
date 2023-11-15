@@ -1,9 +1,9 @@
 package com.github.andrepenteado.apsso.services.impl;
 
-import com.github.andrepenteado.apsso.services.repositories.UsuarioRepository;
-import com.github.andrepenteado.apsso.services.Util;
-import com.github.andrepenteado.apsso.services.entities.Usuario;
 import com.github.andrepenteado.apsso.services.UsuarioService;
+import com.github.andrepenteado.apsso.services.entities.Usuario;
+import com.github.andrepenteado.apsso.services.repositories.UsuarioRepository;
+import com.github.andrepenteado.core.common.CoreUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario incluir(Usuario usuario, BindingResult validacao) {
-        String erros = Util.validateModel(validacao);
+        String erros = CoreUtil.validateModel(validacao);
 
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario alterar(Usuario usuario, String username, BindingResult validacao) {
-        String erros = Util.validateModel(validacao);
+        String erros = CoreUtil.validateModel(validacao);
 
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);

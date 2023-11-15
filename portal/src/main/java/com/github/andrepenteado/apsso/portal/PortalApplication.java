@@ -15,37 +15,13 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-@SpringBootApplication(scanBasePackages = "com.github.andrepenteado.apsso")
+@SpringBootApplication(scanBasePackages = { "com.github.andrepenteado.apsso", "com.github.andrepenteado.core.web" })
 @EntityScan(basePackages = "com.github.andrepenteado.apsso")
 @EnableJpaRepositories(basePackages = "com.github.andrepenteado.apsso")
 public class PortalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PortalApplication.class, args);
-    }
-
-    @Bean
-    @Profile("!test")
-    SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
-        http
-            .authorizeHttpRequests(authorize ->
-                authorize
-                    .requestMatchers("/actuator/**").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .oauth2Login(Customizer.withDefaults())
-            .oauth2Client(Customizer.withDefaults())
-            .logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository)))
-            .csrf(CsrfConfigurer::disable)
-            .cors(CorsConfigurer::disable);
-
-        return http.build();
-    }
-
-    private LogoutSuccessHandler oidcLogoutSuccessHandler(ClientRegistrationRepository clientRegistrationRepository) {
-        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/logout");
-        return oidcLogoutSuccessHandler;
     }
 
 }

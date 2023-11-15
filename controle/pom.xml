@@ -38,6 +38,11 @@
             <artifactId>services</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.andrepenteado.core</groupId>
+            <artifactId>web</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <!-- Testes -->
         <dependency>

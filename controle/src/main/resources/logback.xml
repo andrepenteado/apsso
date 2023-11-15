@@ -6,35 +6,7 @@
 
     <property name="APP" value="apsso" />
     <property name="MODULE" value="controle" />
-    <property name="LOKI_SERVER" value="http://cluster.apcode.com.br:3100/loki/api/v1/push" />
 
-    <!-- Log para console -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%cyan(%d{"dd/MM/yyyy HH:mm:ss,SSS"}) %magenta(${MODULE}) %green(%X{IP:-0.0.0.0}) %yellow(%X{USUARIO:-anônimo}) %highlight(%level %msg) %ex %class %n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
-        <http>
-            <url>${LOKI_SERVER}</url>
-        </http>
-        <format>
-            <label>
-                <pattern>app=${APP},module=${MODULE},host=${HOSTNAME},level=%level,class=%class,user=%X{USUARIO:-anônimo},traceId=%X{traceId:-0},spanId=%X{spanId:-0}</pattern>
-            </label>
-            <message>
-                <pattern>%magenta(${MODULE}) %green(%X{IP:-0.0.0.0}) %yellow(%X{USUARIO:-anônimo}) %highlight(%level %msg) %ex %class</pattern>
-            </message>
-            <sortByTime>true</sortByTime>
-        </format>
-    </appender>
-
-    <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-        <springProfile name="!dev | !homolog">
-            <appender-ref ref="LOKI" />
-        </springProfile>
-    </root>
+    <include resource="logback-common.xml"/>
 
 </configuration>
