@@ -94,4 +94,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
+    @Override
+    public void alterarSenha(String username, String senha) {
+        Usuario usuarioAlterar = buscar(username)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %s não encontrado", username)));
+        usuarioAlterar.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(senha));
+        usuarioRepository.save(usuarioAlterar);
+    }
+
 }

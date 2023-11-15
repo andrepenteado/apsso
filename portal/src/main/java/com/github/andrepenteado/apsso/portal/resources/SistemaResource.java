@@ -2,6 +2,7 @@ package com.github.andrepenteado.apsso.portal.resources;
 
 import com.github.andrepenteado.apsso.portal.services.PermissaoService;
 import com.github.andrepenteado.apsso.services.SistemaService;
+import com.github.andrepenteado.apsso.services.UsuarioService;
 import com.github.andrepenteado.apsso.services.entities.Sistema;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -47,8 +45,8 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}")
-    public Sistema buscar(@PathVariable  String id, @AuthenticationPrincipal OidcUser principal) {
-        log.info("Buscar sistema de ID: #" + id);
+    public Sistema buscar(@PathVariable String id, @AuthenticationPrincipal OidcUser principal) {
+        log.info("Buscar sistema de ID: #{}", id);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");

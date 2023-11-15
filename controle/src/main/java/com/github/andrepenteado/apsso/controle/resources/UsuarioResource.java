@@ -47,7 +47,7 @@ public class UsuarioResource {
 
     @GetMapping("/{username}")
     public Usuario buscar(@PathVariable String username, @AuthenticationPrincipal OidcUser principal) {
-        log.info("Buscar usuário " + username);
+        log.info("Buscar usuário {}", username);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
@@ -66,7 +66,7 @@ public class UsuarioResource {
 
     @PostMapping
     public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal OidcUser principal) {
-        log.info("Incluir novo usuário " + usuario);
+        log.info("Incluir novo usuário {}", usuario);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
@@ -83,7 +83,7 @@ public class UsuarioResource {
 
     @PutMapping("/{username}")
     public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal OidcUser principal) {
-        log.info("Alterar dados do usuário " + usuario);
+        log.info("Alterar dados do usuário {}", usuario);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
@@ -100,7 +100,7 @@ public class UsuarioResource {
 
     @DeleteMapping("/{username}")
     public void excluir(@PathVariable String username, @AuthenticationPrincipal OidcUser principal) {
-        log.info("Excluir usuário " + username);
+        log.info("Excluir usuário {}", username);
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");

@@ -18,4 +18,6 @@ public interface UsuarioService {
 
     void excluir(String username);
 
+    void alterarSenha(String username, String senha);
+
 }

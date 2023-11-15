@@ -8,7 +8,6 @@ import { ExibeMensagemComponent } from './components/exibe-mensagem.component';
 import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import { PhonePipe } from './phone.pipe';
 
-
 @NgModule({
   declarations: [
     FloatingButtonComponent,

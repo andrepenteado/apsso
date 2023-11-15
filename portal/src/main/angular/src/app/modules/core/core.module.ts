@@ -5,16 +5,24 @@ import { CoreRoutingModule } from './core-routing.module';
 import { HomeComponent } from './components/home.component';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListarSistemasComponent } from './components/listar-sistemas.component';
+import { AlterarSenhaComponent } from './components/alterar-senha/alterar-senha.component';
+import { ReactiveFormsModule } from "@angular/forms";
+import { SharedModule } from "../../shared/shared.module";
+import { ExibeMensagemComponent} from "./components/exibe-mensagem.component";
 
 @NgModule({
   declarations: [
     HomeComponent,
-    ListarSistemasComponent
+    ListarSistemasComponent,
+    AlterarSenhaComponent,
+    ExibeMensagemComponent
   ],
   imports: [
     CommonModule,
     CoreRoutingModule,
-    NgbToastModule
+    NgbToastModule,
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
   ]
