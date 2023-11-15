@@ -4,6 +4,8 @@
 ![image](https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white)
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
+[![Compilar, testar e buildar](https://github.com/andrepenteado/apsso/actions/workflows/build.yml/badge.svg)](https://github.com/andrepenteado/apsso/actions/workflows/build.yml)
+
 # Portal de Sistemas
 Micro-serviço de um portal de single sign on para cadastro e autenticação
 de sistemas e usuários
