@@ -51,6 +51,8 @@ jobs:
 
       - name: Compilar e testar os módulos do projeto
         run: mvn -B clean package
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Buscar versão atual
         run: echo "VERSAO=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> $GITHUB_ENV
