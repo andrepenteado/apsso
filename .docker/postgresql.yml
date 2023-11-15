@@ -12,6 +12,8 @@ services:
       - apsso-pgdata:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - docker-host-network
 
   dev.db-test.apcode.com.br:
     image: postgres:16
@@ -25,7 +27,13 @@ services:
       - apsso-test-pgdata:/var/lib/postgresql/data
     ports:
       - 5433:5432
+    networks:
+      - docker-host-network
 
 volumes:
   apsso-pgdata:
   apsso-test-pgdata:
+
+networks:
+  docker-host-network:
+    external: true
