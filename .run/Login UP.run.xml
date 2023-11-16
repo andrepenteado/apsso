@@ -38,21 +38,6 @@
         <option name="VM_PARAMETERS" value="" />
         <option name="PROGRAM_PARAMETERS" value="" />
       </SHUTDOWN>
-      <EnvironmentVariables>
-        <option name="NAME" value="DB_SERVER" />
-        <option name="VALUE" value="dev.db.apcode.com.br" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="LOGIN_SERVER" />
-        <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="ZIPKIN_SERVER" />
-        <option name="VALUE" value="http://cluster.apcode.com.br:9411" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
     </ConfigurationWrapper>
     <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
       <option name="USE_ENV_VARIABLES" value="true" />
@@ -68,21 +53,6 @@
         <option name="VM_PARAMETERS" value="" />
         <option name="PROGRAM_PARAMETERS" value="" />
       </SHUTDOWN>
-      <EnvironmentVariables>
-        <option name="NAME" value="DB_SERVER" />
-        <option name="VALUE" value="dev.db.apcode.com.br" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="LOGIN_SERVER" />
-        <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="ZIPKIN_SERVER" />
-        <option name="VALUE" value="http://cluster.apcode.com.br:9411" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
     </ConfigurationWrapper>
     <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
       <option name="USE_ENV_VARIABLES" value="true" />
@@ -98,21 +68,6 @@
         <option name="VM_PARAMETERS" value="" />
         <option name="PROGRAM_PARAMETERS" value="" />
       </SHUTDOWN>
-      <EnvironmentVariables>
-        <option name="NAME" value="DB_SERVER" />
-        <option name="VALUE" value="dev.db.apcode.com.br" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="LOGIN_SERVER" />
-        <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="ZIPKIN_SERVER" />
-        <option name="VALUE" value="http://cluster.apcode.com.br:9411" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
     </ConfigurationWrapper>
     <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
       <option name="USE_ENV_VARIABLES" value="true" />
@@ -128,21 +83,6 @@
         <option name="VM_PARAMETERS" value="" />
         <option name="PROGRAM_PARAMETERS" value="" />
       </SHUTDOWN>
-      <EnvironmentVariables>
-        <option name="NAME" value="DB_SERVER" />
-        <option name="VALUE" value="dev.db.apcode.com.br" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="LOGIN_SERVER" />
-        <option name="VALUE" value="http://dev.login.apcode.com.br:30000" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
-      <EnvironmentVariables>
-        <option name="NAME" value="ZIPKIN_SERVER" />
-        <option name="VALUE" value="http://cluster.apcode.com.br:9411" />
-        <option name="IS_PREDEFINED" value="false" />
-      </EnvironmentVariables>
     </ConfigurationWrapper>
     <method v="2">
       <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean package --projects services,login -DskipTests" />

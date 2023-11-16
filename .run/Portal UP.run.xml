@@ -1,13 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Portal UP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
-    <envs>
-      <env name="DB_SERVER" value="dev.db.apcode.com.br" />
-      <env name="LOGIN_SERVER" value="http://dev.login.apcode.com.br:30000" />
-      <env name="CLIENT_ID" value="DEV.com.github.andrepenteado.apsso.portal" />
-      <env name="ZIPKIN_SERVER" value="http://cluster.apcode.com.br:9411" />
-    </envs>
     <module name="portal" />
+    <selectedOptions>
+      <option name="environmentVariables" />
+    </selectedOptions>
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.apsso.portal.PortalApplication" />
     <option name="VM_PARAMETERS" value="-Dserver.port=30002" />
     <method v="2">

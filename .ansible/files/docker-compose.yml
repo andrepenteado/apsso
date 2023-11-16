@@ -6,9 +6,6 @@ services:
     hostname: login
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      LOGIN_SERVER: http://dev.login.apcode.com.br:30000
-      DB_SERVER: dev.db.apcode.com.br
-      ZIPKIN_SERVER: http://cluster.apcode.com.br
     ports:
       - 30000:30000
     networks:
@@ -20,10 +17,6 @@ services:
     hostname: controle
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      LOGIN_SERVER: http://dev.login.apcode.com.br:30000
-      DB_SERVER: dev.db.apcode.com.br
-      CLIENT_ID: DEV.com.github.andrepenteado.apsso.controle
-      ZIPKIN_SERVER: http://cluster.apcode.com.br
     ports:
       - 30001:8080
     networks:
@@ -35,10 +28,6 @@ services:
     hostname: portal
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      LOGIN_SERVER: http://dev.login.apcode.com.br:30000
-      DB_SERVER: dev.db.apcode.com.br
-      CLIENT_ID: DEV.com.github.andrepenteado.apsso.portal
-      ZIPKIN_SERVER: http://cluster.apcode.com.br
     ports:
       - 30002:8080
     networks:

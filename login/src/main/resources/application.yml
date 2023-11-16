@@ -4,7 +4,7 @@ spring:
     name: login
 
   datasource:
-    url: jdbc:postgresql://${DB_SERVER}/apsso-dbname?autoReconnect=true
+    url: jdbc:postgresql://db.apcode.com.br/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver
@@ -46,11 +46,11 @@ management:
       probability: 1.0
   zipkin:
     tracing:
-      endpoint: ${ZIPKIN_SERVER}
+      endpoint: http://cluster.apcode.com.br:9411
 
 # keytool.exe -genkeypair -alias apsso -keyalg RSA -keypass passwebra -keystore apsso.jks -storepass passwebra
 apsso:
-  uri: ${LOGIN_SERVER}
+  uri: https://login.apcode.com.br
   jks:
     keypass: passwebra
     storepass: passwebra
