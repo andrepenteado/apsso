@@ -27,7 +27,7 @@ spring:
         registration:
           controle-oidc:
             provider: spring
-            client-id: com.github.andrepenteado.apsso.controle
+            client-id: com.github.andrepenteado.sso.controle
             client-secret: controle-secret
             client-authentication-method: client_secret_basic
             authorization-grant-type: authorization_code
