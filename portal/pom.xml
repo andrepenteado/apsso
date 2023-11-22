@@ -15,14 +15,14 @@
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
-        <artifactId>apsso</artifactId>
+        <artifactId>sso</artifactId>
         <version>2.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>com.github.andrepenteado.apsso</groupId>
+            <groupId>com.github.andrepenteado.sso</groupId>
             <artifactId>services</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -6,7 +6,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.andrepenteado.apsso</groupId>
+    <groupId>com.github.andrepenteado.sso</groupId>
     <artifactId>controle</artifactId>
     <packaging>jar</packaging>
 
@@ -15,7 +15,7 @@
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
-        <artifactId>apsso</artifactId>
+        <artifactId>sso</artifactId>
         <version>2.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -26,7 +26,7 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.andrepenteado.apsso</groupId>
+            <groupId>com.github.andrepenteado.sso</groupId>
             <artifactId>services</artifactId>
             <version>${project.version}</version>
         </dependency>
