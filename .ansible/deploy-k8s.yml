@@ -8,7 +8,12 @@
 
   tasks:
 
-  - name: Deploy dos módulos do sistema
+  - name: Fazendo deploy dos serviços
     kubernetes.core.k8s:
       state: present
-      src: kubernetes-apsso.yml
+      src: 04-deployment.yml
+
+  - name: Expondo serviços
+    kubernetes.core.k8s:
+      state: present
+      src: 05-ingress.yml

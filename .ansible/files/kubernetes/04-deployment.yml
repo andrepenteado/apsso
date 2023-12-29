@@ -1,0 +1,99 @@
+# Módulo de Controle
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-controle
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: controle
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/controle
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &name apsso-controle
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: controle
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: *name
+      port: 8080
+      targetPort: 8080
+  selector:
+    <<: *selector
+
+# Portal de Sistemas
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-portal
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: portal
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/portal
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &name apsso-portal
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: portal
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: *name
+      port: 8080
+      targetPort: 8080
+  selector:
+    <<: *selector

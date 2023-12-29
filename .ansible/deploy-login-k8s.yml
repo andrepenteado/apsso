@@ -1,0 +1,29 @@
+# Instalar os dependências para usar os módulos ansible para kubernetes
+#
+# ansible-galaxy collection install kubernetes.core
+# Ter instalado o python-kubernetes (ou pip install kubernetes)
+
+- name: Fazer deploy do sistema no kubernetes
+  hosts: localhost
+
+  tasks:
+
+  - name: Criando namespace no kubernetes
+    kubernetes.core.k8s:
+      state: present
+      src: 00-namespace.yml
+
+  - name: Criando certificado e secret do github
+    kubernetes.core.k8s:
+      state: present
+      src: 01-secret.yml
+
+  - name: Fazendo deploy do login
+    kubernetes.core.k8s:
+      state: present
+      src: 02-deployment-login.yml
+
+  - name: Expondo serviço de login
+    kubernetes.core.k8s:
+      state: present
+      src: 03-ingress-login.yml

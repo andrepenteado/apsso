@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apsso
+  namespace: apsso
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+    - secretName: cert-apcode.com.br
+  rules:
+    - host: login.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-login
+                port:
+                  name: apsso-login
+    - host: controle.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-controle
+                port:
+                  name: apsso-controle
+    - host: portal.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-portal
+                port:
+                  name: apsso-portal

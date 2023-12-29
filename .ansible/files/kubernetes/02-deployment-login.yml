@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-login
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: login
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/login
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30000
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apsso-login
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: login
+    apcode.com.br/version: 2.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: apsso-login
+      port: 30000
+      targetPort: 30000
+  selector:
+    <<: *selector

@@ -1,5 +1,5 @@
 start:
-	docker stack deploy -c docker-swarm-apsso.yml apsso
+	docker stack deploy -c docker-compose.yml apsso
 
 stop:
 	docker stack rm apsso
