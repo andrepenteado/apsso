@@ -22,6 +22,10 @@ spec:
         - name: *name
           image: ghcr.io/andrepenteado/apsso/login
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1G
+#              cpu: 8000m
           ports:
             - containerPort: 30000
       imagePullSecrets:

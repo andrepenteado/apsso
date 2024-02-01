@@ -24,6 +24,10 @@ spec:
         - name: *name
           image: ghcr.io/andrepenteado/apsso/controle
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1G
+#              cpu: 8000m
           ports:
             - containerPort: 8080
       imagePullSecrets:
@@ -74,6 +78,10 @@ spec:
         - name: *name
           image: ghcr.io/andrepenteado/apsso/portal
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1G
+#              cpu: 8000m
           ports:
             - containerPort: 8080
       imagePullSecrets:
