@@ -6,6 +6,8 @@ param(
 switch($exec) {
     "build-all" {
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+	    npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
+	    npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
         mvn -U clean package -DskipTests
         docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
