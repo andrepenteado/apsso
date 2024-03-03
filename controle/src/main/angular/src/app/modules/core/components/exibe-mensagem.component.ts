@@ -52,7 +52,6 @@ export class ExibeMensagemComponent implements OnInit {
     if (titulo != null) {
       this.titulo = titulo;
     }
-    console.log(this.decoracao);
   }
 
 }
