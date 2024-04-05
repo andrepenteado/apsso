@@ -1,25 +1,27 @@
-<app-loader [show]="this.aguardar"></app-loader>
+<!--
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+      <li class="breadcrumb-item"><a routerLink="/sistema/pesquisar">Sistemas</a></li>
+      <li class="breadcrumb-item active">Cadastro</li>
+    </ol>
+  </nav>
 
-<app-breadcrumb
-  [title]="'Cadastro de Usuários'"
-  [items]="[ ['Usuários','/usuario/pesquisar'] ]"
-  [active_item]="'Cadastro'">
-</app-breadcrumb>
-
-<div class="d-flex">
-  <ul ngbNav #nav="ngbNav" animation="true" class="nav-pills" orientation="vertical">
-    <li ngbNavItem="dados-cadastrais">
-      <a ngbNavLink>Dados Cadastrais</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="formUsuario" [ngClass]="{'was-validated': !formUsuario.valid && formEnviado}">
-          <div class="col-12 col-md-8 offset-md-2">
-            <div class="card border border-primary rounded shadow-lg">
-              <div class="card-header">
-                <h5 class="card-title">Dados Cadastrais</h5>
-                <span>{{ dataCadastro | date: "'Cadastrado desde ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}</span>
-                <span>{{ dataUltimaModificacao | date: "'Modificado em ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}</span>
-              </div>
-              <div class="card-body">
+  <form [formGroup]="formUsuario" [ngClass]="{'was-validated': !formUsuario.valid && formEnviado}">
+    <div class="card border border-primary rounded shadow-lg">
+      <div class="card-header">
+        <nav class="nav nav-pills" id="nav-principal">
+          <button class="nav-link active fw-bold"
+                  id="nav-principal-dados-cadastrais"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-dados-cadastrais"
+                  type="button"
+                  role="tab">
+            DADOS CADASTRAIS
+          </button>
+        </nav>
+        <div class="card-body">
                 <div class="row">
                   <div class="form-group col-12 col-md-6">
                     <label>* Login</label>
@@ -90,3 +92,4 @@
 </div>
 
 <ap-exibe-mensagem #exibeMensagem></ap-exibe-mensagem>
+-->

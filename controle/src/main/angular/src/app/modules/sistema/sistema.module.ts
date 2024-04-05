@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { SistemaRoutingModule } from './sistema-routing.module';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
-import { SharedModule } from '../../shared/shared.module';
-import { CoreModule } from '../core/core.module';
 import { DataTablesModule } from 'angular-datatables';
+import { CoreModule } from "../../libs/core/core.module"
+import { ReactiveFormsModule } from "@angular/forms"
+import { NgxLoadingModule } from "ngx-loading"
 
 
 @NgModule({
@@ -17,9 +18,10 @@ import { DataTablesModule } from 'angular-datatables';
   imports: [
     CommonModule,
     SistemaRoutingModule,
-    SharedModule,
     CoreModule,
-    DataTablesModule
+    DataTablesModule,
+    ReactiveFormsModule,
+    NgxLoadingModule.forRoot({})
   ]
 })
 export class SistemaModule { }

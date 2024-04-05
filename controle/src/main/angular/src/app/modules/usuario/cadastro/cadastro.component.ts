@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DecoracaoMensagem, ExibeMensagemComponent } from '../../core/components/exibe-mensagem.component';
-import { Usuario } from '../../../entities/usuario';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { PerfilSistema } from '../../../entities/perfil-sistema';
 import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
 import { lastValueFrom } from 'rxjs';
+import { Usuario } from "../../../model/entities/usuario"
+import { PerfilSistema } from "../../../model/entities/perfil-sistema"
+import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
 
 @Component({
   selector: 'app-cadastro',
@@ -16,10 +16,6 @@ import { lastValueFrom } from 'rxjs';
 })
 export class CadastroComponent implements OnInit {
 
-  @ViewChild('exibeMensagem')
-  exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
-
-  aguardar = true;
   incluir = true;
   formEnviado = false;
   usuario: Usuario;
@@ -46,7 +42,8 @@ export class CadastroComponent implements OnInit {
   constructor(
       private activedRoute: ActivatedRoute,
       private usuarioService: UsuarioService,
-      private perfilSistemaService: PerfilSistemaService
+      private perfilSistemaService: PerfilSistemaService,
+      private exibirMensagem: ExibirMensagemService
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +52,6 @@ export class CadastroComponent implements OnInit {
       paramUsername = params.username;
     });
     this.pesquisar(paramUsername);
-    this.aguardar = false;
   }
 
   async pesquisar(username: string): Promise<void> {
@@ -117,26 +113,26 @@ export class CadastroComponent implements OnInit {
           this.formUsuario.controls.password.setValue('');
           this.formUsuario.controls.password.disable();
           this.incluir = false;
-          this.exibeMensagem.show(
-              `Dados do usuário ${usuario.nome} gravados com sucesso`,
-              DecoracaoMensagem.SUCESSO,
-              'Gravar Usuário'
+          this.exibirMensagem.showMessage(
+            `Dados do usuário ${usuario.nome} gravados com sucesso`,
+            "Gravar usuário",
+            DecoracaoMensagem.SUCESSO
           );
         },
         error: objetoErro => {
-          this.exibeMensagem.show(
-              `${objetoErro.error.message}`,
-              DecoracaoMensagem.ERRO,
-              'Erro de processamento'
+          this.exibirMensagem.showMessage(
+            `${objetoErro.error.detail}`,
+            "Erro no processamento",
+            DecoracaoMensagem.ERRO
           );
         }
       });
     }
     else {
-      this.exibeMensagem.show(
-          'Preencha todos os dados obrigatórios antes de gravar os dados',
-          DecoracaoMensagem.PRIMARIO,
-          'Dados Obrigatórios'
+      this.exibirMensagem.showMessage(
+        "Preencha todos os dados obrigatórios antes de gravar os dados",
+        "Dados obrigatórios",
+        DecoracaoMensagem.ATENCAO
       );
     }
   }

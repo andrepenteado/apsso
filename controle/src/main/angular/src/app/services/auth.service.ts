@@ -1,31 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { environment } from '../../environments/environment';
-import { Api } from "../config/api";
-import { lastValueFrom } from "rxjs";
-import { UserLogin } from "../entities/dto/user-login";
+import { UserLogin } from "../libs/core/dtos/user-login";
 import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { lastValueFrom } from "rxjs";
+import { Api } from "../etc/api"
+import { SISTEMA_URL } from "../etc/routes"
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  readonly COOKIE_USUARIO = "apadminUsuarioLogado";
+
   constructor(
-      private http: HttpClient,
-      private router: Router
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   public async usuarioLogado(): Promise<UserLogin> {
-    let userLogin = JSON.parse(sessionStorage.getItem("usuarioLogado")) as UserLogin;
+    let userLogin = JSON.parse(sessionStorage.getItem(this.COOKIE_USUARIO) as string) as UserLogin;
     if (userLogin == null) {
-      const userLogin$ = this.http.get<UserLogin>(`${environment.backendURL}${Api.AUTH}/usuario`);
+      const userLogin$ = this.http.get<UserLogin>(`${SISTEMA_URL.backendURL}${Api.AUTH}/usuario`);
       userLogin = await lastValueFrom(userLogin$);
-      if (userLogin != null)
-        sessionStorage.setItem("usuarioLogado", JSON.stringify(userLogin));
+      if (userLogin != null) {
+        userLogin.perfilAtual = this.nomePerfil(userLogin);
+        sessionStorage.setItem(this.COOKIE_USUARIO, JSON.stringify(userLogin));
+      }
     }
     if (!this.isPermitido(userLogin))
-      await this.router.navigate(["/pages/acesso-negado"]);
+      await this.router.navigate(["/acesso-negado"]);
     return userLogin;
   }
 
@@ -36,13 +40,13 @@ export class AuthService {
 
   public voltarAoPortal(): void {
     sessionStorage.clear();
-    window.location.href = environment.portalURL;
+    window.location.href = SISTEMA_URL.portalURL;
   }
 
-  public nomePerfil(userLogin: UserLogin): string {
+  nomePerfil(userLogin: UserLogin): string {
     for (const nome of Object.keys(userLogin.perfis)) {
-      if (nome.startsWith("ROLE_Controle_"))
-        return userLogin.perfis[nome];
+      if (nome.startsWith("ROLE_Admin_"))
+        return nome.replace("ROLE_Admin_","");
     }
     return "Sem Perfil";
   }

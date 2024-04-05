@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Core } from '../../../config/core';
-import { DecoracaoMensagem, ExibeMensagemComponent } from '../../core/components/exibe-mensagem.component';
-import { Sistema } from '../../../entities/sistema';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SistemaService } from '../../../services/sistema.service';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { DATATABLES_OPTIONS } from "../../../etc/datatables"
+import { Sistema } from "../../../model/entities/sistema"
+import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
+import { DataTableDirective } from "angular-datatables"
+import { ngxLoadingAnimationTypes } from "ngx-loading"
 
 @Component({
   selector: 'app-pesquisar',
@@ -13,49 +14,55 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class PesquisarComponent implements OnInit, OnDestroy {
+export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
 
-  @ViewChild('exibeMensagem')
-  exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
 
-  aguardar = true;
-
-  dtOptions: DataTables.Settings = Core.DATATABLES_OPTIONS;
+  dtOptions: DataTables.Settings = DATATABLES_OPTIONS;
   dtTrigger: Subject<any> = new Subject<any>();
 
   lista: Sistema[];
+  aguardar = true;
 
   constructor(
       private sistemaService: SistemaService,
-      private router: Router
+      private router: Router,
+      private exibirMensagem: ExibirMensagemService
   ) { }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(null);
+  }
 
   ngOnInit(): void {
     this.pesquisar();
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(null);
+    });
   }
 
   pesquisar(): void {
     this.sistemaService.listar().subscribe({
       next: listaSistemas => {
         this.lista = listaSistemas;
-        this.dtTrigger.next(null);
+        this.rerender();
         this.aguardar = false;
       },
       error: objetoErro => {
         if (objetoErro.error.status == "403") {
-          this.router.navigate(["/pages/acesso-negado"]);
+          this.router.navigate(["/acesso-negado"]);
         }
         else {
-          this.exibeMensagem.show(
-            `${objetoErro.error.message}`,
-            DecoracaoMensagem.ERRO,
-            'Erro no processamento'
-          );
+          this.exibirMensagem.showMessage(`${objetoErro.error.detail}`, "Erro de processamento", DecoracaoMensagem.ERRO);
         }
       }
     });
@@ -70,28 +77,19 @@ export class PesquisarComponent implements OnInit, OnDestroy {
   }
 
   excluir(sistema): void {
-    Swal.fire({
-      title: 'Excluir?',
-      text: `Confirma a exclusão do sistema ${sistema.nome}`,
-      icon: 'question',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonText: '<i class=\'fa fa-trash\'></i> Sim, Excluir',
-      cancelButtonText: 'Cancelar'
-    }).then((resposta) => {
+    this.exibirMensagem
+      .showConfirm(`Confirma a exclusão do sistema ${sistema.nome}`, "Excluir?")
+      .then((resposta) => {
       if (resposta.value) {
         this.sistemaService.excluir(sistema.id).subscribe({
           next: () => this.pesquisar(),
           error: objetoErro => {
-            this.exibeMensagem.show(
-              `${objetoErro.error.message}`,
-              DecoracaoMensagem.ERRO,
-              'Erro de processamento'
-            );
+            this.exibirMensagem.showMessage(`${objetoErro.error.detail}`, "Erro de processamento", DecoracaoMensagem.ERRO);
           }
         });
       }
     });
   }
 
+  protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes
 }

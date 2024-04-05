@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from '../../../entities/usuario';
-import { Core } from '../../../config/core';
 import { Subject } from 'rxjs';
-import {DecoracaoMensagem, ExibeMensagemComponent} from '../../core/components/exibe-mensagem.component';
-import Swal from 'sweetalert2';
+import { Usuario } from "../../../model/entities/usuario"
+import { DataTableDirective } from "angular-datatables"
+import { DATATABLES_OPTIONS } from "../../../etc/datatables"
+import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
 
 @Component({
   selector: 'app-pesquisar',
@@ -13,49 +13,56 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class PesquisarComponent implements OnInit, OnDestroy {
-
-  @ViewChild('exibeMensagem')
-  exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
+export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
 
   aguardar = true;
 
-  dtOptions: DataTables.Settings = Core.DATATABLES_OPTIONS;
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
+
+  dtOptions: DataTables.Settings = DATATABLES_OPTIONS;
   dtTrigger: Subject<any> = new Subject<any>();
 
   lista: Usuario[];
 
   constructor(
       private usuarioService: UsuarioService,
-      private router: Router
+      private router: Router,
+      private exibirMensagem: ExibirMensagemService
   ) { }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(null);
+  }
 
   ngOnInit(): void {
     this.pesquisar();
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(null);
+    });
   }
 
   pesquisar(): void {
     this.usuarioService.listar().subscribe({
       next: listaUsuarios => {
         this.lista = listaUsuarios;
-        this.dtTrigger.next(null);
+        this.rerender();
         this.aguardar = false;
       },
       error: objetoErro => {
         if (objetoErro.error.status == "403") {
-          this.router.navigate(["/pages/acesso-negado"]);
+          this.router.navigate(["/acesso-negado"]);
         }
         else {
-          this.exibeMensagem.show(
-            `${objetoErro.error.message} ${objetoErro.error.status}`,
-            DecoracaoMensagem.ERRO,
-            'Erro no processamento'
-          );
+          this.exibirMensagem.showMessage(`${objetoErro.error.detail}`, "Erro de processamento", DecoracaoMensagem.ERRO);
         }
       }
     });
@@ -70,28 +77,18 @@ export class PesquisarComponent implements OnInit, OnDestroy {
   }
 
   excluir(usuario): void {
-    Swal.fire({
-      title: 'Excluir?',
-      text: `Confirma a exclusão do usuário ${usuario.nome}`,
-      icon: 'question',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonText: '<i class=\'fa fa-trash\'></i> Sim, Excluir',
-      cancelButtonText: 'Cancelar'
-    }).then((resposta) => {
-      if (resposta.value) {
-        this.usuarioService.excluir(usuario.username).subscribe({
-          next: () => this.pesquisar(),
-          error: objetoErro => {
-            this.exibeMensagem.show(
-              `${objetoErro.error.message}`,
-              DecoracaoMensagem.ERRO,
-              'Erro de processamento'
-            );
-          }
-        });
-      }
-    });
+    this.exibirMensagem
+      .showConfirm(`Confirma a exclusão do usuário ${usuario.nome}`, "Excluir?")
+      .then((resposta) => {
+        if (resposta.value) {
+          this.usuarioService.excluir(usuario.username).subscribe({
+            next: () => this.pesquisar(),
+            error: objetoErro => {
+              this.exibirMensagem.showMessage(`${objetoErro.error.detail}`, "Erro de processamento", DecoracaoMensagem.ERRO);
+            }
+          });
+        }
+      });
   }
 
 }

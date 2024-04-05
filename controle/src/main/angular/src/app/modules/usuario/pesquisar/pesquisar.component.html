@@ -1,12 +1,16 @@
-<app-loader [show]="this.aguardar "></app-loader>
-<ap-floating-button (click)="incluir()"><i class="fa fa-plus fa-2x"></i></ap-floating-button>
+<core-widget-floating-button (click)="incluir()"><i class="bi bi-plus-lg fs-2"></i></core-widget-floating-button>
 
-<app-breadcrumb [title]="'Pesquisar Usuários'" [active_item]="'Usuários'"></app-breadcrumb>
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+      <li class="breadcrumb-item active">Usuários</li>
+    </ol>
+  </nav>
 
-<div class="col-12 col-md-12">
   <div class="card border border-primary rounded shadow-lg">
     <div class="card-body custom-datatable table-responsive table-border-radius">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-styling">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-styling table-striped align-middle">
         <thead>
         <tr>
           <th scope="col">Username</th>
@@ -19,8 +23,10 @@
           <td>{{ usuario.username }}</td>
           <td>{{ usuario.nome }}</td>
           <td class="text-center">
-            <button (click)="editar(usuario)"><i class="fa fa-pencil"></i></button>
-            <button (click)="excluir(usuario)"><i class="fa fa-trash"></i></button>
+            <div class="btn-group">
+              <button class="btn btn-success btn-sm" (click)="editar(usuario)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-danger btn-sm" (click)="excluir(usuario)"><i class="bi bi-trash"></i></button>
+            </div>
           </td>
         </tr>
         </tbody>
@@ -28,5 +34,3 @@
     </div>
   </div>
 </div>
-
-<ap-exibe-mensagem #exibeMensagem></ap-exibe-mensagem>

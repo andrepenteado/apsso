@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DecoracaoMensagem, ExibeMensagemComponent } from '../../core/components/exibe-mensagem.component';
-import { Sistema } from '../../../entities/sistema';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SistemaService } from '../../../services/sistema.service';
 import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
-import { PerfilSistema } from '../../../entities/perfil-sistema';
-import Swal from 'sweetalert2';
+import { Sistema } from "../../../model/entities/sistema"
+import { PerfilSistema } from "../../../model/entities/perfil-sistema"
+import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
 
 @Component({
   selector: 'app-cadastro',
@@ -16,10 +15,6 @@ import Swal from 'sweetalert2';
 })
 export class CadastroComponent implements OnInit {
 
-  @ViewChild('exibeMensagem')
-  exibeMensagem: ExibeMensagemComponent = new ExibeMensagemComponent();
-
-  aguardar = true;
   formEnviado = false;
   formPerfilEnviado = false;
   sistema: Sistema;
@@ -55,7 +50,8 @@ export class CadastroComponent implements OnInit {
   constructor(
       private activedRoute: ActivatedRoute,
       private sistemaService: SistemaService,
-      private perfilSistemaService: PerfilSistemaService
+      private perfilSistemaService: PerfilSistemaService,
+      private exibirMensagem: ExibirMensagemService
   ) { }
 
   ngOnInit(): void {
@@ -65,7 +61,6 @@ export class CadastroComponent implements OnInit {
         this.pesquisar(id);
       }
     });
-    this.aguardar = false;
   }
 
   pesquisar(id: string): void {
@@ -95,26 +90,26 @@ export class CadastroComponent implements OnInit {
           this.form.patchValue(sistema);
           this.form.controls.clientSecret.setValue('');
           this.form.controls.clientSecret.disable();
-          this.exibeMensagem.show(
-              `Dados do sistema ${sistema.id} gravados com sucesso`,
-              DecoracaoMensagem.SUCESSO,
-              'Gravar Sistema'
+          this.exibirMensagem.showMessage(
+            `Dados do sistema ${sistema.id} gravados com sucesso`,
+            "Gravar sistema",
+            DecoracaoMensagem.SUCESSO
           );
         },
         error: objetoErro => {
-          this.exibeMensagem.show(
-            `${objetoErro.error.message}`,
-            DecoracaoMensagem.ERRO,
-            'Erro de processamento'
+          this.exibirMensagem.showMessage(
+            `${objetoErro.error.detail}`,
+            "Erro no processamento",
+            DecoracaoMensagem.ERRO
           );
         }
       });
     }
     else {
-      this.exibeMensagem.show(
-          'Preencha todos os dados obrigatórios antes de gravar os dados',
-          DecoracaoMensagem.PRIMARIO,
-          'Dados Obrigatórios'
+      this.exibirMensagem.showMessage(
+        "Preencha todos os dados obrigatórios antes de gravar os dados",
+        "Dados obrigatórios",
+        DecoracaoMensagem.ATENCAO
       );
     }
   }
@@ -129,53 +124,47 @@ export class CadastroComponent implements OnInit {
           this.perfis.unshift(perfil);
           this.formPerfil.reset();
           this.formPerfilEnviado = false;
-          this.exibeMensagem.show(
-              'Perfil incluído com sucesso',
-              DecoracaoMensagem.SUCESSO,
-              'Gravar Perfil'
+          this.exibirMensagem.showMessage(
+            "Perfil incluído com sucesso",
+            "Gravar perfil",
+            DecoracaoMensagem.SUCESSO
           );
         },
         error: objetoErro => {
-          this.exibeMensagem.show(
-              `${objetoErro.error.message}`,
-              DecoracaoMensagem.ERRO,
-              'Erro de processamento'
+          this.exibirMensagem.showMessage(
+            `${objetoErro.error.detail}`,
+            "Erro no processamento",
+            DecoracaoMensagem.ERRO
           );
         }
       });
     }
     else {
-      this.exibeMensagem.show(
-          'Preencha todos os dados obrigatórios antes de gravar os dados',
-          DecoracaoMensagem.PRIMARIO,
-          'Dados Obrigatórios'
+      this.exibirMensagem.showMessage(
+        "Preencha todos os dados obrigatórios antes de gravar os dados",
+        "Dados obrigatórios",
+        DecoracaoMensagem.ATENCAO
       );
     }
   }
 
   excluirPerfil(perfil: PerfilSistema): void {
-    Swal.fire({
-      title: 'Excluir?',
-      text: `Confirma a exclusão do perfil ${perfil.descricao}`,
-      icon: 'question',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonText: '<i class=\'fa fa-trash\'></i> Sim, Excluir',
-      cancelButtonText: 'Cancelar'
-    }).then((resposta) => {
-      if (resposta.value) {
-        this.perfilSistemaService.excluir(perfil.authority).subscribe({
-          next: () => this.pesquisar(perfil.sistema.id),
-          error: objetoErro => {
-            this.exibeMensagem.show(
-                `${objetoErro.error.message}`,
-                DecoracaoMensagem.ERRO,
-                'Erro de processamento'
-            );
-          }
-        });
-      }
-    });
+    this.exibirMensagem
+      .showConfirm(`Confirma a exclusão do perfil ${perfil.descricao}`, "Excluir?")
+      .then((resposta) => {
+        if (resposta.value) {
+          this.perfilSistemaService.excluir(perfil.authority).subscribe({
+            next: () => this.pesquisar(perfil.sistema.id),
+            error: objetoErro => {
+              this.exibirMensagem.showMessage(
+                `${objetoErro.error.detail}`,
+                "Erro no processamento",
+                DecoracaoMensagem.ERRO
+              );
+            }
+          });
+        }
+      });
   }
 
 }
