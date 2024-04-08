@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
-import { Api } from "../config/api";
+import { SISTEMA_URL } from "../etc/routes"
+import { Api } from "../etc/api"
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class UsuarioService {
   ) { }
 
   public alterarSenha(senha: string): Observable<any> {
-    return this.http.put(`${environment.backendURL}${Api.USUARIOS}/alterar-senha`, senha);
+    return this.http.put(`${SISTEMA_URL.backendURL}${Api.USUARIOS}/alterar-senha`, senha);
   }
 
 }

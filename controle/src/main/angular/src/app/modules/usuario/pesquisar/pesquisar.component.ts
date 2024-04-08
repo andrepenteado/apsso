@@ -6,6 +6,7 @@ import { Usuario } from "../../../model/entities/usuario"
 import { DataTableDirective } from "angular-datatables"
 import { DATATABLES_OPTIONS } from "../../../etc/datatables"
 import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
+import { ngxLoadingAnimationTypes } from "ngx-loading"
 
 @Component({
   selector: 'app-pesquisar',
@@ -91,4 +92,5 @@ export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
       });
   }
 
+  protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes
 }

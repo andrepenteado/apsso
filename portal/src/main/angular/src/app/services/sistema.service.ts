@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Sistema } from '../entities/sistema';
-import { Api } from '../config/api';
-import { environment } from '../../environments/environment';
+import { Sistema } from "../model/entities/sistema"
+import { Api } from "../etc/api"
+import { SISTEMA_URL } from "../etc/routes"
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,11 @@ export class SistemaService {
   ) { }
 
   public listar(): Observable<Sistema[]> {
-    return this.http.get<Sistema[]>(`${environment.backendURL}${Api.SISTEMAS}`);
+    return this.http.get<Sistema[]>(`${SISTEMA_URL.backendURL}${Api.SISTEMAS}`);
   }
 
   public buscar(id: string): Observable<Sistema> {
-    return this.http.get<Sistema>(`${environment.backendURL}${Api.SISTEMAS}/${id}`);
+    return this.http.get<Sistema>(`${SISTEMA_URL.backendURL}${Api.SISTEMAS}/${id}`);
   }
 
 }

@@ -9,6 +9,9 @@
   </nav>
 
   <div class="card border border-primary rounded shadow-lg">
+
+    <ngx-loading [show]="aguardar" [config]="{ primaryColour: '#dd0031', secondaryColour: '#fff', animationType: ngxLoadingAnimationTypes.doubleBounce }"></ngx-loading>
+
     <div class="card-body custom-datatable table-responsive table-border-radius">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-styling table-striped align-middle">
         <thead>
