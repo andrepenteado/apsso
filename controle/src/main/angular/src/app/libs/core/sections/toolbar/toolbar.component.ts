@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MENU } from "../../../../etc/menu";
+import { Layout } from "../../../../etc/layout";
 
 @Component({
   selector: 'core-section-toolbar',
@@ -14,4 +15,5 @@ export class ToolbarComponent {
   }
 
   protected readonly MENU = MENU;
+  protected readonly Layout = Layout;
 }

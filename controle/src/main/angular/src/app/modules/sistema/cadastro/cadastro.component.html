@@ -18,7 +18,7 @@
                 role="tab">
           DADOS CADASTRAIS
         </button>
-        <button class="nav-link fw-bold"
+        <button class="nav-link fw-bold {{ this.sistema == null ? 'disabled' : '' }}"
                 id="nav-principal-perfis"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-conteudo-perfis"
@@ -32,13 +32,13 @@
         {{ dataUltimaModificacao | date: "'Modificado em ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
       </p>
     </div>
-    <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
-      <div class="card-body">
-        <div class="tab-content" id="nav-conteudo-dados-cadastrais">
-          <div class="tab-pane fade show active"
-               id="nav-tab-dados-cadastrais"
-               role="tabpanel"
-               aria-labelledby="nav-conteudo-dados-cadastrais">
+    <div class="card-body">
+      <div class="tab-content" id="nav-conteudo">
+        <div class="tab-pane fade show active"
+             id="nav-conteudo-dados-cadastrais"
+             role="tabpanel"
+             aria-labelledby="nav-conteudo-dados-cadastrais">
+          <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
             <div class="row mb-3">
               <div class="form-group col-12 col-md-4">
                 <label>* Sigla</label>
@@ -66,27 +66,23 @@
                 <label>Client Secret</label>
                 <div class="input-group">
                   <input type="password" name="clientSecret" formControlName="clientSecret" class="form-control" required="true">
-                  <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarClientSecret()"><i class="fa fa-unlock-alt fa-lg"></i></button>
+                  <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarClientSecret()"><i class="bi bi-unlock"></i></button>
                   <div class="invalid-feedback">Client Secret é obrigatório</div>
                 </div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col-12 text-center">
-                <button class="btn btn-primary" (click)="gravar()"><i class="fa fa-save fa-lg"></i> Gravar</button>
+                <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
-      </div>
-    </form>
-    <form [formGroup]="formPerfil" [ngClass]="{'was-validated': !formPerfil.valid && formPerfilEnviado}">
-      <div class="card-body">
-        <div class="tab-content" id="nav-conteudo-perfis">
-          <div class="tab-pane fade show"
-               id="nav-tab-perfis"
-               role="tabpanel"
-               aria-labelledby="nav-conteudo-perfis">
+        <div class="tab-pane fade show"
+             id="nav-conteudo-perfis"
+             role="tabpanel"
+             aria-labelledby="nav-conteudo-perfis">
+          <form [formGroup]="formPerfil" [ngClass]="{'was-validated': !formPerfil.valid && formPerfilEnviado}">
             <div class="row mb-3">
               <div class="form-group col-12 col-md-4">
                 <label>* Nome</label>
@@ -101,13 +97,13 @@
             </div>
             <div class="row mb-3">
               <div class="col-12 text-center">
-                <button class="btn btn-primary" (click)="gravarPerfil()"><i class="fa fa-save fa-lg"></i> Adicionar</button>
+                <button class="btn btn-primary" (click)="gravarPerfil()"><i class="bi bi-floppy"></i> Adicionar</button>
               </div>
             </div>
             <br>
             <div class="row mb-3">
               <div class="col-12 col-md-12 table-responsive">
-                <table class="table table-sm table-bordered">
+                <table class="table table-styling table-striped align-middle table-sm table-bordered">
                   <thead>
                   <tr>
                     <th class="fw-bold" scope="col">Nome</th>
@@ -120,16 +116,16 @@
                     <td>{{ perfil.authority }}</td>
                     <td>{{ perfil.descricao }}</td>
                     <td class="text-center">
-                      <a href="javascript:" (click)="$event.preventDefault();excluirPerfil(perfil)" class="text-danger"><i class="bi bi-trash"></i></a>
+                      <button class="btn btn-danger btn-sm" (click)="excluirPerfil(perfil)"><i class="bi bi-trash"></i></button>
                     </td>
                   </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>

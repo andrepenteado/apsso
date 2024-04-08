@@ -1,95 +1,89 @@
-<!--
 <div class="container">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
-      <li class="breadcrumb-item"><a routerLink="/sistema/pesquisar">Sistemas</a></li>
+      <li class="breadcrumb-item"><a routerLink="/usuario/pesquisar">Usuários</a></li>
       <li class="breadcrumb-item active">Cadastro</li>
     </ol>
   </nav>
 
-  <form [formGroup]="formUsuario" [ngClass]="{'was-validated': !formUsuario.valid && formEnviado}">
-    <div class="card border border-primary rounded shadow-lg">
-      <div class="card-header">
-        <nav class="nav nav-pills" id="nav-principal">
-          <button class="nav-link active fw-bold"
-                  id="nav-principal-dados-cadastrais"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-conteudo-dados-cadastrais"
-                  type="button"
-                  role="tab">
-            DADOS CADASTRAIS
-          </button>
-        </nav>
-        <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-12 col-md-6">
-                    <label>* Login</label>
-                    <input type="text" name="username" formControlName="username" class="form-control" required="true">
-                    <div class="invalid-feedback">Campo login é obrigatório</div>
-                  </div>
-                  <div class="form-group col-12 col-md-6">
-                    <label>Senha</label>
-                    <div class="input-group">
-                      <input type="password" name="password" formControlName="password" class="form-control" required="true" disabled>
-                      <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarSenha()"><i class="fa fa-unlock-alt fa-lg"></i></button>
-                      <div class="invalid-feedback">Senha é um campo obrigatório</div>
-                    </div>
-                  </div>
+  <div class="card border border-primary rounded shadow-lg">
+    <div class="card-header">
+      <nav class="nav nav-pills" id="nav-principal">
+        <button class="nav-link active fw-bold"
+                id="nav-principal-dados-cadastrais"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-conteudo-dados-cadastrais"
+                type="button"
+                role="tab">
+          DADOS CADASTRAIS
+        </button>
+        <button class="nav-link fw-bold {{ this.incluir ? 'disabled' : '' }}"
+                id="nav-principal-perfis"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-conteudo-perfis"
+                type="button"
+                role="tab">
+          PERFIS
+        </button>
+      </nav>
+      <div class="card-body">
+        <div class="tab-content" id="nav-conteudo">
+          <div class="tab-pane fade show active"
+               id="nav-conteudo-dados-cadastrais"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-dados-cadastrais">
+            <form [formGroup]="formUsuario" [ngClass]="{'was-validated': !formUsuario.valid && formEnviado}">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Login</label>
+                  <input type="text" name="username" formControlName="username" class="form-control" required="true">
+                  <div class="invalid-feedback">Campo login é obrigatório</div>
                 </div>
-                <div class="row">
-                  <div class="form-group col-12 col-md-12">
-                    <label>Nome</label>
-                    <input type="text" name="nome" formControlName="nome" class="form-control">
+                <div class="form-group col-12 col-md-6">
+                  <label>Senha</label>
+                  <div class="input-group">
+                    <input type="password" name="password" formControlName="password" class="form-control" required="true">
+                    <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarSenha()"><i class="bi bi-unlock"></i></button>
+                    <div class="invalid-feedback">Senha é um campo obrigatório</div>
                   </div>
                 </div>
               </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-12 text-center">
-                    <button class="btn btn-primary" (click)="gravar()"><i class="fa fa-save fa-lg"></i> Gravar</button>
-                  </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
+                  <label>Nome</label>
+                  <input type="text" name="nome" formControlName="nome" class="form-control">
                 </div>
               </div>
-            </div>
+              <div class="row mb-3">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </ng-template>
-    </li>
-    <li ngbNavItem="perfis" [disabled]="this.incluir">
-      <a ngbNavLink>Perfis</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="formPerfis">
-          <div class="col-12 col-md-8 offset-md-2">
-            <div class="card border border-primary rounded shadow-lg">
-              <div class="card-header">
-                <h5 class="card-title">Selecione os perfis a serem habilitados</h5>
-              </div>
-              <div class="card-body">
-                <div class="row" *ngFor="let control of this.arrayPerfis.controls; let i = index">
-                  <div class="col-12 col-md-12">
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" [formControl]="control" role="switch" id="flexSwitchCheckDefault">
-                      <label class="form-check-label" for="flexSwitchCheckDefault">{{ this.listaPerfis[i].sistema.id }}: {{ this.listaPerfis[i].descricao }}</label>
-                    </div>
+          <div class="tab-pane fade show"
+               id="nav-conteudo-perfis"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-perfis">
+            <form [formGroup]="formPerfis">
+              <div class="row mb-3" *ngFor="let control of this.arrayPerfis.controls; let i = index">
+                <div class="col-12">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" [formControl]="$any(control)" role="switch" id="perfil_{{ this.listaPerfis[i].authority }}">
+                    <label class="form-check-label" for="perfil_{{ this.listaPerfis[i].authority }}">{{ this.listaPerfis[i].sistema.id }}: {{ this.listaPerfis[i].descricao }}</label>
                   </div>
                 </div>
               </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-12 text-center">
-                    <button class="btn btn-primary" (click)="gravar()"><i class="fa fa-save fa-lg"></i> Gravar</button>
-                  </div>
+              <div class="row mb-3">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-        </form>
-      </ng-template>
-    </li>
-  </ul>
-  <div [ngbNavOutlet]="nav" class="ms-4 col-10"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<ap-exibe-mensagem #exibeMensagem></ap-exibe-mensagem>
--->

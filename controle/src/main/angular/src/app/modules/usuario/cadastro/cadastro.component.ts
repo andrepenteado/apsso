@@ -136,4 +136,6 @@ export class CadastroComponent implements OnInit {
       );
     }
   }
+
+  protected readonly FormControl = FormControl;
 }
