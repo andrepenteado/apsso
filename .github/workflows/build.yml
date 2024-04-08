@@ -25,10 +25,10 @@ jobs:
       - name: Checkout do projeto
         uses: actions/checkout@v3
 
-      - name: Usar Node 16
+      - name: Usar Node 20
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
 
       - name: Instalar pacotes do frontend do módulo de controle
         run: npm --prefix ./controle/src/main/angular install
