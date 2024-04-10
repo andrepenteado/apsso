@@ -1,109 +1,106 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/erro"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/erro" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="APcode: Portal de single sign on para acessos aos sistemas">
-    <meta name="keywords" content="apcode, ap-code, portal, acessos, sistemas, java, jsp, bootstrap, angular">
-    <meta name="author" content="pixelstrap">
-    <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
-    <title>Login :: Portal de Sistemas</title>
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
-    <!-- ico-font-->
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/icofont.css">
-    <!-- Themify icon-->
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/themify.css">
-    <!-- Flag icon-->
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/flag-icon.css">
-    <!-- Feather icon-->
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/feather-icon.css">
-    <!-- Plugins css start-->
-    <!-- Plugins css Ends-->
-    <!-- Bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css">
-    <!-- App css-->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link id="color" rel="stylesheet" href="assets/css/color-1.css" media="screen">
-    <!-- Responsive css-->
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-  </head>
-  <body>
-    <!-- login page start-->
-    <div class="container-fluid p-0">
-      <div class="row m-0">
-        <div class="col-12 p-0">    
-          <div class="login-card">
-            <div>
-              <%--<div><a class="logo" href="index.jsp"><img class="img-fluid for-light" src="assets/images/logo/login.png" alt="looginpage"><img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt="looginpage"></a></div>--%>
-              <div class="login-main"> 
-                <form class="theme-form" method="POST" action="<c:url value='/login'/>">
-                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                  <h4 class="text-uppercase"><i data-feather="database" style="margin-bottom: -4px;"></i> Portal de Sistemas</h4>
-                  <p>Digite seu usuário e senha para entrar</p>
-                  <c:if test="${param.error != null}">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert"><i data-feather="alert-triangle"></i>
-                      <strong>Atenção!</strong> Usuário e/ou senha inválidos
-                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                  </c:if>
-                  <div class="form-group">
-                    <label class="col-form-label">Usuário</label>
-                    <input class="form-control" type="text" required="" placeholder="Digite seu nome de usuário" name="username" id="username">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="APcode: Portal de single sign on para acessos de usuários e sistemas">
+  <meta name="keywords" content="apcode, portal, acessos, sistemas, usuarios, login, java, jsp, bootstrap, angular">
+  <meta name="author" content="pixelstrap">
+  <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
+  <title>:: Login ::</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+</head>
+<body style="background-color: dimgray">
+<!-- Login 3 - Bootstrap Brain Component -->
+<section class="p-3 p-md-4 p-xl-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
+        <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
+          <h3 class="m-0">Seja bem-vindo!</h3>
+          <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+          <p class="mb-0 text-center">Não tem usuário cadastrado? <a href="#!" class="link-secondary text-decoration-none">Crie seu login agora</a></p>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 bsb-tpl-bg-lotion">
+        <div class="p-3 p-md-4 p-xl-5">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-5">
+                <h3>Digite seu usuário e senha para continuar</h3>
+              </div>
+            </div>
+          </div>
+          <c:if test="${param.error != null}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: -35px">
+              <strong>Atenção!</strong> Usuário e/ou senha inválidos
+            </div>
+          </c:if>
+          <form method="POST" action="<c:url value='/login'/>">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <div class="row gy-3 gy-md-4 overflow-hidden">
+              <div class="col-12">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5v-1a2 2 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693Q8.844 9.002 8 9c-5 0-6 3-6 4m7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1"/>
+                    </svg>
+                  </span>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Digite seu usuário">
+                    <label for="username">Digite seu usuário</label>
                   </div>
-                  <div class="form-group">
-                    <label class="col-form-label">Senha</label>
-                    <div class="form-input position-relative">
-                      <input class="form-control" type="password" name="password" id="password" required="" placeholder="*********">
-                      <%--<div class="show-hide"><span class="show">                         </span></div>--%>
-                    </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-unlock-fill" viewBox="0 0 16 16">
+                      <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2"/>
+                    </svg>
+                  </span>
+                  <div class="form-floating">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Entre com sua senha">
+                    <label for="password">Entre com a senha</label>
                   </div>
-                  <div class="form-group mb-0">
-                    <%--<div class="checkbox p-0">
-                      <input id="checkbox1" type="checkbox">
-                      <label class="text-muted" for="checkbox1">Remember password</label>
-                    </div><a class="link" href="forget-password.html">Forgot password?</a>--%>
-                    <div class="text-end mt-3">
-                      <button class="btn btn-primary btn-block btn-lg w-100" type="submit"><i data-feather="log-in" style="margin-bottom: -5px;"></i> Entrar</button>
-                    </div>
-                  </div>
-                  <%--<h6 class="text-muted mt-4 or">Or Sign in with</h6>
-                  <div class="social mt-4">
-                    <div class="btn-showcase"><a class="btn btn-light" href="https://www.linkedin.com/login" target="_blank"><i class="txt-linkedin" data-feather="linkedin"></i> LinkedIn </a><a class="btn btn-light" href="https://twitter.com/login?lang=en" target="_blank"><i class="txt-twitter" data-feather="twitter"></i>twitter</a><a class="btn btn-light" href="https://www.facebook.com/" target="_blank"><i class="txt-fb" data-feather="facebook"></i>facebook</a></div>
-                  </div>
-                  <p class="mt-4 mb-0 text-center">Don't have account?<a class="ms-2" href="sign-up.html">Create Account</a></p>--%>
-                </form>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
+                  <label class="form-check-label text-secondary" for="remember_me">
+                    Me mantenha logado
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-grid">
+                  <button class="btn bsb-btn-xl btn-primary btn-lg" type="submit">Entrar</button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-12">
+              <hr class="mt-5 mb-4 border-secondary-subtle">
+              <div class="text-end">
+                <a href="#!" class="link-secondary text-decoration-none">Esqueci minha senha</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- latest jquery-->
-      <script src="assets/js/jquery-3.5.1.min.js"></script>
-      <!-- Bootstrap js-->
-      <script src="assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-      <!-- feather icon js-->
-      <script src="assets/js/icons/feather-icon/feather.min.js"></script>
-      <script src="assets/js/icons/feather-icon/feather-icon.js"></script>
-      <!-- scrollbar js-->
-      <!-- Sidebar jquery-->
-      <script src="assets/js/config.js"></script>
-      <!-- Plugins JS start-->
-      <!-- Plugins JS Ends-->
-      <!-- Theme js-->
-      <script src="assets/js/script.js"></script>
-      <!-- login js-->
-      <!-- Plugin used-->
     </div>
-    <script>
-        document.getElementById("username").focus();
-    </script>
-  </body>
+  </div>
+</section>
+<script>
+  document.getElementById("username").focus();
+</script>
+</body>
 </html>
