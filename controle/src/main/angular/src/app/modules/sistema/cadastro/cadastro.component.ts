@@ -15,6 +15,7 @@ import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/ser
 })
 export class CadastroComponent implements OnInit {
 
+  incluir = true;
   formEnviado = false;
   formPerfilEnviado = false;
   sistema: Sistema;
@@ -59,6 +60,7 @@ export class CadastroComponent implements OnInit {
       const id: string = params.id;
       if (id) {
         this.pesquisar(id);
+        this.incluir = false;
       }
     });
   }
@@ -67,7 +69,7 @@ export class CadastroComponent implements OnInit {
     this.sistemaService.buscar(id).subscribe(sistema => {
       this.sistema = sistema;
       this.dataCadastro = new Date(sistema.dataCadastro);
-      this.dataUltimaModificacao = new Date(sistema.dataUltimaModificacao);
+      this.dataUltimaModificacao = new Date(sistema.dataUltimaAtualizacao);
       this.form.patchValue(sistema);
       this.form.controls.clientSecret.setValue('');
       this.perfilSistemaService.listarPorSistema(id).subscribe(

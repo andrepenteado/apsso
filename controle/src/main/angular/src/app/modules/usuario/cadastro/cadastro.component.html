@@ -27,6 +27,12 @@
           PERFIS
         </button>
       </nav>
+      <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
+        Incluído por {{ usuario.usuarioCadastro }} em {{ usuario.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+        <span *ngIf="usuario.dataUltimaAtualizacao != null">
+          Alterado por {{ usuario.usuarioUltimaAtualizacao }} em {{ usuario.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+        </span>
+      </p>
       <div class="card-body">
         <div class="tab-content" id="nav-conteudo">
           <div class="tab-pane fade show active"

@@ -66,7 +66,7 @@ export class CadastroComponent implements OnInit {
     }
 
     this.dataCadastro = new Date(this.usuario.dataCadastro);
-    this.dataUltimaModificacao = new Date(this.usuario.dataUltimaModificacao);
+    this.dataUltimaModificacao = new Date(this.usuario.dataUltimaAtualizacao);
     this.formUsuario.patchValue(this.usuario);
     this.formUsuario.controls.password.setValue('');
 
@@ -108,7 +108,7 @@ export class CadastroComponent implements OnInit {
           this.usuario = usuario;
           this.formUsuario.reset();
           this.dataCadastro = new Date(this.usuario.dataCadastro);
-          this.dataUltimaModificacao = new Date(this.usuario.dataUltimaModificacao);
+          this.dataUltimaModificacao = new Date(this.usuario.dataUltimaAtualizacao);
           this.formUsuario.patchValue(usuario);
           this.formUsuario.controls.password.setValue('');
           this.formUsuario.controls.password.disable();

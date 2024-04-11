@@ -27,7 +27,11 @@ public class Sistema {
     private LocalDateTime dataCadastro;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDateTime dataUltimaModificacao;
+    private LocalDateTime dataUltimaAtualizacao;
+
+    private String usuarioCadastro;
+
+    private String usuarioUltimaAtualizacao;
 
     @Column(name = "client_name")
     @NotNull(message = "Descrição do sistema é um campo obrigatório")

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -50,6 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Senha é um campo obrigatório");
 
         usuario.setDataCadastro(LocalDateTime.now());
+        usuario.setUsuarioCadastro(SecurityContextHolder.getContext().getAuthentication().getName());
         usuario.setEnabled(true);
 
         return usuarioRepository.save(usuario);
@@ -78,7 +80,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Solicitado alterar usuário %s, porém enviado dados do usuário %s", username, usuarioAlterar.getUsername()));
 
         usuarioAlterar.setPassword(password);
-        usuarioAlterar.setDataUltimaModificacao(LocalDateTime.now());
+        usuarioAlterar.setDataUltimaAtualizacao(LocalDateTime.now());
+        usuarioAlterar.setUsuarioUltimaAtualizacao(SecurityContextHolder.getContext().getAuthentication().getName());
         usuarioAlterar.setEnabled(true);
 
         return usuarioRepository.save(usuarioAlterar);

@@ -2,37 +2,43 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { DecoracaoMensagem, ExibirMensagemService } from "../../../../libs/core/services/exibir-mensagem.service"
+import { UserLogin } from "../../../../libs/core/dtos/user-login"
+import { AuthService } from "../../../../services/auth.service"
 
 @Component({
-  selector: 'app-alterar-senha',
-  templateUrl: './alterar-senha.component.html',
+  selector: 'app-meus-dados',
+  templateUrl: './meus-dados.component.html',
   styles: [
   ]
 })
-export class AlterarSenhaComponent implements OnInit {
+export class MeusDadosComponent implements OnInit {
 
   formEnviado = false;
 
   senha = new FormControl(null, Validators.required);
   repitaSenha = new FormControl(null, Validators.required);
 
+  userLogin: UserLogin;
+
   constructor(
     private service: UsuarioService,
+    private authService: AuthService,
     private exibirMensagem: ExibirMensagemService
   ) { }
 
-  formAlterarSenha = new FormGroup({
+  form = new FormGroup({
     senha: this.senha,
     repitaSenha: this.repitaSenha
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.userLogin = await this.authService.usuarioLogado();
   }
 
   gravar(): void {
     this.formEnviado = true;
-    if (this.formAlterarSenha.valid) {
-      if (this.formAlterarSenha.value.senha != this.formAlterarSenha.value.repitaSenha) {
+    if (this.form.valid) {
+      if (this.form.value.senha != this.form.value.repitaSenha) {
         this.exibirMensagem.showMessage(
           "Digite senhas iguais em ambos os campos",
           "Senha não confere",
@@ -40,7 +46,7 @@ export class AlterarSenhaComponent implements OnInit {
         );
       }
       else {
-        this.service.alterarSenha(this.formAlterarSenha.value.senha).subscribe({
+        this.service.alterarSenha(this.form.value.senha).subscribe({
           next: obj => {
             this.exibirMensagem.showMessage(
               "Senha alterada com sucesso",

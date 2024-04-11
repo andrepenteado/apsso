@@ -27,9 +27,11 @@
           PERFIS
         </button>
       </nav>
-      <p class="form-text ms-1 fst-italic">
-        {{ dataCadastro | date: "'Cadastrado desde ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
-        {{ dataUltimaModificacao | date: "'Modificado em ' EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+      <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
+        Incluído por {{ sistema.usuarioCadastro }} em {{ sistema.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+        <span *ngIf="sistema.dataUltimaAtualizacao != null">
+          Alterado por {{ sistema.usuarioUltimaAtualizacao }} em {{ sistema.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+        </span>
       </p>
     </div>
     <div class="card-body">

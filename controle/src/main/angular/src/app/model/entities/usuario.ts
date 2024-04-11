@@ -2,12 +2,14 @@ import { PerfilSistema } from "./perfil-sistema";
 
 export class Usuario {
 
-    username: string;
-    password: string;
-    nome: string;
-    dataCadastro: Date;
-    dataUltimaModificacao: Date;
-    enabled: boolean;
-    perfis: PerfilSistema[];
+  dataCadastro: Date;
+  dataUltimaAtualizacao: Date;
+  usuarioCadastro: string;
+  usuarioUltimaAtualizacao: string;
+  username: string;
+  password: string;
+  nome: string;
+  enabled: boolean;
+  perfis: PerfilSistema[];
 
 }

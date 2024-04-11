@@ -5,8 +5,8 @@ export const MENU = [
     ]
   },
   {
-    id: 'alterarsenha', texto: 'Alterar Senha', icone: 'key', path: '/alterar-senha', subMenus: [
-      { texto: 'Alterar Senha', path: '/alterar-senha' }
+    id: 'meusdados', texto: 'Meus Dados', icone: 'person', path: '/meus-dados', subMenus: [
+      { texto: 'Meus Dados', path: '/meus-dados' }
     ]
   }
 ]

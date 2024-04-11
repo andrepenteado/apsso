@@ -7,6 +7,7 @@ import com.github.andrepenteado.core.common.CoreUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -40,7 +41,8 @@ public class SistemaServiceImpl implements SistemaService {
 
         Sistema sistemaAlterar = buscar(sistema.getId()).orElse(novoSistema());
 
-        sistemaAlterar.setDataUltimaModificacao(LocalDateTime.now());
+        sistemaAlterar.setDataUltimaAtualizacao(LocalDateTime.now());
+        sistemaAlterar.setUsuarioUltimaAtualizacao(SecurityContextHolder.getContext().getAuthentication().getName());
         sistemaAlterar.setId(sistema.getId());
         sistemaAlterar.setDescricao(sistema.getDescricao());
         sistemaAlterar.setClientId(sistema.getClientId());
@@ -58,6 +60,7 @@ public class SistemaServiceImpl implements SistemaService {
     private Sistema novoSistema() {
         Sistema sistema = new Sistema();
         sistema.setDataCadastro(LocalDateTime.now());
+        sistema.setUsuarioCadastro(SecurityContextHolder.getContext().getAuthentication().getName());
         sistema.setClientAuthenticationMethods("client_secret_basic");
         sistema.setAuthorizationGrantTypes("refresh_token,client_credentials,authorization_code");
         sistema.setScopes("openid");
