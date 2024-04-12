@@ -6,6 +6,7 @@ import { MeusDadosComponent } from './components/meus-dados/meus-dados.component
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxLoadingModule } from "ngx-loading"
 import { MainRoutingModule } from "./main-routing.module"
+import { UploadWidgetModule } from "@bytescale/upload-widget-angular";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MainRoutingModule } from "./main-routing.module"
     CommonModule,
     MainRoutingModule,
     ReactiveFormsModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    UploadWidgetModule
   ],
   exports: [
   ]

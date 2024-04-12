@@ -45,8 +45,8 @@ export class AuthService {
 
   nomePerfil(userLogin: UserLogin): string {
     for (const nome of Object.keys(userLogin.perfis)) {
-      if (nome.startsWith("ROLE_Admin_"))
-        return nome.replace("ROLE_Admin_","");
+      if (nome.startsWith("ROLE_Portal_"))
+        return nome.replace("ROLE_Portal_","");
     }
     return "Sem Perfil";
   }

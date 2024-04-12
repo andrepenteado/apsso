@@ -4,6 +4,7 @@ import { UsuarioService } from "../../../../services/usuario.service";
 import { DecoracaoMensagem, ExibirMensagemService } from "../../../../libs/core/services/exibir-mensagem.service"
 import { UserLogin } from "../../../../libs/core/dtos/user-login"
 import { AuthService } from "../../../../services/auth.service"
+import { UploadWidgetConfig, UploadWidgetResult } from '@bytescale/upload-widget';
 
 @Component({
   selector: 'app-meus-dados',
@@ -19,6 +20,28 @@ export class MeusDadosComponent implements OnInit {
   repitaSenha = new FormControl(null, Validators.required);
 
   userLogin: UserLogin;
+
+  options: UploadWidgetConfig = {
+    apiKey: 'public_12a1yuu3cRCh66K6TZPqK1ePAFGG',
+    multi: false,
+    mimeTypes: ["image/*"]
+  };
+  onComplete = (files: UploadWidgetResult[]) => {
+    this.toDataURL(files[0]?.fileUrl)
+      .then(dataUrl => {
+        this.uploadedFile = dataUrl;
+      })
+  };
+  uploadedFile = undefined;
+
+  toDataURL = url => fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+  }));
 
   constructor(
     private service: UsuarioService,

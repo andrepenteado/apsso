@@ -1,6 +1,7 @@
 package com.github.andrepenteado.sso.services.impl;
 
 import com.github.andrepenteado.sso.services.SistemaService;
+import com.github.andrepenteado.sso.services.UsuarioService;
 import com.github.andrepenteado.sso.services.entities.Sistema;
 import com.github.andrepenteado.sso.services.repositories.SistemaRepository;
 import com.github.andrepenteado.core.common.CoreUtil;
@@ -23,6 +24,8 @@ public class SistemaServiceImpl implements SistemaService {
 
     private final SistemaRepository sistemaRepository;
 
+    private final UsuarioService usuarioService;
+
     @Override
     public List<Sistema> listar() {
         return sistemaRepository.findAll();
@@ -42,7 +45,7 @@ public class SistemaServiceImpl implements SistemaService {
         Sistema sistemaAlterar = buscar(sistema.getId()).orElse(novoSistema());
 
         sistemaAlterar.setDataUltimaAtualizacao(LocalDateTime.now());
-        sistemaAlterar.setUsuarioUltimaAtualizacao(SecurityContextHolder.getContext().getAuthentication().getName());
+        sistemaAlterar.setUsuarioUltimaAtualizacao(usuarioService.buscar(SecurityContextHolder.getContext().getAuthentication().getName()).get().getNome());
         sistemaAlterar.setId(sistema.getId());
         sistemaAlterar.setDescricao(sistema.getDescricao());
         sistemaAlterar.setClientId(sistema.getClientId());
@@ -60,7 +63,7 @@ public class SistemaServiceImpl implements SistemaService {
     private Sistema novoSistema() {
         Sistema sistema = new Sistema();
         sistema.setDataCadastro(LocalDateTime.now());
-        sistema.setUsuarioCadastro(SecurityContextHolder.getContext().getAuthentication().getName());
+        sistema.setUsuarioCadastro(usuarioService.buscar(SecurityContextHolder.getContext().getAuthentication().getName()).get().getNome());
         sistema.setClientAuthenticationMethods("client_secret_basic");
         sistema.setAuthorizationGrantTypes("refresh_token,client_credentials,authorization_code");
         sistema.setScopes("openid");

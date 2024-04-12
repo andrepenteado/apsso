@@ -1,8 +1,8 @@
 INSERT INTO public.oauth2_registered_client (
-    id, client_name, data_cadastro, url_entrada, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
+    id, client_name, data_cadastro, usuario_cadastro, url_entrada, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-   'Controle', 'Módulo de cadastro de usuários e sistemas', now(), 'https://controle.apcode.com.br', 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
+   'Controle', 'Módulo de cadastro de usuários e sistemas', now(), 'Arquiteto do Sistema', 'https://controle.apcode.com.br', 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$xG.KPzsgZddwndKL9AQWquv1FdQW232DWRcC2GSLtr34aUaEEUOOa', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
    'https://controle.apcode.com.br/authorized,https://controle.apcode.com.br/login/oauth2/code/controle-oidc,http://dev.controle.apcode.com.br:30001/authorized,http://dev.controle.apcode.com.br:30001/login/oauth2/code/controle-oidc,http://localhost:30001/authorized,http://localhost:30001/login/oauth2/code/controle-oidc',
    'https://controle.apcode.com.br/logout,http://dev.controle.apcode.com.br:30001/logout,http://localhost:30001/logout', 'openid',
@@ -13,10 +13,10 @@ INSERT INTO perfil_sistema (authority, id_oauth2_registered_client, descricao)
 VALUES ('ROLE_Controle_ARQUITETO', 'Controle', 'Arquiteto do Sistema');
 
 INSERT INTO public.oauth2_registered_client (
-    id, client_name, data_cadastro, url_entrada, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
+    id, client_name, data_cadastro, usuario_cadastro, url_entrada, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-   'Portal', 'Portal de Sistemas', now(), 'https://portal.apcode.com.br', 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
+   'Portal', 'Portal de Sistemas', now(), 'Arquiteto do Sistema', 'https://portal.apcode.com.br', 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$iJMyj3siGWVf1OARieTkAeynUscGkapD9Giu/PjkEVnKod/0PF.dC', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
    'https://portal.apcode.com.br/authorized,https://portal.apcode.com.br/login/oauth2/code/portal-oidc,http://dev.portal.apcode.com.br:30002/authorized,http://dev.portal.apcode.com.br:30002/login/oauth2/code/portal-oidc,http://localhost:30002/authorized,http://localhost:30002/login/oauth2/code/portal-oidc',
    'https://portal.apcode.com.br/logout,http://dev.portal.apcode.com.br:30001/logout,http://localhost:30001/logout', 'openid',
@@ -26,6 +26,6 @@ VALUES (
 INSERT INTO perfil_sistema (authority, id_oauth2_registered_client, descricao)
 VALUES ('ROLE_Portal_USUARIO', 'Portal', 'Usuário de Sistemas');
 
-INSERT INTO users (username, password, enabled, data_cadastro, nome) VALUES ('admin', '{bcrypt}$2a$10$DrggBKNTQujqeW2xPABOEuM1GgL.6VvdiZAP/hzChWxTj6TiWyLym', true, now(), 'Administrador');
-INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_Controle_ARQUITETO');
-INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_Portal_USUARIO');
+INSERT INTO users (username, password, enabled, data_cadastro, usuario_cadastro, nome) VALUES ('arquiteto', '{bcrypt}$2a$10$kGE18ss4rjWDDbomByVRVejkbVt2rjXpTkW.hLWl1uOav.DTuO0Mu', true, now(), 'Arquiteto do Sistema', 'Arquiteto do Sistema');
+INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_Controle_ARQUITETO');
+INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_Portal_USUARIO');

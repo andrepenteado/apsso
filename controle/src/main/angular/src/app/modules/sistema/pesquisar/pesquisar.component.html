@@ -1,13 +1,13 @@
 <core-widget-floating-button (click)="incluir()"><i class="bi bi-plus-lg fs-2"></i></core-widget-floating-button>
 
-<div class="container">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
-      <li class="breadcrumb-item active">Sistemas</li>
-    </ol>
-  </nav>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="margin-top: -23px">
+    <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+    <li class="breadcrumb-item active">Sistemas</li>
+  </ol>
+</nav>
 
+<div class="container">
   <div class="card border border-primary rounded shadow-lg">
 
     <ngx-loading [show]="aguardar" [config]="{ primaryColour: '#dd0031', secondaryColour: '#fff', animationType: ngxLoadingAnimationTypes.doubleBounce }"></ngx-loading>

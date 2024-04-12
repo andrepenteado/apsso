@@ -9,5 +9,6 @@ export class Usuario {
     dataUltimaModificacao: Date;
     enabled: boolean;
     perfis: PerfilSistema[];
+    fotobase64: string;
 
 }

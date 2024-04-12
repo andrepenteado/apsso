@@ -1,11 +1,11 @@
-<div class="container">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
-      <li class="breadcrumb-item active">Alterar Senha</li>
-    </ol>
-  </nav>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="margin-top: -23px">
+    <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+    <li class="breadcrumb-item active">Alterar Senha</li>
+  </ol>
+</nav>
 
+<div class="container">
   <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card border border-primary rounded shadow-lg">
@@ -15,7 +15,7 @@
               <h3 class="card-title">Meus Dados</h3>
             </div>
             <div class="col-3">
-              <img src="assets/images/sem-usuario.png" class="rounded-circle float-end" style="height: 60px;">
+              <img src="{{ this.uploadedFile }}" class="rounded-circle float-end" style="height: 60px;">
             </div>
           </div>
         </div>
@@ -40,6 +40,13 @@
               <label>* Repita a nova senha</label>
               <input class="form-control" formControlName="repitaSenha" name="repita-nova-senha" required="true" type="password">
               <div class="invalid-feedback">Senha é um campo obrigatório</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="form-group col-12 col-md-12">
+              <button uploadButton [uploadOptions]="options" [uploadComplete]="onComplete" class="btn btn-primary">
+                Atualizar foto
+              </button>
             </div>
           </div>
           <div class="row mb-3">

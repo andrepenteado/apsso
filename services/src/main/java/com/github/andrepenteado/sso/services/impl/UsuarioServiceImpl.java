@@ -51,7 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Senha é um campo obrigatório");
 
         usuario.setDataCadastro(LocalDateTime.now());
-        usuario.setUsuarioCadastro(SecurityContextHolder.getContext().getAuthentication().getName());
+        usuario.setUsuarioCadastro(buscar(SecurityContextHolder.getContext().getAuthentication().getName()).get().getNome());
         usuario.setEnabled(true);
 
         return usuarioRepository.save(usuario);
@@ -81,7 +81,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         usuarioAlterar.setPassword(password);
         usuarioAlterar.setDataUltimaAtualizacao(LocalDateTime.now());
-        usuarioAlterar.setUsuarioUltimaAtualizacao(SecurityContextHolder.getContext().getAuthentication().getName());
+        usuarioAlterar.setUsuarioUltimaAtualizacao(buscar(SecurityContextHolder.getContext().getAuthentication().getName()).get().getNome());
         usuarioAlterar.setEnabled(true);
 
         return usuarioRepository.save(usuarioAlterar);
