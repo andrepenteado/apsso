@@ -2,6 +2,7 @@ package com.github.andrepenteado.sso.services;
 
 import com.github.andrepenteado.sso.services.entities.Usuario;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,5 @@ public interface UsuarioService {
 
     void alterarSenha(String username, String senha);
 
+    void atualizarFoto(String username, String fotoBase64);
 }

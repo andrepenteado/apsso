@@ -105,4 +105,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(usuarioAlterar);
     }
 
+    @Override
+    public void atualizarFoto(String username, String fotoBase64) {
+        Usuario usuarioAlterar = buscar(username)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %s não encontrado", username)));
+        usuarioAlterar.setFotoBase64(fotoBase64);
+        usuarioRepository.save(usuarioAlterar);
+    }
+
 }

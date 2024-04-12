@@ -41,4 +41,21 @@ public class UsuarioResource {
         }
     }
 
+    @PutMapping("/atualizar-foto")
+    public void atualizarFoto(@RequestBody String fotoBase64, @AuthenticationPrincipal OidcUser principal) {
+        log.info("Atualizar foto");
+        try {
+            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
+            usuarioService.atualizarFoto(principal.getName(), fotoBase64);
+        }
+        catch (ResponseStatusException rsex) {
+            throw rsex;
+        }
+        catch (Exception ex) {
+            log.error("Erro no processamento", ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
+        }
+    }
+
 }

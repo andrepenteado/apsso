@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NgxLoadingModule } from "ngx-loading"
 import { MainRoutingModule } from "./main-routing.module"
 import { UploadWidgetModule } from "@bytescale/upload-widget-angular";
+import { ImageCropperModule } from "ngx-image-cropper"
 
 @NgModule({
   declarations: [
@@ -17,8 +18,7 @@ import { UploadWidgetModule } from "@bytescale/upload-widget-angular";
     CommonModule,
     MainRoutingModule,
     ReactiveFormsModule,
-    NgxLoadingModule.forRoot({}),
-    UploadWidgetModule
+    NgxLoadingModule.forRoot({})
   ],
   exports: [
   ]

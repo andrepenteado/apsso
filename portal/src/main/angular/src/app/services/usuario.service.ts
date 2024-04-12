@@ -17,4 +17,8 @@ export class UsuarioService {
     return this.http.put(`${SISTEMA_URL.backendURL}${Api.USUARIOS}/alterar-senha`, senha);
   }
 
+  public atualizarFoto(fotoBase64: string): Observable<any> {
+    return this.http.put(`${SISTEMA_URL.backendURL}${Api.USUARIOS}/atualizar-foto`, fotoBase64);
+  }
+
 }

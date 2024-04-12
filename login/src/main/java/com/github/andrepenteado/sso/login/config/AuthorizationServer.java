@@ -138,6 +138,7 @@ public class AuthorizationServer {
 
                 context.getClaims().claim("login", userEntity.getUsername());
                 context.getClaims().claim("nome", userEntity.getNome());
+                context.getClaims().claim("fotoBase64", userEntity.getFotoBase64());
                 context.getClaims().claim("perfis", perfis);
             }
         };
