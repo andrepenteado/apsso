@@ -104,7 +104,7 @@ class UsuarioResourceTest {
             .getResponse()
             .getContentAsString();
         List<Usuario> lista = objectMapper.readValue(json, new TypeReference<List<Usuario>>() {});
-        assertEquals(lista.size(), 2);
+        assertEquals(lista.size(), 3);
     }
 
     @Test

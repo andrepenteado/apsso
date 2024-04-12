@@ -16,7 +16,7 @@
         password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
         enabled="true"
         nome="Teste 01"
-        data_ultima_modificacao="[now]" />
+        data_ultima_atualizacao="[now]" />
 
     <perfil_sistema
         authority="ROLE_Sistema01_Teste01"
@@ -32,7 +32,7 @@
         password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
         enabled="true"
         nome="Teste 02"
-        data_ultima_modificacao="[now]" />
+        data_ultima_atualizacao="[now]" />
 
     <perfil_sistema
         authority="ROLE_Sistema01_Teste02"
@@ -42,5 +42,12 @@
     <authorities
         username="teste02"
         authority="ROLE_Sistema01_Teste02" />
+
+    <users
+        username="user"
+        password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
+        enabled="true"
+        nome="Usuário logado nos testes"
+        data_ultima_atualizacao="[now]" />
 
 </dataset>

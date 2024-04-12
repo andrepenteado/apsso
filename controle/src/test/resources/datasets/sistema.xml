@@ -49,4 +49,15 @@
         id_oauth2_registered_client="Sistema02"
         descricao="Perfil Y" />
 
+    <users
+        username="user"
+        password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
+        enabled="true"
+        nome="Usuário logado nos testes"
+        data_ultima_atualizacao="[now]" />
+
+    <authorities
+        username="user"
+        authority="ROLE_Sistema01_A" />
+
 </dataset>
