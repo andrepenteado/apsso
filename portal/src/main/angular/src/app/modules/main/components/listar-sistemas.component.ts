@@ -6,20 +6,23 @@ import { Sistema } from "../../../model/entities/sistema"
 @Component({
   selector: 'app-listar-sistemas',
   template: `
-      <br>
-      <br>
-      <br>
-      <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
-          <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-              <a href="javascript:void(0)" (click)="acessar(sistema.urlEntrada)" itemprop="contentUrl">
-                  <img class="img-fluid float-right rounded-circle" src="assets/images/sistemas/{{ sistema.id }}.png" width="100"/>
-                  <div class="caption">
-                      <h4>{{ sistema.id }}</h4>
-                      <p>{{ sistema.descricao }}</p>
-                  </div>
-              </a>
-          </figure>
-      </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" style="margin-top: -23px">
+        <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+        <li class="breadcrumb-item active">Acessar Sistemas</li>
+      </ol>
+    </nav>
+    <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
+      <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
+        <a href="javascript:void(0)" (click)="acessar(sistema.urlEntrada)" itemprop="contentUrl">
+          <img class="img-fluid float-right rounded-circle" src="{{ sistema.iconeBase64 }}" width="120" height="120"/>
+          <div class="caption">
+            <h4>{{ sistema.id }}</h4>
+            <p>{{ sistema.descricao }}</p>
+          </div>
+        </a>
+      </figure>
+    </div>
   `,
   styles: [
   ]

@@ -44,14 +44,14 @@
             <div class="row mb-3">
               <div class="form-group col-12 col-md-4">
                 <label>* Sigla</label>
-                <input type="text" name="id" formControlName="id" class="form-control" required="true">
+                <input type="text" name="id" formControlName="id" class="form-control" required>
                 <div class="invalid-feedback">Campo sigla é obrigatório</div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>* Descrição</label>
-                <input type="text" name="descricao" formControlName="descricao" class="form-control" required="true">
+                <input type="text" name="descricao" formControlName="descricao" class="form-control" required>
                 <div class="invalid-feedback">Campo descrição é obrigatório</div>
               </div>
               <div class="form-group col-12 col-md-6">
@@ -67,10 +67,19 @@
               <div class="form-group col-12 col-md-6">
                 <label>Client Secret</label>
                 <div class="input-group">
-                  <input type="password" name="clientSecret" formControlName="clientSecret" class="form-control" required="true">
+                  <input type="password" name="clientSecret" formControlName="clientSecret" class="form-control" required>
                   <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarClientSecret()"><i class="bi bi-unlock"></i></button>
                   <div class="invalid-feedback">Client Secret é obrigatório</div>
                 </div>
+              </div>
+            </div>
+            <div class="row mb-3 align-items-end">
+              <div class="col-9">
+                <label for="formFile" class="form-label">Ícone</label>
+                <input type="file" class="form-control" (change)="atualizarIcone($event)" accept="image/*" id="formFile"/>
+              </div>
+              <div class="col-3 text-center">
+                <img src="{{ this.form.controls.iconeBase64.value }}" width="60" height="60" class="rounded-circle">
               </div>
             </div>
             <div class="row mb-3">
@@ -88,12 +97,12 @@
             <div class="row mb-3">
               <div class="form-group col-12 col-md-4">
                 <label>* Nome</label>
-                <input type="text" name="nomePerfil" formControlName="authority" class="form-control text-uppercase" required="true">
+                <input type="text" name="nomePerfil" formControlName="authority" class="form-control text-uppercase" required>
                 <div class="invalid-feedback">Campo nome do perfil é obrigatório</div>
               </div>
               <div class="form-group col-12 col-md-8">
                 <label>* Descrição</label>
-                <input type="text" name="descricaoPerfil" formControlName="descricao" class="form-control" required="true">
+                <input type="text" name="descricaoPerfil" formControlName="descricao" class="form-control" required>
                 <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
               </div>
             </div>

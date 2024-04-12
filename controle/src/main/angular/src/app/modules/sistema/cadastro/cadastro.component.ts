@@ -29,12 +29,14 @@ export class CadastroComponent implements OnInit {
   urlEntrada = new FormControl(null);
   clientId = new FormControl(null);
   clientSecret = new FormControl({value: '', disabled: true});
+  iconeBase64 = new FormControl(null);
   form = new FormGroup({
     id: this.id,
     descricao: this.descricao,
     urlEntrada: this.urlEntrada,
     clientId: this.clientId,
-    clientSecret: this.clientSecret
+    clientSecret: this.clientSecret,
+    iconeBase64: this.iconeBase64
   });
 
   idPerfil = new FormControl(null);
@@ -82,9 +84,22 @@ export class CadastroComponent implements OnInit {
     this.form.get('clientSecret').enable();
   }
 
+  atualizarIcone(event: any): void {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.form.controls.iconeBase64.setValue(reader.result as string);
+    };
+
+    if (file)
+      reader.readAsDataURL(file);
+  }
+
   gravar(): void {
     this.formEnviado = true;
     if (this.form.valid) {
+      console.log(this.form.value);
       this.sistemaService.gravar(this.form.value).subscribe({
         next: sistema => {
           this.sistema = sistema;

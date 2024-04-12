@@ -49,9 +49,10 @@ public class SistemaServiceImpl implements SistemaService {
         sistemaAlterar.setId(sistema.getId());
         sistemaAlterar.setDescricao(sistema.getDescricao());
         sistemaAlterar.setClientId(sistema.getClientId());
-        sistemaAlterar.setRedirectUris(String.format("%s/login/oauth2/code/%s-oidc,%s/authorized",
-                sistema.getUrlEntrada(), sistema.getId().toLowerCase(), sistema.getUrlEntrada()));
-        sistemaAlterar.setPostLogoutRedirectUris(String.format("%s/logout", sistema.getUrlEntrada()));
+        sistemaAlterar.setIconeBase64(sistema.getIconeBase64());
+//        sistemaAlterar.setRedirectUris(String.format("%s/login/oauth2/code/%s-oidc,%s/authorized",
+//                sistema.getUrlEntrada(), sistema.getId().toLowerCase(), sistema.getUrlEntrada()));
+//        sistemaAlterar.setPostLogoutRedirectUris(String.format("%s/logout", sistema.getUrlEntrada()));
         sistemaAlterar.setUrlEntrada(sistema.getUrlEntrada());
 
         if (sistema.getClientSecret() != null && !sistema.getClientSecret().startsWith("{bcrypt}"))

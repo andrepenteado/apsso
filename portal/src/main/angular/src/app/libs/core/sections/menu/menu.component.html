@@ -2,7 +2,7 @@
 <div class="collapse collapse-horizontal" id="collapseSidebar">
   <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-primary" style="width: 280px; min-height: 100vh;">
     <a href="#" class="d-flex align-items-center justify-content-center p-3 text-decoration-none">
-      <img src="{{ this.userLogin.fotoBase64 }}" alt="mdo" width="128" height="128" class="rounded-circle">
+      <img src="{{ this.userLogin.fotoBase64.length === 0 ? '/assets/images/sem-usuario.png' : this.userLogin.fotoBase64 }}" width="128" height="128" class="rounded-circle">
     </a>
     <div class="text-center fs-5 fw-bolder">{{  this.userLogin.nome }}</div>
     <div class="text-center">{{ this.userLogin.perfilAtual }}</div>
