@@ -14,13 +14,14 @@ import { Sistema } from "../../../model/entities/sistema"
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-        <a href="javascript:void(0)" (click)="acessar(sistema.urlEntrada)" itemprop="contentUrl">
-          <img class="img-fluid float-right rounded-circle" src="{{ sistema.iconeBase64 }}" width="120" height="120"/>
-          <div class="caption">
-            <h4>{{ sistema.id }}</h4>
-            <p>{{ sistema.descricao }}</p>
-          </div>
-        </a>
+        <img class="img-fluid float-right rounded-circle" src="{{ sistema.iconeBase64 }}" width="120" height="120"/>
+        <div class="caption">
+          <h3>{{ sistema.id }}</h3>
+          <p class="form-text">{{ sistema.descricao }}</p>
+        </div>
+        <div *ngFor="let url of sistema.urlEntrada.split(';')">
+          <a href="javascript:void(0)" (click)="acessar(url)">{{ url }}</a><br>
+        </div>
       </figure>
     </div>
   `,
