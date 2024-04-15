@@ -68,6 +68,7 @@ public class SistemaResourceTest {
         Sistema sistema = new Sistema();
         sistema.setId(id);
         sistema.setDescricao("Descrição do sistema " + id);
+        sistema.setUrlEntrada("http://localhost");
         return sistema;
     }
 

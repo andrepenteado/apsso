@@ -9,7 +9,8 @@
         authorization_grant_types="XXXX"
         scopes="XXXX"
         client_settings="XXXX"
-        token_settings="XXXX" />
+        token_settings="XXXX"
+        url_entrada="http://localhost" />
 
     <users
         username="teste01"

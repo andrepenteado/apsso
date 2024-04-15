@@ -9,7 +9,8 @@
         authorization_grant_types="XXXX"
         scopes="XXXX"
         client_settings="XXXX"
-        token_settings="XXXX" />
+        token_settings="XXXX"
+        url_entrada="http://localhost" />
     <oauth2_registered_client
         id="Sistema02"
         client_id="ID02"
@@ -19,7 +20,8 @@
         authorization_grant_types="XXXX"
         scopes="XXXX"
         client_settings="XXXX"
-        token_settings="XXXX" />
+        token_settings="XXXX"
+        url_entrada="http://localhost" />
     <oauth2_registered_client
         id="Sistema03"
         client_id="ID03"
@@ -29,7 +31,8 @@
         authorization_grant_types="XXXX"
         scopes="XXXX"
         client_settings="XXXX"
-        token_settings="XXXX" />
+        token_settings="XXXX"
+        url_entrada="http://localhost" />
 
     <perfil_sistema
         authority="ROLE_Sistema01_A"
