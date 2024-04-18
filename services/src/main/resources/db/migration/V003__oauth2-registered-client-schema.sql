@@ -13,11 +13,11 @@ CREATE TABLE oauth2_registered_client (
   client_settings varchar(2000) NOT NULL,
   token_settings varchar(2000) NOT NULL,
   url_entrada text NULL,
-  icone_base64 text NULL,
   data_cadastro timestamp,
   data_ultima_atualizacao timestamp,
   usuario_cadastro varchar(50),
   usuario_ultima_atualizacao varchar(50),
+  fk_upload UUID NULL,
   PRIMARY KEY (id)
 );
 

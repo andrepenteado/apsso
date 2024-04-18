@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -35,9 +36,12 @@ public class Usuario {
     @NotNull(message = "Nome do usuário é um campo obrigatório")
     private String nome;
 
+    private Long cpf;
+
     private Boolean enabled;
 
-    private String fotoBase64;
+    @Column(name = "fk_upload")
+    private UUID foto;
 
     @ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities",

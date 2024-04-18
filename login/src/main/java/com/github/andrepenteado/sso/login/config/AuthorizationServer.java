@@ -8,6 +8,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -16,7 +17,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
@@ -35,9 +38,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.KeyStore;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Configuration
 @RequiredArgsConstructor
@@ -126,21 +131,26 @@ public class AuthorizationServer {
     }
 
     @Bean
-    public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer(@Qualifier("userDetailsService") UserDetailsService userDetailsService) {
         return (context) -> {
-            Authentication auth = context.getPrincipal();
-            if (auth.getPrincipal() instanceof User user) {
-                final Usuario userEntity = usuarioService.buscar(user.getUsername()).orElseThrow();
+            UserDetails userDetails = userDetailsService.loadUserByUsername(context.getPrincipal().getName());
 
-                Map<String, String> perfis = new HashMap<>();
-                for (PerfilSistema perfil : userEntity.getPerfis()) {
-                    perfis.put(perfil.getAuthority(), perfil.getDescricao());
-                }
+            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+            context.getClaims().claims(claims ->
+                claims.put("authorities", authorities.stream().map(authority -> authority.getAuthority()).collect(Collectors.toList())));
 
-                context.getClaims().claim("login", userEntity.getUsername());
-                context.getClaims().claim("nome", userEntity.getNome());
-                context.getClaims().claim("perfis", perfis);
+            final Usuario userEntity = usuarioService.buscar(userDetails.getUsername()).orElseThrow();
+
+            Map<String, String> perfis = new HashMap<>();
+            for (PerfilSistema perfil : userEntity.getPerfis()) {
+                perfis.put(perfil.getAuthority(), perfil.getDescricao());
             }
+
+            context.getClaims().claim("login", userEntity.getUsername());
+            context.getClaims().claim("nome", userEntity.getNome());
+            context.getClaims().claim("cpf", Objects.isNull(userEntity.getCpf()) ? "" : Long.toString(userEntity.getCpf()));
+            context.getClaims().claim("uuidFoto", Objects.isNull(userEntity.getFoto()) ? "" : userEntity.getFoto().toString());
+            context.getClaims().claim("perfis", perfis);
         };
     }
 

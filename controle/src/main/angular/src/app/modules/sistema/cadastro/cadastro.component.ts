@@ -6,6 +6,9 @@ import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
 import { Sistema } from "../../../model/entities/sistema"
 import { PerfilSistema } from "../../../model/entities/perfil-sistema"
 import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
+import { UploadService } from "../../../libs/core/services/upload.service"
+import { Upload } from "../../../libs/core/dtos/upload"
+import { lastValueFrom, Observable } from "rxjs"
 
 @Component({
   selector: 'app-cadastro',
@@ -21,7 +24,8 @@ export class CadastroComponent implements OnInit {
   sistema: Sistema;
   perfis: PerfilSistema[] = [];
   dataCadastro: Date = new Date();
-  dataUltimaModificacao: Date = new Date();
+  dataUltimaAtualizacao: Date = new Date();
+  iconeUpload: Upload = new Upload();
 
   // Campos do formulário
   id = new FormControl(null, Validators.required);
@@ -29,14 +33,14 @@ export class CadastroComponent implements OnInit {
   urlEntrada = new FormControl(null);
   clientId = new FormControl(null);
   clientSecret = new FormControl({value: '', disabled: true});
-  iconeBase64 = new FormControl(null);
+  icone = new FormControl(null);
   form = new FormGroup({
     id: this.id,
     descricao: this.descricao,
     urlEntrada: this.urlEntrada,
     clientId: this.clientId,
     clientSecret: this.clientSecret,
-    iconeBase64: this.iconeBase64
+    icone: this.icone,
   });
 
   idPerfil = new FormControl(null);
@@ -54,7 +58,8 @@ export class CadastroComponent implements OnInit {
       private activedRoute: ActivatedRoute,
       private sistemaService: SistemaService,
       private perfilSistemaService: PerfilSistemaService,
-      private exibirMensagem: ExibirMensagemService
+      private exibirMensagem: ExibirMensagemService,
+      private uploadService: UploadService
   ) { }
 
   ngOnInit(): void {
@@ -71,9 +76,14 @@ export class CadastroComponent implements OnInit {
     this.sistemaService.buscar(id).subscribe(sistema => {
       this.sistema = sistema;
       this.dataCadastro = new Date(sistema.dataCadastro);
-      this.dataUltimaModificacao = new Date(sistema.dataUltimaAtualizacao);
+      this.dataUltimaAtualizacao = new Date(sistema.dataUltimaAtualizacao);
       this.form.patchValue(sistema);
       this.form.controls.clientSecret.setValue('');
+      if (sistema.icone) {
+        this.uploadService.buscar(this.sistema.icone).subscribe(upload => {
+          this.iconeUpload = upload;
+        });
+      }
       this.perfilSistemaService.listarPorSistema(id).subscribe(
         perfis => this.perfis = perfis
       );
@@ -89,17 +99,27 @@ export class CadastroComponent implements OnInit {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      this.form.controls.iconeBase64.setValue(reader.result as string);
+      this.iconeUpload.base64 = reader.result as string;
+      this.iconeUpload.nome = file.name;
+      this.iconeUpload.descricao = "Ícone do sistema " + this.sistema.descricao;
+      this.iconeUpload.tipo = file.type;
     };
 
     if (file)
       reader.readAsDataURL(file);
   }
 
-  gravar(): void {
+  async gravar() {
     this.formEnviado = true;
     if (this.form.valid) {
-      console.log(this.form.value);
+      let upload$: Observable<Upload>;
+      if (this.sistema.icone)
+        upload$ = this.uploadService.alterar(this.iconeUpload)
+      else
+        upload$ = this.uploadService.incluir(this.iconeUpload);
+      let upload = await lastValueFrom(upload$);
+
+      this.form.controls.icone.setValue(upload.uuid);
       this.sistemaService.gravar(this.form.value).subscribe({
         next: sistema => {
           this.sistema = sistema;

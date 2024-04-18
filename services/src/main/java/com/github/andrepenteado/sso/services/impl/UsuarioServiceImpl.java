@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -106,10 +107,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void atualizarFoto(String username, String fotoBase64) {
+    public void atualizarFoto(String username, UUID uuidFoto) {
         Usuario usuarioAlterar = buscar(username)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Usuário %s não encontrado", username)));
-        usuarioAlterar.setFotoBase64(fotoBase64);
+        usuarioAlterar.setFoto(uuidFoto);
         usuarioRepository.save(usuarioAlterar);
     }
 

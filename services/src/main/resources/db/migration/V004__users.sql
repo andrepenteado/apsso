@@ -3,11 +3,12 @@ create table users(
     password varchar(500) not null,
     enabled boolean not null,
     nome text not null,
+    cpf bigint null,
     data_cadastro timestamp,
     data_ultima_atualizacao timestamp,
     usuario_cadastro varchar(50),
     usuario_ultima_atualizacao varchar(50),
-    foto_base64 text NULL
+    fk_upload UUID NULL
 );
 
 create table authorities (

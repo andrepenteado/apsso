@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = { "com.github.andrepenteado.sso", "com.github.andrepenteado.core.web" })
-@EntityScan(basePackages = "com.github.andrepenteado.sso")
-@EnableJpaRepositories(basePackages = "com.github.andrepenteado.sso")
+@SpringBootApplication(scanBasePackages = { "com.github.andrepenteado.sso", "com.github.andrepenteado.core" })
+@EntityScan(basePackages = { "com.github.andrepenteado.sso", "com.github.andrepenteado.core" })
+@EnableJpaRepositories(basePackages = { "com.github.andrepenteado.sso", "com.github.andrepenteado.core" })
 public class ControleApplication {
     
     public static void main(String[] args) {

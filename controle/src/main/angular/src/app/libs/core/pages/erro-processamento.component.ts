@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         </svg>
         <br><br><br>
         <h1 class="text-danger fw-bolder">ERRO NO PROCESSAMENTO</h1>
-        <p class="fs-5 text-gray-600">O sistema está temporariamente indisponível.<br>Por favor, entre em contato com o suporte.</p>
+        <p class="fs-5 text-dark">O sistema está temporariamente indisponível.<br>Por favor, entre em contato com o suporte.</p>
         <a href="/" class="btn btn-lg btn-outline-primary mt-3"><i class="bi bi-house"></i> Voltar para página inicial</a>
       </div>
     </div>

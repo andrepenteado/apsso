@@ -9,6 +9,6 @@ export class Sistema {
   clientSecret: string;
   descricao: string;
   urlEntrada: string;
-  iconeBase64: string;
+  icone: string;
 
 }

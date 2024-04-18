@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS Upload CASCADE;
+
+CREATE TABLE IF NOT EXISTS Upload (
+  UUID       UUID         NOT NULL,
+  Nome       VARCHAR(100) NOT NULL,
+  Descricao  VARCHAR(200) NULL,
+  Tipo       VARCHAR(100) NOT NULL,
+  Base64     TEXT         NOT NULL,
+  CONSTRAINT PK_Upload    PRIMARY KEY (UUID)
+);

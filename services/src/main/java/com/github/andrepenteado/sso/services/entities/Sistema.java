@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "oauth2_registered_client")
@@ -37,7 +38,8 @@ public class Sistema {
 
     private String urlEntrada;
 
-    private String iconeBase64;
+    @Column(name = "fk_upload")
+    private UUID icone;
 
     private String clientId;
 

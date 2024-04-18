@@ -2,7 +2,8 @@ export class UserLogin {
 
   login: string;
   nome: string;
-  fotoBase64: string;
+  cpf: number;
+  uuidFoto: string;
   perfilAtual: string;
   perfis: Map<string, string>;
 

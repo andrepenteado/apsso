@@ -46,6 +46,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.andrepenteado.core</groupId>
+            <artifactId>upload</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

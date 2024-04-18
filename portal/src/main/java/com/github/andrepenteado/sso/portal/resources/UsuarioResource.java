@@ -6,13 +6,13 @@ import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -24,25 +24,6 @@ public class UsuarioResource {
     private final UsuarioService usuarioService;
 
     private final PermissaoService permissaoService;
-
-    @GetMapping("/foto")
-    public String obtemFoto(@AuthenticationPrincipal OidcUser principal) {
-        log.info("Obter foto do usuário");
-        try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
-            return usuarioService.buscar(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("Foto do usuário %s não encontrada", principal.getName()))).getFotoBase64();
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
-
-    }
 
     @PutMapping("/alterar-senha")
     public void alterarSenha(@RequestBody String senha, @AuthenticationPrincipal OidcUser principal) {
@@ -62,12 +43,12 @@ public class UsuarioResource {
     }
 
     @PutMapping("/atualizar-foto")
-    public void atualizarFoto(@RequestBody String fotoBase64, @AuthenticationPrincipal OidcUser principal) {
+    public void atualizarFoto(@RequestBody String uuidFoto, @AuthenticationPrincipal OidcUser principal) {
         log.info("Atualizar foto");
         try {
             if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
-            usuarioService.atualizarFoto(principal.getName(), fotoBase64);
+            usuarioService.atualizarFoto(principal.getName(), UUID.fromString(uuidFoto));
         }
         catch (ResponseStatusException rsex) {
             throw rsex;

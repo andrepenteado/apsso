@@ -15,7 +15,7 @@
               <h3 class="card-title">Meus Dados</h3>
             </div>
             <div class="col-3">
-              <img src="{{ this.fotoBase64 }}" class="rounded-circle float-end" style="height: 60px; width: 60px;">
+              <img src="{{ this.foto.base64 && this.foto.base64.length > 0 ? this.foto.base64 : '/assets/images/sem-foto.png' }}" class="rounded-circle float-end" style="height: 60px; width: 60px;">
             </div>
           </div>
         </div>
@@ -23,11 +23,11 @@
           <div class="row mb-3">
             <div class="form-group col-12 col-md-6">
               <label>Nome</label>
-              <input class="form-control" name="nome" type="text" disabled [value]="userLogin.nome">
+              <input class="form-control" name="nome" type="text" disabled [value]="userLogin?.nome">
             </div>
             <div class="form-group col-12 col-md-6">
               <label>Perfil Atual</label>
-              <input class="form-control" name="nome" type="text" disabled [value]="userLogin.perfilAtual">
+              <input class="form-control" name="nome" type="text" disabled [value]="userLogin?.perfilAtual">
             </div>
           </div>
           <div class="row mb-3">

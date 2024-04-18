@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UsuarioService {
 
@@ -21,5 +22,5 @@ public interface UsuarioService {
 
     void alterarSenha(String username, String senha);
 
-    void atualizarFoto(String username, String fotoBase64);
+    void atualizarFoto(String username, UUID uuidFoto);
 }

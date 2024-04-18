@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { DecoracaoMensagem, ExibirMensagemService } from "../../../../libs/core/services/exibir-mensagem.service"
 import { UserLogin } from "../../../../libs/core/dtos/user-login"
 import { AuthService } from "../../../../services/auth.service"
+import { Upload } from "../../../../libs/core/dtos/upload"
+import { UploadService } from "../../../../libs/core/services/upload.service"
+import { lastValueFrom, Observable } from "rxjs"
+import { MenuComponent } from "../../../../libs/core/sections/menu/menu.component"
 
 @Component({
   selector: 'app-meus-dados',
@@ -19,12 +23,12 @@ export class MeusDadosComponent implements OnInit {
   repitaSenha = new FormControl(null);
 
   userLogin: UserLogin;
-
-  fotoBase64: string;
+  foto: Upload = new Upload();
 
   constructor(
     private service: UsuarioService,
     private authService: AuthService,
+    private uploadService: UploadService,
     private exibirMensagem: ExibirMensagemService
   ) { }
 
@@ -35,7 +39,11 @@ export class MeusDadosComponent implements OnInit {
 
   async ngOnInit() {
     this.userLogin = await this.authService.usuarioLogado();
-    this.fotoBase64 = this.userLogin.fotoBase64;
+    if (this.userLogin.uuidFoto) {
+      this.uploadService.buscar(this.userLogin.uuidFoto).subscribe(upload => {
+        this.foto = upload
+      });
+    }
   }
 
   atualizarFoto(event: any): void {
@@ -43,7 +51,10 @@ export class MeusDadosComponent implements OnInit {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      this.fotoBase64 = reader.result as string;
+      this.foto.base64 = reader.result as string;
+      this.foto.nome = file.name;
+      this.foto.descricao = "Foto usuário " + this.userLogin.nome;
+      this.foto.tipo = file.type;
     };
 
     if (file)
@@ -76,7 +87,7 @@ export class MeusDadosComponent implements OnInit {
               DecoracaoMensagem.ERRO
             );
           }
-      });
+        });
       }
     }
     else {
@@ -88,9 +99,18 @@ export class MeusDadosComponent implements OnInit {
     }
   }
 
-  gravarFoto(): void {
-    this.service.atualizarFoto(this.fotoBase64).subscribe({
+  async gravarFoto() {
+    let upload$: Observable<Upload>;
+    if (this.userLogin.uuidFoto)
+      upload$ = this.uploadService.alterar(this.foto)
+    else
+      upload$ = this.uploadService.incluir(this.foto);
+    let upload = await lastValueFrom(upload$);
+
+    this.service.atualizarFoto(upload.uuid).subscribe({
       next: obj => {
+        this.userLogin.uuidFoto = upload.uuid;
+        MenuComponent.upload = upload;
         this.exibirMensagem.showMessage(
           "Foto atualizada com sucesso",
           "Atualizar Foto",

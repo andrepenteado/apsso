@@ -14,7 +14,7 @@ import { Sistema } from "../../../model/entities/sistema"
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-        <img class="img-fluid float-right rounded-circle" src="{{ sistema.iconeBase64 }}" width="120" height="120"/>
+        <img class="img-fluid float-right rounded-circle" src="/assets/images/sem-sistema.gif" width="120" height="120"/>
         <div class="caption">
           <h3>{{ sistema.id }}</h3>
           <p class="form-text">{{ sistema.descricao }}</p>

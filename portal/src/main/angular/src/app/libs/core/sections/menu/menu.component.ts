@@ -3,6 +3,8 @@ import { AuthService } from "../../../../services/auth.service";
 import { UserLogin } from "../../dtos/user-login";
 import { MENU } from "../../../../etc/menu";
 import { TemaService } from "../../services/tema.service"
+import { UploadService } from "../../services/upload.service"
+import { Upload } from "../../dtos/upload"
 
 @Component({
   selector: 'core-section-menu',
@@ -11,15 +13,40 @@ import { TemaService } from "../../services/tema.service"
 })
 export class MenuComponent implements OnInit {
 
+  public static upload = new Upload();
+
   userLogin: UserLogin;
 
   constructor(
     private authService: AuthService,
-    protected temaService: TemaService
+    private temaService: TemaService,
+    private uploadService: UploadService
   ) { }
 
   async ngOnInit() {
     this.userLogin = await this.authService.usuarioLogado();
+    if (this.userLogin.uuidFoto) {
+      this.uploadService.buscar(this.userLogin.uuidFoto).subscribe(upload => {
+        MenuComponent.upload = upload
+      });
+    }
+  }
+
+  isDark(): boolean {
+    return this.temaService.isDark();
+  }
+
+  alterarTema(event: Event): void {
+    const isDark = (<HTMLInputElement>event.target).checked;
+    this.temaService.setDark(isDark);
+  }
+
+  getMenu() {
+    return MENU;
+  }
+
+  getUpload() {
+    return MenuComponent.upload
   }
 
   logout(): void {
@@ -29,12 +56,5 @@ export class MenuComponent implements OnInit {
   voltarAoPortal(): void {
     this.authService.voltarAoPortal();
   }
-
-  alterarTema(event: Event): void {
-    const isDark = (<HTMLInputElement>event.target).checked;
-    this.temaService.setDark(isDark);
-  }
-
-  protected readonly MENU = MENU;
 
 }

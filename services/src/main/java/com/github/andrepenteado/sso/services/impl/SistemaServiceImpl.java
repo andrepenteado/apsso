@@ -49,7 +49,7 @@ public class SistemaServiceImpl implements SistemaService {
         sistemaAlterar.setId(sistema.getId());
         sistemaAlterar.setDescricao(sistema.getDescricao());
         sistemaAlterar.setClientId(sistema.getClientId());
-        sistemaAlterar.setIconeBase64(sistema.getIconeBase64());
+        sistemaAlterar.setIcone(sistema.getIcone());
         sistemaAlterar.setUrlEntrada(sistema.getUrlEntrada());
 
         StringBuilder redirectUris = new StringBuilder();

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class TemaService {
 
-  public static readonly TEMA_COOKIE = 'TEMA_COOKIE';
+  public static readonly TEMA_COOKIE = 'APCODE_TEMA_COOKIE';
 
   constructor() {
     let tema = sessionStorage.getItem(TemaService.TEMA_COOKIE);

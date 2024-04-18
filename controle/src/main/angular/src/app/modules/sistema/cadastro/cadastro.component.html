@@ -28,8 +28,8 @@
         </button>
       </nav>
       <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
-        Incluído por {{ sistema.usuarioCadastro }} em {{ sistema.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
-        <span *ngIf="sistema.dataUltimaAtualizacao != null">
+        Incluído por {{ sistema?.usuarioCadastro }} em {{ sistema?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+        <span *ngIf="sistema?.dataUltimaAtualizacao != null">
           Alterado por {{ sistema.usuarioUltimaAtualizacao }} em {{ sistema.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
         </span>
       </p>
@@ -80,7 +80,7 @@
                 <input type="file" class="form-control" (change)="atualizarIcone($event)" accept="image/*" id="formFile"/>
               </div>
               <div class="col-3 text-center">
-                <img src="{{ this.form.controls.iconeBase64.value }}" width="60" height="60" class="rounded-circle">
+                <img src="{{ this.iconeUpload.base64 && this.iconeUpload.base64.length > 0 ? this.iconeUpload.base64 : '/assets/images/sem-sistema.gif' }}" width="60" height="60" class="rounded-circle">
               </div>
             </div>
             <div class="row mb-3">
