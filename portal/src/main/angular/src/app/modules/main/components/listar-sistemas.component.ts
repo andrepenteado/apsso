@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SistemaService } from "../../../services/sistema.service";
 import { Router } from "@angular/router";
 import { Sistema } from "../../../model/entities/sistema"
+import { SISTEMA_URL } from "../../../etc/routes"
 
 @Component({
   selector: 'app-listar-sistemas',
@@ -14,7 +15,7 @@ import { Sistema } from "../../../model/entities/sistema"
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-        <img class="img-fluid float-right rounded-circle" src="/assets/images/sem-sistema.gif" width="120" height="120"/>
+        <img class="img-fluid float-right rounded-circle" src="{{ getLinkIcone(sistema.icone) }}" style="width: 120px; height: 120px;"/>
         <div class="caption">
           <h3>{{ sistema.id }}</h3>
           <p class="form-text">{{ sistema.descricao }}</p>
@@ -59,6 +60,12 @@ export class ListarSistemasComponent implements OnInit {
 
   acessar(url: string): void {
     window.location.href = url;
+  }
+
+  getLinkIcone(uuid: string): string {
+    if (uuid)
+      return `${SISTEMA_URL.backendURL}/upload/html/${uuid ? uuid : 'sem-imagem'}`;
+    return "/assets/images/sem-imagem.gif";
   }
 
 }
