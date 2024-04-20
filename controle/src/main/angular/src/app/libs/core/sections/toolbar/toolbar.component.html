@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
 
   <div class="container-fluid">
-    <a class="navbar-brand fs-1 fw-bolder" href="#"><span [innerHTML]="Layout.LOGOTIPO"></span></a>
+    <a class="navbar-brand fs-1 fw-bolder" href="#"><span [innerHTML]="getLayout().LOGOTIPO"></span></a>
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSidebar"
       aria-expanded="false" aria-controls="collapseSidebar">
       <i class="bi bi-menu-app"></i>
     </button>
-    <span class="navbar-text fw-bolder fs-5 ms-3">{{ Layout.MODULO }}</span>
+    <span class="navbar-text fw-bolder fs-5 ms-3">{{ getLayout().MODULO }}</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToolbar"
       aria-controls="navbarToolbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarToolbar">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item" *ngFor="let menu of MENU">
+        <li class="nav-item" *ngFor="let menu of getMenu()">
           <a routerLink="{{ menu.path }}" class="nav-link active text-center"><i class="bi bi-{{ menu.icone }} fs-3"></i><br>{{ menu.texto }}</a>
         </li>
       </ul>

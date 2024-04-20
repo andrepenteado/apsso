@@ -14,6 +14,12 @@ export class ToolbarComponent {
     body.setAttribute('data-bs-theme', 'dark');
   }
 
-  protected readonly MENU = MENU;
-  protected readonly Layout = Layout;
+  getMenu() {
+    return MENU
+  }
+
+  getLayout() {
+    return Layout;
+  }
+
 }
