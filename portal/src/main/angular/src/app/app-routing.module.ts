@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DecoratedComponent } from './libs/core/layout/decorated/decorated.component';
-import { NoDecoratedComponent } from './libs/core/layout/no-decorated/no-decorated.component';
 import { DECORATED_ROUTES, NO_DECORATED_ROUTES } from './etc/routes';
+import { DecoratedComponent, NoDecoratedComponent } from "@andrepenteado/ngx-apcore"
 
 const routes: Routes = [
   {

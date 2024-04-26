@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
-import { DecoracaoMensagem, ExibirMensagemService } from "../../../../libs/core/services/exibir-mensagem.service"
-import { UserLogin } from "../../../../libs/core/dtos/user-login"
-import { AuthService } from "../../../../services/auth.service"
-import { Upload } from "../../../../libs/core/dtos/upload"
-import { UploadService } from "../../../../libs/core/services/upload.service"
 import { lastValueFrom, Observable } from "rxjs"
-import { MenuComponent } from "../../../../libs/core/sections/menu/menu.component"
+import { AuthService, DecoracaoMensagem, ExibirMensagemService, MenuComponent, Upload, UploadService, UserLogin } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-meus-dados',

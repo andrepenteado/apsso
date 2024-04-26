@@ -2,11 +2,10 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { Subject } from 'rxjs';
 import { SistemaService } from '../../../services/sistema.service';
 import { Router } from '@angular/router';
-import { DATATABLES_OPTIONS } from "../../../etc/datatables"
 import { Sistema } from "../../../model/entities/sistema"
-import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
 import { DataTableDirective } from "angular-datatables"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
+import { DATATABLES_OPTIONS, DecoracaoMensagem, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',

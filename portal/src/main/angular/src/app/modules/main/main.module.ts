@@ -6,8 +6,7 @@ import { MeusDadosComponent } from './components/meus-dados/meus-dados.component
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxLoadingModule } from "ngx-loading"
 import { MainRoutingModule } from "./main-routing.module"
-import { UploadWidgetModule } from "@bytescale/upload-widget-angular";
-import { ImageCropperModule } from "ngx-image-cropper"
+import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
 
 @NgModule({
   declarations: [
@@ -18,7 +17,8 @@ import { ImageCropperModule } from "ngx-image-cropper"
     CommonModule,
     MainRoutingModule,
     ReactiveFormsModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    NgxApcoreModule
   ],
   exports: [
   ]

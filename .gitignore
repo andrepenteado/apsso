@@ -36,11 +36,13 @@ nbactions.xml
 /controle/src/main/angular/node_modules/
 /controle/src/main/angular/.angular/
 /controle/src/main/angular/*.iml
+/controle/src/main/angular/.npmrc
 /portal/target/
 /portal/src/main/resources/static/
 /portal/*.iml
 /portal/src/main/angular/node_modules/
 /portal/src/main/angular/.angular/
 /portal/src/main/angular/*.iml
+/portal/src/main/angular/.npmrc
 /services/target/
 .ansible/ansible.log

@@ -1,7 +1,5 @@
 import { Routes } from "@angular/router"
-import { ErroProcessamentoComponent } from "../libs/core/pages/erro-processamento.component"
-import { AcessoNegadoComponent } from "../libs/core/pages/acesso-negado.component"
-import { PaginaInicialComponent } from "../libs/core/pages/pagina-inicial.component"
+import { AcessoNegadoComponent, ErroProcessamentoComponent, PaginaInicialComponent } from "@andrepenteado/ngx-apcore"
 
 export const DECORATED_ROUTES: Routes = [
 

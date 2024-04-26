@@ -3,8 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CoreModule } from './libs/core/core.module';
 import { HttpClientModule } from "@angular/common/http"
+import { MENU } from "./etc/menu"
+import { SISTEMA_URL } from "./etc/routes"
+import { Layout } from "./etc/layout"
+import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
 
 @NgModule({
   declarations: [
@@ -13,8 +16,15 @@ import { HttpClientModule } from "@angular/common/http"
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxApcoreModule.forRoot({
+      NOME_SISTEMA: Layout.MODULO,
+      LOGOTIPO_SISTEMA: Layout.LOGOTIPO,
+      URL_BACKEND_SISTEMA: SISTEMA_URL.backendURL,
+      URL_PORTAL: SISTEMA_URL.portalURL,
+      PREFIXO_PERFIL: "ROLE_Controle_",
+      MENU: MENU
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

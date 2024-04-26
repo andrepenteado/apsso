@@ -4,9 +4,8 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { Subject } from 'rxjs';
 import { Usuario } from "../../../model/entities/usuario"
 import { DataTableDirective } from "angular-datatables"
-import { DATATABLES_OPTIONS } from "../../../etc/datatables"
-import { DecoracaoMensagem, ExibirMensagemService } from "../../../libs/core/services/exibir-mensagem.service"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
+import { DATATABLES_OPTIONS, DecoracaoMensagem, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',
