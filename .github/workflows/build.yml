@@ -29,21 +29,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-
-      - name: Autenticar repositório NPM do github
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+          registry-url: https://npm.pkg.github.com/
+          scope: '@andrepenteado'
 
       - name: Instalar pacotes do frontend do módulo de controle
         run: npm --prefix ./controle/src/main/angular install
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Buildar frontend do módulo de controle
         run: npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Instalar pacotes do frontend do portal de sistemas
         run: npm --prefix ./portal/src/main/angular install
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Buildar frontend do portal de sistemas
         run: npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Usar JDK 21
         uses: actions/setup-java@v3
