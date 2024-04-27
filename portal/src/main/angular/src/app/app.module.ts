@@ -22,7 +22,7 @@ import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
       LOGOTIPO_SISTEMA: Layout.LOGOTIPO,
       URL_BACKEND_SISTEMA: SISTEMA_URL.backendURL,
       URL_PORTAL: SISTEMA_URL.portalURL,
-      PREFIXO_PERFIL: "ROLE_Controle_",
+      PREFIXO_PERFIL: "ROLE_Portal_",
       MENU: MENU
     })
   ],

@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Autenticar repositório NPM do github
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Instalar pacotes do frontend do módulo de controle
         run: npm --prefix ./controle/src/main/angular install
 
