@@ -2,13 +2,6 @@ spring:
   datasource:
     url: jdbc:postgresql://dev.db.apcode.com.br/apsso-dbname
 
-  security:
-    oauth2:
-      client:
-        provider:
-          spring:
-            issuer-uri: http://dev.login.apcode.com.br:30000
-
 management:
   tracing:
     enabled: false

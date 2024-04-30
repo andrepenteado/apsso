@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Portal UP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
+    <envs>
+      <env name="AUTHORIZATION_SERVER_URL" value="http://dev.login.apcode.com.br:30000" />
+    </envs>
     <module name="portal" />
-    <selectedOptions>
-      <option name="environmentVariables" />
-    </selectedOptions>
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.sso.portal.PortalApplication" />
     <option name="VM_PARAMETERS" value="-Dserver.port=30002 -Duser.timezone=&quot;America/Sao_Paulo&quot;" />
     <method v="2">

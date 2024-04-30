@@ -16,9 +16,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -36,12 +34,12 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.security.KeyStore;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -61,6 +59,9 @@ public class AuthorizationServer {
             .oidc(Customizer.withDefaults());
 
         http
+            .cors(Customizer.withDefaults());
+
+        http
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
                     new LoginUrlAuthenticationEntryPoint("/login"))
@@ -78,6 +79,9 @@ public class AuthorizationServer {
         http
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().permitAll()
+            )
+            .cors(
+                Customizer.withDefaults()
             )
             .formLogin(form -> {
                 form
@@ -137,7 +141,7 @@ public class AuthorizationServer {
 
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
             context.getClaims().claims(claims ->
-                claims.put("authorities", authorities.stream().map(authority -> authority.getAuthority()).collect(Collectors.toList())));
+                claims.put("authorities", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())));
 
             final Usuario userEntity = usuarioService.buscar(userDetails.getUsername()).orElseThrow();
 
@@ -152,6 +156,21 @@ public class AuthorizationServer {
             context.getClaims().claim("uuidFoto", Objects.isNull(userEntity.getFoto()) ? "" : userEntity.getFoto().toString());
             context.getClaims().claim("perfis", perfis);
         };
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return new CorsFilter(source);
     }
 
 }
