@@ -1,7 +1,3 @@
-export class Api {
+export const API_SISTEMAS: string = '/sistemas';
 
-  static readonly SISTEMAS: string = '/sistemas';
-
-  static readonly USUARIOS: string = '/usuarios';
-
-}
+export const API_USUARIOS: string = '/usuarios';

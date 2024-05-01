@@ -53,11 +53,11 @@ export class CadastroComponent implements OnInit {
   });
 
   constructor(
-      private activedRoute: ActivatedRoute,
-      private sistemaService: SistemaService,
-      private perfilSistemaService: PerfilSistemaService,
-      private exibirMensagem: ExibirMensagemService,
-      private uploadService: UploadService
+    private activedRoute: ActivatedRoute,
+    private sistemaService: SistemaService,
+    private perfilSistemaService: PerfilSistemaService,
+    private exibirMensagem: ExibirMensagemService,
+    private uploadService: UploadService
   ) { }
 
   ngOnInit(): void {

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,10 +30,11 @@ public class SistemaResource {
     private final PermissaoService permissaoService;
 
     @GetMapping
-    public List<Sistema> listar(@AuthenticationPrincipal OidcUser principal) {
+    public List<Sistema> listar(JwtAuthenticationToken auth) {
         log.info("Listar sistemas");
+        Jwt jwt = (Jwt)auth.getCredentials();
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(jwt.getClaim("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.listar();
         }
@@ -45,10 +48,11 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}")
-    public Sistema buscar(@PathVariable String id, @AuthenticationPrincipal OidcUser principal) {
+    public Sistema buscar(@PathVariable String id, JwtAuthenticationToken auth) {
         log.info("Buscar sistema de ID: #{}", id);
+        Jwt jwt = (Jwt)auth.getCredentials();
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(principal.getAttribute("perfis"))))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(jwt.getClaim("perfis"))))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.buscar(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

@@ -2,7 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { lastValueFrom, Observable } from "rxjs"
-import { AuthService, DecoracaoMensagem, ExibirMensagemService, MenuComponent, Upload, UploadService, UserLogin } from "@andrepenteado/ngx-apcore"
+import {
+  DecoracaoMensagem,
+  ExibirMensagemService,
+  LoginService,
+  MenuComponent,
+  Upload,
+  UploadService,
+  UserLogin
+} from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-meus-dados',
@@ -22,7 +30,7 @@ export class MeusDadosComponent implements OnInit {
 
   constructor(
     private service: UsuarioService,
-    private authService: AuthService,
+    private loginService: LoginService,
     private uploadService: UploadService,
     private exibirMensagem: ExibirMensagemService
   ) { }
@@ -33,7 +41,7 @@ export class MeusDadosComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.userLogin = await this.authService.usuarioLogado();
+    this.userLogin = await this.loginService.getUserLogin();
     if (this.userLogin.uuidFoto) {
       this.uploadService.buscar(this.userLogin.uuidFoto).subscribe(upload => {
         this.foto = upload

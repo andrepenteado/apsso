@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "apadmin": {
+    "controle": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "preserveSymlinks": true,
             "outputPath": {
               "base": "../resources/static",
               "browser": ""

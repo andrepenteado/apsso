@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from "@angular/common/http"
 import { MENU } from "./etc/menu"
 import { SISTEMA_URL } from "./etc/routes"
-import { Layout } from "./etc/layout"
 import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
+import { CLIENT_ID, REDIRECT_URI, SECRET_ID, URL_AUTHORIZATION_SERVER } from "./etc/oauth2";
+import { LOGOTIPO, MODULO } from "./etc/layout";
 
 @NgModule({
   declarations: [
@@ -18,12 +19,16 @@ import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
     AppRoutingModule,
     HttpClientModule,
     NgxApcoreModule.forRoot({
-      NOME_SISTEMA: Layout.MODULO,
-      LOGOTIPO_SISTEMA: Layout.LOGOTIPO,
-      URL_BACKEND_SISTEMA: SISTEMA_URL.backendURL,
-      URL_PORTAL: SISTEMA_URL.portalURL,
-      PREFIXO_PERFIL: "ROLE_Portal_",
-      MENU: MENU
+      nomeSistema: MODULO,
+      logotipoSistema: LOGOTIPO,
+      urlBackendSistema: SISTEMA_URL.backendURL,
+      urlPortal: SISTEMA_URL.portalURL,
+      prefixoPerfil: "ROLE_Portal_",
+      menu: MENU,
+      clientId: CLIENT_ID,
+      redirectUri: REDIRECT_URI,
+      secretId: SECRET_ID,
+      urlAuthorizationServer: URL_AUTHORIZATION_SERVER
     })
   ],
   providers: [],
