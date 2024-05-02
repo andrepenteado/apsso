@@ -1,16 +1,17 @@
 package com.github.andrepenteado.sso.portal.resources;
 
+import com.github.andrepenteado.core.web.dto.UserLogin;
 import com.github.andrepenteado.sso.portal.services.PermissaoService;
 import com.github.andrepenteado.sso.services.UsuarioService;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
@@ -30,11 +31,11 @@ public class UsuarioResource {
     @PutMapping("/alterar-senha")
     public void alterarSenha(@RequestBody String senha, JwtAuthenticationToken auth) {
         log.info("Alterar senha");
-        Jwt jwt = (Jwt)auth.getCredentials();
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(jwt.getClaim("perfis"))))
+            UserLogin userLogin = new UserLogin(auth);
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
-            usuarioService.alterarSenha(jwt.getClaim("login"), senha);
+            usuarioService.alterarSenha(userLogin.login(), senha);
         }
         catch (ResponseStatusException rsex) {
             throw rsex;
@@ -48,11 +49,11 @@ public class UsuarioResource {
     @PutMapping("/atualizar-foto")
     public void atualizarFoto(@RequestBody String uuidFoto, JwtAuthenticationToken auth) {
         log.info("Atualizar foto");
-        Jwt jwt = (Jwt)auth.getCredentials();
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(jwt.getClaim("perfis"))))
+            UserLogin userLogin = new UserLogin(auth);
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
-            usuarioService.atualizarFoto(jwt.getClaim("login"), UUID.fromString(uuidFoto));
+            usuarioService.atualizarFoto(userLogin.login(), UUID.fromString(uuidFoto));
         }
         catch (ResponseStatusException rsex) {
             throw rsex;

@@ -11,21 +11,17 @@ import { LoginService } from "@andrepenteado/ngx-apcore";
 })
 export class SistemaService {
 
-  readonly bearer = new HttpHeaders()
-    .set("Content-type", "application/x-www-form-urlencoded")
-    .set("Authorization", "Bearer " + this.loginService.getBearerToken());
-
   constructor(
       private http: HttpClient,
       private loginService: LoginService
   ) { }
 
   public listar(): Observable<Sistema[]> {
-    return this.http.get<Sistema[]>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}`, { headers: this.bearer });
+    return this.http.get<Sistema[]>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}`);
   }
 
   public buscar(id: string): Observable<Sistema> {
-    return this.http.get<Sistema>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/${id}`, { headers: this.bearer });
+    return this.http.get<Sistema>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/${id}`);
   }
 
 }

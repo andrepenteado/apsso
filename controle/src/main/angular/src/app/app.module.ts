@@ -6,9 +6,10 @@ import { HttpClientModule } from "@angular/common/http"
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
-import { Layout } from "./etc/layout"
+import { LOGOTIPO, MODULO } from "./etc/layout"
 import { SISTEMA_URL } from "./etc/routes"
 import { MENU } from "./etc/menu"
+import { CLIENT_ID, REDIRECT_URI, SECRET_ID, URL_AUTHORIZATION_SERVER } from "./etc/oauth2"
 
 registerLocaleData(localePT);
 
@@ -21,12 +22,16 @@ registerLocaleData(localePT);
     AppRoutingModule,
     HttpClientModule,
     NgxApcoreModule.forRoot({
-      NOME_SISTEMA: Layout.MODULO,
-      LOGOTIPO_SISTEMA: Layout.LOGOTIPO,
-      URL_BACKEND_SISTEMA: SISTEMA_URL.backendURL,
-      URL_PORTAL: SISTEMA_URL.portalURL,
-      PREFIXO_PERFIL: "ROLE_Controle_",
-      MENU: MENU
+      nomeSistema: MODULO,
+      logotipoSistema: LOGOTIPO,
+      urlBackendSistema: SISTEMA_URL.backendURL,
+      urlPortal: SISTEMA_URL.portalURL,
+      prefixoPerfil: "ROLE_Controle_",
+      menu: MENU,
+      clientId: CLIENT_ID,
+      redirectUri: REDIRECT_URI,
+      secretId: SECRET_ID,
+      urlAuthorizationServer: URL_AUTHORIZATION_SERVER
     })
   ],
   providers: [

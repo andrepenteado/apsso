@@ -28,8 +28,8 @@ export const NO_DECORATED_ROUTES: Routes = [
 
 export const SISTEMA_URL = {
 
-  backendURL:  window.location.protocol + '//' + window.location.host,
+  backendURL:  "http://localhost:30001",
 
-  portalURL: window.location.protocol + '//' + window.location.host.replace('controle.', 'portal.').replace('30001','30002')
+  portalURL: "http://localhost:30002"
 
 };

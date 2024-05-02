@@ -1,9 +1,9 @@
 package com.github.andrepenteado.sso.services.impl;
 
+import com.github.andrepenteado.core.common.CoreUtil;
 import com.github.andrepenteado.sso.services.UsuarioService;
 import com.github.andrepenteado.sso.services.entities.Usuario;
 import com.github.andrepenteado.sso.services.repositories.UsuarioRepository;
-import com.github.andrepenteado.core.common.CoreUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;

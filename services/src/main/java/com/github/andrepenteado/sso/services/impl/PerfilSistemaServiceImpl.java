@@ -1,9 +1,9 @@
 package com.github.andrepenteado.sso.services.impl;
 
+import com.github.andrepenteado.core.common.CoreUtil;
 import com.github.andrepenteado.sso.services.PerfilSistemaService;
 import com.github.andrepenteado.sso.services.entities.PerfilSistema;
 import com.github.andrepenteado.sso.services.repositories.PerfilSistemaRepository;
-import com.github.andrepenteado.core.common.CoreUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

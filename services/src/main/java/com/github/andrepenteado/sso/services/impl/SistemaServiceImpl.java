@@ -1,10 +1,10 @@
 package com.github.andrepenteado.sso.services.impl;
 
+import com.github.andrepenteado.core.common.CoreUtil;
 import com.github.andrepenteado.sso.services.SistemaService;
 import com.github.andrepenteado.sso.services.UsuarioService;
 import com.github.andrepenteado.sso.services.entities.Sistema;
 import com.github.andrepenteado.sso.services.repositories.SistemaRepository;
-import com.github.andrepenteado.core.common.CoreUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -55,8 +55,7 @@ public class SistemaServiceImpl implements SistemaService {
         StringBuilder redirectUris = new StringBuilder();
         StringBuilder logoutUris = new StringBuilder();
         for (String url: sistema.getUrlEntrada().split(";")) {
-            redirectUris.append(String.format("%s/login/oauth2/code/%s-oidc,%s/authorized,",
-                    url, sistema.getId().toLowerCase(), url));
+            redirectUris.append(String.format("%s/authorized,", url));
             logoutUris.append(String.format("%s/logout,", url));
         }
         sistemaAlterar.setRedirectUris(redirectUris.toString());

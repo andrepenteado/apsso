@@ -87,6 +87,9 @@
               "buildTarget": "portal:build:development"
             }
           },
+          "options": {
+            "port": 40002
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

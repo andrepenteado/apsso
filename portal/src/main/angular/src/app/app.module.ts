@@ -31,7 +31,7 @@ import { LOGOTIPO, MODULO } from "./etc/layout";
       urlAuthorizationServer: URL_AUTHORIZATION_SERVER
     })
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

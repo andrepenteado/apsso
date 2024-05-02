@@ -18,7 +18,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "apcontrole",
+      "prefix": "controle",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -81,18 +81,21 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "apcontrole:build:production"
+              "buildTarget": "controle:build:production"
             },
             "development": {
-              "buildTarget": "apcontrole:build:development"
+              "buildTarget": "controle:build:development"
             }
+          },
+          "options": {
+            "port": 40001
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "apcontrole:build"
+            "buildTarget": "controle:build"
           }
         },
         "test": {
