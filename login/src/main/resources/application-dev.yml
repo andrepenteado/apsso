@@ -1,10 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dev.db.apcode.com.br/apsso-dbname
+    url: jdbc:postgresql://localhost/apsso-dbname
 
 management:
   tracing:
     enabled: false
 
 apsso:
-  uri: http://dev.login.apcode.com.br:30000
+  uri: http://localhost:30000

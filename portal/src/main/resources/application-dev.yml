@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dev.db.apcode.com.br/apsso-dbname
+    url: jdbc:postgresql://localhost/apsso-dbname
 
 management:
   tracing:

@@ -1,13 +1,18 @@
 import { Routes } from "@angular/router"
 import {
-  AcessoNegadoComponent,
+  AcessoNegadoComponent, autorizarPerfilGuard,
   ErroProcessamentoComponent,
   PaginaInicialComponent
 } from "@andrepenteado/ngx-apcore"
 
 export const DECORATED_ROUTES: Routes = [
 
-  { path: "pagina-inicial", component: PaginaInicialComponent },
+  {
+    path: "pagina-inicial",
+    component: PaginaInicialComponent,
+    canActivate: [ autorizarPerfilGuard ],
+    data: { perfilAutorizado: 'ROLE_Portal_USUARIO' }
+  },
 
   {
     path: "",

@@ -2,11 +2,27 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
+import { autorizarPerfilGuard } from "@andrepenteado/ngx-apcore"
 
 const routes: Routes = [
-  { path: 'pesquisar', component: PesquisarComponent },
-  { path: 'cadastro', component: CadastroComponent },
-  { path: 'cadastro/:username', component: CadastroComponent }
+  {
+    path: 'pesquisar',
+    component: PesquisarComponent,
+    canActivate: [ autorizarPerfilGuard ],
+    data: { perfilAutorizado: 'ROLE_Controle_ARQUITETO' }
+  },
+  {
+    path: 'cadastro',
+    component: CadastroComponent,
+    canActivate: [ autorizarPerfilGuard ],
+    data: { perfilAutorizado: 'ROLE_Controle_ARQUITETO' }
+  },
+  {
+    path: 'cadastro/:username',
+    component: CadastroComponent,
+    canActivate: [ autorizarPerfilGuard ],
+    data: { perfilAutorizado: 'ROLE_Controle_ARQUITETO' }
+  }
 ];
 
 @NgModule({
