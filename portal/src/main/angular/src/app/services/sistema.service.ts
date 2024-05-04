@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Sistema } from "../model/entities/sistema"
-import { SISTEMA_URL } from "../etc/routes"
 import { API_SISTEMAS } from "../etc/api";
-import { LoginService } from "@andrepenteado/ngx-apcore";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +11,15 @@ import { LoginService } from "@andrepenteado/ngx-apcore";
 export class SistemaService {
 
   constructor(
-      private http: HttpClient,
-      private loginService: LoginService
+      private http: HttpClient
   ) { }
 
   public listar(): Observable<Sistema[]> {
-    return this.http.get<Sistema[]>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}`);
+    return this.http.get<Sistema[]>(`${environment.backendURL}${API_SISTEMAS}`);
   }
 
   public buscar(id: string): Observable<Sistema> {
-    return this.http.get<Sistema>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/${id}`);
+    return this.http.get<Sistema>(`${environment.backendURL}${API_SISTEMAS}/${id}`);
   }
 
 }

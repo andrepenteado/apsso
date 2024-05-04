@@ -7,9 +7,9 @@ import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
 import { LOGOTIPO, MODULO } from "./etc/layout"
-import { SISTEMA_URL } from "./etc/routes"
 import { MENU } from "./etc/menu"
-import { CLIENT_ID, REDIRECT_URI, SECRET_ID, URL_AUTHORIZATION_SERVER } from "./etc/oauth2"
+import { environment } from "../environments/environment";
+import { clientId, secretId } from "./etc/oauth2";
 
 registerLocaleData(localePT);
 
@@ -24,14 +24,14 @@ registerLocaleData(localePT);
     NgxApcoreModule.forRoot({
       nomeSistema: MODULO,
       logotipoSistema: LOGOTIPO,
-      urlBackendSistema: SISTEMA_URL.backendURL,
-      urlPortal: SISTEMA_URL.portalURL,
+      urlBackendSistema: environment.backendURL,
+      urlPortal: environment.portalURL,
       prefixoPerfil: "ROLE_Controle_",
       menu: MENU,
-      clientId: CLIENT_ID,
-      redirectUri: REDIRECT_URI,
-      secretId: SECRET_ID,
-      urlAuthorizationServer: URL_AUTHORIZATION_SERVER
+      clientId: clientId,
+      redirectUri: environment.redirectUri,
+      secretId: secretId,
+      urlAuthorizationServer: environment.urlAuthorizationServer
     })
   ],
   providers: [

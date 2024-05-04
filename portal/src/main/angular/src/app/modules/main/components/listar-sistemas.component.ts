@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SistemaService } from "../../../services/sistema.service";
 import { Router } from "@angular/router";
 import { Sistema } from "../../../model/entities/sistema"
-import { SISTEMA_URL } from "../../../etc/routes"
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: 'app-listar-sistemas',
@@ -64,7 +64,7 @@ export class ListarSistemasComponent implements OnInit {
 
   getLinkIcone(uuid: string): string {
     if (uuid)
-      return `${SISTEMA_URL.backendURL}/upload/html/${uuid ? uuid : 'sem-imagem'}`;
+      return `${environment.backendURL}/upload/html/${uuid ? uuid : 'sem-imagem'}`;
     return "/assets/images/sem-imagem.gif";
   }
 

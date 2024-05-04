@@ -28,11 +28,3 @@ export const NO_DECORATED_ROUTES: Routes = [
   { path: "acesso-negado", component: AcessoNegadoComponent }
 
 ]
-
-export const SISTEMA_URL = {
-
-  backendURL:  "http://localhost:30002",
-
-  portalURL: "http://localhost:30002"
-
-};

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PerfilSistema } from "../model/entities/perfil-sistema"
-import { SISTEMA_URL } from "../etc/routes"
 import { API_SISTEMAS } from "../etc/api"
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +15,19 @@ export class PerfilSistemaService {
   ) { }
 
   public listar(): Observable<PerfilSistema[]> {
-    return this.http.get<PerfilSistema[]>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/perfis`);
+    return this.http.get<PerfilSistema[]>(`${environment.backendURL}${API_SISTEMAS}/perfis`);
   }
 
   public listarPorSistema(idSistema: string): Observable<PerfilSistema[]> {
-    return this.http.get<PerfilSistema[]>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/${idSistema}/perfis`);
+    return this.http.get<PerfilSistema[]>(`${environment.backendURL}${API_SISTEMAS}/${idSistema}/perfis`);
   }
 
   public incluir(perfilSistema: any): Observable<PerfilSistema> {
-    return this.http.post<PerfilSistema>(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/perfil`, perfilSistema);
+    return this.http.post<PerfilSistema>(`${environment.backendURL}${API_SISTEMAS}/perfil`, perfilSistema);
   }
 
   public excluir(authority: string): Observable<any> {
-    return this.http.delete(`${SISTEMA_URL.backendURL}${API_SISTEMAS}/perfil/${authority}`);
+    return this.http.delete(`${environment.backendURL}${API_SISTEMAS}/perfil/${authority}`);
   }
 
 }
