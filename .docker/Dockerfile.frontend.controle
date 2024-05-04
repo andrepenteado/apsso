@@ -1,0 +1,12 @@
+# Stage 1 - Angular
+FROM node:20 AS angular
+WORKDIR /app
+COPY /frontend/controle/ /app/frontend/controle/
+RUN npm --prefix ./frontend/controle install
+RUN npm --prefix ./frontend/controle run build --omit=dev
+
+# Stage 2 - Deploy
+FROM nginx
+WORKDIR /site
+COPY --from=angular /app/frontend/controle/dist/  /usr/share/nginx/html/
+EXPOSE 80

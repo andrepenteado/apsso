@@ -1,0 +1,12 @@
+# Stage 1 - Build
+FROM maven:3-amazoncorretto-21-debian AS build
+WORKDIR /apsso/
+COPY /backend/ /apsso/
+RUN mvn --projects services,portal -U clean package --file /apsso/pom.xml -DskipTests
+
+# Stage 3 - Deploy
+FROM amazoncorretto:21
+WORKDIR /portal
+COPY --from=build /apsso/portal/target/portal.jar /portal/portal.jar
+ENTRYPOINT [ "java", "-jar", "/portal/portal.jar" ]
+EXPOSE 8080

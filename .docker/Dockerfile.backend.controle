@@ -1,0 +1,12 @@
+# Stage 1 - Build
+FROM maven:3-amazoncorretto-21-debian AS build
+WORKDIR /apsso/
+COPY /backend/ /apsso/
+RUN mvn --projects services,controle -U clean package --file /apsso/pom.xml -DskipTests
+
+# Stage 3 - Deploy
+FROM amazoncorretto:21
+WORKDIR /controle
+COPY --from=build /apsso/backend/controle/target/controle.jar /controle/controle.jar
+ENTRYPOINT [ "java", "-jar", "/controle/controle.jar" ]
+EXPOSE 8080

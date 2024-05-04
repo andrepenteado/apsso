@@ -1,0 +1,4 @@
+FROM nginx
+WORKDIR /site
+COPY ./frontend/controle/dist/  /usr/share/nginx/html/
+EXPOSE 80

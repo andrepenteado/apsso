@@ -1,0 +1,68 @@
+name: Build e gerar imagem do frontend
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    name: Build e gerar imagem do frontend
+
+    steps:
+
+      - name: Checkout do projeto
+        uses: actions/checkout@v3
+
+      - name: Usar Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Login NPM registry
+        uses: healthplace/npmrc-registry-login-action@v1.0
+        with:
+          scope: '@${{ github.actor }}'
+          registry: 'https://npm.pkg.github.com'
+          auth-token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Instalar pacotes do frontend do módulo de controle
+        run: npm --prefix ./frontend/controle install
+
+      - name: Buildar frontend do módulo de controle
+        run: npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
+
+      - name: Instalar pacotes do frontend do portal de sistemas
+        run: npm --prefix ./frontend/portal install
+
+      - name: Buildar frontend do portal de sistemas
+        run: npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+
+      - name: Buscar versão atual
+        run: echo "VERSAO=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file ./backend/pom.xml)" >> $GITHUB_ENV
+
+      - name: Logar no registry do github
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build da imagem docker do frontend do módulo de controle
+        run: docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle/frontend:latest -t ghcr.io/andrepenteado/apsso/controle/frontend:${{ env.VERSAO }} .
+
+      - name: Push da imagem docker do frontend do módulo de controle
+        run: |
+          docker push ghcr.io/andrepenteado/apsso/controle/frontend:latest
+          docker push ghcr.io/andrepenteado/apsso/controle/frontend:${{ env.VERSAO }}
+
+      - name: Build da imagem docker do frontend do portal de sistemas
+        run: docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal/frontend:latest -t ghcr.io/andrepenteado/apsso/portal/frontend:${{ env.VERSAO }} .
+
+      - name: Push da imagem docker do frontend do portal de sistemas
+        run: |
+          docker push ghcr.io/andrepenteado/apsso/portal/frontend:latest
+          docker push ghcr.io/andrepenteado/apsso/portal/frontend:${{ env.VERSAO }}

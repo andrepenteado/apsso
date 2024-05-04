@@ -1,4 +1,4 @@
-name: Compilar, testar e buildar
+name: Compilar, testar e buildar o backend
 
 on:
   push:
@@ -24,27 +24,6 @@ jobs:
 
       - name: Checkout do projeto
         uses: actions/checkout@v3
-
-      - name: Usar Node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Criar arquivo .npmrc
-        run: echo -e "@andrepenteado:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-
-      - name: Instalar pacotes do frontend do módulo de controle
-        run: npm --prefix ./frontend/controle install
-
-      - name: Buildar frontend do módulo de controle
-        run: npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
-
-      - name: Instalar pacotes do frontend do portal de sistemas
-        run: npm --prefix ./frontend/portal install
-
-      - name: Buildar frontend do portal de sistemas
-        run: npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
 
       - name: Usar JDK 21
         uses: actions/setup-java@v3
@@ -86,18 +65,18 @@ jobs:
           docker push ghcr.io/andrepenteado/apsso/login:latest
           docker push ghcr.io/andrepenteado/apsso/login:${{ env.VERSAO }}
 
-      - name: Build da imagem docker do módulo de controle
-        run: docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle:latest -t ghcr.io/andrepenteado/apsso/controle:${{ env.VERSAO }} .
+      - name: Build da imagem docker do backend do módulo de controle
+        run: docker build -f .docker/Dockerfile.backend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle/backend:latest -t ghcr.io/andrepenteado/apsso/controle/backend:${{ env.VERSAO }} .
 
-      - name: Push da imagem docker do módulo de controle
+      - name: Push da imagem docker do backend do módulo de controle
         run: |
-          docker push ghcr.io/andrepenteado/apsso/controle:latest
-          docker push ghcr.io/andrepenteado/apsso/controle:${{ env.VERSAO }}
+          docker push ghcr.io/andrepenteado/apsso/controle/backend:latest
+          docker push ghcr.io/andrepenteado/apsso/controle/backend:${{ env.VERSAO }}
 
-      - name: Build da imagem docker do portal de sistemas
-        run: docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal:latest -t ghcr.io/andrepenteado/apsso/portal:${{ env.VERSAO }} .
+      - name: Build da imagem docker do backend do portal de sistemas
+        run: docker build -f .docker/Dockerfile.backend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal/backend:latest -t ghcr.io/andrepenteado/apsso/portal/backend:${{ env.VERSAO }} .
 
-      - name: Push da imagem docker do portal de sistemas
+      - name: Push da imagem docker do backend do portal de sistemas
         run: |
-          docker push ghcr.io/andrepenteado/apsso/portal:latest
-          docker push ghcr.io/andrepenteado/apsso/portal:${{ env.VERSAO }}
+          docker push ghcr.io/andrepenteado/apsso/portal/backend:latest
+          docker push ghcr.io/andrepenteado/apsso/portal/backend:${{ env.VERSAO }}
