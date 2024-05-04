@@ -43,7 +43,7 @@ jobs:
             }]
 
       - name: Compilar e testar os módulos do projeto
-        run: mvn -B clean package
+        run: mvn -B --file ./backend/pom.xml clean package
         env:
           GITHUB_TOKEN: ${{ github.token }}
 

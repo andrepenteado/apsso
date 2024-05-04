@@ -22,12 +22,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
 
-      - name: Login NPM registry
-        uses: healthplace/npmrc-registry-login-action@v1.0
-        with:
-          scope: '@${{ github.actor }}'
-          registry: 'https://npm.pkg.github.com'
-          auth-token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Criar .npmrc para módulo de controle
+        run: echo -e "@${{ github.actor }}:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ./frontend/controle/.npmrc
+
+      - name: Criar .npmrc para o portal
+        run: echo -e "@${{ github.actor }}:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ./frontend/portal/.npmrc
 
       - name: Instalar pacotes do frontend do módulo de controle
         run: npm --prefix ./frontend/controle install
