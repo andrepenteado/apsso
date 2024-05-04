@@ -1,17 +1,17 @@
 services:
 
-  dev.login.apcode.com.br:
+  login:
     image: ghcr.io/andrepenteado/apsso/login
     container_name: login
     hostname: login
     environment:
       SPRING_PROFILES_ACTIVE: dev
     ports:
-      - 30000:30000
+      - 30000:8080
     networks:
       - docker-host-network
 
-  dev.controle.apcode.com.br:
+  controle:
     image: ghcr.io/andrepenteado/apsso/controle
     container_name: controle
     hostname: controle
@@ -22,7 +22,7 @@ services:
     networks:
       - docker-host-network
 
-  dev.portal.apcode.com.br:
+  portal:
     image: ghcr.io/andrepenteado/apsso/portal
     container_name: portal
     hostname: portal

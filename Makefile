@@ -1,10 +1,10 @@
-VERSAO_APP := $(shell mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
+VERSAO_APP := $(shell mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file ./backend/pom.xml)
 
 build-all:
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
-	npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
-	mvn -U clean package -DskipTests
+	npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
+	npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+	mvn -U -f ./backend/pom.xml clean package -DskipTests
 	docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP) .
@@ -18,7 +18,7 @@ build-all:
 
 build-login:
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	mvn -U clean package --projects services,login
+	mvn -U -f ./backend/pom.xml clean package --projects services,login
 	docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP) .
 	docker push ghcr.io/andrepenteado/apsso/login
 	docker push ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP)
@@ -26,8 +26,8 @@ build-login:
 
 build-controle:
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
-	mvn -U clean package --projects services,controle -DskipTests
+	npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
+	mvn -U -f ./backend/pom.xml clean package --projects services,controle -DskipTests
 	docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP) .
 	docker push ghcr.io/andrepenteado/apsso/controle
 	docker push ghcr.io/andrepenteado/apsso/controle:$(VERSAO_APP)
@@ -35,8 +35,8 @@ build-controle:
 
 build-portal:
 	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
-	mvn -U clean package --projects services,portal -DskipTests
+	npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+	mvn -U -f ./backend/pom.xml clean package --projects services,portal -DskipTests
 	docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP) .
 	docker push ghcr.io/andrepenteado/apsso/portal
 	docker push ghcr.io/andrepenteado/apsso/portal:$(VERSAO_APP)
@@ -63,4 +63,4 @@ update:
 
 start-backend-dev:
 	docker compose -f .docker/postgresql.yml up -d
-	mvn -f controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev
+	mvn -f ./backend/controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev

@@ -6,9 +6,9 @@ param(
 switch($exec) {
     "build-all" {
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-	    npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
-	    npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
+	    npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
+	    npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
         mvn -U clean package -DskipTests
         docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
         docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
@@ -22,8 +22,8 @@ switch($exec) {
         docker logout ghcr.io
     }
     "build-login" {
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        mvn -U clean package --projects services,login
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
+        mvn -U -f ./backend/pom.xml clean package --projects services,login
         docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
@@ -31,9 +31,9 @@ switch($exec) {
         docker logout ghcr.io
     }
     "build-controle" {
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        npm --prefix ./controle/src/main/angular run build --omit=dev -- "-c=production"
-        mvn -U clean package --projects services,controle -DskipTests
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
+        npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
+        mvn -U -f ./backend/pom.xml clean package --projects services,controle -DskipTests
         docker build -f .docker/Dockerfile.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle -t ghcr.io/andrepenteado/apsso/controle:$VERSAO .
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/controle
@@ -41,9 +41,9 @@ switch($exec) {
         docker logout ghcr.io
     }
     "build-portal" {
-        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        npm --prefix ./portal/src/main/angular run build --omit=dev -- "-c=production"
-        mvn -U clean package --projects services,portal -DskipTests
+        $VERSAO = mvn -f ./backend/pom.xml help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
+        npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+        mvn -U -f ./backend/pom.xml clean package --projects services,portal -DskipTests
         docker build -f .docker/Dockerfile.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal -t ghcr.io/andrepenteado/apsso/portal:$VERSAO .
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/portal
@@ -71,7 +71,7 @@ switch($exec) {
     }
     "start-backend-dev" {
         docker compose -f .docker/postgresql.yml up -d
-        mvn -f controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev
+        mvn -f ./backend/controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev
     }
     Default {
         "`nInforme o parâmetro: -exec <target>`n"

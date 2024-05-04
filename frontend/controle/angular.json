@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "portal": {
+    "controle": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,14 +18,14 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "portal",
+      "prefix": "controle",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "preserveSymlinks": true,
             "outputPath": {
-              "base": "../resources/static",
+              "base": "dist",
               "browser": ""
             },
             "index": "src/index.html",
@@ -87,21 +87,21 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "portal:build:production"
+              "buildTarget": "controle:build:production"
             },
             "development": {
-              "buildTarget": "portal:build:development"
+              "buildTarget": "controle:build:development"
             }
           },
           "options": {
-            "port": 40002
+            "port": 40001
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "portal:build"
+            "buildTarget": "controle:build"
           }
         },
         "test": {
@@ -123,11 +123,6 @@
           }
         }
       }
-    }
-  },
-  "cli": {
-    "cache": {
-      "enabled": false
     }
   }
 }

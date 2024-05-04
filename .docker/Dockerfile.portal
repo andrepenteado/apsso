@@ -1,19 +1,19 @@
 # Stage 1 - Angular
-FROM node:16 AS angular
-WORKDIR /frontend
-COPY /portal/src/main/angular/ /frontend/portal/src/main/angular/
-RUN npm --prefix ./portal/src/main/angular install
-RUN npm --prefix ./portal/src/main/angular run build --omit=dev
+FROM node:20 AS angular
+WORKDIR /app
+COPY /frontend/portal/ /app/frontend/portal/
+RUN npm --prefix ./frontend/portal install
+RUN npm --prefix ./frontend/portal run build --omit=dev
 
 # Stage 2 - Build
 FROM maven:3-amazoncorretto-21-debian AS build
 WORKDIR /apsso/
-COPY pom.xml /apsso/
-COPY /login/pom.xml /apsso/login/
-COPY /controle/pom.xml /apsso/controle/
-COPY /services/ /apsso/services/
-COPY /portal/ /apsso/portal/
-COPY --from=angular /frontend/portal/src/main/resources/static/ /apsso/portal/src/main/resources/static/
+COPY /backend/pom.xml /apsso/
+COPY /backend/login/pom.xml /apsso/login/
+COPY /backend/controle/pom.xml /apsso/controle/
+COPY /backend/services/ /apsso/services/
+COPY /backend/portal/ /apsso/portal/
+COPY --from=angular /app/frontend/portal/dist/ /apsso/portal/src/main/resources/static/
 RUN mvn --projects services,portal -U clean package --file /apsso/pom.xml -DskipTests
 
 # Stage 3 - Deploy

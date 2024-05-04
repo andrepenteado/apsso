@@ -1,5 +1,5 @@
 FROM amazoncorretto:21
-WORKDIR /controle
-COPY controle/target/controle.jar /controle/controle.jar
-ENTRYPOINT [ "java", "-jar", "/controle/controle.jar" ]
+WORKDIR /app
+COPY backend/controle/target/controle.jar /app/controle.jar
+ENTRYPOINT [ "java", "-jar", "/app/controle.jar" ]
 EXPOSE 8080

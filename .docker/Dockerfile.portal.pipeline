@@ -1,5 +1,5 @@
 FROM amazoncorretto:21
 WORKDIR /portal
-COPY portal/target/portal.jar /portal/portal.jar
+COPY backend/portal/target/portal.jar /portal/portal.jar
 ENTRYPOINT [ "java", "-jar", "/portal/portal.jar" ]
 EXPOSE 8080

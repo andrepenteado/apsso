@@ -27,7 +27,7 @@ spec:
               memory: 1G
 #              cpu: 8000m
           ports:
-            - containerPort: 30000
+            - containerPort: 8080
       imagePullSecrets:
         - name: github-secret
 ---
@@ -45,7 +45,7 @@ spec:
   type: LoadBalancer
   ports:
     - name: apsso-login
-      port: 30000
-      targetPort: 30000
+      port: 8080
+      targetPort: 8080
   selector:
     <<: *selector

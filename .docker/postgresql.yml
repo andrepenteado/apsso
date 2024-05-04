@@ -1,6 +1,6 @@
 services:
 
-  dev.db.apcode.com.br:
+  apsso-dbname:
     image: postgres:16
     container_name: apsso-db
     hostname: apsso-db
@@ -15,7 +15,7 @@ services:
     networks:
       - docker-host-network
 
-  dev.db-test.apcode.com.br:
+  apsso-dbname-test:
     image: postgres:16
     container_name: apsso-db-test
     hostname: apsso-db-test
