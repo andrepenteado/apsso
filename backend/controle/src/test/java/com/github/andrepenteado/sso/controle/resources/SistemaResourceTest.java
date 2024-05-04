@@ -17,6 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -32,8 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,12 +95,19 @@ public class SistemaResourceTest {
         return perfil;
     }
 
+    private Jwt getJwt() {
+        Jwt.Builder jwtBuilder = Jwt.withTokenValue("token").header("alg", "none")
+            .claim(JwtClaimNames.SUB, "user")
+            .issuer("https://issuer-host/auth/realms/test")
+            .claim("perfis", getPerfil());
+        return jwtBuilder.build();
+    }
+
     @Test
     @DisplayName("Listar todos sistemas")
     void testListar() throws Exception {
         String json = mockMvc.perform(get("/sistemas")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -113,13 +121,12 @@ public class SistemaResourceTest {
     @DisplayName("Buscar sistema por ID")
     void testBuscar() throws Exception {
         mockMvc.perform(get("/sistemas/Sistema01")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
+
         mockMvc.perform(get("/sistemas/SistemaNaoExiste")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -128,8 +135,7 @@ public class SistemaResourceTest {
     @DisplayName("Incluir ou alterar sistema")
     void testIncluirOuAlterar() throws Exception {
         String json = mockMvc.perform(post("/sistemas")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonSistema(ID_SISTEMA)))
@@ -142,8 +148,7 @@ public class SistemaResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/sistemas")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Sistema())))
@@ -155,8 +160,7 @@ public class SistemaResourceTest {
     @DisplayName("Excluir sistema existente")
     void testExcluir() throws Exception {
         mockMvc.perform(delete("/sistemas/Sistema02")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
@@ -169,8 +173,7 @@ public class SistemaResourceTest {
     @DisplayName("Listar perfis de todos sistemas")
     void testListarPerfis() throws Exception {
         String json = mockMvc.perform(get("/sistemas/perfis")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -184,8 +187,7 @@ public class SistemaResourceTest {
     @DisplayName("Incluir perfil de sistema")
     void testIncluirPerfil() throws Exception {
         String json = mockMvc.perform(post("/sistemas/perfil")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonPerfilSistema(-1L)))
@@ -198,8 +200,7 @@ public class SistemaResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/sistemas/perfil")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new PerfilSistema())))
@@ -211,8 +212,7 @@ public class SistemaResourceTest {
     @DisplayName("Excluir perfil de sistema existente")
     void testExcluirPerfil() throws Exception {
         mockMvc.perform(delete("/sistemas/perfil/ROLE_Sistema01_A")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());

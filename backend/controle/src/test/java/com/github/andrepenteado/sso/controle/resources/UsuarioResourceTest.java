@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -29,7 +31,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,12 +94,19 @@ class UsuarioResourceTest {
         return perfil;
     }
 
+    private Jwt getJwt() {
+        Jwt.Builder jwtBuilder = Jwt.withTokenValue("token").header("alg", "none")
+            .claim(JwtClaimNames.SUB, "user")
+            .issuer("https://issuer-host/auth/realms/test")
+            .claim("perfis", getPerfil());
+        return jwtBuilder.build();
+    }
+
     @Test
     @DisplayName("Listar todos usuários")
     void testListar() throws Exception {
         String json = mockMvc.perform(get("/usuarios")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -111,8 +120,7 @@ class UsuarioResourceTest {
     @DisplayName("Buscar usuário por username")
     void testBuscar() throws Exception {
         String json = mockMvc.perform(get("/usuarios/teste01")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -122,8 +130,7 @@ class UsuarioResourceTest {
         assertEquals(usuario.getPerfis().size(), 1);
 
         mockMvc.perform(get("/usuarios/usuarioNaoExiste")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -132,8 +139,7 @@ class UsuarioResourceTest {
     @DisplayName("Incluir usuário")
     void testIncluir() throws Exception {
         String json = mockMvc.perform(post("/usuarios")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario(USERNAME)))
@@ -146,8 +152,7 @@ class UsuarioResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/usuarios")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Usuario())))
@@ -159,8 +164,7 @@ class UsuarioResourceTest {
     @DisplayName("Alterar usuário")
     void testAlterar() throws Exception {
         String json = mockMvc.perform(put("/usuarios/teste01")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario("teste01")))
@@ -172,8 +176,7 @@ class UsuarioResourceTest {
         assertEquals(usuarioAlterado.getNome(), NOME);
 
         mockMvc.perform(put("/usuarios/naoExiste")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario("naoExiste")))
@@ -181,8 +184,7 @@ class UsuarioResourceTest {
             .andExpect(ex -> assertTrue(ex.getResolvedException().getMessage().contains("não encontrado")));
 
         mockMvc.perform(put("/usuarios/dadosIncompletos")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Usuario())))
@@ -194,8 +196,7 @@ class UsuarioResourceTest {
     @DisplayName("Excluir usuário")
     void testExcluir() throws Exception {
         mockMvc.perform(delete("/usuarios/teste02")
-                .with(oidcLogin()
-                    .idToken(token -> token.claim("perfis", getPerfil())))
+                .with(jwt().jwt(getJwt()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
