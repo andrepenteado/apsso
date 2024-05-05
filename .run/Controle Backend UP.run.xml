@@ -4,7 +4,7 @@
     <option name="ALTERNATIVE_JRE_PATH" value="Amazon Corretto JDK 21" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <envs>
-      <env name="AUTHORIZATION_SERVER_URL" value="http://localhost:30000" />
+      <env name="AUTHORIZATION_SERVER_URL" value="http://login:30000" />
     </envs>
     <module name="controle" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.sso.controle.ControleApplication" />

@@ -2,7 +2,7 @@
   <configuration default="false" name="Portal Backend UP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
     <envs>
-      <env name="AUTHORIZATION_SERVER_URL" value="http://localhost:30000" />
+      <env name="AUTHORIZATION_SERVER_URL" value="http://login:30000" />
     </envs>
     <module name="portal" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.sso.portal.PortalApplication" />

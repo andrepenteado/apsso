@@ -51,17 +51,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build da imagem docker do frontend do módulo de controle
-        run: docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle/frontend:latest -t ghcr.io/andrepenteado/apsso/controle/frontend:${{ env.VERSAO }} .
+        run: docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend:latest -t ghcr.io/andrepenteado/apsso/controle-frontend:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do frontend do módulo de controle
         run: |
-          docker push ghcr.io/andrepenteado/apsso/controle/frontend:latest
-          docker push ghcr.io/andrepenteado/apsso/controle/frontend:${{ env.VERSAO }}
+          docker push ghcr.io/andrepenteado/apsso/controle-frontend:latest
+          docker push ghcr.io/andrepenteado/apsso/controle-frontend:${{ env.VERSAO }}
 
       - name: Build da imagem docker do frontend do portal de sistemas
-        run: docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal/frontend:latest -t ghcr.io/andrepenteado/apsso/portal/frontend:${{ env.VERSAO }} .
+        run: docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend:latest -t ghcr.io/andrepenteado/apsso/portal-frontend:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do frontend do portal de sistemas
         run: |
-          docker push ghcr.io/andrepenteado/apsso/portal/frontend:latest
-          docker push ghcr.io/andrepenteado/apsso/portal/frontend:${{ env.VERSAO }}
+          docker push ghcr.io/andrepenteado/apsso/portal-frontend:latest
+          docker push ghcr.io/andrepenteado/apsso/portal-frontend:${{ env.VERSAO }}

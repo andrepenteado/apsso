@@ -12,7 +12,7 @@
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
-        <artifactId>sso</artifactId>
+        <artifactId>backend</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

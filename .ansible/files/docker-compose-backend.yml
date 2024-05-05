@@ -23,15 +23,6 @@ services:
     networks:
       - docker-host-network
 
-  controle-frontend:
-    image: ghcr.io/andrepenteado/apsso/controle-frontend:dev
-    container_name: controle-frontend
-    hostname: controle-frontend
-    ports:
-      - 40001:80
-    networks:
-      - docker-host-network
-
   portal-backend:
     image: ghcr.io/andrepenteado/apsso/portal-backend
     container_name: portal-backend
@@ -41,15 +32,6 @@ services:
       AUTHORIZATION_SERVER_URL: http://login:30000
     ports:
       - 30002:8080
-    networks:
-      - docker-host-network
-
-  portal-frontend:
-    image: ghcr.io/andrepenteado/apsso/portal-frontend:dev
-    container_name: portal-frontend
-    hostname: portal-frontend
-    ports:
-      - 40002:80
     networks:
       - docker-host-network
 
