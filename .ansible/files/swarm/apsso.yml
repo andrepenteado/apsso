@@ -30,9 +30,9 @@ services:
     networks:
       - rede-swarm-apsso
 
-  controle:
-    image: ghcr.io/andrepenteado/apsso/controle
-    hostname: controle
+  controle-backend:
+    image: ghcr.io/andrepenteado/apsso/controle/backend
+    hostname: controle-backend
     deploy:
       replicas: 1
       restart_policy:
@@ -44,13 +44,10 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.controle.rule=Host(`controle.apcode.com.br`)
-        - traefik.http.routers.controle.entrypoints=web
-        - traefik.http.routers.controle.tls=false
-        - traefik.http.services.controle.loadbalancer.server.port=8080
-        - traefik.http.services.controle.loadbalancer.sticky=true
-        - traefik.http.services.controle.loadbalancer.sticky.cookie.name=controle-server
-        - traefik.http.services.controle.loadbalancer.sticky.cookie.httpOnly=true
+        - traefik.http.routers.controle-backend.rule=Host(`api.controle.apcode.com.br`)
+        - traefik.http.routers.controle-backend.entrypoints=web
+        - traefik.http.routers.controle-backend.tls=false
+        - traefik.http.services.controle-backend.loadbalancer.server.port=8080
     environment:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
     volumes:
@@ -58,9 +55,9 @@ services:
     networks:
       - rede-swarm-apsso
 
-  portal:
-    image: ghcr.io/andrepenteado/apsso/portal
-    hostname: portal
+  controle-frontend:
+    image: ghcr.io/andrepenteado/apsso/controle/frontend
+    hostname: controle-frontend
     deploy:
       replicas: 1
       restart_policy:
@@ -72,13 +69,64 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.portal.rule=Host(`portal.apcode.com.br`)
-        - traefik.http.routers.portal.entrypoints=web
-        - traefik.http.routers.portal.tls=false
-        - traefik.http.services.portal.loadbalancer.server.port=8080
-        - traefik.http.services.portal.loadbalancer.sticky=true
-        - traefik.http.services.portal.loadbalancer.sticky.cookie.name=portal-server
-        - traefik.http.services.portal.loadbalancer.sticky.cookie.httpOnly=true
+        - traefik.http.routers.controle-frontend.rule=Host(`controle.apcode.com.br`)
+        - traefik.http.routers.controle-frontend.entrypoints=web
+        - traefik.http.routers.controle-frontend.tls=false
+        - traefik.http.services.controle-frontend.loadbalancer.server.port=8080
+        - traefik.http.services.controle-frontend.loadbalancer.sticky=true
+        - traefik.http.services.controle-frontend.loadbalancer.sticky.cookie.name=controle-frontend-server
+        - traefik.http.services.controle-frontend.loadbalancer.sticky.cookie.httpOnly=true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - rede-swarm-apsso
+
+  portal-backend:
+    image: ghcr.io/andrepenteado/apsso/portal/backend
+    hostname: portal-backend
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      rollback_config:
+        order: start-first
+      update_config:
+        failure_action: rollback
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.portal-backend.rule=Host(`api.portal.apcode.com.br`)
+        - traefik.http.routers.portal-backend.entrypoints=web
+        - traefik.http.routers.portal-backend.tls=false
+        - traefik.http.services.portal-backend.loadbalancer.server.port=8080
+    environment:
+      JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - rede-swarm-apsso
+
+  portal-frontend:
+    image: ghcr.io/andrepenteado/apsso/portal/frontend
+    hostname: portal-frontend
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      rollback_config:
+        order: start-first
+      update_config:
+        failure_action: rollback
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.portal-frontend.rule=Host(`portal.apcode.com.br`)
+        - traefik.http.routers.portal-frontend.entrypoints=web
+        - traefik.http.routers.portal-frontend.tls=false
+        - traefik.http.services.portal-frontend.loadbalancer.server.port=8080
+        - traefik.http.services.portal-frontend.loadbalancer.sticky=true
+        - traefik.http.services.portal-frontend.loadbalancer.sticky.cookie.name=portal-frontend-server
+        - traefik.http.services.portal-frontend.loadbalancer.sticky.cookie.httpOnly=true
     environment:
       JAVA_OPTS: -XX:+UseG1GC -Duser.language=pt -Duser.country=BR -Duser.timezone=GMT-3 -Djava.awt.headless=true
     volumes:
