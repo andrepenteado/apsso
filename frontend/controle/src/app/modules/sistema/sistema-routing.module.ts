@@ -10,21 +10,21 @@ const routes: Routes = [
     path: 'pesquisar',
     component: PesquisarComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfilAutorizado: 'ROLE_Controle_ARQUITETO' }
+    data: { perfisAutorizados: ['ROLE_Controle_ARQUITETO'] }
   },
 
   {
     path: 'cadastro',
     component: CadastroComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfilAutorizado: 'ROLE_Controle_ARQUITETO' }
+    data: { perfisAutorizados: ['ROLE_Controle_ARQUITETO'] }
   },
 
   {
     path: 'cadastro/:id',
     component: CadastroComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfilAutorizado: 'ROLE_Controle_ARQUITETO' }
+    data: { perfisAutorizados: ['ROLE_Controle_ARQUITETO'] }
   }
 
 ];

@@ -9,7 +9,7 @@ import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
 import { LOGOTIPO, MODULO } from "./etc/layout"
 import { MENU } from "./etc/menu"
 import { environment } from "../environments/environment";
-import { clientId, secretId } from "./etc/oauth2";
+import { clientId, clientSecret } from "./etc/oauth2";
 
 registerLocaleData(localePT);
 
@@ -30,7 +30,7 @@ registerLocaleData(localePT);
       menu: MENU,
       clientId: clientId,
       redirectUri: environment.redirectUri,
-      secretId: secretId,
+      clientSecret: clientSecret,
       urlAuthorizationServer: environment.urlAuthorizationServer
     })
   ],

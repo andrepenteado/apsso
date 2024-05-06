@@ -9,13 +9,13 @@ const routes: Routes = [
     path: 'listar-sistemas',
     component: ListarSistemasComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfilAutorizado: 'ROLE_Portal_USUARIO' }
+    data: { perfisAutorizados: ['ROLE_Portal_USUARIO'] }
   },
   {
     path: 'meus-dados',
     component: MeusDadosComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfilAutorizado: 'ROLE_Portal_USUARIO' }
+    data: { perfisAutorizados: ['ROLE_Portal_USUARIO'] }
   }
 ];
 

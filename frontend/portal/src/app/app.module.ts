@@ -8,7 +8,7 @@ import { MENU } from "./etc/menu"
 import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
 import { LOGOTIPO, MODULO } from "./etc/layout";
 import { environment } from "../environments/environment";
-import { clientId, secretId } from "./etc/oauth2";
+import { clientId, clientSecret } from "./etc/oauth2";
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { clientId, secretId } from "./etc/oauth2";
       menu: MENU,
       clientId: clientId,
       redirectUri: environment.redirectUri,
-      secretId: secretId,
+      clientSecret: clientSecret,
       urlAuthorizationServer: environment.urlAuthorizationServer
     })
   ],
