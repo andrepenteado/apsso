@@ -33,11 +33,10 @@ public class SistemaResource {
     private final PermissaoService permissaoService;
 
     @GetMapping
-    public List<Sistema> listar(JwtAuthenticationToken auth) {
+    public List<Sistema> listar(UserLogin userLogin) {
         log.info("Listar sistemas");
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.listar();
         }
@@ -51,11 +50,10 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}")
-    public Sistema buscar(@PathVariable  String id, JwtAuthenticationToken auth) {
+    public Sistema buscar(@PathVariable  String id, UserLogin userLogin) {
         log.info("Buscar sistema de ID #{}", id);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.buscar(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -71,11 +69,10 @@ public class SistemaResource {
     }
 
     @PostMapping
-    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao, JwtAuthenticationToken auth) {
+    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao, UserLogin userLogin) {
         log.info("Incluir/Alterar sistema {}", sistema);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.incluirOuAlterar(sistema, validacao);
         }
@@ -89,11 +86,10 @@ public class SistemaResource {
     }
 
     @DeleteMapping("/{id}")
-    public void excluir(@PathVariable String id, JwtAuthenticationToken auth) {
+    public void excluir(@PathVariable String id, UserLogin userLogin) {
         log.info("Excluir sistema de ID #" + id);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new Exception("Permissão negada");
             sistemaService.excluir(id);
         }
@@ -107,11 +103,10 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}/perfis")
-    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id, JwtAuthenticationToken auth) {
+    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id, UserLogin userLogin) {
         log.info("Listar perfis do sistema #{}", id);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new Exception("Permissão negada");
             return perfilSistemaService.listarPorSistema(id);
         }
@@ -122,11 +117,10 @@ public class SistemaResource {
     }
 
     @GetMapping("/perfis")
-    public List<PerfilSistema> listarPerfis(JwtAuthenticationToken auth) {
+    public List<PerfilSistema> listarPerfis(UserLogin userLogin) {
         log.info("Listar perfis de sistemas");
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new Exception("Permissão negada");
             return perfilSistemaService.listar();
         }
@@ -137,11 +131,10 @@ public class SistemaResource {
     }
 
     @PostMapping("/perfil")
-    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao, JwtAuthenticationToken auth) {
+    public PerfilSistema incluirPerfil(@RequestBody @Valid PerfilSistema perfilSistema, BindingResult validacao, UserLogin userLogin) {
         log.info("Incluir novo perfil de sistema {}", perfilSistema);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new Exception("Permissão negada");
             return perfilSistemaService.incluir(perfilSistema, validacao);
         }
@@ -155,11 +148,10 @@ public class SistemaResource {
     }
 
     @DeleteMapping("/perfil/{authority}")
-    public void excluirPerfil(@PathVariable String authority, JwtAuthenticationToken auth) {
+    public void excluirPerfil(@PathVariable String authority, UserLogin userLogin) {
         log.info("Excluir perfil de sistema {}", authority);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new Exception("Permissão negada");
             perfilSistemaService.excluir(authority);
         }

@@ -89,6 +89,4 @@ update:
 	docker logout ghcr.io
 	$(MAKE) start
 
-start-backend-dev:
-	docker compose -f .docker/postgresql.yml up -d
-	mvn -f ./backend/controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev
+# mvn clean spring-boot:run -D spring-boot.run.profiles=dev -D spring-boot.run.jvmArguments="-DAUTHORIZATION_SERVER_URL=http://login:30000 -Dserver.port=30002"

@@ -5,7 +5,7 @@ param(
 
 switch($exec) {
     "build-all" {
-#        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
 	    npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
 	    npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
@@ -15,22 +15,22 @@ switch($exec) {
         docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
         docker build -f .docker/Dockerfile.backend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
         docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
-#        docker push ghcr.io/andrepenteado/apsso/login
-#        docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
-#        docker push ghcr.io/andrepenteado/apsso/controle-backend
-#        docker push ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO
-#        docker push ghcr.io/andrepenteado/apsso/controle-frontend
-#        docker push ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO
-#        docker push ghcr.io/andrepenteado/apsso/portal-backend
-#        docker push ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO
-#        docker push ghcr.io/andrepenteado/apsso/portal-frontend
-#        docker push ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/login
+        docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/controle-backend
+        docker push ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/controle-frontend
+        docker push ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/portal-backend
+        docker push ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/portal-frontend
+        docker push ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO
         npm run ng build -- --configuration=development --prefix .\frontend\controle\
         docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
-#        docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
+        docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
         npm run ng build -- --configuration=development --prefix .\frontend\portal\
         docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
-#        docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
+        docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
         docker logout ghcr.io
     }
     "build-login" {
@@ -96,10 +96,6 @@ switch($exec) {
         docker image pull ghcr.io/andrepenteado/apsso/portal-frontend:dev
         docker logout ghcr.io
         docker compose -f .ansible/files/docker-compose.yml up -d
-    }
-    "start-backend-dev" {
-        docker compose -f .docker/postgresql.yml up -d
-        mvn -f ./backend/controle/pom.xml clean spring-boot:run -Dspring-boot.run.profiles=dev
     }
     Default {
         "`nInforme o parâmetro: -exec <target>`n"

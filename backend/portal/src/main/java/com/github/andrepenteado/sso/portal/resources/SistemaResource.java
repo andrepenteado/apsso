@@ -30,11 +30,11 @@ public class SistemaResource {
     private final PermissaoService permissaoService;
 
     @GetMapping
-    public List<Sistema> listar(JwtAuthenticationToken auth) {
+    public List<Sistema> listar(UserLogin userLogin) {
         log.info("Listar sistemas");
+
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.listar();
         }
@@ -48,11 +48,10 @@ public class SistemaResource {
     }
 
     @GetMapping("/{id}")
-    public Sistema buscar(@PathVariable String id, JwtAuthenticationToken auth) {
+    public Sistema buscar(@PathVariable String id, UserLogin userLogin) {
         log.info("Buscar sistema de ID: #{}", id);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return sistemaService.buscar(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

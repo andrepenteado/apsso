@@ -29,13 +29,12 @@ public class UsuarioResource {
     private final PermissaoService permissaoService;
 
     @PutMapping("/alterar-senha")
-    public void alterarSenha(@RequestBody String senha, JwtAuthenticationToken auth) {
+    public void alterarSenha(@RequestBody String senha, UserLogin userLogin) {
         log.info("Alterar senha");
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
-            usuarioService.alterarSenha(userLogin.login(), senha);
+            usuarioService.alterarSenha(userLogin.getLogin(), senha);
         }
         catch (ResponseStatusException rsex) {
             throw rsex;
@@ -47,13 +46,12 @@ public class UsuarioResource {
     }
 
     @PutMapping("/atualizar-foto")
-    public void atualizarFoto(@RequestBody String uuidFoto, JwtAuthenticationToken auth) {
+    public void atualizarFoto(@RequestBody String uuidFoto, UserLogin userLogin) {
         log.info("Atualizar foto");
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
-            usuarioService.atualizarFoto(userLogin.login(), UUID.fromString(uuidFoto));
+            usuarioService.atualizarFoto(userLogin.getLogin(), UUID.fromString(uuidFoto));
         }
         catch (ResponseStatusException rsex) {
             throw rsex;

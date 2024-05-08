@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Controle Backend UP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
-    <option name="ALTERNATIVE_JRE_PATH" value="Amazon Corretto JDK 21" />
+    <option name="ALTERNATIVE_JRE_PATH" value="JDK Amazon Corretto  21" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <envs>
       <env name="AUTHORIZATION_SERVER_URL" value="http://login:30000" />
@@ -10,7 +10,7 @@
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.andrepenteado.sso.controle.ControleApplication" />
     <option name="VM_PARAMETERS" value="-Dserver.port=30001 -Duser.timezone=&quot;America/Sao_Paulo&quot;" />
     <method v="2">
-      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean package --projects services,controle -DskipTests" />
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/backend/pom.xml" goal="clean package --projects services,controle -DskipTests" />
     </method>
   </configuration>
 </component>

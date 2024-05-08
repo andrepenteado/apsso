@@ -29,11 +29,10 @@ public class UsuarioResource {
     private final PermissaoService permissaoService;
 
     @GetMapping
-    public List<Usuario> listar(JwtAuthenticationToken auth) {
+    public List<Usuario> listar(UserLogin userLogin) {
         log.info("Listar usuários");
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.listar();
         }
@@ -47,11 +46,10 @@ public class UsuarioResource {
     }
 
     @GetMapping("/{username}")
-    public Usuario buscar(@PathVariable String username, JwtAuthenticationToken auth) {
+    public Usuario buscar(@PathVariable String username, UserLogin userLogin) {
         log.info("Buscar usuário {}", username);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.buscar(username)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -67,11 +65,10 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, JwtAuthenticationToken auth) {
+    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, UserLogin userLogin) {
         log.info("Incluir novo usuário {}", usuario);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.incluir(usuario, validacao);
         }
@@ -85,11 +82,10 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{username}")
-    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, JwtAuthenticationToken auth) {
+    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, UserLogin userLogin) {
         log.info("Alterar dados do usuário {}", usuario);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.alterar(usuario, username, validacao);
         }
@@ -103,11 +99,10 @@ public class UsuarioResource {
     }
 
     @DeleteMapping("/{username}")
-    public void excluir(@PathVariable String username, JwtAuthenticationToken auth) {
+    public void excluir(@PathVariable String username, UserLogin userLogin) {
         log.info("Excluir usuário {}", username);
         try {
-            UserLogin userLogin = new UserLogin(auth);
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.perfis())))
+            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             usuarioService.excluir(username);
         }
