@@ -1,7 +1,5 @@
 package com.github.andrepenteado.sso.controle.resources;
 
-import com.github.andrepenteado.core.web.dto.UserLogin;
-import com.github.andrepenteado.sso.controle.services.PermissaoService;
 import com.github.andrepenteado.sso.services.UsuarioService;
 import com.github.andrepenteado.sso.services.entities.Usuario;
 import io.micrometer.observation.annotation.Observed;
@@ -9,13 +7,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -26,18 +23,12 @@ public class UsuarioResource {
 
     private final UsuarioService usuarioService;
 
-    private final PermissaoService permissaoService;
-
     @GetMapping
-    public List<Usuario> listar(UserLogin userLogin) {
+    @Secured({"ROLE_Controle_ARQUITETO"})
+    public List<Usuario> listar() {
         log.info("Listar usuários");
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.listar();
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
         }
         catch (Exception ex) {
             log.error("Erro no processamento", ex);
@@ -46,11 +37,10 @@ public class UsuarioResource {
     }
 
     @GetMapping("/{username}")
-    public Usuario buscar(@PathVariable String username, UserLogin userLogin) {
+    @Secured({"ROLE_Controle_ARQUITETO"})
+    public Usuario buscar(@PathVariable String username) {
         log.info("Buscar usuário {}", username);
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.buscar(username)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Usuário ID %s não encontrado", username)));
@@ -65,11 +55,10 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, UserLogin userLogin) {
+    @Secured({"ROLE_Controle_ARQUITETO"})
+    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao) {
         log.info("Incluir novo usuário {}", usuario);
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.incluir(usuario, validacao);
         }
         catch (ResponseStatusException rsex) {
@@ -82,11 +71,10 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{username}")
-    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, UserLogin userLogin) {
+    @Secured({"ROLE_Controle_ARQUITETO"})
+    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao) {
         log.info("Alterar dados do usuário {}", usuario);
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             return usuarioService.alterar(usuario, username, validacao);
         }
         catch (ResponseStatusException rsex) {
@@ -99,11 +87,10 @@ public class UsuarioResource {
     }
 
     @DeleteMapping("/{username}")
-    public void excluir(@PathVariable String username, UserLogin userLogin) {
+    @Secured({"ROLE_Controle_ARQUITETO"})
+    public void excluir(@PathVariable String username) {
         log.info("Excluir usuário {}", username);
         try {
-            if (!permissaoService.isPermitido(Objects.requireNonNull(userLogin.getPerfis())))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Permissão negada");
             usuarioService.excluir(username);
         }
         catch (ResponseStatusException rsex) {

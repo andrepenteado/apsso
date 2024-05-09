@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Controle Backend UP" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
-    <option name="ALTERNATIVE_JRE_PATH" value="JDK Amazon Corretto  21" />
+    <option name="ALTERNATIVE_JRE_PATH" value="JDK 21 Amazon Corretto" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <envs>
       <env name="AUTHORIZATION_SERVER_URL" value="http://login:30000" />
