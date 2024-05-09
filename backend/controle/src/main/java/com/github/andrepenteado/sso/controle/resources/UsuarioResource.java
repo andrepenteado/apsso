@@ -27,79 +27,37 @@ public class UsuarioResource {
     @Secured({"ROLE_Controle_ARQUITETO"})
     public List<Usuario> listar() {
         log.info("Listar usuários");
-        try {
-            return usuarioService.listar();
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        return usuarioService.listar();
     }
 
     @GetMapping("/{username}")
     @Secured({"ROLE_Controle_ARQUITETO"})
     public Usuario buscar(@PathVariable String username) {
         log.info("Buscar usuário {}", username);
-        try {
-            return usuarioService.buscar(username)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Usuário ID %s não encontrado", username)));
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        return usuarioService.buscar(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("Usuário ID %s não encontrado", username)));
     }
 
     @PostMapping
     @Secured({"ROLE_Controle_ARQUITETO"})
     public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao) {
         log.info("Incluir novo usuário {}", usuario);
-        try {
-            return usuarioService.incluir(usuario, validacao);
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        return usuarioService.incluir(usuario, validacao);
     }
 
     @PutMapping("/{username}")
     @Secured({"ROLE_Controle_ARQUITETO"})
     public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao) {
         log.info("Alterar dados do usuário {}", usuario);
-        try {
-            return usuarioService.alterar(usuario, username, validacao);
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        return usuarioService.alterar(usuario, username, validacao);
     }
 
     @DeleteMapping("/{username}")
     @Secured({"ROLE_Controle_ARQUITETO"})
     public void excluir(@PathVariable String username) {
         log.info("Excluir usuário {}", username);
-        try {
-            usuarioService.excluir(username);
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        usuarioService.excluir(username);
     }
 
 }

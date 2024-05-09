@@ -28,32 +28,16 @@ public class SistemaResource {
     @Secured({"ROLE_Portal_USUARIO"})
     public List<Sistema> listar() {
         log.info("Listar sistemas");
-
-        try {
-            return sistemaService.listar();
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        return sistemaService.listar();
     }
 
     @GetMapping("/{id}")
     @Secured({"ROLE_Portal_USUARIO"})
     public Sistema buscar(@PathVariable String id) {
         log.info("Buscar sistema de ID: #{}", id);
-        try {
-            return sistemaService.buscar(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("Sistema de ID %s não encontrado", id)));
-        }
-        catch (ResponseStatusException rsex) {
-            throw rsex;
-        }
-        catch (Exception ex) {
-            log.error("Erro no processamento", ex);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro no processamento");
-        }
+        return sistemaService.buscar(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+            String.format("Sistema de ID %s não encontrado", id)));
     }
 
 }
