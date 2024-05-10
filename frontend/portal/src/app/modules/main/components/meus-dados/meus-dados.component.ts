@@ -19,6 +19,7 @@ export class MeusDadosComponent implements OnInit {
 
   userLogin: UserLogin;
   foto: Upload = new Upload();
+  descricaoPerfil: string = "";
 
   constructor(
     private service: UsuarioService,
@@ -39,6 +40,17 @@ export class MeusDadosComponent implements OnInit {
         this.foto = upload
       });
     }
+    this.descricaoPerfis();
+  }
+
+  descricaoPerfis(): void {
+    let result: string = "";
+    for (const [ nome, descricao ] of Object.entries(this.userLogin.perfis)) {
+      if (nome.startsWith("ROLE_Portal_")) {
+        result = result + descricao + ",";
+      }
+    }
+    this.descricaoPerfil = result.substring(0, result.length - 1);
   }
 
   atualizarFoto(event: any): void {

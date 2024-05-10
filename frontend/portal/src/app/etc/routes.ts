@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router"
 import {
-  AcessoNegadoComponent, autorizarPerfilGuard,
+  AcessoNegadoComponent,
   ErroProcessamentoComponent,
   PaginaInicialComponent
 } from "@andrepenteado/ngx-apcore"

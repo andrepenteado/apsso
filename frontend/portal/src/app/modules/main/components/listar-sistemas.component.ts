@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SistemaService } from "../../../services/sistema.service";
-import { Router } from "@angular/router";
 import { Sistema } from "../../../model/entities/sistema"
-import { environment } from "../../../../environments/environment";
+import { Upload, UploadService } from "@andrepenteado/ngx-apcore";
+import { lastValueFrom, Observable } from "rxjs"
 
 @Component({
   selector: 'app-listar-sistemas',
@@ -15,7 +15,8 @@ import { environment } from "../../../../environments/environment";
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-        <img class="img-fluid float-right rounded-circle" src="{{ getLinkIcone(sistema.icone) }}" style="width: 120px; height: 120px;"/>
+        <img *ngIf="sistema.icone" class="img-fluid float-right rounded-circle" id="image_{{ sistema.id }}" style="width: 120px; height: 120px;"/>
+        <img *ngIf="!sistema.icone" class="img-fluid float-right rounded-circle" src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
         <div class="caption">
           <h3>{{ sistema.id }}</h3>
           <p class="form-text">{{ sistema.descricao }}</p>
@@ -35,29 +36,28 @@ export class ListarSistemasComponent implements OnInit {
 
   constructor(
     private sistemaService: SistemaService,
-    private router: Router
+    private uploadService: UploadService
   ) { }
 
   ngOnInit(): void {
     this.pesquisar();
   }
 
-  pesquisar(): void {
-    this.sistemaService.listar().subscribe({
-      next: listaSistemas => {
-        this.lista = listaSistemas;
+  async pesquisar() {
+    this.lista = await lastValueFrom(this.sistemaService.listar());
+    this.lista.forEach((sistema: Sistema) => {
+      if (sistema.icone) {
+        this.uploadService.buscar(sistema.icone).subscribe(upload => {
+          document
+            .getElementById(`image_${sistema.id}`)
+            .setAttribute('src', upload.base64);
+        });
       }
     });
   }
 
   acessar(url: string): void {
     window.location.href = url;
-  }
-
-  getLinkIcone(uuid: string): string {
-    if (uuid)
-      return `${environment.backendURL}/upload/html/${uuid ? uuid : 'sem-imagem'}`;
-    return "/assets/images/sem-imagem.gif";
   }
 
 }
