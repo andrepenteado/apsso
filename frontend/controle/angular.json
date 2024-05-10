@@ -24,10 +24,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "preserveSymlinks": true,
-            "outputPath": {
-              "base": "dist",
-              "browser": ""
-            },
+            "outputPath": "dist/default",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -69,14 +66,14 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "localhost": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.localhost.ts"
                 }
               ]
             }
@@ -89,14 +86,14 @@
             "production": {
               "buildTarget": "controle:build:production"
             },
-            "development": {
-              "buildTarget": "controle:build:development"
+            "localhost": {
+              "buildTarget": "controle:build:localhost"
             }
           },
           "options": {
             "port": 40001
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "localhost"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

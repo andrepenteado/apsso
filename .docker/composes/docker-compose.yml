@@ -1,5 +1,35 @@
 services:
 
+  dbserver:
+    image: postgres:16
+    container_name: apsso-db
+    hostname: apsso-db
+    environment:
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
+    volumes:
+      - apsso-pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - docker-host-network
+
+  dbserver-test:
+    image: postgres:16
+    container_name: apsso-db-test
+    hostname: apsso-db-test
+    environment:
+      POSTGRES_USER: apsso-dbuser
+      POSTGRES_PASSWORD: apsso-dbpasswd
+      POSTGRES_DB: apsso-dbname
+    volumes:
+      - apsso-test-pgdata:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    networks:
+      - docker-host-network
+
   login:
     image: ghcr.io/andrepenteado/apsso/login
     container_name: login
@@ -52,6 +82,10 @@ services:
       - 40002:80
     networks:
       - docker-host-network
+
+volumes:
+  apsso-pgdata:
+  apsso-test-pgdata:
 
 networks:
   docker-host-network:

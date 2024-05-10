@@ -5,16 +5,17 @@ param(
 
 switch($exec) {
     "build-all" {
+        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-	    npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
-	    npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+        cd ./frontend/controle/ && ng build --configuration=production --output-path=dist/production && cd ../..
+        cd ./frontend/portal/ && ng build --configuration=production --output-path=dist/production && cd ../..
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
         mvn -U clean package -DskipTests -f ./backend/pom.xml
-        docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
-        docker build -f .docker/Dockerfile.backend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-backend -t ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO .
-        docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
-        docker build -f .docker/Dockerfile.backend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
-        docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
+        docker build -f .docker/dockerfiles/login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+        docker build -f .docker/dockerfiles/backend.controle -t ghcr.io/andrepenteado/apsso/controle-backend -t ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO .
+        docker build -f .docker/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
+        docker build -f .docker/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
+        docker build -f .docker/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/controle-backend
@@ -25,18 +26,19 @@ switch($exec) {
         docker push ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/portal-frontend
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO
-        npm run ng build -- --configuration=development --prefix .\frontend\controle\
-        docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
+        cd ./frontend/controle/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+        docker build -f .docker/dockerfiles/frontend.controle --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
-        npm run ng build -- --configuration=development --prefix .\frontend\portal\
-        docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
+        cd ./frontend/portal/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+        docker build -f .docker/dockerfiles/frontend.portal --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
         docker logout ghcr.io
     }
     "build-login" {
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
         mvn -U -f ./backend/pom.xml clean package --projects services,login
-        docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+        docker build -f .docker/dockerfiles/login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
+        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
@@ -44,47 +46,50 @@ switch($exec) {
     }
     "build-controle" {
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
-        npm --prefix ./frontend/controle run build --omit=dev -- "-c=production"
+        cd ./frontend/controle/ && ng build --configuration=production --output-path=dist/production && cd ../..
         mvn -U -f ./backend/pom.xml clean package --projects services,controle -DskipTests
-        docker build -f .docker/Dockerfile.backend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-backend -t ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO .
-        docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
+        docker build -f .docker/dockerfiles/backend.controle -t ghcr.io/andrepenteado/apsso/controle-backend -t ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO .
+        docker build -f .docker/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
+        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/controle-backend
         docker push ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/controle-frontend
         docker push ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO
-        npm run ng build -- --configuration=development --prefix .\frontend\controle\
-        docker build -f .docker/Dockerfile.frontend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
+        cd ./frontend/controle/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+        docker build -f .docker/dockerfiles/frontend.controle --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
         docker logout ghcr.io
     }
     "build-portal" {
         $VERSAO = mvn -f ./backend/pom.xml help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout'
-        npm --prefix ./frontend/portal run build --omit=dev -- "-c=production"
+        cd ./frontend/portal/ && ng build --configuration=production --output-path=dist/production && cd ../..
         mvn -U -f ./backend/pom.xml clean package --projects services,portal -DskipTests
-        docker build -f .docker/Dockerfile.backend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
-        docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
+        docker build -f .docker/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
+        docker build -f .docker/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
+        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/portal-backend
         docker push ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/portal-frontend
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO
-        npm run ng build -- --configuration=development --prefix .\frontend\portal\
-        docker build -f .docker/Dockerfile.frontend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
+        cd ./frontend/portal/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+        docker build -f .docker/dockerfiles/frontend.portal --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
         docker logout ghcr.io
     }
     "start" {
-        docker compose -f .ansible/files/docker-compose.yml up -d
+        docker compose -f .docker/composes/docker-compose.yml up -d
     }
     "stop" {
-        docker compose -f .ansible/files/docker-compose.yml down
+        docker compose -f .docker/composes/docker-compose.yml down
     }
     "log" {
-        docker compose -f .ansible/files/docker-compose.yml logs -f
+        docker compose -f .docker/composes/docker-compose.yml logs -f
     }
     "update" {
         docker compose -f .ansible/files/docker-compose.yml down
+        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker image pull postgres:16
         docker image pull ghcr.io/andrepenteado/apsso/login
@@ -95,7 +100,6 @@ switch($exec) {
         docker image pull ghcr.io/andrepenteado/apsso/portal-frontend
         docker image pull ghcr.io/andrepenteado/apsso/portal-frontend:dev
         docker logout ghcr.io
-        docker compose -f .ansible/files/docker-compose.yml up -d
     }
     Default {
         "`nInforme o parâmetro: -exec <target>`n"

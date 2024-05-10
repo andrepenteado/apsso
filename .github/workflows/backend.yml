@@ -1,9 +1,9 @@
 name: Compilar, testar e buildar o backend
 
-#on: workflow_dispatch
-on:
-  push:
-    branches: [main]
+on: workflow_dispatch
+#on:
+#  push:
+#    branches: [main]
 
 jobs:
   build:
@@ -59,7 +59,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build da imagem docker do login
-        run: docker build -f .docker/Dockerfile.login.pipeline -t ghcr.io/andrepenteado/apsso/login:latest -t ghcr.io/andrepenteado/apsso/login:${{ env.VERSAO }} .
+        run: docker build -f .docker/dockerfiles/login -t ghcr.io/andrepenteado/apsso/login:latest -t ghcr.io/andrepenteado/apsso/login:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do login
         run: |
@@ -67,7 +67,7 @@ jobs:
           docker push ghcr.io/andrepenteado/apsso/login:${{ env.VERSAO }}
 
       - name: Build da imagem docker do backend do módulo de controle
-        run: docker build -f .docker/Dockerfile.backend.controle.pipeline -t ghcr.io/andrepenteado/apsso/controle-backend:latest -t ghcr.io/andrepenteado/apsso/controle-backend:${{ env.VERSAO }} .
+        run: docker build -f .docker/dockerfiles/backend.controle -t ghcr.io/andrepenteado/apsso/controle-backend:latest -t ghcr.io/andrepenteado/apsso/controle-backend:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do backend do módulo de controle
         run: |
@@ -75,7 +75,7 @@ jobs:
           docker push ghcr.io/andrepenteado/apsso/controle-backend:${{ env.VERSAO }}
 
       - name: Build da imagem docker do backend do portal de sistemas
-        run: docker build -f .docker/Dockerfile.backend.portal.pipeline -t ghcr.io/andrepenteado/apsso/portal-backend:latest -t ghcr.io/andrepenteado/apsso/portal-backend:${{ env.VERSAO }} .
+        run: docker build -f .docker/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend:latest -t ghcr.io/andrepenteado/apsso/portal-backend:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do backend do portal de sistemas
         run: |
