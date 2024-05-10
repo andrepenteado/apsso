@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = { "com.github.andrepenteado.sso", "com.github.andrepenteado.core" })
 public class PortalApplication {
 
+    public static final String PERFIL_USUARIO = "ROLE_com.github.andrepenteado.sso.portal_USUARIO";
+
     public static void main(String[] args) {
         SpringApplication.run(PortalApplication.class, args);
     }

@@ -15,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static com.github.andrepenteado.sso.portal.PortalApplication.PERFIL_USUARIO;
+
 @RestController
 @RequestMapping("/sistemas")
 @RequiredArgsConstructor
@@ -25,14 +27,14 @@ public class SistemaResource {
     private final SistemaService sistemaService;
 
     @GetMapping
-    @Secured({"ROLE_Portal_USUARIO"})
+    @Secured({ PERFIL_USUARIO })
     public List<Sistema> listar() {
         log.info("Listar sistemas");
         return sistemaService.listar();
     }
 
     @GetMapping("/{id}")
-    @Secured({"ROLE_Portal_USUARIO"})
+    @Secured({ PERFIL_USUARIO })
     public Sistema buscar(@PathVariable String id) {
         log.info("Buscar sistema de ID: #{}", id);
         return sistemaService.buscar(id)

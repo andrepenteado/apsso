@@ -90,7 +90,7 @@ class UsuarioResourceTest {
 
     private Map<String, String> getPerfil() {
         Map<String, String> perfil = new HashMap<>();
-        perfil.put("ROLE_Controle_ARQUITETO", "Arquiteto do Sistema");
+        perfil.put("ROLE_com.github.andrepenteado.sso.controle_ARQUITETO", "Arquiteto do Sistema");
         return perfil;
     }
 

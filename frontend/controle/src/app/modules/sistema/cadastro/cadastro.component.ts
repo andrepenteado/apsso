@@ -145,7 +145,7 @@ export class CadastroComponent implements OnInit {
   gravarPerfil(): void {
     this.formPerfilEnviado = true;
     if (this.formPerfil.valid) {
-      this.formPerfil.controls.authority.setValue('ROLE_' + this.sistema.id + '_' + this.formPerfil.controls.authority.value.toUpperCase());
+      this.formPerfil.controls.authority.setValue('ROLE_' + this.sistema.clientId + '_' + this.formPerfil.controls.authority.value.toUpperCase());
       this.formPerfil.controls.sistema.setValue(this.sistema);
       this.perfilSistemaService.incluir(this.formPerfil.value).subscribe({
         next: perfil => {

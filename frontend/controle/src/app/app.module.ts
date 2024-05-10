@@ -26,7 +26,6 @@ registerLocaleData(localePT);
       logotipoSistema: LOGOTIPO,
       urlBackendSistema: environment.backendURL,
       urlPortal: environment.portalURL,
-      prefixoPerfil: "ROLE_Controle_",
       menu: MENU,
       clientId: clientId,
       redirectUri: environment.redirectUri,

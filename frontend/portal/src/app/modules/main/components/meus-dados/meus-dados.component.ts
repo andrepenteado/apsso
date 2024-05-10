@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { lastValueFrom, Observable } from "rxjs"
 import { DecoracaoMensagem, ExibirMensagemService, LoginService, MenuComponent, Upload, UploadService, UserLogin } from "@andrepenteado/ngx-apcore"
+import { clientId } from "../../../../etc/oauth2";
 
 @Component({
   selector: 'app-meus-dados',
@@ -46,7 +47,7 @@ export class MeusDadosComponent implements OnInit {
   descricaoPerfis(): void {
     let result: string = "";
     for (const [ nome, descricao ] of Object.entries(this.userLogin.perfis)) {
-      if (nome.startsWith("ROLE_Portal_")) {
+      if (nome.startsWith(`ROLE_${clientId}_`)) {
         result = result + descricao + ",";
       }
     }

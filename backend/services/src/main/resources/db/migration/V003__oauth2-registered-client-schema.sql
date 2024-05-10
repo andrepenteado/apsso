@@ -22,7 +22,7 @@ CREATE TABLE oauth2_registered_client (
 );
 
 CREATE TABLE perfil_sistema (
-    authority varchar(50) NOT NULL,
+    authority text NOT NULL,
     id_oauth2_registered_client varchar(100) NOT NULL,
     descricao varchar(100) NOT NULL,
     PRIMARY KEY(authority),

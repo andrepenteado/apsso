@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+import static com.github.andrepenteado.sso.portal.PortalApplication.PERFIL_USUARIO;
+
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class UsuarioResource {
     private final UsuarioService usuarioService;
 
     @PutMapping("/alterar-senha")
-    @Secured({ "ROLE_Portal_USUARIO" })
+    @Secured({ PERFIL_USUARIO })
     public void alterarSenha(
         @RequestBody
         String senha, UserLogin userLogin) {
@@ -32,7 +34,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/atualizar-foto")
-    @Secured({ "ROLE_Portal_USUARIO" })
+    @Secured({ PERFIL_USUARIO })
     public void atualizarFoto(
         @RequestBody
         String uuidFoto, UserLogin userLogin) {

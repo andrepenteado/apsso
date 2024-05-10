@@ -24,14 +24,14 @@ public class UsuarioResource {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    @Secured({"ROLE_Controle_ARQUITETO"})
+    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
     public List<Usuario> listar() {
         log.info("Listar usuários");
         return usuarioService.listar();
     }
 
     @GetMapping("/{username}")
-    @Secured({"ROLE_Controle_ARQUITETO"})
+    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
     public Usuario buscar(@PathVariable String username) {
         log.info("Buscar usuário {}", username);
         return usuarioService.buscar(username)
@@ -40,21 +40,21 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    @Secured({"ROLE_Controle_ARQUITETO"})
+    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
     public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao) {
         log.info("Incluir novo usuário {}", usuario);
         return usuarioService.incluir(usuario, validacao);
     }
 
     @PutMapping("/{username}")
-    @Secured({"ROLE_Controle_ARQUITETO"})
+    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
     public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao) {
         log.info("Alterar dados do usuário {}", usuario);
         return usuarioService.alterar(usuario, username, validacao);
     }
 
     @DeleteMapping("/{username}")
-    @Secured({"ROLE_Controle_ARQUITETO"})
+    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
     public void excluir(@PathVariable String username) {
         log.info("Excluir usuário {}", username);
         usuarioService.excluir(username);

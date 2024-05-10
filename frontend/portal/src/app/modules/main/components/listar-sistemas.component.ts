@@ -15,7 +15,7 @@ import { lastValueFrom, Observable } from "rxjs"
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-        <img *ngIf="sistema.icone" class="img-fluid float-right rounded-circle" id="image_{{ sistema.id }}" style="width: 120px; height: 120px;"/>
+        <img *ngIf="sistema.icone" class="img-fluid float-right rounded-circle" id="image-{{ sistema.icone }}" style="width: 120px; height: 120px;"/>
         <img *ngIf="!sistema.icone" class="img-fluid float-right rounded-circle" src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
         <div class="caption">
           <h3>{{ sistema.id }}</h3>
@@ -49,7 +49,7 @@ export class ListarSistemasComponent implements OnInit {
       if (sistema.icone) {
         this.uploadService.buscar(sistema.icone).subscribe(upload => {
           document
-            .getElementById(`image_${sistema.id}`)
+            .getElementById(`image-${sistema.icone}`)
             .setAttribute('src', upload.base64);
         });
       }
