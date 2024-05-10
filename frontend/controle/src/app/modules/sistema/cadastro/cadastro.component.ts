@@ -130,13 +130,6 @@ export class CadastroComponent implements OnInit {
             "Gravar sistema",
             DecoracaoMensagem.SUCESSO
           );
-        },
-        error: objetoErro => {
-          this.exibirMensagem.showMessage(
-            `${objetoErro.error.detail}`,
-            "Erro no processamento",
-            DecoracaoMensagem.ERRO
-          );
         }
       });
     }
@@ -164,13 +157,6 @@ export class CadastroComponent implements OnInit {
             "Gravar perfil",
             DecoracaoMensagem.SUCESSO
           );
-        },
-        error: objetoErro => {
-          this.exibirMensagem.showMessage(
-            `${objetoErro.error.detail}`,
-            "Erro no processamento",
-            DecoracaoMensagem.ERRO
-          );
         }
       });
     }
@@ -189,14 +175,7 @@ export class CadastroComponent implements OnInit {
       .then((resposta) => {
         if (resposta.value) {
           this.perfilSistemaService.excluir(perfil.authority).subscribe({
-            next: () => this.pesquisar(perfil.sistema.id),
-            error: objetoErro => {
-              this.exibirMensagem.showMessage(
-                `${objetoErro.error.detail}`,
-                "Erro no processamento",
-                DecoracaoMensagem.ERRO
-              );
-            }
+            next: () => this.pesquisar(perfil.sistema.id)
           });
         }
       });

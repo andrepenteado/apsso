@@ -2,15 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { lastValueFrom, Observable } from "rxjs"
-import {
-  DecoracaoMensagem,
-  ExibirMensagemService,
-  LoginService,
-  MenuComponent,
-  Upload,
-  UploadService,
-  UserLogin
-} from "@andrepenteado/ngx-apcore"
+import { DecoracaoMensagem, ExibirMensagemService, LoginService, MenuComponent, Upload, UploadService, UserLogin } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-meus-dados',
@@ -82,13 +74,6 @@ export class MeusDadosComponent implements OnInit {
               "Alterar senha",
               DecoracaoMensagem.SUCESSO
             );
-          },
-          error: objetoErro => {
-            this.exibirMensagem.showMessage(
-              `${objetoErro.error.detail}`,
-              "Erro no processamento",
-              DecoracaoMensagem.ERRO
-            );
           }
         });
       }
@@ -118,13 +103,6 @@ export class MeusDadosComponent implements OnInit {
           "Foto atualizada com sucesso",
           "Atualizar Foto",
           DecoracaoMensagem.SUCESSO
-        );
-      },
-      error: objetoErro => {
-        this.exibirMensagem.showMessage(
-          `${objetoErro.error.detail}`,
-          "Erro no processamento",
-          DecoracaoMensagem.ERRO
         );
       }
     });

@@ -7,9 +7,7 @@ export const DECORATED_ROUTES: Routes = [
 
   {
     path: "pagina-inicial",
-    component: PaginaInicialComponent,
-    canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: ['ROLE_Controle_ARQUITETO'] }
+    component: PaginaInicialComponent
   },
 
   {

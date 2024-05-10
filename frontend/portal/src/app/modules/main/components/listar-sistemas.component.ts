@@ -46,14 +46,6 @@ export class ListarSistemasComponent implements OnInit {
     this.sistemaService.listar().subscribe({
       next: listaSistemas => {
         this.lista = listaSistemas;
-      },
-      error: objetoErro => {
-        if (objetoErro.error.status == "403") {
-          this.router.navigate(["/acesso-negado"]);
-        }
-        else {
-          this.router.navigate(["/erro-processamento"]);
-        }
       }
     });
   }

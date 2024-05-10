@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { Usuario } from "../../../model/entities/usuario"
 import { DataTableDirective } from "angular-datatables"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
-import { DATATABLES_OPTIONS, DecoracaoMensagem, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
+import { DATATABLES_OPTIONS, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',
@@ -56,14 +56,6 @@ export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
         this.lista = listaUsuarios;
         this.rerender();
         this.aguardar = false;
-      },
-      error: objetoErro => {
-        if (objetoErro.error.status == "403") {
-          this.router.navigate(["/acesso-negado"]);
-        }
-        else {
-          this.exibirMensagem.showMessage(`${objetoErro.error.detail}`, "Erro de processamento", DecoracaoMensagem.ERRO);
-        }
       }
     });
   }
@@ -82,10 +74,7 @@ export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
       .then((resposta) => {
         if (resposta.value) {
           this.usuarioService.excluir(usuario.username).subscribe({
-            next: () => this.pesquisar(),
-            error: objetoErro => {
-              this.exibirMensagem.showMessage(`${objetoErro.error.detail}`, "Erro de processamento", DecoracaoMensagem.ERRO);
-            }
+            next: () => this.pesquisar()
           });
         }
       });
