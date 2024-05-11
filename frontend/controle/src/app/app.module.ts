@@ -26,6 +26,7 @@ registerLocaleData(localePT);
       logotipoSistema: LOGOTIPO,
       urlBackendSistema: environment.backendURL,
       urlPortal: environment.portalURL,
+      urlBackendPortal: environment.backendPortalURL,
       menu: MENU,
       clientId: clientId,
       redirectUri: environment.redirectUri,

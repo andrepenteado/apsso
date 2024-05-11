@@ -23,6 +23,7 @@ import { clientId, clientSecret } from "./etc/oauth2";
       logotipoSistema: LOGOTIPO,
       urlBackendSistema: environment.backendURL,
       urlPortal: environment.portalURL,
+      urlBackendPortal: environment.backendPortalURL,
       menu: MENU,
       clientId: clientId,
       redirectUri: environment.redirectUri,

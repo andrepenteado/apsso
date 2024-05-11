@@ -4,6 +4,8 @@ export const environment = {
 
   portalURL: "https://portal.apcode.com.br",
 
+  backendPortalURL: "https://api.portal.apcode.com.br",
+
   urlAuthorizationServer: "https://login.apcode.com.br",
 
   redirectUri: "https://portal.apcode.com.br/authorized"
