@@ -27,11 +27,13 @@ export class CadastroComponent implements OnInit {
   username = new FormControl(null, Validators.required);
   password = new FormControl({value: '', disabled: true});
   nome = new FormControl(null);
+  cpf = new FormControl(null);
 
   formUsuario = new FormGroup({
     username: this.username,
     password: this.password,
-    nome: this.nome
+    nome: this.nome,
+    cpf: this.cpf
   });
   formPerfis = new FormGroup({
     perfis: new FormArray([])

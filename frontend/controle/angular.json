@@ -39,15 +39,32 @@
               "node_modules/bootswatch/dist/lumen/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css",
               "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
-              "node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.css",
+              "node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.css",
+              "node_modules/datatables.net-colreorder-bs5/css/colReorder.bootstrap5.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/datatables.net/js/jquery.dataTables.min.js",
-              "node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js"
+              "node_modules/datatables.net/js/dataTables.min.js",
+              "node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js",
+              "node_modules/jszip/dist/jszip.js",
+              "node_modules/pdfmake/build/pdfmake.js",
+              "node_modules/pdfmake/build/vfs_fonts.js",
+              "node_modules/datatables.net-buttons/js/dataTables.buttons.min.js",
+              "node_modules/datatables.net-buttons-dt/js/buttons.dataTables.min.js",
+              "node_modules/datatables.net-buttons/js/buttons.colVis.min.js",
+              "node_modules/datatables.net-buttons/js/buttons.html5.min.js",
+              "node_modules/datatables.net-buttons/js/buttons.print.min.js",
+              "node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js",
+              "node_modules/datatables.net-responsive/js/dataTables.responsive.js",
+              "node_modules/datatables.net-responsive-dt/js/responsive.dataTables.js",
+              "node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.js",
+              "node_modules/datatables.net-colreorder/js/dataTables.colReorder.js",
+              "node_modules/datatables.net-colreorder-dt/js/colReorder.dataTables.js",
+              "node_modules/datatables.net-colreorder-bs5/js/colReorder.bootstrap5.js"
             ]
           },
           "configurations": {

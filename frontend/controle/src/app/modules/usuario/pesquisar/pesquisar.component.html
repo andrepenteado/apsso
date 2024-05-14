@@ -13,18 +13,20 @@
     <ngx-loading [show]="aguardar" [config]="{ primaryColour: '#dd0031', secondaryColour: '#fff', animationType: ngxLoadingAnimationTypes.doubleBounce }"></ngx-loading>
 
     <div class="card-body custom-datatable table-responsive table-border-radius">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-styling table-striped align-middle">
+      <table id="datatable-pesquisar-usuario" class="table table-styling table-striped align-middle nowrap w-100">
         <thead>
         <tr>
-          <th scope="col">Username</th>
-          <th scope="col">Nome</th>
+          <th scope="col" class="text-center">Username</th>
+          <th scope="col" class="text-start">Nome</th>
+          <th scope="col" class="text-center">CPF</th>
           <th scope="col" class="text-center">Ações</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let usuario of this.lista ">
-          <td>{{ usuario.username }}</td>
-          <td>{{ usuario.nome }}</td>
+          <td class="text-center">{{ usuario.username }}</td>
+          <td class="text-start">{{ usuario.nome }}</td>
+          <td class="text-center">{{ usuario.cpf }}</td>
           <td class="text-center">
             <div class="btn-group">
               <button class="btn btn-success btn-sm" (click)="editar(usuario)"><i class="bi bi-pencil"></i></button>

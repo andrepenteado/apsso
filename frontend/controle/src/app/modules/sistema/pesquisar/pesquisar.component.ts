@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { SistemaService } from '../../../services/sistema.service';
 import { Router } from '@angular/router';
 import { Sistema } from "../../../model/entities/sistema"
-import { DataTableDirective } from "angular-datatables"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
-import { DATATABLES_OPTIONS, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
+import { DatatablesService, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',
@@ -13,13 +11,7 @@ import { DATATABLES_OPTIONS, ExibirMensagemService } from "@andrepenteado/ngx-ap
   styles: [
   ]
 })
-export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
-
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-
-  dtOptions: DataTables.Settings = DATATABLES_OPTIONS;
-  dtTrigger: Subject<any> = new Subject<any>();
+export class PesquisarComponent implements OnInit {
 
   lista: Sistema[];
   aguardar = true;
@@ -27,34 +19,22 @@ export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
       private sistemaService: SistemaService,
       private router: Router,
-      private exibirMensagem: ExibirMensagemService
+      private exibirMensagem: ExibirMensagemService,
+      private datatablesService: DatatablesService
   ) { }
-
-  ngAfterViewInit(): void {
-    this.dtTrigger.next(null);
-  }
 
   ngOnInit(): void {
     this.pesquisar();
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
-
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next(null);
-    });
   }
 
   pesquisar(): void {
     this.sistemaService.listar().subscribe({
       next: listaSistemas => {
         this.lista = listaSistemas;
-        this.rerender();
         this.aguardar = false;
+        setTimeout(() => {
+          $('#datatable-pesquisar-sistema').DataTable(this.datatablesService.getOptions());
+        }, 5);
       }
     });
   }
@@ -73,7 +53,7 @@ export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
       .then((resposta) => {
       if (resposta.value) {
         this.sistemaService.excluir(sistema.id).subscribe({
-          next: () => this.pesquisar()
+          next: () => window.location.reload()
         });
       }
     });

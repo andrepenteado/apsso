@@ -1,4 +1,6 @@
-export const MENU = [
+import { Menu } from "@andrepenteado/ngx-apcore";
+
+export const MENU: Menu[] = [
   {
     id: 'sistema', texto: 'Sistemas', icone: 'window-fullscreen', path: '/sistema/pesquisar', subMenus: [
       { texto: 'Pesquisar', path: '/sistema/pesquisar' },

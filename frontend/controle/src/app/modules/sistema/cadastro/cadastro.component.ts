@@ -100,7 +100,8 @@ export class CadastroComponent implements OnInit {
       this.iconeUpload.base64 = reader.result as string;
       this.iconeUpload.nome = file.name;
       this.iconeUpload.descricao = "Ícone do sistema " + this.sistema.descricao;
-      this.iconeUpload.tipo = file.type;
+      this.iconeUpload.tipoMime = file.type;
+      this.iconeUpload.tamanho = file.size;
     };
 
     if (file)

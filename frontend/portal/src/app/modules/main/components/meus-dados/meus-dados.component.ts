@@ -62,7 +62,8 @@ export class MeusDadosComponent implements OnInit {
       this.foto.base64 = reader.result as string;
       this.foto.nome = file.name;
       this.foto.descricao = "Foto usuário " + this.userLogin.nome;
-      this.foto.tipo = file.type;
+      this.foto.tipoMime = file.type;
+      this.foto.tamanho = file.size;
     };
 
     if (file)

@@ -9,6 +9,7 @@ export class Usuario {
   username: string;
   password: string;
   nome: string;
+  cpf: number;
   enabled: boolean;
   perfis: PerfilSistema[];
 

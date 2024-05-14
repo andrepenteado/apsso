@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { Subject } from 'rxjs';
 import { Usuario } from "../../../model/entities/usuario"
-import { DataTableDirective } from "angular-datatables"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
-import { DATATABLES_OPTIONS, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
+import { DatatablesService, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',
@@ -13,49 +11,30 @@ import { DATATABLES_OPTIONS, ExibirMensagemService } from "@andrepenteado/ngx-ap
   styles: [
   ]
 })
-export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
+export class PesquisarComponent implements OnInit {
 
   aguardar = true;
-
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-
-  dtOptions: DataTables.Settings = DATATABLES_OPTIONS;
-  dtTrigger: Subject<any> = new Subject<any>();
-
   lista: Usuario[];
 
   constructor(
       private usuarioService: UsuarioService,
       private router: Router,
-      private exibirMensagem: ExibirMensagemService
+      private exibirMensagem: ExibirMensagemService,
+      private datatablesService: DatatablesService
   ) { }
-
-  ngAfterViewInit(): void {
-    this.dtTrigger.next(null);
-  }
 
   ngOnInit(): void {
     this.pesquisar();
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
-
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next(null);
-    });
   }
 
   pesquisar(): void {
     this.usuarioService.listar().subscribe({
       next: listaUsuarios => {
         this.lista = listaUsuarios;
-        this.rerender();
         this.aguardar = false;
+        setTimeout(() => {
+          $('#datatable-pesquisar-usuario').DataTable(this.datatablesService.getOptions());
+        }, 5);
       }
     });
   }
@@ -74,7 +53,7 @@ export class PesquisarComponent implements AfterViewInit, OnInit, OnDestroy {
       .then((resposta) => {
         if (resposta.value) {
           this.usuarioService.excluir(usuario.username).subscribe({
-            next: () => this.pesquisar()
+            next: () => window.location.reload()
           });
         }
       });
