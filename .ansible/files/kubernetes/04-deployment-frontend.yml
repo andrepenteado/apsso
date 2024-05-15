@@ -3,12 +3,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: &name apsso-controle
+  name: &name apsso-controle-frontend
   namespace: apsso
   labels: &selector
     apcode.com.br/app: apsso
-    apcode.com.br/module: controle
-    apcode.com.br/version: 2.0.0
+    apcode.com.br/module: controle-frontend
+    apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
   replicas: 1
@@ -22,33 +22,33 @@ spec:
     spec:
       containers:
         - name: *name
-          image: ghcr.io/andrepenteado/apsso/controle
+          image: ghcr.io/andrepenteado/apsso/controle-frontend
           imagePullPolicy: Always
           resources:
             limits:
               memory: 1G
 #              cpu: 8000m
           ports:
-            - containerPort: 8080
+            - containerPort: 80
       imagePullSecrets:
         - name: github-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: &name apsso-controle
+  name: apsso-controle-frontend
   namespace: apsso
   labels: &selector
     apcode.com.br/app: apsso
-    apcode.com.br/module: controle
-    apcode.com.br/version: 2.0.0
+    apcode.com.br/module: controle-frontend
+    apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
   type: LoadBalancer
   ports:
-    - name: *name
-      port: 8080
-      targetPort: 8080
+    - name: control-front
+      port: 80
+      targetPort: 80
   selector:
     <<: *selector
 
@@ -57,12 +57,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: &name apsso-portal
+  name: &name apsso-portal-frontend
   namespace: apsso
   labels: &selector
     apcode.com.br/app: apsso
-    apcode.com.br/module: portal
-    apcode.com.br/version: 2.0.0
+    apcode.com.br/module: portal-frontend
+    apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
   replicas: 1
@@ -76,32 +76,32 @@ spec:
     spec:
       containers:
         - name: *name
-          image: ghcr.io/andrepenteado/apsso/portal
+          image: ghcr.io/andrepenteado/apsso/portal-frontend
           imagePullPolicy: Always
           resources:
             limits:
               memory: 1G
 #              cpu: 8000m
           ports:
-            - containerPort: 8080
+            - containerPort: 80
       imagePullSecrets:
         - name: github-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: &name apsso-portal
+  name: apsso-portal-frontend
   namespace: apsso
   labels: &selector
     apcode.com.br/app: apsso
-    apcode.com.br/module: portal
-    apcode.com.br/version: 2.0.0
+    apcode.com.br/module: portal-frontend
+    apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
   type: LoadBalancer
   ports:
-    - name: *name
-      port: 8080
-      targetPort: 8080
+    - name: portal-front
+      port: 80
+      targetPort: 80
   selector:
     <<: *selector

@@ -10,7 +10,8 @@ expor-login:
 	kubectl apply -f 03-ingress-login.yml
 
 deploy:
-	kubectl apply -f 04-deployment.yml
+	kubectl apply -f 04-deployment-backend.yml
+	kubectl apply -f 04-deployment-frontend.yml
 
 expor:
 	kubectl apply -f 05-ingress.yml
@@ -19,23 +20,29 @@ delete:
 	kubectl delete namespace apsso
 
 log-portal:
-	kubectl logs -n apsso service/apsso-portal -f
+	kubectl logs -n apsso service/apsso-portal-backend -f
 
 log-controle:
-	kubectl logs -n apsso service/apsso-controle -f
+	kubectl logs -n apsso service/apsso-controle-backend -f
 
 log-login:
 	kubectl logs -n apsso service/apsso-login -f
 
 update-portal:
-	kubectl rollout restart deployment apsso-portal -n apsso
-	kubectl rollout status deployment apsso-portal -n apsso
-	kubectl rollout history deployment apsso-portal -n apsso
+	kubectl rollout restart deployment apsso-portal-backend -n apsso
+	kubectl rollout restart deployment apsso-portal-frontend -n apsso
+	kubectl rollout status deployment apsso-portal-backend -n apsso
+	kubectl rollout status deployment apsso-portal-frontend -n apsso
+	kubectl rollout history deployment apsso-portal-backend -n apsso
+	kubectl rollout history deployment apsso-portal-frontend -n apsso
 
 update-controle:
-	kubectl rollout restart deployment apsso-controle -n apsso
-	kubectl rollout status deployment apsso-controle -n apsso
-	kubectl rollout history deployment apsso-controle -n apsso
+	kubectl rollout restart deployment apsso-controle-backend -n apsso
+	kubectl rollout restart deployment apsso-controle-frontend -n apsso
+	kubectl rollout status deployment apsso-controle-backend -n apsso
+	kubectl rollout status deployment apsso-controle-frontend -n apsso
+	kubectl rollout history deployment apsso-controle-backend -n apsso
+	kubectl rollout history deployment apsso-controle-frontend -n apsso
 
 update-login:
 	kubectl rollout restart deployment apsso-login -n apsso

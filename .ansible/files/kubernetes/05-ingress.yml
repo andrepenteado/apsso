@@ -20,6 +20,26 @@ spec:
                 name: apsso-login
                 port:
                   name: apsso-login
+    - host: api-controle.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-controle-backend
+                port:
+                  name: control-back
+    - host: api-portal.apcode.com.br
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: apsso-portal-backend
+                port:
+                  name: portal-back
     - host: controle.apcode.com.br
       http:
         paths:
@@ -27,9 +47,9 @@ spec:
             path: /
             backend:
               service:
-                name: apsso-controle
+                name: apsso-controle-frontend
                 port:
-                  name: apsso-controle
+                  name: control-front
     - host: portal.apcode.com.br
       http:
         paths:
@@ -37,6 +57,6 @@ spec:
             path: /
             backend:
               service:
-                name: apsso-portal
+                name: apsso-portal-frontend
                 port:
-                  name: apsso-portal
+                  name: portal-front

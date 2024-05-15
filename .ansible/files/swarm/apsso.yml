@@ -44,7 +44,7 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.controle-backend.rule=Host(`api.controle.apcode.com.br`)
+        - traefik.http.routers.controle-backend.rule=Host(`api-controle.apcode.com.br`)
         - traefik.http.routers.controle-backend.entrypoints=web
         - traefik.http.routers.controle-backend.tls=false
         - traefik.http.services.controle-backend.loadbalancer.server.port=8080
@@ -95,7 +95,7 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.http.routers.portal-backend.rule=Host(`api.portal.apcode.com.br`)
+        - traefik.http.routers.portal-backend.rule=Host(`api-portal.apcode.com.br`)
         - traefik.http.routers.portal-backend.entrypoints=web
         - traefik.http.routers.portal-backend.tls=false
         - traefik.http.services.portal-backend.loadbalancer.server.port=8080

@@ -6,7 +6,7 @@ metadata:
   labels: &selector
     apcode.com.br/app: apsso
     apcode.com.br/module: login
-    apcode.com.br/version: 2.0.0
+    apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
   replicas: 1
@@ -27,7 +27,7 @@ spec:
               memory: 1G
 #              cpu: 8000m
           ports:
-            - containerPort: 8080
+            - containerPort: 30000
       imagePullSecrets:
         - name: github-secret
 ---
@@ -39,13 +39,13 @@ metadata:
   labels: &selector
     apcode.com.br/app: apsso
     apcode.com.br/module: login
-    apcode.com.br/version: 2.0.0
+    apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
   type: LoadBalancer
   ports:
     - name: apsso-login
-      port: 8080
-      targetPort: 8080
+      port: 30000
+      targetPort: 30000
   selector:
     <<: *selector
