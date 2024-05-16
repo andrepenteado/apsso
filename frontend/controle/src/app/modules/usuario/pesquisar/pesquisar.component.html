@@ -23,13 +23,13 @@
         </tr>
         </thead>
         <tbody>
-        <td class="text-center">
-          <div class="btn-group">
-            <button class="btn btn-success btn-sm" (click)="editar(usuario)"><i class="bi bi-pencil"></i></button>
-            <button class="btn btn-danger btn-sm" (click)="excluir(usuario)"><i class="bi bi-trash"></i></button>
-          </div>
-        </td>
         <tr *ngFor="let usuario of this.lista ">
+          <td class="text-center">
+            <div class="btn-group">
+              <button class="btn btn-success btn-sm" (click)="editar(usuario)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-danger btn-sm" (click)="excluir(usuario)"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
           <td class="text-center">{{ usuario.username }}</td>
           <td class="text-start">{{ usuario.nome }}</td>
           <td class="text-center">{{ usuario.cpf }}</td>
