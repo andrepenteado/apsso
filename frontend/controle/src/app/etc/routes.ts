@@ -1,5 +1,5 @@
+import { AcessoNegadoComponent, ErroProcessamentoComponent, PaginaInicialComponent } from "@andrepenteado/ngx-apcore"
 import { Routes } from "@angular/router"
-import { AcessoNegadoComponent, autorizarPerfilGuard, ErroProcessamentoComponent, PaginaInicialComponent } from "@andrepenteado/ngx-apcore"
 
 export const DECORATED_ROUTES: Routes = [
 
