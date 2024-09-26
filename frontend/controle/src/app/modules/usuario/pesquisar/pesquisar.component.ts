@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from "../../../model/entities/usuario"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
-import { DatatablesService, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
+import { Datatables, ExibirMensagemService } from "@andre.penteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',
@@ -19,8 +19,7 @@ export class PesquisarComponent implements OnInit {
   constructor(
       private usuarioService: UsuarioService,
       private router: Router,
-      private exibirMensagem: ExibirMensagemService,
-      private datatablesService: DatatablesService
+      private exibirMensagem: ExibirMensagemService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +32,7 @@ export class PesquisarComponent implements OnInit {
         this.lista = listaUsuarios;
         this.aguardar = false;
         setTimeout(() => {
-          $('#datatable-pesquisar-usuario').DataTable(this.datatablesService.getOptions());
+          $('#datatable-pesquisar-usuario').DataTable(Datatables.config);
         }, 5);
       }
     });

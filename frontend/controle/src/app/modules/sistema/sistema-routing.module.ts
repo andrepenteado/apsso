@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
-import { autorizarPerfilGuard } from "@andrepenteado/ngx-apcore"
-import { clientId } from '../../etc/oauth2';
+import { autorizarPerfilGuard } from "@andre.penteado/ngx-apcore"
 
 const routes: Routes = [
 
@@ -11,21 +10,21 @@ const routes: Routes = [
     path: 'pesquisar',
     component: PesquisarComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_${clientId}_ARQUITETO`] }
+    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.controle_ARQUITETO`] }
   },
 
   {
     path: 'cadastro',
     component: CadastroComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_${clientId}_ARQUITETO`] }
+    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.controle_ARQUITETO`] }
   },
 
   {
     path: 'cadastro/:id',
     component: CadastroComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_${clientId}_ARQUITETO`] }
+    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.controle_ARQUITETO`] }
   }
 
 ];

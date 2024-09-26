@@ -14,11 +14,11 @@ export class UsuarioService {
   ) { }
 
   public alterarSenha(senha: string): Observable<any> {
-    return this.http.put(`${environment.backendURL}${API_USUARIOS}/alterar-senha`, senha);
+    return this.http.put(`${environment.urlBackend}${API_USUARIOS}/alterar-senha`, senha);
   }
 
   public atualizarFoto(uuidFoto: string): Observable<any> {
-    return this.http.put(`${environment.backendURL}${API_USUARIOS}/atualizar-foto`, uuidFoto);
+    return this.http.put(`${environment.urlBackend}${API_USUARIOS}/atualizar-foto`, uuidFoto);
   }
 
 }

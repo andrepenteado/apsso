@@ -36,6 +36,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/bootswatch/dist/lumen/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "src/styles.css",
@@ -108,7 +109,7 @@
             }
           },
           "options": {
-            "port": 40001
+            "port": 4200
           },
           "defaultConfiguration": "localhost"
         },

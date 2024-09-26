@@ -1,13 +1,13 @@
 export const environment = {
 
-  backendURL:  "https://api-controle.apcode.com.br",
+  production: true,
 
-  portalURL: "https://portal.apcode.com.br",
+  urlBackend: "https://api-controle.apcode.com.br",
 
-  backendPortalURL: "https://api-portal.apcode.com.br",
+  urlLogin: "https://api-controle.apcode.com.br/auth?redirectUrl=https://controle.apcode.com.br/authorized",
 
-  urlAuthorizationServer: "https://login.apcode.com.br",
+  urlLogout: "https://api-controle.apcode.com.br/logout",
 
-  redirectUri: "https://controle.apcode.com.br/authorized"
+  urlUserLogin: "https://api-controle.apcode.com.br/auth/usuario-logado"
 
 };

@@ -6,7 +6,7 @@ import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
 import { Sistema } from "../../../model/entities/sistema"
 import { PerfilSistema } from "../../../model/entities/perfil-sistema"
 import { lastValueFrom, Observable } from "rxjs"
-import { DecoracaoMensagem, ExibirMensagemService, Upload, UploadService } from "@andrepenteado/ngx-apcore"
+import { DecoracaoMensagem, ExibirMensagemService, Upload, UploadService } from "@andre.penteado/ngx-apcore"
 
 @Component({
   selector: 'app-cadastro',

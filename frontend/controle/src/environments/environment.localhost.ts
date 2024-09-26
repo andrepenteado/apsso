@@ -1,13 +1,13 @@
 export const environment = {
 
-  backendURL:  "http://localhost:30001",
+  production: false,
 
-  portalURL: "http://localhost:40002",
+  urlBackend: "http://localhost:8080/controle-backend",
 
-  backendPortalURL: "http://localhost:30002",
+  urlLogin: "http://localhost:8080/controle-backend/auth?redirectUrl=http://localhost:4200/controle/authorized",
 
-  urlAuthorizationServer: "http://localhost:30000",
+  urlLogout: "http://localhost:8080/controle-backend/logout",
 
-  redirectUri: "http://localhost:40001/authorized"
+  urlUserLogin: "http://localhost:8080/controle-backend/auth/usuario-logado"
 
 };

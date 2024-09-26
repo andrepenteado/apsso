@@ -7,4 +7,4 @@ management:
     enabled: false
 
 apsso:
-  uri: http://login:30000
+  uri: http://localhost:30000

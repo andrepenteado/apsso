@@ -1,6 +1,6 @@
 package com.github.andrepenteado.sso.services.impl;
 
-import com.github.andrepenteado.core.common.CoreUtil;
+import br.unesp.fc.andrepenteado.core.common.CoreUtil;
 import com.github.andrepenteado.sso.services.PerfilSistemaService;
 import com.github.andrepenteado.sso.services.entities.PerfilSistema;
 import com.github.andrepenteado.sso.services.repositories.PerfilSistemaRepository;

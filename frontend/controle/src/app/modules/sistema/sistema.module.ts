@@ -5,8 +5,8 @@ import { SistemaRoutingModule } from './sistema-routing.module';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { ReactiveFormsModule } from "@angular/forms"
-import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
 import { NgxLoadingModule } from "ngx-loading"
+import { FloatingButtonComponent } from "@andre.penteado/ngx-apcore";
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { NgxLoadingModule } from "ngx-loading"
     SistemaRoutingModule,
     ReactiveFormsModule,
     NgxLoadingModule.forRoot({}),
-    NgxApcoreModule
+    FloatingButtonComponent
   ]
 })
 export class SistemaModule { }

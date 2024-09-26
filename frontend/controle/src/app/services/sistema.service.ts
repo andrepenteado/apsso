@@ -15,19 +15,19 @@ export class SistemaService {
   ) { }
 
   public listar(): Observable<Sistema[]> {
-    return this.http.get<Sistema[]>(`${environment.backendURL}${API_SISTEMAS}`);
+    return this.http.get<Sistema[]>(`${environment.urlBackend}${API_SISTEMAS}`);
   }
 
   public buscar(id: string): Observable<Sistema> {
-    return this.http.get<Sistema>(`${environment.backendURL}${API_SISTEMAS}/${id}`);
+    return this.http.get<Sistema>(`${environment.urlBackend}${API_SISTEMAS}/${id}`);
   }
 
   public gravar(sistema: any): Observable<Sistema> {
-    return this.http.post<Sistema>(`${environment.backendURL}${API_SISTEMAS}`, sistema);
+    return this.http.post<Sistema>(`${environment.urlBackend}${API_SISTEMAS}`, sistema);
   }
 
   public excluir(id: number): Observable<any> {
-    return this.http.delete(`${environment.backendURL}${API_SISTEMAS}/${id}`);
+    return this.http.delete(`${environment.urlBackend}${API_SISTEMAS}/${id}`);
   }
 
 }

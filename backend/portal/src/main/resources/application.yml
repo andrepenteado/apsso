@@ -21,10 +21,30 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
 
+  security:
+    oauth2:
+      client:
+        registration:
+          portal-oidc:
+            provider: portal-de-sistemas
+            client-name: Portal de Sistemas
+            client-id: com.github.andrepenteado.sso.portal
+            client-secret: controle-secret
+            authorization-grant-type: authorization_code
+            scope: openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-authentication-method: client_secret_basic
+        provider:
+          portal-de-sistemas:
+            issuer-uri: https://login.apcode.com.br
+
 server:
   forward-headers-strategy: framework
+  port: 8080
   error:
     include-message: always
+  servlet:
+    context-path: /portal-backend
 
 management:
   endpoints:
@@ -37,3 +57,6 @@ management:
   zipkin:
     tracing:
       endpoint: http://cluster.apcode.com.br:9411
+
+frontend:
+  pagina-inicial: https://portal.apcode.com.br

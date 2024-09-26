@@ -15,11 +15,11 @@ export class SistemaService {
   ) { }
 
   public listar(): Observable<Sistema[]> {
-    return this.http.get<Sistema[]>(`${environment.backendURL}${API_SISTEMAS}`);
+    return this.http.get<Sistema[]>(`${environment.urlBackend}${API_SISTEMAS}`);
   }
 
   public buscar(id: string): Observable<Sistema> {
-    return this.http.get<Sistema>(`${environment.backendURL}${API_SISTEMAS}/${id}`);
+    return this.http.get<Sistema>(`${environment.urlBackend}${API_SISTEMAS}/${id}`);
   }
 
 }

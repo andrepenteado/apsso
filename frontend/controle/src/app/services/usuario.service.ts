@@ -15,24 +15,24 @@ export class UsuarioService {
   ) { }
 
   public listar(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${environment.backendURL}${API_USUARIOS}`);
+    return this.http.get<Usuario[]>(`${environment.urlBackend}${API_USUARIOS}`);
   }
 
   public buscar(username: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${environment.backendURL}${API_USUARIOS}/${username}`);
+    return this.http.get<Usuario>(`${environment.urlBackend}${API_USUARIOS}/${username}`);
   }
 
   public gravar(usuario: any, incluir: boolean): Observable<Usuario> {
     if (incluir) {
-      return this.http.post<Usuario>(`${environment.backendURL}${API_USUARIOS}`, usuario);
+      return this.http.post<Usuario>(`${environment.urlBackend}${API_USUARIOS}`, usuario);
     }
     else {
-      return this.http.put<Usuario>(`${environment.backendURL}${API_USUARIOS}/${usuario.username}`, usuario);
+      return this.http.put<Usuario>(`${environment.urlBackend}${API_USUARIOS}/${usuario.username}`, usuario);
     }
   }
 
   public excluir(username: string): Observable<any> {
-    return this.http.delete(`${environment.backendURL}${API_USUARIOS}/${username}`);
+    return this.http.delete(`${environment.urlBackend}${API_USUARIOS}/${username}`);
   }
 
 }

@@ -4,7 +4,7 @@ INSERT INTO public.oauth2_registered_client (
 VALUES (
    'Controle', 'Módulo de cadastro de usuários e sistemas', now(), 'Arquiteto do Sistema', 'https://controle.apcode.com.br;http://localhost:40001', 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$xG.KPzsgZddwndKL9AQWquv1FdQW232DWRcC2GSLtr34aUaEEUOOa', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
-   'https://controle.apcode.com.br/authorized,http://localhost:40001/authorized', 'https://controle.apcode.com.br/logout,http://localhost:40001/logout', 'openid',
+   'https://controle.apcode.com.br/authorized,https://controle.apcode.com.br/login/oauth2/code/controle-oidc,http://localhost:30001/authorized,http://localhost:30001/login/oauth2/code/controle-oidc', 'https://controle.apcode.com.br/logout,http://localhost:40001/logout', 'openid',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",900.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}'
 );
@@ -17,7 +17,7 @@ INSERT INTO public.oauth2_registered_client (
 VALUES (
    'Portal', 'Portal de Sistemas', now(), 'Arquiteto do Sistema', 'https://portal.apcode.com.br;http://localhost:40002', 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$iJMyj3siGWVf1OARieTkAeynUscGkapD9Giu/PjkEVnKod/0PF.dC', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
-   'https://portal.apcode.com.br/authorized,http://localhost:40002/authorized', 'https://portal.apcode.com.br/logout,http://localhost:40002/logout', 'openid',
+   'https://portal.apcode.com.br/authorized,https://portal.apcode.com.br/login/oauth2/code/portal-oidc,http://localhost:30002/authorized,http://localhost:30002/login/oauth2/code/portal-oidc', 'https://portal.apcode.com.br/logout,http://localhost:40002/logout', 'openid',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",900.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}'
 );

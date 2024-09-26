@@ -15,7 +15,7 @@
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
-        <artifactId>backend</artifactId>
+        <artifactId>sso</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -27,9 +27,13 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.andrepenteado.core</groupId>
+            <groupId>br.unesp.fc.andrepenteado.core</groupId>
             <artifactId>web</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
         <!-- Testes -->

@@ -3,9 +3,11 @@ import {
   AcessoNegadoComponent,
   ErroProcessamentoComponent,
   PaginaInicialComponent
-} from "@andrepenteado/ngx-apcore"
+} from "@andre.penteado/ngx-apcore"
 
 export const DECORATED_ROUTES: Routes = [
+
+  { path: "", component: PaginaInicialComponent },
 
   {
     path: "pagina-inicial",

@@ -6,8 +6,7 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
 import { NgxLoadingModule } from "ngx-loading"
 import { ReactiveFormsModule } from "@angular/forms"
-import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
-
+import { FloatingButtonComponent } from "@andre.penteado/ngx-apcore";
 
 @NgModule({
   declarations: [
@@ -19,7 +18,7 @@ import { NgxApcoreModule } from "@andrepenteado/ngx-apcore"
     UsuarioRoutingModule,
     ReactiveFormsModule,
     NgxLoadingModule.forRoot({}),
-    NgxApcoreModule
+    FloatingButtonComponent
   ]
 })
 export class UsuarioModule { }

@@ -7,12 +7,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.andrepenteado</groupId>
-    <artifactId>backend</artifactId>
+    <artifactId>sso</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <name>APsso</name>
-    <description>Portal de single sign on para autenticação de usuários e sistemas</description>
+    <description>Portal centralizado de autenticação de usuários e sistemas</description>
 
     <organization>
         <name>APcode</name>
@@ -30,7 +30,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -59,9 +59,14 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.github.andrepenteado.core</groupId>
+            <groupId>br.unesp.fc.andrepenteado.core</groupId>
             <artifactId>common</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,10 +77,15 @@
     </dependencies>
 
     <repositories>
-        <repository>
+        <!--<repository>
             <id>github-apcode</id>
             <name>GitHub Packages - APcode</name>
             <url>https://maven.pkg.github.com/andrepenteado/apcore</url>
+        </repository>-->
+        <repository>
+            <id>gitlab-maven</id>
+            <name>APcore</name>
+            <url>https://git.unesp.br/api/v4/projects/592/packages/maven</url>
         </repository>
     </repositories>
 

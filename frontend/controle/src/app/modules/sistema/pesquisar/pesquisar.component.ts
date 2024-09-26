@@ -3,7 +3,7 @@ import { SistemaService } from '../../../services/sistema.service';
 import { Router } from '@angular/router';
 import { Sistema } from "../../../model/entities/sistema"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
-import { DatatablesService, ExibirMensagemService } from "@andrepenteado/ngx-apcore"
+import { Datatables, ExibirMensagemService } from "@andre.penteado/ngx-apcore"
 
 @Component({
   selector: 'app-pesquisar',
@@ -19,8 +19,7 @@ export class PesquisarComponent implements OnInit {
   constructor(
       private sistemaService: SistemaService,
       private router: Router,
-      private exibirMensagem: ExibirMensagemService,
-      private datatablesService: DatatablesService
+      private exibirMensagem: ExibirMensagemService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +32,7 @@ export class PesquisarComponent implements OnInit {
         this.lista = listaSistemas;
         this.aguardar = false;
         setTimeout(() => {
-          $('#datatable-pesquisar-sistema').DataTable(this.datatablesService.getOptions());
+          $('#datatable-pesquisar-sistema').DataTable(Datatables.config);
         }, 5);
       }
     });

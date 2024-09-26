@@ -1,4 +1,4 @@
-import { Menu } from "@andrepenteado/ngx-apcore";
+import { Menu } from "@andre.penteado/ngx-apcore";
 
 export const MENU: Menu[] = [
   {
