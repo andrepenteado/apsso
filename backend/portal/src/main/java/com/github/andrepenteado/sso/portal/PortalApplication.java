@@ -1,5 +1,8 @@
 package com.github.andrepenteado.sso.portal;
 
+import br.unesp.fc.andrepenteado.core.upload.Upload;
+import br.unesp.fc.andrepenteado.core.upload.UploadRepository;
+import br.unesp.fc.andrepenteado.core.upload.UploadResource;
 import br.unesp.fc.andrepenteado.core.web.config.CorsConfig;
 import br.unesp.fc.andrepenteado.core.web.config.SecurityConfig;
 import br.unesp.fc.andrepenteado.core.web.resources.AuthResource;
@@ -19,17 +22,24 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         AuthResource.class,
         UserLoginOAuth2Service.class,
         UserLoginOidcService.class,
-        CorsConfig.class
+        CorsConfig.class,
+        UploadResource.class
     }
 )
 @EntityScan(
     basePackages = {
         "com.github.andrepenteado.sso"
+    },
+    basePackageClasses = {
+        Upload.class
     }
 )
 @EnableJpaRepositories(
     basePackages = {
         "com.github.andrepenteado.sso"
+    },
+    basePackageClasses = {
+        UploadRepository.class
     }
 )
 public class PortalApplication {

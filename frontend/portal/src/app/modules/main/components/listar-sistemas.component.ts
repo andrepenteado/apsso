@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SistemaService } from "../../../services/sistema.service";
 import { Sistema } from "../../../model/entities/sistema"
-import { Upload, UploadService } from "@andre.penteado/ngx-apcore";
-import { lastValueFrom, Observable } from "rxjs"
+import { UploadService } from "@andre.penteado/ngx-apcore";
+import { lastValueFrom } from "rxjs"
 
 @Component({
   selector: 'app-listar-sistemas',
   template: `
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb" style="margin-top: -23px">
+      <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
         <li class="breadcrumb-item active">Acessar Sistemas</li>
       </ol>

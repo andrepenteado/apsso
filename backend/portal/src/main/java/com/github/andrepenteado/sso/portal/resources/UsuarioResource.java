@@ -6,6 +6,7 @@ import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,18 +27,14 @@ public class UsuarioResource {
 
     @PutMapping("/alterar-senha")
     @Secured({ PERFIL_USUARIO })
-    public void alterarSenha(
-        @RequestBody
-        String senha, UserLogin userLogin) {
+    public void alterarSenha(@RequestBody String senha, @AuthenticationPrincipal UserLogin userLogin) {
         log.info("Alterar senha");
         usuarioService.alterarSenha(userLogin.getLogin(), senha);
     }
 
     @PutMapping("/atualizar-foto")
     @Secured({ PERFIL_USUARIO })
-    public void atualizarFoto(
-        @RequestBody
-        String uuidFoto, UserLogin userLogin) {
+    public void atualizarFoto(@RequestBody String uuidFoto, @AuthenticationPrincipal UserLogin userLogin) {
         log.info("Atualizar foto");
         usuarioService.atualizarFoto(userLogin.getLogin(), UUID.fromString(uuidFoto));
     }

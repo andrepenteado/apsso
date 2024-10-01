@@ -3,19 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListarSistemasComponent } from "./components/listar-sistemas.component";
 import { MeusDadosComponent } from "./components/meus-dados/meus-dados.component";
 import { autorizarPerfilGuard } from "@andre.penteado/ngx-apcore"
+import { PREFIXO_PERFIL_SISTEMA } from "../../etc/layout";
 
 const routes: Routes = [
   {
     path: 'listar-sistemas',
     component: ListarSistemasComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.portal_USUARIO`] }
+    data: { perfisAutorizados: [ `${PREFIXO_PERFIL_SISTEMA}USUARIO` ] }
   },
   {
     path: 'meus-dados',
     component: MeusDadosComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.portal_USUARIO`] }
+    data: { perfisAutorizados: [ `${PREFIXO_PERFIL_SISTEMA}USUARIO` ] }
   }
 ];
 

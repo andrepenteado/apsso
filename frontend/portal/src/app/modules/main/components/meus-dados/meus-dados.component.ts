@@ -19,7 +19,6 @@ export class MeusDadosComponent implements OnInit {
 
   userLogin: UserLogin;
   foto: Upload = new Upload();
-  descricaoPerfil: string = "";
 
   constructor(
     private service: UsuarioService,
@@ -35,22 +34,11 @@ export class MeusDadosComponent implements OnInit {
 
   async ngOnInit() {
     this.userLogin = await this.loginService.getUserLogin();
-    if (this.userLogin.uuidFoto) {
-      this.uploadService.buscar(this.userLogin.uuidFoto).subscribe(upload => {
-        this.foto = upload
-      });
-    }
-    this.descricaoPerfis();
+    this.foto = LoginService.fotoPerfil;
   }
 
-  descricaoPerfis(): void {
-    let result: string = "";
-    for (const [ nome, descricao ] of Object.entries(this.userLogin.authorities)) {
-      if (nome.startsWith(`ROLE_com.github.andrepenteado.sso.portal_`)) {
-        result = result + descricao + ",";
-      }
-    }
-    this.descricaoPerfil = result.substring(0, result.length - 1);
+  descricaoPerfis(): string {
+    return this.loginService.getDescricaoPerfis();
   }
 
   atualizarFoto(event: any): void {
@@ -111,7 +99,7 @@ export class MeusDadosComponent implements OnInit {
     this.service.atualizarFoto(upload.uuid).subscribe({
       next: obj => {
         this.userLogin.uuidFoto = upload.uuid;
-        //MenuComponent.upload = upload;
+        LoginService.fotoPerfil = upload;
         this.exibirMensagem.showMessage(
           "Foto atualizada com sucesso",
           "Atualizar Foto",
