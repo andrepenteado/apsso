@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { PesquisarComponent } from './pesquisar/pesquisar.component';
 import { autorizarPerfilGuard } from "@andre.penteado/ngx-apcore"
+import { PREFIXO_PERFIL_SISTEMA } from "../../etc/layout";
 
 const routes: Routes = [
 
@@ -10,21 +11,21 @@ const routes: Routes = [
     path: 'pesquisar',
     component: PesquisarComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.controle_ARQUITETO`] }
+    data: { perfisAutorizados: [`${PREFIXO_PERFIL_SISTEMA}ARQUITETO`] }
   },
 
   {
     path: 'cadastro',
     component: CadastroComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.controle_ARQUITETO`] }
+    data: { perfisAutorizados: [`${PREFIXO_PERFIL_SISTEMA}ARQUITETO`] }
   },
 
   {
     path: 'cadastro/:id',
     component: CadastroComponent,
     canActivate: [ autorizarPerfilGuard ],
-    data: { perfisAutorizados: [`ROLE_com.github.andrepenteado.sso.controle_ARQUITETO`] }
+    data: { perfisAutorizados: [`${PREFIXO_PERFIL_SISTEMA}ARQUITETO`] }
   }
 
 ];

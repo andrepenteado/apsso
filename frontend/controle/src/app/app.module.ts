@@ -6,7 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { HttpErrorsInterceptor, PARAMS, WithCredentialsInterceptor } from "@andre.penteado/ngx-apcore"
-import { LOGOTIPO, MODULO } from "./etc/layout"
+import { LOGOTIPO, MODULO, PREFIXO_PERFIL_SISTEMA } from "./etc/layout"
 import { MENU } from "./etc/menu"
 import { environment } from "../environments/environment";
 import { NgxLoadingModule } from "ngx-loading";
@@ -29,13 +29,14 @@ registerLocaleData(localePT);
     { provide: LOCALE_ID, useValue: "pt-BR" },
     {
       provide: PARAMS, useValue: {
-        logotipoSistema: LOGOTIPO,
+        logotipo: LOGOTIPO,
         menu: MENU,
-        nomeSistema: MODULO,
+        sistema: MODULO,
         urlBackend: environment.urlBackend,
         urlLogin: environment.urlLogin,
         urlLogout: environment.urlLogout,
-        urlUserLogin: environment.urlUserLogin
+        urlUserLogin: environment.urlUserLogin,
+        prefixoPerfil: PREFIXO_PERFIL_SISTEMA
       }
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorsInterceptor, multi: true },
