@@ -11,6 +11,7 @@ import { MENU } from "./etc/menu"
 import { environment } from "../environments/environment";
 import { NgxLoadingModule } from "ngx-loading";
 import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 registerLocaleData(localePT);
 
@@ -20,6 +21,7 @@ registerLocaleData(localePT);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     NgxLoadingModule,

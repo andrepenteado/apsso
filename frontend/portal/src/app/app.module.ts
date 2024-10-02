@@ -12,6 +12,7 @@ import { registerLocaleData } from "@angular/common";
 import localePT from '@angular/common/locales/pt';
 import { ToastrModule } from "ngx-toastr";
 import { NgxLoadingModule } from "ngx-loading";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 registerLocaleData(localePT);
 
@@ -21,6 +22,7 @@ registerLocaleData(localePT);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     NgxLoadingModule,

@@ -2,7 +2,7 @@ import { Menu } from "@andre.penteado/ngx-apcore";
 
 export const MENU: Menu[] = [
   {
-    id: 'sistema', texto: 'Sistemas', icone: 'window-fullscreen', path: '/sistema/pesquisar', subMenus: [
+    id: 'sistema', texto: 'Sistemas', icone: 'desktop', path: '/sistema/pesquisar', subMenus: [
       { texto: 'Pesquisar', path: '/sistema/pesquisar' },
       { texto: 'Incluir', path: '/sistema/cadastro' }
     ]
