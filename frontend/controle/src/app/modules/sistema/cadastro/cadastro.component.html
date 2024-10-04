@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
-    <li class="breadcrumb-item"><a routerLink="/sistema/pesquisar">Sistemas</a></li>
+    <li class="breadcrumb-item"><a routerLink="/ambienteSistema/pesquisar">Sistemas</a></li>
     <li class="breadcrumb-item active">Cadastro</li>
   </ol>
 </nav>
@@ -18,7 +18,7 @@
                 role="tab">
           DADOS CADASTRAIS
         </button>
-        <button class="nav-link fw-bold {{ this.sistema == null ? 'disabled' : '' }}"
+        <button class="nav-link fw-bold {{ this.ambienteSistema == null ? 'disabled' : '' }}"
                 id="nav-principal-perfis"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-conteudo-perfis"
@@ -28,9 +28,9 @@
         </button>
       </nav>
       <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
-        Incluído por {{ sistema?.usuarioCadastro }} em {{ sistema?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
-        <span *ngIf="sistema?.dataUltimaAtualizacao != null">
-          Alterado por {{ sistema.usuarioUltimaAtualizacao }} em {{ sistema.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+        Incluído por {{ ambienteSistema?.usuarioCadastro }} em {{ ambienteSistema?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+        <span *ngIf="ambienteSistema?.dataUltimaAtualizacao != null">
+          Alterado por {{ ambienteSistema.usuarioUltimaAtualizacao }} em {{ ambienteSistema.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
         </span>
       </p>
     </div>

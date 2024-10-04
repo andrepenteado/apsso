@@ -10,10 +10,10 @@ public interface SistemaService {
 
     List<Sistema> listar();
 
-    Optional<Sistema> buscar(String id);
+    Optional<Sistema> buscar(Long id);
 
     Sistema incluirOuAlterar(Sistema sistema, BindingResult validacao);
 
-    void excluir(String id);
+    void excluir(Long id);
 
 }

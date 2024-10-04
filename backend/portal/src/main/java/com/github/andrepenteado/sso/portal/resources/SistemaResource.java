@@ -35,7 +35,7 @@ public class SistemaResource {
 
     @GetMapping("/{id}")
     @Secured({ PERFIL_USUARIO })
-    public Sistema buscar(@PathVariable String id) {
+    public Sistema buscar(@PathVariable Long id) {
         log.info("Buscar sistema de ID: #{}", id);
         return sistemaService.buscar(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

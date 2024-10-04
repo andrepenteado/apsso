@@ -1,56 +1,67 @@
 <dataset>
 
-    <oauth2_registered_client
-        id="Sistema01"
-        client_id="ID01"
-        client_id_issued_at="[now]"
-        client_name="Sistema 01"
-        client_authentication_methods="XXXX"
-        authorization_grant_types="XXXX"
-        scopes="XXXX"
-        client_settings="XXXX"
-        token_settings="XXXX"
-        url_entrada="http://localhost" />
-    <oauth2_registered_client
-        id="Sistema02"
-        client_id="ID02"
-        client_id_issued_at="[now]"
-        client_name="Sistema 02"
-        client_authentication_methods="XXXX"
-        authorization_grant_types="XXXX"
-        scopes="XXXX"
-        client_settings="XXXX"
-        token_settings="XXXX"
-        url_entrada="http://localhost" />
-    <oauth2_registered_client
-        id="Sistema03"
-        client_id="ID03"
-        client_id_issued_at="[now]"
-        client_name="Sistema 03"
-        client_authentication_methods="XXXX"
-        authorization_grant_types="XXXX"
-        scopes="XXXX"
-        client_settings="XXXX"
-        token_settings="XXXX"
-        url_entrada="http://localhost" />
+    <empresa
+        id="10"
+        razao_social="Empresa Teste"
+        cnpj="0000000000"
+        telefone="1111111111" />
+
+    <sistema
+        id="100"
+        nome="Sistema 100"
+        fk_empresa="10" />
+    <sistema
+        id="200"
+        nome="Sistema 200"
+        fk_empresa="10" />
+    <sistema
+        id="300"
+        nome="Sistema 300"
+        fk_empresa="10" />
 
     <perfil_sistema
-        authority="ROLE_Sistema01_A"
-        id_oauth2_registered_client="Sistema01"
+        authority="ROLE_Sistema100_A"
+        fk_sistema="100"
         descricao="Perfil A" />
     <perfil_sistema
-        authority="ROLE_Sistema01_B"
-        id_oauth2_registered_client="Sistema01"
+        authority="ROLE_Sistema100_B"
+        fk_sistema="100"
         descricao="Perfil B" />
 
     <perfil_sistema
-        authority="ROLE_Sistema02_X"
-        id_oauth2_registered_client="Sistema02"
+        authority="ROLE_Sistema200_X"
+        fk_sistema="200"
         descricao="Perfil X" />
     <perfil_sistema
-        authority="ROLE_Sistema01_Y"
-        id_oauth2_registered_client="Sistema02"
+        authority="ROLE_Sistema200_Y"
+        fk_sistema="200"
         descricao="Perfil Y" />
+
+    <oauth2_registered_client
+        id="Ambiente01"
+        client_id="ID01"
+        client_id_issued_at="[now]"
+        client_name="Ambiente 01"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX"
+        url_entrada="http://localhost"
+        fk_sistema="100" />
+
+    <oauth2_registered_client
+        id="Ambiente02"
+        client_id="ID02"
+        client_id_issued_at="[now]"
+        client_name="Ambiente 02"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX"
+        url_entrada="http://localhost"
+        fk_sistema="100" />
 
     <users
         username="user"
@@ -61,6 +72,6 @@
 
     <authorities
         username="user"
-        authority="ROLE_Sistema01_A" />
+        authority="ROLE_Sistema100_A" />
 
 </dataset>

@@ -1,16 +1,28 @@
 <dataset>
 
+    <empresa
+        id="10"
+        razao_social="Empresa Teste"
+        cnpj="0000000000"
+        telefone="1111111111" />
+
+    <sistema
+        id="100"
+        nome="Sistema100"
+        fk_empresa="10"/>
+
     <oauth2_registered_client
-        id="Sistema01"
+        id="Ambiente01"
         client_id="ID01"
         client_id_issued_at="[now]"
-        client_name="Sistema 01"
+        client_name="Ambiente 01"
         client_authentication_methods="XXXX"
         authorization_grant_types="XXXX"
         scopes="XXXX"
         client_settings="XXXX"
         token_settings="XXXX"
-        url_entrada="http://localhost" />
+        url_entrada="http://localhost"
+        fk_sistema="100" />
 
     <users
         username="teste01"
@@ -21,7 +33,7 @@
 
     <perfil_sistema
         authority="ROLE_Sistema01_Teste01"
-        id_oauth2_registered_client="Sistema01"
+        fk_sistema="100"
         descricao="Perfil 01" />
 
     <authorities
@@ -37,7 +49,7 @@
 
     <perfil_sistema
         authority="ROLE_Sistema01_Teste02"
-        id_oauth2_registered_client="Sistema01"
+        fk_sistema="100"
         descricao="Perfil 02" />
 
     <authorities

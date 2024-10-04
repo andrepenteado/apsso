@@ -1,7 +1,10 @@
 package com.github.andrepenteado.sso.controle.resources;
 
+import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
+import com.github.andrepenteado.sso.services.AmbienteSistemaService;
 import com.github.andrepenteado.sso.services.PerfilSistemaService;
 import com.github.andrepenteado.sso.services.SistemaService;
+import com.github.andrepenteado.sso.services.entities.AmbienteSistema;
 import com.github.andrepenteado.sso.services.entities.PerfilSistema;
 import com.github.andrepenteado.sso.services.entities.Sistema;
 import io.micrometer.observation.annotation.Observed;
@@ -10,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.github.andrepenteado.sso.controle.ControleApplication.PERFIL_ARQUITETO;
 
@@ -27,6 +33,8 @@ public class SistemaResource {
 
     private final SistemaService sistemaService;
 
+    private final AmbienteSistemaService ambienteSistemaService;
+
     private final PerfilSistemaService perfilSistemaService;
 
     @GetMapping
@@ -38,7 +46,7 @@ public class SistemaResource {
 
     @GetMapping("/{id}")
     @Secured({ PERFIL_ARQUITETO })
-    public Sistema buscar(@PathVariable  String id) {
+    public Sistema buscar(@PathVariable  Long id) {
         log.info("Buscar sistema de ID #{}", id);
         return sistemaService.buscar(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -47,21 +55,31 @@ public class SistemaResource {
 
     @PostMapping
     @Secured({ PERFIL_ARQUITETO })
-    public Sistema incluir(@RequestBody @Valid Sistema sistema, BindingResult validacao) {
-        log.info("Incluir/Alterar sistema {}", sistema);
+    public Sistema incluirOuAlterar(@RequestBody @Valid Sistema sistema, BindingResult validacao, @AuthenticationPrincipal UserLogin userLogin) {
+        log.info("Incluir ou alterar sistema {}", sistema);
+
+        if (Objects.isNull(sistema.getId())) {
+            sistema.setDataCadastro(LocalDateTime.now());
+            sistema.setUsuarioCadastro(userLogin.getNome());
+        }
+        else {
+            sistema.setDataUltimaAtualizacao(LocalDateTime.now());
+            sistema.setUsuarioUltimaAtualizacao(userLogin.getNome());
+        }
+
         return sistemaService.incluirOuAlterar(sistema, validacao);
     }
 
     @DeleteMapping("/{id}")
     @Secured({ PERFIL_ARQUITETO })
-    public void excluir(@PathVariable String id) {
-        log.info("Excluir sistema de ID #" + id);
+    public void excluir(@PathVariable Long id) {
+        log.info("Excluir sistema de ID #{}", id);
         sistemaService.excluir(id);
     }
 
     @GetMapping("/{id}/perfis")
     @Secured({ PERFIL_ARQUITETO })
-    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable String id) {
+    public List<PerfilSistema> listarPerfisPorSistema(@PathVariable Long id) {
         log.info("Listar perfis do sistema #{}", id);
         return perfilSistemaService.listarPorSistema(id);
     }
@@ -85,6 +103,27 @@ public class SistemaResource {
     public void excluirPerfil(@PathVariable String authority) {
         log.info("Excluir perfil de sistema {}", authority);
         perfilSistemaService.excluir(authority);
+    }
+
+    @GetMapping("/{id}/ambientes")
+    @Secured({ PERFIL_ARQUITETO })
+    public List<AmbienteSistema> listarAmbientesPorSistema(@PathVariable Long id) {
+        log.info("Listar ambientes do sistema #{}", id);
+        return ambienteSistemaService.listarPorSistema(id);
+    }
+
+    @PostMapping("/ambiente")
+    @Secured({ PERFIL_ARQUITETO })
+    public AmbienteSistema incluirAmbiente(@RequestBody @Valid AmbienteSistema ambienteSistema, BindingResult validacao) {
+        log.info("Incluir novo ambiente de sistema {}", ambienteSistema);
+        return ambienteSistemaService.incluir(ambienteSistema, validacao);
+    }
+
+    @DeleteMapping("/ambiente/{id}")
+    @Secured({ PERFIL_ARQUITETO })
+    public void excluirAmbiente(@PathVariable String id) {
+        log.info("Excluir ambiente de sistema {}", id);
+        ambienteSistemaService.excluir(id);
     }
 
 }

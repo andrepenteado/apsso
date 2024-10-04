@@ -1,5 +1,6 @@
 package com.github.andrepenteado.sso.controle.resources;
 
+import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
 import com.github.andrepenteado.sso.services.UsuarioService;
 import com.github.andrepenteado.sso.services.entities.Usuario;
 import io.micrometer.observation.annotation.Observed;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,15 +43,17 @@ public class UsuarioResource {
 
     @PostMapping
     @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
-    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao) {
+    public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal UserLogin userLogin) {
         log.info("Incluir novo usuário {}", usuario);
+        usuario.setUsuarioCadastro(userLogin.getNome());
         return usuarioService.incluir(usuario, validacao);
     }
 
     @PutMapping("/{username}")
     @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
-    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao) {
+    public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal UserLogin userLogin) {
         log.info("Alterar dados do usuário {}", usuario);
+        usuario.setUsuarioUltimaAtualizacao(userLogin.getNome());
         return usuarioService.alterar(usuario, username, validacao);
     }
 

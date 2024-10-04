@@ -1,7 +1,7 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/apsso-dbname?autoReconnect=true
+    url: jdbc:postgresql://db-server:5433/apsso-dbname?autoReconnect=true
     username: apsso-dbuser
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver
@@ -11,3 +11,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  tracing:
+    enabled: false
+
+frontend:
+  pagina-inicial: https://controle.apcode.com.br

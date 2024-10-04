@@ -22,7 +22,7 @@ public class PerfilSistema implements Serializable {
     private String authority;
 
     @ManyToOne
-    @JoinColumn(name = "id_oauth2_registered_client", referencedColumnName = "id")
+    @JoinColumn(name = "fk_sistema")
     @NotNull(message = "Sistema é um campo obrigatório")
     private Sistema sistema;
 

@@ -1,7 +1,9 @@
 package com.github.andrepenteado.sso.controle.resources;
 
+import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.andrepenteado.sso.controle.ControleApplication;
 import com.github.andrepenteado.sso.services.entities.PerfilSistema;
 import com.github.andrepenteado.sso.services.entities.Sistema;
 import com.github.andrepenteado.sso.services.entities.Usuario;
@@ -14,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimNames;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -23,14 +27,13 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -71,7 +74,7 @@ class UsuarioResourceTest {
         usuario.setPerfis(new ArrayList<>());
 
         Sistema sistema = new Sistema();
-        sistema.setId("Sistema01");
+        sistema.setId(100L);
         sistema.setDescricao("Sistema Sistema01");
 
         PerfilSistema perfilSistema = new PerfilSistema();
@@ -88,25 +91,45 @@ class UsuarioResourceTest {
         return objectMapper.writeValueAsString(getUsuario(username));
     }
 
-    private Map<String, String> getPerfil() {
-        Map<String, String> perfil = new HashMap<>();
-        perfil.put("ROLE_com.github.andrepenteado.sso.controle_ARQUITETO", "Arquiteto do Sistema");
-        return perfil;
-    }
-
-    private Jwt getJwt() {
+    /*private Jwt getJwt() {
         Jwt.Builder jwtBuilder = Jwt.withTokenValue("token").header("alg", "none")
             .claim(JwtClaimNames.SUB, "user")
             .issuer("https://issuer-host/auth/realms/test")
             .claim("perfis", getPerfil());
         return jwtBuilder.build();
+    }*/
+
+    private OAuth2AuthenticationToken getToken() {
+        OidcIdToken idToken = new OidcIdToken(
+            "tokenValue",
+            Instant.now(),
+            Instant.now().plusSeconds(60),
+            Map.of(
+                "login", "arquiteto",
+                "nome", "Arquiteto do Sistema",
+                "perfis", Map.of(ControleApplication.PERFIL_ARQUITETO, "Arquiteto do Sistema"))
+        );
+
+        DefaultOidcUser oidcUser = new DefaultOidcUser(
+            List.of(new SimpleGrantedAuthority(ControleApplication.PERFIL_ARQUITETO)),
+            idToken,
+            "login"
+        );
+
+        UserLogin userLogin = new UserLogin(oidcUser);
+
+        return new OAuth2AuthenticationToken(
+            userLogin,
+            userLogin.getAuthorities(),
+            "com.github.andrepenteado.sso.controle"
+        );
     }
 
     @Test
     @DisplayName("Listar todos usuários")
     void testListar() throws Exception {
         String json = mockMvc.perform(get("/usuarios")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -120,7 +143,7 @@ class UsuarioResourceTest {
     @DisplayName("Buscar usuário por username")
     void testBuscar() throws Exception {
         String json = mockMvc.perform(get("/usuarios/teste01")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
@@ -130,7 +153,7 @@ class UsuarioResourceTest {
         assertEquals(usuario.getPerfis().size(), 1);
 
         mockMvc.perform(get("/usuarios/usuarioNaoExiste")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -139,7 +162,7 @@ class UsuarioResourceTest {
     @DisplayName("Incluir usuário")
     void testIncluir() throws Exception {
         String json = mockMvc.perform(post("/usuarios")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario(USERNAME)))
@@ -152,19 +175,19 @@ class UsuarioResourceTest {
 
         // Sem dados obrigatórios
         mockMvc.perform(post("/usuarios")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Usuario())))
             .andExpect(status().isUnprocessableEntity())
-            .andExpect(ex -> assertTrue(ex.getResolvedException().getMessage().contains("é um campo obrigatório")));
+            .andExpect(ex -> assertTrue(Objects.requireNonNull(ex.getResolvedException()).getMessage().contains("é um campo obrigatório")));
     }
 
     @Test
     @DisplayName("Alterar usuário")
     void testAlterar() throws Exception {
         String json = mockMvc.perform(put("/usuarios/teste01")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario("teste01")))
@@ -176,7 +199,7 @@ class UsuarioResourceTest {
         assertEquals(usuarioAlterado.getNome(), NOME);
 
         mockMvc.perform(put("/usuarios/naoExiste")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(getJsonUsuario("naoExiste")))
@@ -184,7 +207,7 @@ class UsuarioResourceTest {
             .andExpect(ex -> assertTrue(ex.getResolvedException().getMessage().contains("não encontrado")));
 
         mockMvc.perform(put("/usuarios/dadosIncompletos")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Usuario())))
@@ -196,7 +219,7 @@ class UsuarioResourceTest {
     @DisplayName("Excluir usuário")
     void testExcluir() throws Exception {
         mockMvc.perform(delete("/usuarios/teste02")
-                .with(jwt().jwt(getJwt()))
+                .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());

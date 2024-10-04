@@ -11,7 +11,7 @@ public interface PerfilSistemaRepository extends JpaRepository<PerfilSistema, St
 
     List<PerfilSistema> findByOrderBySistemaId();
 
-    List<PerfilSistema> findBySistemaIdOrderByAuthority(String idSistema);
+    List<PerfilSistema> findBySistemaIdOrderByAuthority(Long idSistema);
 
     PerfilSistema findByAuthority(String authority);
 
