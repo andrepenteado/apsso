@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SistemaService } from "../../../services/sistema.service";
-import { Sistema } from "../../../model/entities/sistema"
+import { Sistema } from "../../../domain/entities/sistema"
 import { UploadService } from "@andre.penteado/ngx-apcore";
 import { lastValueFrom } from "rxjs"
 

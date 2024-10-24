@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListarSistemasComponent } from "./components/listar-sistemas.component";
 import { MeusDadosComponent } from "./components/meus-dados/meus-dados.component";
 import { autorizarPerfilGuard } from "@andre.penteado/ngx-apcore"
-import { PREFIXO_PERFIL_SISTEMA } from "../../etc/layout";
+import { PREFIXO_PERFIL_SISTEMA } from "../../config/layout";
 
 const routes: Routes = [
   {

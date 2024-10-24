@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from "../../../model/entities/usuario"
+import { Usuario } from "../../../domain/entities/usuario"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
 import { Datatables, ExibirMensagemService } from "@andre.penteado/ngx-apcore"
 

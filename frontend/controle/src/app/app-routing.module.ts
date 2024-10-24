@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DECORATED_ROUTES, NO_DECORATED_ROUTES } from './etc/routes';
+import { DECORATED_ROUTES, NO_DECORATED_ROUTES } from './config/routes';
 import {
   AuthorizedComponent,
   LayoutPadraoComponent,

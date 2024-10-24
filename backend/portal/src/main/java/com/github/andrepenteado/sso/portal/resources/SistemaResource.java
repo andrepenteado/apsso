@@ -1,7 +1,7 @@
 package com.github.andrepenteado.sso.portal.resources;
 
-import com.github.andrepenteado.sso.services.SistemaService;
-import com.github.andrepenteado.sso.services.entities.Sistema;
+import com.github.andrepenteado.sso.core.services.SistemaService;
+import com.github.andrepenteado.sso.core.domain.entities.Sistema;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

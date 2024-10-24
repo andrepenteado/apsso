@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Sistema } from "../model/entities/sistema"
-import { API_SISTEMAS } from "../etc/api";
+import { Sistema } from "../domain/entities/sistema"
+import { API_SISTEMAS } from "../config/api";
 import { environment } from "../../environments/environment";
 
 @Injectable({

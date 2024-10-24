@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SistemaService } from '../../../services/sistema.service';
 import { Router } from '@angular/router';
-import { Sistema } from "../../../model/entities/sistema"
+import { Sistema } from "../../../domain/entities/sistema"
 import { ngxLoadingAnimationTypes } from "ngx-loading"
 import { Datatables, ExibirMensagemService } from "@andre.penteado/ngx-apcore"
 

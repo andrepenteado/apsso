@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SistemaService } from '../../../services/sistema.service';
 import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
-import { Sistema } from "../../../model/entities/sistema"
-import { PerfilSistema } from "../../../model/entities/perfil-sistema"
+import { Sistema } from "../../../domain/entities/sistema"
+import { PerfilSistema } from "../../../domain/entities/perfil-sistema"
 import { lastValueFrom, Observable } from "rxjs"
 import { DecoracaoMensagem, ExibirMensagemService, Upload, UploadService } from "@andre.penteado/ngx-apcore"
 

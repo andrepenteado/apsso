@@ -4,8 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"
-import { MENU } from "./etc/menu"
-import { LOGOTIPO, MODULO, PREFIXO_PERFIL_SISTEMA } from "./etc/layout";
+import { MENU } from "./config/menu"
+import { LOGOTIPO, MODULO, PREFIXO_PERFIL_SISTEMA } from "./config/layout";
 import { environment } from "../environments/environment";
 import { HttpErrorsInterceptor, PARAMS, WithCredentialsInterceptor } from "@andre.penteado/ngx-apcore";
 import { registerLocaleData } from "@angular/common";

@@ -1,12 +1,12 @@
 package com.github.andrepenteado.sso.controle.resources;
 
 import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
-import com.github.andrepenteado.sso.services.AmbienteSistemaService;
-import com.github.andrepenteado.sso.services.PerfilSistemaService;
-import com.github.andrepenteado.sso.services.SistemaService;
-import com.github.andrepenteado.sso.services.entities.AmbienteSistema;
-import com.github.andrepenteado.sso.services.entities.PerfilSistema;
-import com.github.andrepenteado.sso.services.entities.Sistema;
+import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
+import com.github.andrepenteado.sso.core.services.PerfilSistemaService;
+import com.github.andrepenteado.sso.core.services.SistemaService;
+import com.github.andrepenteado.sso.core.domain.entities.AmbienteSistema;
+import com.github.andrepenteado.sso.core.domain.entities.PerfilSistema;
+import com.github.andrepenteado.sso.core.domain.entities.Sistema;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

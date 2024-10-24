@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.andrepenteado.sso</groupId>
-            <artifactId>services</artifactId>
+            <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

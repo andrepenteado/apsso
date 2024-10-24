@@ -41,7 +41,7 @@
     </properties>
 
     <modules>
-        <module>services</module>
+        <module>core</module>
         <module>login</module>
         <module>controle</module>
         <module>portal</module>

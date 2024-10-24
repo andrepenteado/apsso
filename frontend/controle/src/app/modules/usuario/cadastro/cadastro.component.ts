@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { PerfilSistemaService } from '../../../services/perfil-sistema.service';
 import { lastValueFrom } from 'rxjs';
-import { Usuario } from "../../../model/entities/usuario"
-import { PerfilSistema } from "../../../model/entities/perfil-sistema"
+import { Usuario } from "../../../domain/entities/usuario"
+import { PerfilSistema } from "../../../domain/entities/perfil-sistema"
 import { DecoracaoMensagem, ExibirMensagemService } from "@andre.penteado/ngx-apcore"
 
 @Component({

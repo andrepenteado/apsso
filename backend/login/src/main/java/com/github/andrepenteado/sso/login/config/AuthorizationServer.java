@@ -1,8 +1,8 @@
 package com.github.andrepenteado.sso.login.config;
 
-import com.github.andrepenteado.sso.services.UsuarioService;
-import com.github.andrepenteado.sso.services.entities.PerfilSistema;
-import com.github.andrepenteado.sso.services.entities.Usuario;
+import com.github.andrepenteado.sso.core.services.UsuarioService;
+import com.github.andrepenteado.sso.core.domain.entities.PerfilSistema;
+import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;

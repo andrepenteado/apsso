@@ -1,0 +1,17 @@
+com\github\andrepenteado\sso\core\domain\entities\Usuario.class
+com\github\andrepenteado\sso\core\domain\entities\AmbienteSistema.class
+com\github\andrepenteado\sso\core\services\UsuarioService.class
+com\github\andrepenteado\sso\core\services\AmbienteSistemaService.class
+com\github\andrepenteado\sso\core\domain\entities\PerfilSistema.class
+com\github\andrepenteado\sso\core\domain\repositories\SistemaRepository.class
+com\github\andrepenteado\sso\core\services\impl\PerfilSistemaServiceImpl.class
+com\github\andrepenteado\sso\core\domain\repositories\UsuarioRepository.class
+com\github\andrepenteado\sso\core\services\SistemaService.class
+com\github\andrepenteado\sso\core\services\impl\SistemaServiceImpl.class
+com\github\andrepenteado\sso\core\domain\repositories\AmbienteSistemaRepository.class
+com\github\andrepenteado\sso\core\services\impl\AmbienteSistemaServiceImpl.class
+com\github\andrepenteado\sso\core\services\PerfilSistemaService.class
+com\github\andrepenteado\sso\core\domain\repositories\PerfilSistemaRepository.class
+com\github\andrepenteado\sso\core\services\impl\UsuarioServiceImpl.class
+com\github\andrepenteado\sso\core\domain\entities\Empresa.class
+com\github\andrepenteado\sso\core\domain\entities\Sistema.class

@@ -1,8 +1,8 @@
 package com.github.andrepenteado.sso.controle.resources;
 
 import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
-import com.github.andrepenteado.sso.services.UsuarioService;
-import com.github.andrepenteado.sso.services.entities.Usuario;
+import com.github.andrepenteado.sso.core.services.UsuarioService;
+import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

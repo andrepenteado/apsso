@@ -6,8 +6,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { HttpErrorsInterceptor, PARAMS, WithCredentialsInterceptor } from "@andre.penteado/ngx-apcore"
-import { LOGOTIPO, MODULO, PREFIXO_PERFIL_SISTEMA } from "./etc/layout"
-import { MENU } from "./etc/menu"
+import { LOGOTIPO, MODULO, PREFIXO_PERFIL_SISTEMA } from "./config/layout"
+import { MENU } from "./config/menu"
 import { environment } from "../environments/environment";
 import { NgxLoadingModule } from "ngx-loading";
 import { ToastrModule } from "ngx-toastr";

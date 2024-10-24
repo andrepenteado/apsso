@@ -1,7 +1,7 @@
 package com.github.andrepenteado.sso.portal.resources;
 
 import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
-import com.github.andrepenteado.sso.services.UsuarioService;
+import com.github.andrepenteado.sso.core.services.UsuarioService;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
