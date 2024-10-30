@@ -81,7 +81,7 @@ public class SistemaResource {
     @Secured({ PERFIL_ARQUITETO })
     public List<PerfilSistema> listarPerfisPorSistema(@PathVariable Long id) {
         log.info("Listar perfis do sistema #{}", id);
-        return perfilSistemaService.listarPorSistema(id);
+        return perfilSistemaService.filtrarPorSistema(id);
     }
 
     @GetMapping("/perfis")
@@ -109,7 +109,7 @@ public class SistemaResource {
     @Secured({ PERFIL_ARQUITETO })
     public List<AmbienteSistema> listarAmbientesPorSistema(@PathVariable Long id) {
         log.info("Listar ambientes do sistema #{}", id);
-        return ambienteSistemaService.listarPorSistema(id);
+        return ambienteSistemaService.filtrarPorSistema(id);
     }
 
     @PostMapping("/ambiente")

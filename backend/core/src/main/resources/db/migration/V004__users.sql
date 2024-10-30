@@ -3,20 +3,21 @@ create table users(
     password varchar(500) not null,
     enabled boolean not null,
     nome text not null,
-    cpf bigint null,
+    cpf bigint not null,
     data_cadastro timestamp,
     data_ultima_atualizacao timestamp,
     usuario_cadastro varchar(50),
     usuario_ultima_atualizacao varchar(50),
     fk_upload UUID NULL
 );
+create unique index un_users_cpf on users (cpf);
 
 create table authorities (
     username text not null,
     authority text not null,
     constraint fk_authorities_users foreign key(username) references users(username)
 );
-create unique index ix_auth_username on authorities (username,authority);
+create unique index un_authorities_usernameauthority on authorities (username,authority);
 
 create table groups (
     id bigserial primary key,

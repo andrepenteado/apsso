@@ -3,14 +3,12 @@ package com.github.andrepenteado.sso.core.domain.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
 @Table(name = "oauth2_registered_client")
 @Data
-@EqualsAndHashCode(of = "id")
-@ToString(of = "id")
+@ToString(of = "descricao")
 public class AmbienteSistema {
 
     @Id
@@ -25,6 +23,7 @@ public class AmbienteSistema {
 
     @ManyToOne
     @JoinColumn(name = "fk_sistema")
+    @NotNull(message = "Sistema é um campo obrigatório")
     private Sistema sistema;
 
     private String clientId;
@@ -44,5 +43,21 @@ public class AmbienteSistema {
     private String clientSettings;
 
     private String tokenSettings;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AmbienteSistema that = (AmbienteSistema) o;
+        return id.equals(that.id) && sistema.equals(that.sistema);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + sistema.hashCode();
+        return result;
+    }
 
 }

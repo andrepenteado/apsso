@@ -6,15 +6,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.Serializable;
 
 @Entity
 @Data
-@EqualsAndHashCode(of = "authority")
-@ToString(of = "authority")
+@ToString(of = "descricao")
 public class PerfilSistema implements Serializable {
 
     @Id
@@ -28,4 +26,21 @@ public class PerfilSistema implements Serializable {
 
     @NotNull(message = "Descrição do perfil é um campo obrigatório")
     private String descricao;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PerfilSistema that = (PerfilSistema) o;
+        return authority.equals(that.authority) && sistema.equals(that.sistema);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = authority.hashCode();
+        result = 31 * result + sistema.hashCode();
+        return result;
+    }
+
 }

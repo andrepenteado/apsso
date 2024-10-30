@@ -1,7 +1,7 @@
 package com.github.andrepenteado.sso.portal.resources;
 
-import com.github.andrepenteado.sso.core.services.SistemaService;
-import com.github.andrepenteado.sso.core.domain.entities.Sistema;
+import com.github.andrepenteado.sso.core.domain.entities.AmbienteSistema;
+import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,28 +18,28 @@ import java.util.List;
 import static com.github.andrepenteado.sso.portal.PortalApplication.PERFIL_USUARIO;
 
 @RestController
-@RequestMapping("/sistemas")
+@RequestMapping("/ambientes-sistemas")
 @RequiredArgsConstructor
 @Observed
 @Slf4j
-public class SistemaResource {
+public class AmbienteSistemaResource {
 
-    private final SistemaService sistemaService;
+    private final AmbienteSistemaService service;
 
     @GetMapping
     @Secured({ PERFIL_USUARIO })
-    public List<Sistema> listar() {
-        log.info("Listar sistemas");
-        return sistemaService.listar();
+    public List<AmbienteSistema> listar() {
+        log.info("Listar ambientes dos sistemas");
+        return service.listar();
     }
 
     @GetMapping("/{id}")
     @Secured({ PERFIL_USUARIO })
-    public Sistema buscar(@PathVariable Long id) {
-        log.info("Buscar sistema de ID: #{}", id);
-        return sistemaService.buscar(id)
+    public AmbienteSistema buscar(@PathVariable String id) {
+        log.info("Buscar ambiente de sistema de ID: #{}", id);
+        return service.buscar(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-            String.format("Sistema de ID %s não encontrado", id)));
+            String.format("Ambiente de sistema de ID %s não encontrado", id)));
     }
 
 }

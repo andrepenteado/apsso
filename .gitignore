@@ -30,6 +30,7 @@ nbactions.xml
 .directory
 
 /backend/login/target/
+
 /backend/controle/target/
 /backend/controle/src/main/resources/static/
 /backend/controle/*.iml
@@ -49,5 +50,7 @@ nbactions.xml
 /frontend/portal/.angular/
 /frontend/portal/*.iml
 /frontend/portal/.npmrc
-/backend/services/target/
+
+/backend/core/target/
+
 .ansible/ansible.log

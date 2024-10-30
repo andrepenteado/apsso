@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Data
-@EqualsAndHashCode(of = "nome")
 @ToString(of = "nome")
 public class Usuario {
 
@@ -36,6 +34,7 @@ public class Usuario {
     @NotNull(message = "Nome do usuário é um campo obrigatório")
     private String nome;
 
+    @NotNull(message = "CPF do usuário é um campo obrigatório")
     private Long cpf;
 
     private Boolean enabled;
@@ -48,4 +47,21 @@ public class Usuario {
                joinColumns = { @JoinColumn(name = "username") },
                inverseJoinColumns = { @JoinColumn(name = "authority") })
     private List<PerfilSistema> perfis;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Usuario usuario = (Usuario) o;
+        return username.equals(usuario.username) && cpf.equals(usuario.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + cpf.hashCode();
+        return result;
+    }
+
 }

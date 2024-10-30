@@ -9,7 +9,7 @@ public interface PerfilSistemaService {
 
     List<PerfilSistema> listar();
 
-    List<PerfilSistema> listarPorSistema(Long idSistema);
+    List<PerfilSistema> filtrarPorSistema(Long idSistema);
 
     PerfilSistema incluir(PerfilSistema perfilSistema, BindingResult validacao);
 

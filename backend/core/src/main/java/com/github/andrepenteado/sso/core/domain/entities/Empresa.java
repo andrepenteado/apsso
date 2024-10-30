@@ -4,15 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@EqualsAndHashCode(of = "id")
-@ToString(of = "id")
+@ToString(of = "razaoSocial")
 public class Empresa {
 
     @Id
@@ -59,5 +57,19 @@ public class Empresa {
     @ManyToOne
     @JoinColumn(name = "fk_empresa_matriz")
     private Empresa matriz;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Empresa empresa = (Empresa) o;
+        return id.equals(empresa.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
 }

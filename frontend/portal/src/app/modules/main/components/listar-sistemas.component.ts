@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SistemaService } from "../../../services/sistema.service";
-import { Sistema } from "../../../domain/entities/sistema"
+import { AmbienteSistemaService } from "../../../services/ambiente-sistema.service";
 import { UploadService } from "@andre.penteado/ngx-apcore";
 import { lastValueFrom } from "rxjs"
+import { AmbienteSistema } from "../../../domain/entities/ambiente-sistema";
 
 @Component({
   selector: 'app-listar-sistemas',
@@ -14,15 +14,15 @@ import { lastValueFrom } from "rxjs"
       </ol>
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
-      <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let sistema of this.lista">
-        <img *ngIf="sistema.icone" class="img-fluid float-right rounded-circle" id="image-{{ sistema.icone }}" style="width: 120px; height: 120px;"/>
-        <img *ngIf="!sistema.icone" class="img-fluid float-right rounded-circle" src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
+      <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let ambiente of this.lista">
+        <img *ngIf="ambiente.sistema.icone" class="img-fluid float-right rounded-circle" id="image-{{ ambiente.sistema.icone }}" style="width: 120px; height: 120px;"/>
+        <img *ngIf="!ambiente.sistema.icone" class="img-fluid float-right rounded-circle" src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
         <div class="caption">
-          <h3>{{ sistema.id }}</h3>
-          <p class="form-text">{{ sistema.descricao }}</p>
+          <h3>{{ ambiente.sistema.nome }}</h3>
+          <p class="form-text">{{ ambiente.sistema.descricao }}</p>
         </div>
-        <div *ngFor="let url of sistema.urlEntrada.split(';')">
-          <a href="javascript:void(0)" (click)="acessar(url)">{{ url }}</a><br>
+        <div *ngFor="let url of ambiente.urlEntrada.split(';')">
+          <a href="javascript:void(0)" (click)="acessar(url)">{{ ambiente.descricao }}</a><br>
         </div>
       </figure>
     </div>
@@ -32,10 +32,10 @@ import { lastValueFrom } from "rxjs"
 })
 export class ListarSistemasComponent implements OnInit {
 
-  lista: Sistema[];
+  lista: AmbienteSistema[] = [];
 
   constructor(
-    private sistemaService: SistemaService,
+    private service: AmbienteSistemaService,
     private uploadService: UploadService
   ) { }
 
@@ -44,12 +44,12 @@ export class ListarSistemasComponent implements OnInit {
   }
 
   async pesquisar() {
-    this.lista = await lastValueFrom(this.sistemaService.listar());
-    this.lista.forEach((sistema: Sistema) => {
-      if (sistema.icone) {
-        this.uploadService.buscar(sistema.icone).subscribe(upload => {
+    this.lista = await lastValueFrom(this.service.listar());
+    this.lista.forEach((ambiente: AmbienteSistema) => {
+      if (ambiente.sistema.icone) {
+        this.uploadService.buscar(ambiente.sistema.icone).subscribe(upload => {
           document
-            .getElementById(`image-${sistema.icone}`)
+            .getElementById(`image-${ambiente.sistema.icone}`)
             .setAttribute('src', upload.base64);
         });
       }

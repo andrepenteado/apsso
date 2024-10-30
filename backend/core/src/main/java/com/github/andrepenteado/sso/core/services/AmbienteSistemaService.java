@@ -8,7 +8,9 @@ import java.util.Optional;
 
 public interface AmbienteSistemaService {
 
-    List<AmbienteSistema> listarPorSistema(Long idSistema);
+    List<AmbienteSistema> listar();
+
+    List<AmbienteSistema> filtrarPorSistema(Long idSistema);
 
     Optional<AmbienteSistema> buscar(String id);
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -12,8 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode(of = "id")
-@ToString(of = "id")
+@ToString(of = "nome")
 public class Sistema {
 
     @Id
@@ -42,5 +40,19 @@ public class Sistema {
     @JoinColumn(name = "fk_empresa")
     @NotNull(message = "Empresa é um campo obrigatório")
     private Empresa empresa;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Sistema sistema = (Sistema) o;
+        return id.equals(sistema.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
 }

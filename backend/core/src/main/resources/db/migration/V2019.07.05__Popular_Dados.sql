@@ -1,9 +1,11 @@
-INSERT INTO sistema (data_cadastro, usuario_cadastro, nome, descricao) VALUES (now(), 'Arquiteto do Sistema', 'Módulo de Controle', 'Módulo de cadastro de usuários e sistemas');
+INSERT INTO empresa (data_cadastro, usuario_cadastro, razao_social, cnpj, telefone) VALUES (now(), 'Arquiteto do Sistema', 'APcode Tecnologia', 111111111111100, '(11) 11111-1100');
+
+INSERT INTO sistema (data_cadastro, usuario_cadastro, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'Módulo de Controle', 'Módulo de cadastro de usuários e sistemas', currval('empresa_id_seq'));
 INSERT INTO public.oauth2_registered_client (
     id, client_name, url_entrada, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-   'Controle', 'Módulo de cadastro de usuários e sistemas', 'http://localhost:4200/controle', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
+   'Controle-DEV', 'Ambiente de Desenvolvimento', 'http://localhost:4200/controle', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$xG.KPzsgZddwndKL9AQWquv1FdQW232DWRcC2GSLtr34aUaEEUOOa', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
    'http://localhost:8080/controle-backend/authorized,http://localhost:8080/controle-backend/login/oauth2/code/controle-oidc', 'http://localhost:8080/controle-backend/logout', 'openid',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -12,12 +14,12 @@ VALUES (
 INSERT INTO perfil_sistema (authority, fk_sistema, descricao)
 VALUES ('ROLE_com.github.andrepenteado.sso.controle_ARQUITETO', currval('sistema_id_seq'), 'Arquiteto do Sistema');
 
-INSERT INTO sistema (data_cadastro, usuario_cadastro, nome, descricao) VALUES (now(), 'Arquiteto do Sistema', 'Portal de Sistemas', 'Portal de acesso a sistemas e serviços');
+INSERT INTO sistema (data_cadastro, usuario_cadastro, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'Portal de Sistemas', 'Portal de acesso a sistemas e serviços', currval('empresa_id_seq'));
 INSERT INTO public.oauth2_registered_client (
     id, client_name, url_entrada, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-   'Portal', 'Portal de Sistemas', 'http://localhost:4200/portal', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
+   'Portal-DEV', 'Ambiente de Desenvolvimento', 'http://localhost:4200/portal', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$iJMyj3siGWVf1OARieTkAeynUscGkapD9Giu/PjkEVnKod/0PF.dC', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
    'http://localhost:8080/portal-backend/authorized,http://localhost:8080/portal-backend/login/oauth2/code/portal-oidc', 'http://localhost:8080/portal-backend/logout', 'openid',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -26,6 +28,6 @@ VALUES (
 INSERT INTO perfil_sistema (authority, fk_sistema, descricao)
 VALUES ('ROLE_com.github.andrepenteado.sso.portal_USUARIO', currval('sistema_id_seq'), 'Usuário de Sistemas');
 
-INSERT INTO users (username, password, enabled, data_cadastro, usuario_cadastro, nome) VALUES ('arquiteto', '{bcrypt}$2a$10$kGE18ss4rjWDDbomByVRVejkbVt2rjXpTkW.hLWl1uOav.DTuO0Mu', true, now(), 'Arquiteto do Sistema', 'Arquiteto do Sistema');
+INSERT INTO users (username, password, enabled, data_cadastro, usuario_cadastro, nome, cpf) VALUES ('arquiteto', '{bcrypt}$2a$10$kGE18ss4rjWDDbomByVRVejkbVt2rjXpTkW.hLWl1uOav.DTuO0Mu', true, now(), 'Arquiteto do Sistema', 'Arquiteto do Sistema', 11111111100);
 INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_com.github.andrepenteado.sso.controle_ARQUITETO');
 INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_com.github.andrepenteado.sso.portal_USUARIO');

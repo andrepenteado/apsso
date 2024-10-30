@@ -1,9 +1,9 @@
 package com.github.andrepenteado.sso.core.services.impl;
 
 import br.unesp.fc.andrepenteado.core.common.CoreUtil;
-import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
 import com.github.andrepenteado.sso.core.domain.entities.AmbienteSistema;
 import com.github.andrepenteado.sso.core.domain.repositories.AmbienteSistemaRepository;
+import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,12 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
     private final AmbienteSistemaRepository ambienteSistemaRepository;
 
     @Override
-    public List<AmbienteSistema> listarPorSistema(Long idSistema) {
+    public List<AmbienteSistema> listar() {
+        return ambienteSistemaRepository.findByOrderBySistema();
+    }
+
+    @Override
+    public List<AmbienteSistema> filtrarPorSistema(Long idSistema) {
         return ambienteSistemaRepository.findBySistemaIdOrderById(idSistema);
     }
 

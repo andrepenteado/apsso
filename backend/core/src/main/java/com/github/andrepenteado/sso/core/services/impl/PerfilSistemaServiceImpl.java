@@ -25,7 +25,7 @@ public class PerfilSistemaServiceImpl implements PerfilSistemaService {
     }
 
     @Override
-    public List<PerfilSistema> listarPorSistema(Long idSistema) {
+    public List<PerfilSistema> filtrarPorSistema(Long idSistema) {
         return repository.findBySistemaIdOrderByAuthority(idSistema);
     }
 
