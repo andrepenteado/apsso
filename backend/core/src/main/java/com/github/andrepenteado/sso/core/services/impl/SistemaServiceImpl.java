@@ -39,11 +39,6 @@ public class SistemaServiceImpl implements SistemaService {
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 
-        if (Objects.isNull(sistema.getId()))
-            sistema.setDataCadastro(LocalDateTime.now());
-        else
-            sistema.setDataUltimaAtualizacao(LocalDateTime.now());
-
         return repository.save(sistema);
     }
 

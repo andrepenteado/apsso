@@ -4,8 +4,8 @@ CREATE TABLE empresa (
   data_ultima_atualizacao timestamp,
   usuario_cadastro varchar(50),
   usuario_ultima_atualizacao varchar(50),
-  razao_social text,
-  cnpj bigint,
+  razao_social text not null,
+  cnpj bigint not null,
   telefone varchar(15),
   nome_fantasia text,
   email varchar(50),
@@ -18,21 +18,24 @@ CREATE TABLE empresa (
   estado varchar(2),
   fk_empresa_matriz bigint,
   primary key (id),
-  constraint fk_empresamatriz_empresa foreign key (fk_empresa_matriz) references empresa (id)
+  constraint fk_empresamatriz_empresa foreign key (fk_empresa_matriz) references empresa (id),
+  constraint un_empresa_cnpj unique (cnpj)
 );
 
 CREATE TABLE sistema (
   id bigserial not null,
+  codigo text not null,
   nome text not null,
   descricao text,
   data_cadastro timestamp,
   data_ultima_atualizacao timestamp,
   usuario_cadastro varchar(50),
   usuario_ultima_atualizacao varchar(50),
-  fk_upload UUID NULL,
-  fk_empresa bigint,
+  fk_upload UUID,
+  fk_empresa bigint not null,
   primary key (id),
-  constraint fk_sistema_empresa foreign key (fk_empresa) references empresa (id)
+  constraint fk_sistema_empresa foreign key (fk_empresa) references empresa (id),
+  constraint un_sistema_codigo unique (codigo)
 );
 
 CREATE TABLE perfil_sistema (
@@ -57,8 +60,8 @@ CREATE TABLE oauth2_registered_client (
   scopes varchar(1000) NOT NULL,
   client_settings varchar(2000) NOT NULL,
   token_settings varchar(2000) NOT NULL,
-  url_entrada text NULL,
-  fk_sistema bigint,
+  url_entrada text not null,
+  fk_sistema bigint not null,
   primary key (id),
   constraint fk_oauth2registeredclient_sistema foreign key (fk_sistema) references sistema (id)
 );

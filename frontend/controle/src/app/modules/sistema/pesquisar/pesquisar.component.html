@@ -13,24 +13,28 @@
     <ngx-loading [show]="aguardar" [config]="{ primaryColour: '#dd0031', secondaryColour: '#fff', animationType: ngxLoadingAnimationTypes.doubleBounce }"></ngx-loading>
 
     <div class="card-body custom-datatable table-responsive table-border-radius">
-      <table id="datatable-pesquisar-ambienteSistema" class="table table-styling table-striped align-middle nowrap w-100">
+      <table id="datatable-pesquisar-sistema" class="table table-styling table-striped align-middle nowrap w-100">
         <thead>
         <tr>
           <th scope="col" class="text-center">Ações</th>
-          <th scope="col">Sigla</th>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
+          <th scope="col">Empresa</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let ambienteSistema of this.lista ">
+        <tr *ngFor="let sistema of this.lista ">
           <td class="text-center">
             <div class="btn-group">
-              <button class="btn btn-success btn-sm" (click)="editar(ambienteSistema)"><i class="bi bi-pencil"></i></button>
-              <button class="btn btn-danger btn-sm" (click)="excluir(ambienteSistema)"><i class="bi bi-trash"></i></button>
+              <button class="btn btn-success btn-sm" (click)="editar(sistema)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-danger btn-sm" (click)="excluir(sistema)"><i class="bi bi-trash"></i></button>
             </div>
           </td>
-          <td>{{ ambienteSistema.id }}</td>
-          <td>{{ ambienteSistema.descricao }}</td>
+          <td>{{ sistema.id }}</td>
+          <td>{{ sistema.nome }}</td>
+          <td>{{ sistema.descricao }}</td>
+          <td>{{ sistema.empresa.razaoSocial }}</td>
         </tr>
         </tbody>
       </table>

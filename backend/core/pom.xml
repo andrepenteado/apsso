@@ -43,6 +43,11 @@
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
+        </dependency>
+        <dependency>
             <groupId>br.unesp.fc.andrepenteado.core</groupId>
             <artifactId>upload</artifactId>
             <version>1.0.0</version>

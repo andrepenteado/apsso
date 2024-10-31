@@ -16,9 +16,10 @@ spring:
     open-in-view: false
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         enable_lazy_load_no_trans: true
-        temp:
-          use_jdbc_metadata_defaults: false
+        boot:
+          allow_jdbc_metadata_access: false
 
   security:
     oauth2:
@@ -55,7 +56,7 @@ management:
       probability: 1.0
   zipkin:
     tracing:
-      endpoint: http://cluster.apcode.com.br:9411
+      endpoint: http://sistemas.apcode.com.br:9411
 
 frontend:
   pagina-inicial: https://controle.apcode.com.br

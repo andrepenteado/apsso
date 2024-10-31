@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>Módulo de Controle</name>
-    <description>Módulo de cadastro de usuários e sistemas</description>
+    <description>Módulo de controle de permissões de usuários e sistemas</description>
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>

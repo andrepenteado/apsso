@@ -2,7 +2,7 @@ import { Sistema } from "./sistema";
 
 export class AmbienteSistema {
 
-  id: number;
+  id: string;
   descricao: string;
   urlEntrada: string;
   sistema: Sistema;

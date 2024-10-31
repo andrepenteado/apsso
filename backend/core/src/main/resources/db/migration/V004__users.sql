@@ -8,9 +8,9 @@ create table users(
     data_ultima_atualizacao timestamp,
     usuario_cadastro varchar(50),
     usuario_ultima_atualizacao varchar(50),
-    fk_upload UUID NULL
+    fk_upload UUID NULL,
+    constraint un_users_cpf unique (cpf)
 );
-create unique index un_users_cpf on users (cpf);
 
 create table authorities (
     username text not null,

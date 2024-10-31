@@ -51,6 +51,7 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());
         ambienteSistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(ambienteSistema.getClientSecret()));
+        ambienteSistemaAlterar.setSistema(ambienteSistema.getSistema());
 
         return ambienteSistemaRepository.save(ambienteSistemaAlterar);
     }

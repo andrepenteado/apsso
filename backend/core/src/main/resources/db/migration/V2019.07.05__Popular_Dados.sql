@@ -1,6 +1,6 @@
-INSERT INTO empresa (data_cadastro, usuario_cadastro, razao_social, cnpj, telefone) VALUES (now(), 'Arquiteto do Sistema', 'APcode Tecnologia', 111111111111100, '(11) 11111-1100');
+INSERT INTO empresa (data_cadastro, usuario_cadastro, razao_social, cnpj) VALUES (now(), 'Arquiteto do Sistema', 'APcode Tecnologia', 111111111111100);
 
-INSERT INTO sistema (data_cadastro, usuario_cadastro, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'Módulo de Controle', 'Módulo de cadastro de usuários e sistemas', currval('empresa_id_seq'));
+INSERT INTO sistema (data_cadastro, usuario_cadastro, codigo, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'com.github.andrepenteado.sso.controle', 'Módulo de Controle', 'Módulo de controle de permissões de usuários e sistemas', currval('empresa_id_seq'));
 INSERT INTO public.oauth2_registered_client (
     id, client_name, url_entrada, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
@@ -14,7 +14,7 @@ VALUES (
 INSERT INTO perfil_sistema (authority, fk_sistema, descricao)
 VALUES ('ROLE_com.github.andrepenteado.sso.controle_ARQUITETO', currval('sistema_id_seq'), 'Arquiteto do Sistema');
 
-INSERT INTO sistema (data_cadastro, usuario_cadastro, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'Portal de Sistemas', 'Portal de acesso a sistemas e serviços', currval('empresa_id_seq'));
+INSERT INTO sistema (data_cadastro, usuario_cadastro, codigo, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'com.github.andrepenteado.sso.portal', 'Portal de Sistemas', 'Portal de acesso a sistemas e serviços', currval('empresa_id_seq'));
 INSERT INTO public.oauth2_registered_client (
     id, client_name, url_entrada, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)

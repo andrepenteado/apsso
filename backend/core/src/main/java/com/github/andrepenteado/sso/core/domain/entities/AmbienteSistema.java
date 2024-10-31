@@ -19,6 +19,7 @@ public class AmbienteSistema {
     @NotNull(message = "Descrição do ambiente do sistema é um campo obrigatório")
     private String descricao;
 
+    @NotNull(message = "URL do sistema é um campo obrigatório")
     private String urlEntrada;
 
     @ManyToOne

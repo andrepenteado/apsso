@@ -1,6 +1,7 @@
 package com.github.andrepenteado.sso.controle.resources;
 
 import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
+import com.github.andrepenteado.sso.controle.ControleApplication;
 import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import io.micrometer.observation.annotation.Observed;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,14 +28,14 @@ public class UsuarioResource {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
+    @Secured({ ControleApplication.PERFIL_ARQUITETO })
     public List<Usuario> listar() {
         log.info("Listar usuários");
         return usuarioService.listar();
     }
 
     @GetMapping("/{username}")
-    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
+    @Secured({ ControleApplication.PERFIL_ARQUITETO })
     public Usuario buscar(@PathVariable String username) {
         log.info("Buscar usuário {}", username);
         return usuarioService.buscar(username)
@@ -42,23 +44,25 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
+    @Secured({ ControleApplication.PERFIL_ARQUITETO })
     public Usuario incluir(@RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal UserLogin userLogin) {
         log.info("Incluir novo usuário {}", usuario);
         usuario.setUsuarioCadastro(userLogin.getNome());
+        usuario.setDataCadastro(LocalDateTime.now());
         return usuarioService.incluir(usuario, validacao);
     }
 
     @PutMapping("/{username}")
-    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
+    @Secured({ ControleApplication.PERFIL_ARQUITETO })
     public Usuario alterar(@PathVariable String username, @RequestBody @Valid Usuario usuario, BindingResult validacao, @AuthenticationPrincipal UserLogin userLogin) {
         log.info("Alterar dados do usuário {}", usuario);
         usuario.setUsuarioUltimaAtualizacao(userLogin.getNome());
+        usuario.setDataUltimaAtualizacao(LocalDateTime.now());
         return usuarioService.alterar(usuario, username, validacao);
     }
 
     @DeleteMapping("/{username}")
-    @Secured({"ROLE_com.github.andrepenteado.sso.controle_ARQUITETO"})
+    @Secured({ ControleApplication.PERFIL_ARQUITETO })
     public void excluir(@PathVariable String username) {
         log.info("Excluir usuário {}", username);
         usuarioService.excluir(username);

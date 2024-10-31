@@ -1,3 +1,5 @@
+import { Empresa } from "./empresa";
+
 export class Sistema {
 
   id: string;
@@ -5,10 +7,10 @@ export class Sistema {
   dataUltimaAtualizacao: Date;
   usuarioCadastro: string;
   usuarioUltimaAtualizacao: string;
-  clientId: string;
-  clientSecret: string;
+  codigo: string;
+  nome: string;
   descricao: string;
-  urlEntrada: string;
   icone: string;
+  empresa: Empresa;
 
 }

@@ -1,142 +1,216 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
-    <li class="breadcrumb-item"><a routerLink="/ambienteSistema/pesquisar">Sistemas</a></li>
+    <li class="breadcrumb-item"><a routerLink="/sistema/pesquisar">Sistemas</a></li>
     <li class="breadcrumb-item active">Cadastro</li>
   </ol>
 </nav>
 
 <div class="container">
-  <div class="card border border-primary rounded shadow-lg">
-    <div class="card-header">
-      <nav class="nav nav-pills" id="nav-principal">
-        <button class="nav-link active fw-bold"
-                id="nav-principal-dados-cadastrais"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-conteudo-dados-cadastrais"
-                type="button"
-                role="tab">
-          DADOS CADASTRAIS
-        </button>
-        <button class="nav-link fw-bold {{ this.ambienteSistema == null ? 'disabled' : '' }}"
-                id="nav-principal-perfis"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-conteudo-perfis"
-                type="button"
-                role="tab">
-          PERFIS
-        </button>
-      </nav>
-      <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
-        Incluído por {{ ambienteSistema?.usuarioCadastro }} em {{ ambienteSistema?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
-        <span *ngIf="ambienteSistema?.dataUltimaAtualizacao != null">
-          Alterado por {{ ambienteSistema.usuarioUltimaAtualizacao }} em {{ ambienteSistema.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
-        </span>
-      </p>
-    </div>
-    <div class="card-body">
-      <div class="tab-content" id="nav-conteudo">
-        <div class="tab-pane fade show active"
-             id="nav-conteudo-dados-cadastrais"
-             role="tabpanel"
-             aria-labelledby="nav-conteudo-dados-cadastrais">
-          <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
-            <div class="row mb-3">
-              <div class="form-group col-12 col-md-4">
-                <label>* Sigla</label>
-                <input type="text" name="id" formControlName="id" class="form-control" required>
-                <div class="invalid-feedback">Campo sigla é obrigatório</div>
-              </div>
-              <div class="form-group col-12 col-md-8">
-                <label>* Descrição</label>
-                <input type="text" name="descricao" formControlName="descricao" class="form-control" required>
-                <div class="invalid-feedback">Campo descrição é obrigatório</div>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="form-group col-12">
-                <label>URLs de Entrada</label>
-                <textarea name="urlEntrada" formControlName="urlEntrada" class="form-control" rows="3"></textarea>
-                <div class="form-text fst-italic">Separe por ponto e vírgulas as URLs</div>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="form-group col-12 col-md-6">
-                <label>Client ID</label>
-                <input type="text" name="clientId" formControlName="clientId" class="form-control">
-              </div>
-              <div class="form-group col-12 col-md-6">
-                <label>Client Secret</label>
-                <div class="input-group">
-                  <input type="password" name="clientSecret" formControlName="clientSecret" class="form-control" required>
-                  <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarClientSecret()"><i class="bi bi-unlock"></i></button>
-                  <div class="invalid-feedback">Client Secret é obrigatório</div>
+  <div class="col-12 col-md-8 offset-md-2">
+    <div class="card border border-primary rounded shadow-lg">
+      <div class="card-header">
+        <nav class="nav nav-pills" id="nav-principal">
+          <button class="nav-link active fw-bold"
+                  id="nav-principal-dados-cadastrais"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-dados-cadastrais"
+                  type="button"
+                  role="tab">
+            DADOS CADASTRAIS
+          </button>
+          <button class="nav-link fw-bold {{ this.incluir ? 'disabled' : '' }}"
+                  id="nav-principal-perfis"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-perfis"
+                  type="button"
+                  role="tab">
+            PERFIS
+          </button>
+          <button class="nav-link fw-bold {{ this.incluir ? 'disabled' : '' }}"
+                  id="nav-principal-ambientes"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-ambientes"
+                  type="button"
+                  role="tab">
+            AMBIENTES
+          </button>
+        </nav>
+        <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
+          Incluído por {{ sistema?.usuarioCadastro }} em {{ sistema?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+          <span *ngIf="sistema?.dataUltimaAtualizacao != null">
+            Alterado por {{ sistema.usuarioUltimaAtualizacao }} em {{ sistema.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+          </span>
+        </p>
+      </div>
+      <div class="card-body">
+        <div class="tab-content" id="nav-conteudo">
+          <div class="tab-pane fade show active"
+               id="nav-conteudo-dados-cadastrais"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-dados-cadastrais">
+            <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Código</label>
+                  <input type="text" name="codigo" formControlName="codigo" class="form-control" required>
+                  <div class="form-text fst-italic">Informe um identificador único para o sistema</div>
+                  <div class="invalid-feedback">Código é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>* Empresa</label>
+                  <select [compareWith]="empresaService.compareFn" formControlName="empresa" class="form-select" required>
+                    <option *ngFor="let empresa of listaEmpresas" [ngValue]="empresa">
+                      {{ empresa.razaoSocial }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">Empresa é um campo obrigatório</div>
                 </div>
               </div>
-            </div>
-            <div class="row mb-3 align-items-end">
-              <div class="col-9">
-                <label for="formFile" class="form-label">Ícone</label>
-                <input type="file" class="form-control" (change)="atualizarIcone($event)" accept="image/*" id="formFile"/>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
+                  <label>* Nome</label>
+                  <input type="text" name="nome" formControlName="nome" class="form-control" required>
+                  <div class="invalid-feedback">Nome é um campo obrigatório</div>
+                </div>
               </div>
-              <div class="col-3 text-center">
-                <img src="{{ this.iconeUpload.base64 && this.iconeUpload.base64.length > 0 ? this.iconeUpload.base64 : '/assets/images/sem-imagem.gif' }}" width="60" height="60" class="rounded-circle">
+              <div class="row mb-3">
+                <div class="form-group col-12">
+                  <label>* Descrição</label>
+                  <textarea name="descricao" formControlName="descricao" class="form-control" rows="3" required></textarea>
+                  <div class="invalid-feedback">Descrição é um campo obrigatório</div>
+                </div>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-12 text-center">
-                <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+              <div class="row mb-3 align-items-end">
+                <div class="col-9">
+                  <label for="formFile" class="form-label">Ícone</label>
+                  <input type="file" class="form-control" (change)="atualizarIcone($event)" accept="image/*" id="formFile"/>
+                </div>
+                <div class="col-3 text-center">
+                  <img src="{{ this.iconeUpload.base64 && this.iconeUpload.base64.length > 0 ? this.iconeUpload.base64 : '/assets/images/sem-imagem.gif' }}" width="60" height="60" class="rounded-circle">
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-        <div class="tab-pane fade show"
-             id="nav-conteudo-perfis"
-             role="tabpanel"
-             aria-labelledby="nav-conteudo-perfis">
-          <form [formGroup]="formPerfil" [ngClass]="{'was-validated': !formPerfil.valid && formPerfilEnviado}">
-            <div class="row mb-3">
-              <div class="form-group col-12 col-md-4">
-                <label>* Nome</label>
-                <input type="text" name="nomePerfil" formControlName="authority" class="form-control text-uppercase" required>
-                <div class="invalid-feedback">Campo nome do perfil é obrigatório</div>
+              <div class="row mb-3">
+                <div class="col-12 text-center p-2">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                </div>
               </div>
-              <div class="form-group col-12 col-md-8">
-                <label>* Descrição</label>
-                <input type="text" name="descricaoPerfil" formControlName="descricao" class="form-control" required>
-                <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
+            </form>
+          </div>
+          <div class="tab-pane fade show"
+               id="nav-conteudo-perfis"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-perfis">
+            <form [formGroup]="formPerfil" [ngClass]="{'was-validated': !formPerfil.valid && formPerfilEnviado}">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-4">
+                  <label>* Nome</label>
+                  <input type="text" name="nomePerfil" formControlName="authority" class="form-control text-uppercase" required>
+                  <div class="invalid-feedback">Campo nome do perfil é obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-8">
+                  <label>* Descrição</label>
+                  <input type="text" name="descricaoPerfil" formControlName="descricao" class="form-control" required>
+                  <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
+                </div>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-12 text-center">
-                <button class="btn btn-primary" (click)="gravarPerfil()"><i class="bi bi-floppy"></i> Adicionar</button>
+              <div class="row mb-3">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravarPerfil()"><i class="bi bi-floppy"></i> Adicionar</button>
+                </div>
               </div>
-            </div>
-            <br>
-            <div class="row mb-3">
-              <div class="col-12 col-md-12 table-responsive">
-                <table class="table table-styling table-striped align-middle table-sm table-bordered">
-                  <thead>
-                  <tr>
-                    <th class="fw-bold" scope="col">Nome</th>
-                    <th class="fw-bold" scope="col">Descrição</th>
-                    <th class="fw-bold text-center" scope="col">Excluir?</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let perfil of this.perfis">
-                    <td>{{ perfil.authority }}</td>
-                    <td>{{ perfil.descricao }}</td>
-                    <td class="text-center">
-                      <button class="btn btn-danger btn-sm" (click)="excluirPerfil(perfil)"><i class="bi bi-trash"></i></button>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+              <br>
+              <div class="row mb-3">
+                <div class="col-12 col-md-12 table-responsive">
+                  <table class="table table-styling table-striped align-middle table-sm table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="fw-bold" scope="col">Nome</th>
+                        <th class="fw-bold" scope="col">Descrição</th>
+                        <th class="fw-bold text-center" scope="col">Excluir?</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let perfil of this.perfis">
+                        <td>{{ perfil.authority }}</td>
+                        <td>{{ perfil.descricao }}</td>
+                        <td class="text-center">
+                          <button class="btn btn-danger btn-sm" (click)="excluirPerfil(perfil)"><i class="bi bi-trash"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+          <div class="tab-pane fade show"
+               id="nav-conteudo-ambientes"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-ambientes">
+            <form [formGroup]="formAmbiente" [ngClass]="{'was-validated': !formAmbiente.valid && formAmbienteEnviado}">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Sigla</label>
+                  <input type="text" name="idAmbiente" formControlName="id" class="form-control text-uppercase" required>
+                  <div class="form-text fst-italic">Informe uma sigla única para o sistema, sem espaços</div>
+                  <div class="invalid-feedback">Campo sigla do ambiente é obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>* Descrição</label>
+                  <input type="text" name="descricaoAmbiente" formControlName="descricao" class="form-control" required>
+                  <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
+                  <label>* URL de Entrada</label>
+                  <input type="text" name="urlEntrada" formControlName="urlEntrada" class="form-control" required>
+                  <div class="invalid-feedback">Campo url de entrada do ambiente é obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Login</label>
+                  <input type="text" name="clientId" formControlName="clientId" class="form-control text-uppercase" required>
+                  <div class="invalid-feedback">Campo login do ambiente é obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>* Senha</label>
+                  <input type="text" name="clientSecret" formControlName="clientSecret" class="form-control" required>
+                  <div class="invalid-feedback">Campo senha do ambiente é obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12 text-center p-2">
+                  <button class="btn btn-primary" (click)="gravarAmbiente()"><i class="bi bi-floppy"></i> Adicionar</button>
+                </div>
+              </div>
+              <br>
+              <div class="row mb-3">
+                <div class="col-12 col-md-12 table-responsive">
+                  <table class="table table-styling table-striped align-middle table-sm table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="fw-bold" scope="col">Sigla</th>
+                        <th class="fw-bold" scope="col">Descrição</th>
+                        <th class="fw-bold text-center" scope="col">Excluir?</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ambiente of this.ambientes">
+                        <td>{{ ambiente.id }}</td>
+                        <td>{{ ambiente.descricao }}</td>
+                        <td class="text-center">
+                          <button class="btn btn-danger btn-sm" (click)="excluirAmbiente(ambiente)"><i class="bi bi-trash"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
       </div>
     </div>
   </div>

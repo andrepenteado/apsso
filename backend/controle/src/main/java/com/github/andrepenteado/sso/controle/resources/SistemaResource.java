@@ -1,6 +1,7 @@
 package com.github.andrepenteado.sso.controle.resources;
 
 import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
+import com.github.andrepenteado.sso.core.domain.repositories.SistemaRepository;
 import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
 import com.github.andrepenteado.sso.core.services.PerfilSistemaService;
 import com.github.andrepenteado.sso.core.services.SistemaService;
@@ -36,6 +37,7 @@ public class SistemaResource {
     private final AmbienteSistemaService ambienteSistemaService;
 
     private final PerfilSistemaService perfilSistemaService;
+    private final SistemaRepository sistemaRepository;
 
     @GetMapping
     @Secured({ PERFIL_ARQUITETO }) //@RolesAllowed({"Controle_ARQUITETO"})
@@ -61,8 +63,13 @@ public class SistemaResource {
         if (Objects.isNull(sistema.getId())) {
             sistema.setDataCadastro(LocalDateTime.now());
             sistema.setUsuarioCadastro(userLogin.getNome());
+            sistema.setDataUltimaAtualizacao(null);
+            sistema.setUsuarioUltimaAtualizacao(null);
         }
         else {
+            Sistema sistemaAtual = sistemaService.buscar(sistema.getId()).get();
+            sistema.setDataCadastro(sistemaAtual.getDataCadastro());
+            sistema.setUsuarioCadastro(sistemaAtual.getUsuarioCadastro());
             sistema.setDataUltimaAtualizacao(LocalDateTime.now());
             sistema.setUsuarioUltimaAtualizacao(userLogin.getNome());
         }

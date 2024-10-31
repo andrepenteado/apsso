@@ -33,7 +33,6 @@ public class Empresa {
     @NotNull(message = "CNPJ é um campo obrigatório")
     private Long cnpj;
 
-    @NotNull(message = "Telefone é um campo obrigatório")
     private String telefone;
 
     private String nomeFantasia;

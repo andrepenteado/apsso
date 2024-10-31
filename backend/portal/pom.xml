@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>Portal de Sistemas</name>
-    <description>Portal de acesso aos sistemas</description>
+    <description>Portal de acesso a sistemas e serviços</description>
 
     <parent>
         <groupId>com.github.andrepenteado</groupId>
