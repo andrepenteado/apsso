@@ -18,7 +18,7 @@ export class PerfilSistemaService {
     return this.http.get<PerfilSistema[]>(`${environment.urlBackend}${API_SISTEMAS}/perfis`);
   }
 
-  public listarPorSistema(idSistema: string): Observable<PerfilSistema[]> {
+  public listarPorSistema(idSistema: number): Observable<PerfilSistema[]> {
     return this.http.get<PerfilSistema[]>(`${environment.urlBackend}${API_SISTEMAS}/${idSistema}/perfis`);
   }
 

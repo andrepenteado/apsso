@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -44,10 +45,15 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
 
         AmbienteSistema ambienteSistemaAlterar = novoAmbiente();
 
-        ambienteSistemaAlterar.setId(ambienteSistema.getId());
+        ambienteSistemaAlterar.setId(UUID.randomUUID().toString());
         ambienteSistemaAlterar.setDescricao(ambienteSistema.getDescricao());
-        ambienteSistemaAlterar.setClientId(ambienteSistema.getClientId());
-        ambienteSistemaAlterar.setUrlEntrada(ambienteSistema.getUrlEntrada());
+        ambienteSistemaAlterar.setTipo(ambienteSistema.getTipo());
+        ambienteSistemaAlterar.setClientId(
+            ambienteSistema.getSistema().getCodigo()
+            .concat("_")
+            .concat(ambienteSistema.getClientId())
+        );
+        ambienteSistemaAlterar.setUrlAcesso(ambienteSistema.getUrlAcesso());
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());
         ambienteSistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(ambienteSistema.getClientSecret()));

@@ -15,13 +15,15 @@ import { AmbienteSistema } from "../../../domain/entities/ambiente-sistema";
     </nav>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let ambiente of this.lista">
-        <img *ngIf="ambiente.sistema.icone" class="img-fluid float-right rounded-circle" id="image-{{ ambiente.sistema.icone }}" style="width: 120px; height: 120px;"/>
-        <img *ngIf="!ambiente.sistema.icone" class="img-fluid float-right rounded-circle" src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
+        <img *ngIf="ambiente.sistema.icone" class="img-fluid float-right rounded-circle"
+             id="image-{{ ambiente.sistema.icone }}" style="width: 120px; height: 120px;"/>
+        <img *ngIf="!ambiente.sistema.icone" class="img-fluid float-right rounded-circle"
+             src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
         <div class="caption">
           <h3>{{ ambiente.sistema.nome }}</h3>
           <p class="form-text">{{ ambiente.sistema.descricao }}</p>
         </div>
-        <div *ngFor="let url of ambiente.urlEntrada.split(';')">
+        <div *ngFor="let url of ambiente.urlAcesso.split(';')">
           <a href="javascript:void(0)" (click)="acessar(url)">{{ ambiente.descricao }}</a><br>
         </div>
       </figure>

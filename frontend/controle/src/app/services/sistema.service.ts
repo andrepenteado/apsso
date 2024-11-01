@@ -18,7 +18,7 @@ export class SistemaService {
     return this.http.get<Sistema[]>(`${environment.urlBackend}${API_SISTEMAS}`);
   }
 
-  public buscar(id: string): Observable<Sistema> {
+  public buscar(id: number): Observable<Sistema> {
     return this.http.get<Sistema>(`${environment.urlBackend}${API_SISTEMAS}/${id}`);
   }
 

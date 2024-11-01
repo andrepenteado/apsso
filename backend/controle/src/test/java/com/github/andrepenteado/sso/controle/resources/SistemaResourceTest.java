@@ -31,10 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -112,7 +109,7 @@ public class SistemaResourceTest {
         AmbienteSistema ambienteSistema = new AmbienteSistema();
         ambienteSistema.setId(id);
         ambienteSistema.setDescricao(DESCRICAO_AMBIENTE);
-        ambienteSistema.setUrlEntrada("http://localhost");
+        ambienteSistema.setUrlAcesso("http://localhost");
         ambienteSistema.setClientSecret("password");
         return ambienteSistema;
     }
@@ -294,7 +291,7 @@ public class SistemaResourceTest {
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonAmbiente("Ambiente1000")))
+                .content(getJsonAmbiente(UUID.randomUUID().toString())))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()

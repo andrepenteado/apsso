@@ -11,6 +11,7 @@ import { AmbienteSistema } from "../../../domain/entities/ambiente-sistema";
 import { AmbienteSistemaService } from "../../../services/ambiente-sistema.service";
 import { Empresa } from "../../../domain/entities/empresa";
 import { EmpresaService } from "../../../services/empresa.service";
+import { TipoAmbiente } from "../../../domain/enums/tipo-ambiente";
 
 @Component({
   selector: 'app-cadastro',
@@ -31,6 +32,8 @@ export class CadastroComponent implements OnInit {
   dataCadastro: Date = new Date();
   dataUltimaAtualizacao: Date = new Date();
   iconeUpload: Upload = new Upload();
+  tiposAmbientes = Object.keys(TipoAmbiente);
+  enumTipoAmbiente: { [key: string]: TipoAmbiente } = TipoAmbiente;
 
   // Campos do formulário
   id = new FormControl(null);
@@ -61,17 +64,23 @@ export class CadastroComponent implements OnInit {
 
   idAmbiente = new FormControl(null);
   sistemaAmbiente = new FormControl(null);
+  tipoAmbiente = new FormControl(null, Validators.required);
   descricaoAmbiente = new FormControl(null, Validators.required);
-  urlEntrada = new FormControl(null, Validators.required);
-  clientId = new FormControl(null);
-  clientSecret = new FormControl(null);
+  urlAcesso = new FormControl(null, Validators.required);
+  clientId = new FormControl(null, Validators.required);
+  clientSecret = new FormControl({ value:  Math.floor(Date.now() * Math.random()).toString(36).toUpperCase(), disabled: false });
+  redirectUris = new FormControl(null, Validators.required);
+  postLogoutRedirectUris = new FormControl(null, Validators.required);
   formAmbiente = new FormGroup({
     id: this.idAmbiente,
+    tipo: this.tipoAmbiente,
     sistema: this.sistemaAmbiente,
     descricao: this.descricaoAmbiente,
-    urlEntrada: this.urlEntrada,
+    urlAcesso: this.urlAcesso,
     clientId: this.clientId,
-    clientSecret: this.clientSecret
+    clientSecret: this.clientSecret,
+    redirectUris: this.redirectUris,
+    postLogoutRedirectUris: this.postLogoutRedirectUris
   });
 
   constructor(
@@ -90,7 +99,7 @@ export class CadastroComponent implements OnInit {
       const id: string = params.id;
       if (id) {
         this.incluir = false;
-        this.pesquisar(id);
+        this.pesquisar(Number(id));
       }
     });
   }
@@ -103,7 +112,7 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  pesquisar(id: string): void {
+  pesquisar(id: number): void {
     this.sistemaService.buscar(id).subscribe(sistema => {
       this.sistema = sistema;
       this.dataCadastro = new Date(sistema.dataCadastro);
@@ -220,8 +229,9 @@ export class CadastroComponent implements OnInit {
 
   gravarAmbiente(): void {
     this.formAmbienteEnviado = true;
+    this.formAmbiente.controls.sistema.setValue(this.sistema);
+
     if (this.formAmbiente.valid) {
-      this.formAmbiente.controls.sistema.setValue(this.sistema);
       this.ambienteSistemaService.incluir(this.formAmbiente.value).subscribe({
         next: ambiente => {
           this.ambientes.unshift(ambiente);

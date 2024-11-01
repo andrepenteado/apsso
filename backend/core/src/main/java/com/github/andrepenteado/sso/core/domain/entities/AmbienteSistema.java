@@ -1,5 +1,6 @@
 package com.github.andrepenteado.sso.core.domain.entities;
 
+import com.github.andrepenteado.sso.core.domain.enums.TipoAmbiente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -12,7 +13,6 @@ import lombok.ToString;
 public class AmbienteSistema {
 
     @Id
-    @NotNull(message = "Sigla do ambiente do sistema é um campo obrigatório")
     private String id;
 
     @Column(name = "client_name")
@@ -20,7 +20,11 @@ public class AmbienteSistema {
     private String descricao;
 
     @NotNull(message = "URL do sistema é um campo obrigatório")
-    private String urlEntrada;
+    private String urlAcesso;
+
+    @NotNull(message = "Tipo do ambiente é um campo obrigatório")
+    @Enumerated(EnumType.STRING)
+    private TipoAmbiente tipo;
 
     @ManyToOne
     @JoinColumn(name = "fk_sistema")

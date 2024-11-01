@@ -60,8 +60,9 @@ CREATE TABLE oauth2_registered_client (
   scopes varchar(1000) NOT NULL,
   client_settings varchar(2000) NOT NULL,
   token_settings varchar(2000) NOT NULL,
-  url_entrada text not null,
+  url_acesso text not null,
   fk_sistema bigint not null,
+  tipo varchar(50) not null,
   primary key (id),
   constraint fk_oauth2registeredclient_sistema foreign key (fk_sistema) references sistema (id)
 );

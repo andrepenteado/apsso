@@ -150,35 +150,54 @@
                aria-labelledby="nav-conteudo-ambientes">
             <form [formGroup]="formAmbiente" [ngClass]="{'was-validated': !formAmbiente.valid && formAmbienteEnviado}">
               <div class="row mb-3">
-                <div class="form-group col-12 col-md-6">
-                  <label>* Sigla</label>
-                  <input type="text" name="idAmbiente" formControlName="id" class="form-control text-uppercase" required>
-                  <div class="form-text fst-italic">Informe uma sigla única para o sistema, sem espaços</div>
-                  <div class="invalid-feedback">Campo sigla do ambiente é obrigatório</div>
+                <div class="form-group col-12 col-md-12">
+                  <label>* Tipo de Ambiente</label>
+                  <div class="m-t-15 m-checkbox-inline mb-0 custom-radio-ml ml-2">
+                    <div class="form-check form-check-inline" *ngFor="let t of tiposAmbientes; let ultimo = last">
+                      <input type="radio" class="form-check-input" id="tipo_{{ t }}" name="tipo" formControlName="tipo" [value]="t" required/>
+                      <label for="tipo_{{ t }}" class="mb-0">{{ enumTipoAmbiente[t] }}</label>
+                      <span *ngIf="ultimo" class="invalid-feedback">Tipo de ambiente é um campo obrigatório</span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="row mb-3">
                 <div class="form-group col-12 col-md-6">
                   <label>* Descrição</label>
                   <input type="text" name="descricaoAmbiente" formControlName="descricao" class="form-control" required>
                   <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <div class="form-group col-12 col-md-12">
-                  <label>* URL de Entrada</label>
-                  <input type="text" name="urlEntrada" formControlName="urlEntrada" class="form-control" required>
+                <div class="form-group col-12 col-md-6">
+                  <label>* URL de Acesso (frontend)</label>
+                  <input type="text" name="urlAcesso" formControlName="urlAcesso" class="form-control" required>
                   <div class="invalid-feedback">Campo url de entrada do ambiente é obrigatório</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="form-group col-12 col-md-6">
-                  <label>* Login</label>
-                  <input type="text" name="clientId" formControlName="clientId" class="form-control text-uppercase" required>
-                  <div class="invalid-feedback">Campo login do ambiente é obrigatório</div>
+                  <label>* Redirect URIs</label>
+                  <input type="text" name="redirectUris" formControlName="redirectUris" class="form-control" required>
+                  <div class="invalid-feedback">Campo redirect uris é obrigatório</div>
                 </div>
                 <div class="form-group col-12 col-md-6">
-                  <label>* Senha</label>
-                  <input type="text" name="clientSecret" formControlName="clientSecret" class="form-control" required>
-                  <div class="invalid-feedback">Campo senha do ambiente é obrigatório</div>
+                  <label>* Logout URIs</label>
+                  <input type="text" name="postLogoutRedirectUris" formControlName="postLogoutRedirectUris" class="form-control" required>
+                  <div class="invalid-feedback">Campo URI de logout é obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Client ID</label>
+                  <div class="input-group">
+                    <span class="input-group-text">{{ sistema.codigo }}_</span>
+                    <input type="text" class="form-control" id="clientId" formControlName="clientId" required>
+                    <div class="invalid-feedback">Campo client id é obrigatório</div>
+                  </div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>Client Secret</label>
+                  <input type="text" class="form-control" name="clientSecret" formControlName="clientSecret" readonly>
+                  <div class="form-text fst-italic">Copie esse valor antes de gravar. Após gravar não será possível recuperá-lo</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -192,15 +211,21 @@
                   <table class="table table-styling table-striped align-middle table-sm table-bordered">
                     <thead>
                       <tr>
-                        <th class="fw-bold" scope="col">Sigla</th>
+                        <th class="fw-bold" scope="col">Configurações OAuth2</th>
                         <th class="fw-bold" scope="col">Descrição</th>
+                        <th class="fw-bold" scope="col">Tipo</th>
                         <th class="fw-bold text-center" scope="col">Excluir?</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let ambiente of this.ambientes">
-                        <td>{{ ambiente.id }}</td>
+                        <td>
+                          CLIENTID: {{ ambiente.clientId }}<br><br>
+                          REDIRECTURIs: {{ ambiente.redirectUris }}<br><br>
+                          LOGOUTURIs: {{ ambiente.postLogoutRedirectUris }}
+                        </td>
                         <td>{{ ambiente.descricao }}</td>
+                        <td>{{ ambiente.tipo }}</td>
                         <td class="text-center">
                           <button class="btn btn-danger btn-sm" (click)="excluirAmbiente(ambiente)"><i class="bi bi-trash"></i></button>
                         </td>

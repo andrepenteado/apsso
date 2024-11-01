@@ -14,7 +14,7 @@ export class AmbienteSistemaService {
       private http: HttpClient
   ) { }
 
-  public listarPorSistema(idSistema: string): Observable<AmbienteSistema[]> {
+  public listarPorSistema(idSistema: number): Observable<AmbienteSistema[]> {
     return this.http.get<AmbienteSistema[]>(`${environment.urlBackend}${API_SISTEMAS}/${idSistema}/ambientes`);
   }
 

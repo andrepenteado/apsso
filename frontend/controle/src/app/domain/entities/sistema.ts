@@ -2,7 +2,7 @@ import { Empresa } from "./empresa";
 
 export class Sistema {
 
-  id: string;
+  id: number;
   dataCadastro: Date;
   dataUltimaAtualizacao: Date;
   usuarioCadastro: string;
