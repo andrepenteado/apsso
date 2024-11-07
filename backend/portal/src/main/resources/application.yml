@@ -21,23 +21,6 @@ spring:
         boot:
           allow_jdbc_metadata_access: false
 
-  security:
-    oauth2:
-      client:
-        registration:
-          portal-oidc:
-            provider: portal-de-sistemas
-            client-name: Portal de Sistemas
-            client-id: com.github.andrepenteado.sso.portal
-            client-secret: portal-secret
-            authorization-grant-type: authorization_code
-            scope: openid
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            client-authentication-method: client_secret_basic
-        provider:
-          portal-de-sistemas:
-            issuer-uri: https://login.apcode.com.br
-
 server:
   forward-headers-strategy: framework
   port: 8080

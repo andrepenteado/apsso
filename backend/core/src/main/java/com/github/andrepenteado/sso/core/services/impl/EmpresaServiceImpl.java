@@ -20,4 +20,9 @@ public class EmpresaServiceImpl implements EmpresaService {
         return repository.findAll(Sort.by("razaoSocial"));
     }
 
+    @Override
+    public Empresa buscarPorUrlSso(String urlSso) {
+        return repository.findByUrlSso(urlSso);
+    }
+
 }

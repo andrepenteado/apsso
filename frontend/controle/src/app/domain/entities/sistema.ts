@@ -7,7 +7,7 @@ export class Sistema {
   dataUltimaAtualizacao: Date;
   usuarioCadastro: string;
   usuarioUltimaAtualizacao: string;
-  codigo: string;
+  identificador: string;
   nome: string;
   descricao: string;
   icone: string;

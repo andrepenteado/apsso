@@ -46,7 +46,7 @@ management:
       probability: 1.0
   zipkin:
     tracing:
-      endpoint: http://cluster.apcode.com.br:9411
+      endpoint: http://sistemas.apcode.com.br:9411
 
 # keytool.exe -genkeypair -alias apsso -keyalg RSA -keypass passwebra -keystore apsso.jks -storepass passwebra
 apsso:

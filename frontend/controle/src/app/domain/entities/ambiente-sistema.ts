@@ -5,7 +5,7 @@ export class AmbienteSistema {
 
   id: string;
   descricao: string;
-  urlEntrada: string;
+  urlAcesso: string;
   tipo: TipoAmbiente;
   sistema: Sistema;
   clientId: string;

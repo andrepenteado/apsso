@@ -16,7 +16,9 @@ CREATE TABLE empresa (
   bairro text,
   cidade text,
   estado varchar(2),
+  url_sso varchar(100),
   fk_empresa_matriz bigint,
+  fk_upload UUID,
   primary key (id),
   constraint fk_empresamatriz_empresa foreign key (fk_empresa_matriz) references empresa (id),
   constraint un_empresa_cnpj unique (cnpj)
@@ -24,7 +26,7 @@ CREATE TABLE empresa (
 
 CREATE TABLE sistema (
   id bigserial not null,
-  codigo text not null,
+  identificador text not null,
   nome text not null,
   descricao text,
   data_cadastro timestamp,
@@ -35,7 +37,7 @@ CREATE TABLE sistema (
   fk_empresa bigint not null,
   primary key (id),
   constraint fk_sistema_empresa foreign key (fk_empresa) references empresa (id),
-  constraint un_sistema_codigo unique (codigo)
+  constraint un_sistema_identificador unique (identificador)
 );
 
 CREATE TABLE perfil_sistema (

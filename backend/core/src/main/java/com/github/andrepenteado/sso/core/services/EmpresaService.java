@@ -8,4 +8,6 @@ public interface EmpresaService {
 
     List<Empresa> listar();
 
+    Empresa buscarPorUrlSso(String urlSso);
+
 }

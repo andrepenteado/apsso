@@ -6,6 +6,8 @@ export enum TipoAmbiente {
 
   TESTE = "Teste",
 
-  DESENVOLVIMENTO = "Desenvolvimento"
+  DESENVOLVIMENTO = "Desenvolvimento",
+
+  LOCAL = "Local"
 
 }

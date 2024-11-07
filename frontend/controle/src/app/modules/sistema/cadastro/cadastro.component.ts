@@ -37,14 +37,14 @@ export class CadastroComponent implements OnInit {
 
   // Campos do formulário
   id = new FormControl(null);
-  codigo = new FormControl(null, Validators.required);
+  identificador = new FormControl(null, Validators.required);
   nome = new FormControl(null, Validators.required);
   descricao = new FormControl(null);
   icone = new FormControl(null);
   empresa = new FormControl(null, Validators.required);
   form = new FormGroup({
     id: this.id,
-    codigo: this.codigo,
+    identificador: this.identificador,
     nome: this.nome,
     descricao: this.descricao,
     icone: this.icone,
@@ -117,6 +117,7 @@ export class CadastroComponent implements OnInit {
       this.sistema = sistema;
       this.dataCadastro = new Date(sistema.dataCadastro);
       this.dataUltimaAtualizacao = new Date(sistema.dataUltimaAtualizacao);
+      this.clientId.setValue(sistema.identificador);
       this.form.patchValue(sistema);
       this.form.get("empresa").setValue(this.sistema.empresa);
       if (sistema.icone) {
@@ -191,7 +192,7 @@ export class CadastroComponent implements OnInit {
   gravarPerfil(): void {
     this.formPerfilEnviado = true;
     if (this.formPerfil.valid) {
-      this.formPerfil.controls.authority.setValue('ROLE_' + this.sistema.codigo + '_' + this.formPerfil.controls.authority.value.toUpperCase());
+      this.formPerfil.controls.authority.setValue('ROLE_' + this.sistema.identificador + '_' + this.formPerfil.controls.authority.value.toUpperCase());
       this.formPerfil.controls.sistema.setValue(this.sistema);
       this.perfilSistemaService.incluir(this.formPerfil.value).subscribe({
         next: perfil => {

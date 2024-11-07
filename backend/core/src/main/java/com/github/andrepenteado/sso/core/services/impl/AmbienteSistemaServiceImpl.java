@@ -45,14 +45,13 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
 
         AmbienteSistema ambienteSistemaAlterar = novoAmbiente();
 
-        ambienteSistemaAlterar.setId(UUID.randomUUID().toString());
+        ambienteSistemaAlterar.setId(
+            ambienteSistema.getSistema().getIdentificador()
+            .concat("_")
+            .concat(ambienteSistema.getTipo().toString()));
         ambienteSistemaAlterar.setDescricao(ambienteSistema.getDescricao());
         ambienteSistemaAlterar.setTipo(ambienteSistema.getTipo());
-        ambienteSistemaAlterar.setClientId(
-            ambienteSistema.getSistema().getCodigo()
-            .concat("_")
-            .concat(ambienteSistema.getClientId())
-        );
+        ambienteSistemaAlterar.setClientId(ambienteSistema.getSistema().getIdentificador());
         ambienteSistemaAlterar.setUrlAcesso(ambienteSistema.getUrlAcesso());
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());

@@ -8,6 +8,8 @@ public enum TipoAmbiente {
 
     TESTE,
 
-    DESENVOLVIMENTO
+    DESENVOLVIMENTO,
+
+    LOCAL
 
 }

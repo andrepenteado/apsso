@@ -5,8 +5,7 @@ param(
 
 switch($exec) {
     "build-all" {
-        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\andrepenteado\ownCloud\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         cd ./frontend/controle/ && ng build --configuration=production --output-path=dist/production && cd ../..
         cd ./frontend/portal/ && ng build --configuration=production --output-path=dist/production && cd ../..
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
@@ -38,8 +37,7 @@ switch($exec) {
         $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
         mvn -U -f ./backend/pom.xml clean package --projects services,login
         docker build -f .docker/dockerfiles/login -t ghcr.io/andrepenteado/apsso/login -t ghcr.io/andrepenteado/apsso/login:$VERSAO .
-        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\andrepenteado\ownCloud\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
         docker logout ghcr.io
@@ -50,8 +48,7 @@ switch($exec) {
         mvn -U -f ./backend/pom.xml clean package --projects services,controle -DskipTests
         docker build -f .docker/dockerfiles/backend.controle -t ghcr.io/andrepenteado/apsso/controle-backend -t ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO .
         docker build -f .docker/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
-        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\andrepenteado\ownCloud\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/controle-backend
         docker push ghcr.io/andrepenteado/apsso/controle-backend:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/controle-frontend
@@ -67,8 +64,7 @@ switch($exec) {
         mvn -U -f ./backend/pom.xml clean package --projects services,portal -DskipTests
         docker build -f .docker/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
         docker build -f .docker/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
-        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\andrepenteado\ownCloud\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker push ghcr.io/andrepenteado/apsso/portal-backend
         docker push ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/portal-frontend
@@ -89,8 +85,7 @@ switch($exec) {
     }
     "update" {
         docker compose -f .ansible/files/docker-compose.yml down
-        Get-Content 'Z:\Nuvem\Documentos\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
-        Get-Content 'C:\Users\André Penteado\Documents\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        Get-Content 'C:\Users\andrepenteado\ownCloud\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
         docker image pull postgres:16
         docker image pull ghcr.io/andrepenteado/apsso/login
         docker image pull ghcr.io/andrepenteado/apsso/controle-backend

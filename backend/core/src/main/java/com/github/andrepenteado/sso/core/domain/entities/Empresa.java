@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -53,9 +54,14 @@ public class Empresa {
 
     private String estado;
 
+    private String urlSso;
+
     @ManyToOne
     @JoinColumn(name = "fk_empresa_matriz")
     private Empresa matriz;
+
+    @Column(name = "fk_upload")
+    private UUID logotipo;
 
     @Override
     public boolean equals(Object o) {

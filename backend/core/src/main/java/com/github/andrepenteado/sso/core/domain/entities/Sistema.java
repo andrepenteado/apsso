@@ -28,8 +28,8 @@ public class Sistema {
 
     private String usuarioUltimaAtualizacao;
 
-    @NotNull(message = "Código do sistema é um campo obrigatório")
-    private String codigo;
+    @NotNull(message = "Identificador do sistema é um campo obrigatório")
+    private String identificador;
 
     @NotNull(message = "Nome do sistema é um campo obrigatório")
     private String nome;

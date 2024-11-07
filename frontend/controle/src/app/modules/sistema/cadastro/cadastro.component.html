@@ -52,10 +52,10 @@
             <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
               <div class="row mb-3">
                 <div class="form-group col-12 col-md-6">
-                  <label>* Código</label>
-                  <input type="text" name="codigo" formControlName="codigo" class="form-control" required>
+                  <label>* Identificador</label>
+                  <input type="text" name="identificador" formControlName="identificador" class="form-control" required>
                   <div class="form-text fst-italic">Informe um identificador único para o sistema</div>
-                  <div class="invalid-feedback">Código é um campo obrigatório</div>
+                  <div class="invalid-feedback">Identificador é um campo obrigatório</div>
                 </div>
                 <div class="form-group col-12 col-md-6">
                   <label>* Empresa</label>
@@ -187,11 +187,9 @@
               </div>
               <div class="row mb-3">
                 <div class="form-group col-12 col-md-6">
-                  <label>* Client ID</label>
+                  <label>Client ID</label>
                   <div class="input-group">
-                    <span class="input-group-text">{{ sistema.codigo }}_</span>
-                    <input type="text" class="form-control" id="clientId" formControlName="clientId" required>
-                    <div class="invalid-feedback">Campo client id é obrigatório</div>
+                    <input type="text" class="form-control" id="clientId" formControlName="clientId" readonly>
                   </div>
                 </div>
                 <div class="form-group col-12 col-md-6">
@@ -211,7 +209,7 @@
                   <table class="table table-styling table-striped align-middle table-sm table-bordered">
                     <thead>
                       <tr>
-                        <th class="fw-bold" scope="col">Configurações OAuth2</th>
+                        <th class="fw-bold" scope="col">URLs</th>
                         <th class="fw-bold" scope="col">Descrição</th>
                         <th class="fw-bold" scope="col">Tipo</th>
                         <th class="fw-bold text-center" scope="col">Excluir?</th>
@@ -220,9 +218,9 @@
                     <tbody>
                       <tr *ngFor="let ambiente of this.ambientes">
                         <td>
-                          CLIENTID: {{ ambiente.clientId }}<br><br>
-                          REDIRECTURIs: {{ ambiente.redirectUris }}<br><br>
-                          LOGOUTURIs: {{ ambiente.postLogoutRedirectUris }}
+                          REDIRECT: {{ ambiente.redirectUris }}<br><br>
+                          LOGOUT: {{ ambiente.postLogoutRedirectUris }}<br><br>
+                          ENTRADA: {{ ambiente.urlAcesso }}
                         </td>
                         <td>{{ ambiente.descricao }}</td>
                         <td>{{ ambiente.tipo }}</td>
