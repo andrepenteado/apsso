@@ -26,7 +26,7 @@ spring:
       client:
         registration:
           "[com.github.andrepenteado.sso.portal]":
-            provider: portal-de-sistemas
+            provider: com.github.andrepenteado.sso.portal
             client-name: Portal de Sistemas
             client-id: com.github.andrepenteado.sso.portal
             client-secret: portal-secret
@@ -35,7 +35,7 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-authentication-method: client_secret_basic
         provider:
-          portal-de-sistemas:
+          "[com.github.andrepenteado.sso.portal]":
             issuer-uri: https://login.apcode.com.br
 
 server:

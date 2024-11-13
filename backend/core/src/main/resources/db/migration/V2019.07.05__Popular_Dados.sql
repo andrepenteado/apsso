@@ -5,7 +5,7 @@ INSERT INTO public.oauth2_registered_client (
     id, client_name, url_acesso, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-   'com.github.andrepenteado.sso.controle_LOCAL', 'Máquina Local', 'http://localhost:4200/controle', 'LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
+   gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/controle', 'LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$xG.KPzsgZddwndKL9AQWquv1FdQW232DWRcC2GSLtr34aUaEEUOOa', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
    'http://localhost:8080/controle-backend/authorized,http://localhost:8080/controle-backend/login/oauth2/code/com.github.andrepenteado.sso.controle', 'http://localhost:8080/controle-backend/logout', 'openid',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -19,7 +19,7 @@ INSERT INTO public.oauth2_registered_client (
     id, client_name, url_acesso, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-   'com.github.andrepenteado.sso.portal_LOCAL', 'Máquina Local', 'http://localhost:4200/portal', 'LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
+   gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/portal', 'LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
    '{bcrypt}$2a$10$iJMyj3siGWVf1OARieTkAeynUscGkapD9Giu/PjkEVnKod/0PF.dC', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
    'http://localhost:8080/portal-backend/authorized,http://localhost:8080/portal-backend/login/oauth2/code/com.github.andrepenteado.sso.portal', 'http://localhost:8080/portal-backend/logout', 'openid',
    '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',

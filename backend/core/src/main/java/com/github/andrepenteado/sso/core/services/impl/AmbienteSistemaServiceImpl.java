@@ -5,6 +5,8 @@ import com.github.andrepenteado.sso.core.domain.entities.AmbienteSistema;
 import com.github.andrepenteado.sso.core.domain.repositories.AmbienteSistemaRepository;
 import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,13 +49,14 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
 
         AmbienteSistema ambienteSistemaAlterar = novoAmbiente();
 
-        ambienteSistemaAlterar.setId(ambienteSistema.getSistema().getIdentificador());
+        ambienteSistemaAlterar.setId(UUID.randomUUID().toString());
         ambienteSistemaAlterar.setDescricao(ambienteSistema.getDescricao());
         ambienteSistemaAlterar.setTipo(ambienteSistema.getTipo());
         ambienteSistemaAlterar.setClientId(ambienteSistema.getSistema().getIdentificador());
         ambienteSistemaAlterar.setUrlAcesso(ambienteSistema.getUrlAcesso());
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());
+        ambienteSistemaAlterar.setUriProvider(ambienteSistema.getUriProvider());
         ambienteSistemaAlterar.setSistema(ambienteSistema.getSistema());
 
         String novaSenha = UUID.randomUUID().toString();

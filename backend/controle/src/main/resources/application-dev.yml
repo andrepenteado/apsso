@@ -6,7 +6,7 @@ spring:
     oauth2:
       client:
         provider:
-          portal-de-sistemas:
+          "[com.github.andrepenteado.sso.portal]":
             issuer-uri: http://localhost:30000
 
 management:

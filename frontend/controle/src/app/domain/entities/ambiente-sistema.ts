@@ -11,6 +11,7 @@ export class AmbienteSistema {
   clientId: string;
   clientSecret: string;
   clientSecretPlain: string;
+  uriProvider: string;
   redirectUris: string;
   postLogoutRedirectUris: string;
 

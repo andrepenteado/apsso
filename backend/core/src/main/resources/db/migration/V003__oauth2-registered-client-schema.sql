@@ -63,6 +63,7 @@ CREATE TABLE oauth2_registered_client (
   client_settings varchar(2000) NOT NULL,
   token_settings varchar(2000) NOT NULL,
   url_acesso text not null,
+  uri_provider text,
   fk_sistema bigint not null,
   tipo varchar(50) not null,
   primary key (id),

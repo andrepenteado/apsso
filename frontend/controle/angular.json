@@ -44,7 +44,8 @@
               "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
               "node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.css",
               "node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.css",
-              "node_modules/datatables.net-colreorder-bs5/css/colReorder.bootstrap5.css"
+              "node_modules/datatables.net-colreorder-bs5/css/colReorder.bootstrap5.css",
+              "node_modules/prismjs/themes/prism.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -65,7 +66,8 @@
               "node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.js",
               "node_modules/datatables.net-colreorder/js/dataTables.colReorder.js",
               "node_modules/datatables.net-colreorder-dt/js/colReorder.dataTables.js",
-              "node_modules/datatables.net-colreorder-bs5/js/colReorder.bootstrap5.js"
+              "node_modules/datatables.net-colreorder-bs5/js/colReorder.bootstrap5.js",
+              "node_modules/prismjs/prism.js"
             ]
           },
           "configurations": {
