@@ -10,6 +10,7 @@ export class AmbienteSistema {
   sistema: Sistema;
   clientId: string;
   clientSecret: string;
+  clientSecretPlain: string;
   redirectUris: string;
   postLogoutRedirectUris: string;
 

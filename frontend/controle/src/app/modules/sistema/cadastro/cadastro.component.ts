@@ -67,8 +67,6 @@ export class CadastroComponent implements OnInit {
   tipoAmbiente = new FormControl(null, Validators.required);
   descricaoAmbiente = new FormControl(null, Validators.required);
   urlAcesso = new FormControl(null, Validators.required);
-  clientId = new FormControl(null, Validators.required);
-  clientSecret = new FormControl({ value:  Math.floor(Date.now() * Math.random()).toString(36).toUpperCase(), disabled: false });
   redirectUris = new FormControl(null, Validators.required);
   postLogoutRedirectUris = new FormControl(null, Validators.required);
   formAmbiente = new FormGroup({
@@ -77,8 +75,6 @@ export class CadastroComponent implements OnInit {
     sistema: this.sistemaAmbiente,
     descricao: this.descricaoAmbiente,
     urlAcesso: this.urlAcesso,
-    clientId: this.clientId,
-    clientSecret: this.clientSecret,
     redirectUris: this.redirectUris,
     postLogoutRedirectUris: this.postLogoutRedirectUris
   });
@@ -117,7 +113,6 @@ export class CadastroComponent implements OnInit {
       this.sistema = sistema;
       this.dataCadastro = new Date(sistema.dataCadastro);
       this.dataUltimaAtualizacao = new Date(sistema.dataUltimaAtualizacao);
-      this.clientId.setValue(sistema.identificador);
       this.form.patchValue(sistema);
       this.form.get("empresa").setValue(this.sistema.empresa);
       if (sistema.icone) {
@@ -238,9 +233,11 @@ export class CadastroComponent implements OnInit {
           this.ambientes.unshift(ambiente);
           this.formAmbiente.reset();
           this.formAmbienteEnviado = false;
-          this.exibirMensagem.showMessage(
+          this.exibirMensagem.showAlert(
+            `Anote a senha a seguir porque após fechar
+            essa janela não é mais possível recupera-lá:
+            ${ambiente.clientSecretPlain}`,
             "Ambiente de sistema incluído com sucesso",
-            "Gravar ambiente",
             DecoracaoMensagem.SUCESSO
           );
         }

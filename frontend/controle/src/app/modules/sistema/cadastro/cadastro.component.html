@@ -162,40 +162,31 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <div class="form-group col-12 col-md-6">
+                <div class="form-group col-12 col-md-12">
                   <label>* Descrição</label>
                   <input type="text" name="descricaoAmbiente" formControlName="descricao" class="form-control" required>
-                  <div class="invalid-feedback">Campo descrição do perfil é obrigatório</div>
-                </div>
-                <div class="form-group col-12 col-md-6">
-                  <label>* URL de Acesso (frontend)</label>
-                  <input type="text" name="urlAcesso" formControlName="urlAcesso" class="form-control" required>
-                  <div class="invalid-feedback">Campo url de entrada do ambiente é obrigatório</div>
+                  <div class="invalid-feedback">Campo descrição do ambiente é obrigatório</div>
                 </div>
               </div>
               <div class="row mb-3">
-                <div class="form-group col-12 col-md-6">
+                <div class="form-group col-12 col-md-12">
+                  <label>* URL de Acesso (frontend)</label>
+                  <input type="text" name="urlAcesso" formControlName="urlAcesso" class="form-control" required>
+                  <div class="invalid-feedback">Campo url de entrada do frontend é obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
                   <label>* Redirect URIs</label>
                   <input type="text" name="redirectUris" formControlName="redirectUris" class="form-control" required>
                   <div class="invalid-feedback">Campo redirect uris é obrigatório</div>
                 </div>
-                <div class="form-group col-12 col-md-6">
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
                   <label>* Logout URIs</label>
                   <input type="text" name="postLogoutRedirectUris" formControlName="postLogoutRedirectUris" class="form-control" required>
                   <div class="invalid-feedback">Campo URI de logout é obrigatório</div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="form-group col-12 col-md-6">
-                  <label>Client ID</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="clientId" formControlName="clientId" readonly>
-                  </div>
-                </div>
-                <div class="form-group col-12 col-md-6">
-                  <label>Client Secret</label>
-                  <input type="text" class="form-control" name="clientSecret" formControlName="clientSecret" readonly>
-                  <div class="form-text fst-italic">Copie esse valor antes de gravar. Após gravar não será possível recuperá-lo</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -218,6 +209,7 @@
                     <tbody>
                       <tr *ngFor="let ambiente of this.ambientes">
                         <td>
+                          CLIENT ID: {{ ambiente.clientId }}<br><br>
                           REDIRECT: {{ ambiente.redirectUris }}<br><br>
                           LOGOUT: {{ ambiente.postLogoutRedirectUris }}<br><br>
                           ENTRADA: {{ ambiente.urlAcesso }}

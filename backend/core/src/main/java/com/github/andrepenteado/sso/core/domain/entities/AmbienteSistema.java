@@ -35,6 +35,9 @@ public class AmbienteSistema {
 
     private String clientSecret;
 
+    @Transient
+    private String clientSecretPlain;
+
     private String redirectUris;
 
     private String postLogoutRedirectUris;

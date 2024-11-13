@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor
@@ -45,20 +47,22 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
 
         AmbienteSistema ambienteSistemaAlterar = novoAmbiente();
 
-        ambienteSistemaAlterar.setId(
-            ambienteSistema.getSistema().getIdentificador()
-            .concat("_")
-            .concat(ambienteSistema.getTipo().toString()));
+        ambienteSistemaAlterar.setId(ambienteSistema.getSistema().getIdentificador());
         ambienteSistemaAlterar.setDescricao(ambienteSistema.getDescricao());
         ambienteSistemaAlterar.setTipo(ambienteSistema.getTipo());
         ambienteSistemaAlterar.setClientId(ambienteSistema.getSistema().getIdentificador());
         ambienteSistemaAlterar.setUrlAcesso(ambienteSistema.getUrlAcesso());
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());
-        ambienteSistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(ambienteSistema.getClientSecret()));
         ambienteSistemaAlterar.setSistema(ambienteSistema.getSistema());
 
-        return ambienteSistemaRepository.save(ambienteSistemaAlterar);
+        String novaSenha = UUID.randomUUID().toString();
+        ambienteSistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(novaSenha));
+
+        AmbienteSistema result = ambienteSistemaRepository.save(ambienteSistemaAlterar);
+        result.setClientSecretPlain(novaSenha);
+
+        return result;
     }
 
     private AmbienteSistema novoAmbiente() {

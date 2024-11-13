@@ -2,6 +2,13 @@ spring:
   datasource:
     url: jdbc:postgresql://dbserver/apsso-dbname
 
+  security:
+    oauth2:
+      client:
+        provider:
+          portal-de-sistemas:
+            issuer-uri: http://localhost:30000
+
 management:
   tracing:
     enabled: false
