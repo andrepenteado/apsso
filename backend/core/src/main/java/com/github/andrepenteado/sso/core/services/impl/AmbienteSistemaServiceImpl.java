@@ -26,6 +26,9 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
 
     private final AmbienteSistemaRepository ambienteSistemaRepository;
 
+    @Value("${spring.security.oauth2.client.provider.[com.github.andrepenteado.sso.portal].issuer-uri:http://localhost:30000}")
+    private String issuerUri;
+
     @Override
     public List<AmbienteSistema> listar() {
         return ambienteSistemaRepository.findByOrderBySistema();
@@ -56,7 +59,7 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
         ambienteSistemaAlterar.setUrlAcesso(ambienteSistema.getUrlAcesso());
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());
-        ambienteSistemaAlterar.setUriProvider(ambienteSistema.getUriProvider());
+        ambienteSistemaAlterar.setUriProvider(this.issuerUri);
         ambienteSistemaAlterar.setSistema(ambienteSistema.getSistema());
 
         String novaSenha = UUID.randomUUID().toString();

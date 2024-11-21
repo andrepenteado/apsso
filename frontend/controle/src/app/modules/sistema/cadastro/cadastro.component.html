@@ -191,8 +191,34 @@
                 </div>
               </div>
               <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
+                  <label>Configuração spring-boot</label>
+                  <textarea class="form-control" readonly style="white-space: pre-wrap; font-family: monospace;" rows="18">
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          "[{{ sistema.identificador }}]":
+            provider: com.github.andrepenteado.sso.portal
+            client-name: {{ sistema.nome }}
+            client-id: {{ ambienteAtual.clientId }}
+            client-secret: *************
+            authorization-grant-type: authorization_code
+            scope: openid
+            redirect-uri: "&#123;baseUrl&#125;/login/oauth2/code/&#123;registrationId&#125;"
+            client-authentication-method: client_secret_basic
+        provider:
+          "[com.github.andrepenteado.sso.portal]":
+            issuer-uri: {{ ambienteAtual.uriProvider }}}
+                  </textarea>
+                  <div class="form-text fst-italic">Usando a dependência spring-boot-starter-oauth2-client</div>
+                </div>
+              </div>
+              <div class="row mb-3">
                 <div class="col-12 text-center p-2">
-                  <button class="btn btn-primary" (click)="gravarAmbiente()"><i class="bi bi-floppy"></i> Adicionar</button>
+                  <button class="btn btn-primary mx-2" (click)="gravarAmbiente()"><i class="bi bi-floppy"></i> Adicionar</button>
+                  <button class="btn btn-light mx-2" type="reset"><i class="bi bi-eraser"></i> Limpar</button>
                 </div>
               </div>
               <br>
@@ -201,46 +227,21 @@
                   <table class="table table-styling table-striped align-middle table-sm table-bordered">
                     <thead>
                       <tr>
-                        <th class="fw-bold text-center" scope="col">Excluir?</th>
-                        <th class="fw-bold" scope="col">Spring Boot</th>
-                        <th class="fw-bold" scope="col">Dados</th>
+                        <th class="fw-bold text-center" scope="col">Ações</th>
+                        <th class="fw-bold" scope="col">Descrição</th>
+                        <th class="fw-bold" scope="col">Tipo</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let ambiente of this.ambientes">
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm" (click)="excluirAmbiente(ambiente)"><i class="bi bi-trash"></i></button>
+                          <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm" (click)="consultarAmbiente(ambiente)"><i class="bi bi-search"></i></button>
+                            <button class="btn btn-danger btn-sm" (click)="excluirAmbiente(ambiente)"><i class="bi bi-trash"></i></button>
+                          </div>
                         </td>
-                        <td>
-                          <pre><code>
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          "[{{ ambiente.sistema.identificador }}]":
-            provider: com.github.andrepenteado.sso.portal
-            client-name: {{ ambiente.sistema.nome }}
-            client-id: {{ ambiente.clientId }}
-            client-secret: *************
-            authorization-grant-type: authorization_code
-            scope: openid
-            redirect-uri: "&#123;baseUrl&#125;/login/oauth2/code/&#123;registrationId&#125;"
-            client-authentication-method: client_secret_basic
-        provider:
-          "[com.github.andrepenteado.sso.portal]":
-            issuer-uri: {{ ambiente.uriProvider }}
-                          </code></pre>
-                        </td>
-                        <td>
-                          <pre><code>
-Descrição:    {{ ambiente.descricao }}
-Tipo:         {{ ambiente.tipo }}
-URL Acesso:   {{ ambiente.urlAcesso }}
-URL Logout:   {{ ambiente.postLogoutRedirectUris }}
-URL Redirect: {{ ambiente.redirectUris }}
-                          </code></pre>
-                        </td>
+                        <td>{{ ambiente.descricao }}</td>
+                        <td>{{ ambiente.tipo }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -251,4 +252,5 @@ URL Redirect: {{ ambiente.redirectUris }}
       </div>
     </div>
   </div>
+</div>
 </div>

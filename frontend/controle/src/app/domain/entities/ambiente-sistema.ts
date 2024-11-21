@@ -9,7 +9,6 @@ export class AmbienteSistema {
   tipo: TipoAmbiente;
   sistema: Sistema;
   clientId: string;
-  clientSecret: string;
   clientSecretPlain: string;
   uriProvider: string;
   redirectUris: string;

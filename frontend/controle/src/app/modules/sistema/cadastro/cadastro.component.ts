@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SistemaService } from '../../../services/sistema.service';
@@ -12,7 +12,6 @@ import { AmbienteSistemaService } from "../../../services/ambiente-sistema.servi
 import { Empresa } from "../../../domain/entities/empresa";
 import { EmpresaService } from "../../../services/empresa.service";
 import { TipoAmbiente } from "../../../domain/enums/tipo-ambiente";
-import * as Prism from 'prismjs';
 
 @Component({
   selector: 'app-cadastro',
@@ -20,7 +19,7 @@ import * as Prism from 'prismjs';
   styles: [
   ]
 })
-export class CadastroComponent implements OnInit, AfterViewInit {
+export class CadastroComponent implements OnInit {
 
   incluir = true;
   formEnviado = false;
@@ -28,6 +27,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   formAmbienteEnviado = false;
   sistema = new Sistema();
   perfis: PerfilSistema[] = [];
+  ambienteAtual = new AmbienteSistema();
   ambientes: AmbienteSistema[] = [];
   listaEmpresas: Empresa[] = [];
   dataCadastro: Date = new Date();
@@ -89,10 +89,6 @@ export class CadastroComponent implements OnInit, AfterViewInit {
     private exibirMensagem: ExibirMensagemService,
     private uploadService: UploadService
   ) { }
-
-  ngAfterViewInit(): void {
-    Prism.highlightAll();
-  }
 
   ngOnInit(): void {
     this.pesquisarEmpresas();
@@ -267,6 +263,11 @@ export class CadastroComponent implements OnInit, AfterViewInit {
           });
         }
       });
+  }
+
+  consultarAmbiente(ambiente: AmbienteSistema) {
+    this.ambienteAtual = ambiente;
+    this.formAmbiente.patchValue(ambiente);
   }
 
 }
