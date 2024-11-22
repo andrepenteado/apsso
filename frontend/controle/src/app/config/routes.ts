@@ -11,12 +11,16 @@ export const DECORATED_ROUTES: Routes = [
   },
 
   {
+    path: "empresa",
+    loadChildren: () => import("../modules/empresa/empresa.module").then((m) => m.EmpresaModule)
+  },
+  {
     path: "sistema",
-    loadChildren: () => import("../modules/sistema/sistema.module").then((m) => m.SistemaModule),
+    loadChildren: () => import("../modules/sistema/sistema.module").then((m) => m.SistemaModule)
   },
   {
     path: "usuario",
-    loadChildren: () => import("../modules/usuario/usuario.module").then((m) => m.UsuarioModule),
+    loadChildren: () => import("../modules/usuario/usuario.module").then((m) => m.UsuarioModule)
   }
 
 ]

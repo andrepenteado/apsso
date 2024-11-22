@@ -1,0 +1,128 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/empresa/pesquisar">Empresas</a></li>
+    <li class="breadcrumb-item active">Cadastro</li>
+  </ol>
+</nav>
+
+<div class="container">
+  <div class="col-12 col-md-8 offset-md-2">
+    <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
+      <div class="card border border-primary rounded shadow-lg">
+        <div class="card-header">
+          <nav class="nav nav-pills" id="nav-principal">
+            <button class="nav-link active fw-bold"
+                    id="nav-principal-dados-cadastrais"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-conteudo-dados-cadastrais"
+                    type="button"
+                    role="tab">
+              DADOS CADASTRAIS
+            </button>
+          </nav>
+          <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
+            Incluído por {{ empresa?.usuarioCadastro }} em {{ empresa?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+            <span *ngIf="empresa?.dataUltimaAtualizacao != null">
+            Alterado por {{ empresa.usuarioUltimaAtualizacao }} em {{ empresa.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+          </span>
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="tab-content" id="nav-conteudo">
+            <div class="tab-pane fade show active"
+                 id="nav-conteudo-dados-cadastrais"
+                 role="tabpanel"
+                 aria-labelledby="nav-conteudo-dados-cadastrais">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-8">
+                  <label>* Razão Social</label>
+                  <input type="text" name="razaoSocial" formControlName="razaoSocial" class="form-control" required="true">
+                  <div class="invalid-feedback">Razão social é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <label>Matriz</label>
+                  <select [compareWith]="empresaService.compareFn" formControlName="matriz" class="form-select">
+                    <option *ngFor="let empresa of listaEmpresas" [ngValue]="empresa">
+                      {{ empresa.nomeFantasia }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">Empresa é um campo obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Nome fantasia</label>
+                  <input type="text" name="nomeFantasia" formControlName="nomeFantasia" class="form-control" required="true">
+                  <div class="invalid-feedback">Nome fantasia é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>* CNPJ</label>
+                  <input type="text" name="cnpj" formControlName="cnpj" class="form-control" required="true" mask="00.000.000/0000-00">
+                  <div class="invalid-feedback">CNPJ é um campo obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Telefone</label>
+                  <input type="text" name="telefone" formControlName="telefone" class="form-control" required="true" mask="(00) 0000-0000">
+                  <div class="invalid-feedback">Telefone é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>E-mail</label>
+                  <input type="email" name="email" formControlName="email" class="form-control">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-4">
+                  <label>CEP</label>
+                  <div class="input-group">
+                    <input #cep type="text" name="cep" formControlName="cep" class="form-control" mask="00000-000">
+                    <div class="input-group-append">
+                      <button class="btn btn-light" type="submit" (click)="consultaCep(cep.value)"><i class="bi bi-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>Logradouro</label>
+                  <input type="text" name="logradouro" formControlName="logradouro" class="form-control" readonly>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <label>Complemento</label>
+                  <input type="text" name="complemento" formControlName="complemento" class="form-control">
+                </div>
+                <div class="form-group col-12 col-md-2">
+                  <label>Número</label>
+                  <input type="number" name="numeroLogradouro" formControlName="numeroLogradouro" class="form-control">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-5">
+                  <label>Bairro</label>
+                  <input type="text" name="bairro" formControlName="bairro" class="form-control" readonly>
+                </div>
+                <div class="form-group col-12 col-md-5">
+                  <label>Cidade</label>
+                  <input type="text" name="cidade" formControlName="cidade" class="form-control" readonly>
+                </div>
+                <div class="form-group col-12 col-md-2">
+                  <label>Estado</label>
+                  <input type="text" name="estado" formControlName="estado" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+    </form>
+  </div>
+</div>

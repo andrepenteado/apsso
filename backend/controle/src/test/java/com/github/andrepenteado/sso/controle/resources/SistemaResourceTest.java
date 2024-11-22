@@ -8,6 +8,7 @@ import com.github.andrepenteado.sso.core.domain.entities.AmbienteSistema;
 import com.github.andrepenteado.sso.core.domain.entities.Empresa;
 import com.github.andrepenteado.sso.core.domain.entities.PerfilSistema;
 import com.github.andrepenteado.sso.core.domain.entities.Sistema;
+import com.github.andrepenteado.sso.core.domain.enums.TipoAmbiente;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.DisplayName;
@@ -78,6 +79,7 @@ public class SistemaResourceTest {
         Sistema sistema = new Sistema();
         sistema.setId(id);
         sistema.setNome("Sistema ABC");
+        sistema.setIdentificador("sistema.abc");
         sistema.setDescricao(DESCRICAO_SISTEMA);
         sistema.setEmpresa(empresa);
         return sistema;
@@ -110,6 +112,8 @@ public class SistemaResourceTest {
         ambienteSistema.setId(id);
         ambienteSistema.setDescricao(DESCRICAO_AMBIENTE);
         ambienteSistema.setUrlAcesso("http://localhost");
+        ambienteSistema.setTipo(TipoAmbiente.LOCAL);
+        ambienteSistema.setSistema(getSistema(100L));
         ambienteSistema.setClientSecret("password");
         return ambienteSistema;
     }
@@ -187,7 +191,7 @@ public class SistemaResourceTest {
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonSistema(2000L)))
+                .content(getJsonSistema(200L)))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()

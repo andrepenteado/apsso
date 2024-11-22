@@ -9,13 +9,16 @@
     <sistema
         id="100"
         nome="Sistema 100"
+        identificador="sistema.100"
         fk_empresa="10" />
     <sistema
         id="200"
+        identificador="sistema.200"
         nome="Sistema 200"
         fk_empresa="10" />
     <sistema
         id="300"
+        identificador="sistema.300"
         nome="Sistema 300"
         fk_empresa="10" />
 
@@ -47,7 +50,8 @@
         scopes="XXXX"
         client_settings="XXXX"
         token_settings="XXXX"
-        url_entrada="http://localhost"
+        url_acesso="http://localhost"
+        tipo="LOCAL"
         fk_sistema="100" />
 
     <oauth2_registered_client
@@ -60,7 +64,8 @@
         scopes="XXXX"
         client_settings="XXXX"
         token_settings="XXXX"
-        url_entrada="http://localhost"
+        url_acesso="http://localhost"
+        tipo="LOCAL"
         fk_sistema="100" />
 
     <users
@@ -68,6 +73,7 @@
         password="{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy"
         enabled="true"
         nome="Usuário logado nos testes"
+        cpf="99999999990"
         data_ultima_atualizacao="[now]" />
 
     <authorities

@@ -5,14 +5,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.andrepenteado.sso.controle.ControleApplication;
 import com.github.andrepenteado.sso.core.domain.entities.Empresa;
-import com.github.andrepenteado.sso.core.domain.entities.PerfilSistema;
-import com.github.andrepenteado.sso.core.domain.entities.Sistema;
-import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,16 +29,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Testes do resource {@link UsuarioResource}
+ * Testes do resource {@link EmpresaResource}
  */
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -49,10 +49,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     TransactionalTestExecutionListener.class,
     DbUnitTestExecutionListener.class
 })
-@DatabaseSetup("/datasets/usuario.xml")
+@DatabaseSetup("/datasets/empresa.xml")
 @Transactional
 @ActiveProfiles("test")
-class UsuarioResourceTest {
+@ExtendWith(MockitoExtension.class)
+public class EmpresaResourceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,53 +61,25 @@ class UsuarioResourceTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private final String USERNAME = "usuarioTeste01";
+    private final String RAZAO_SOCIAL = "Empresa para Testes";
 
-    private final String NOME = "Usuario Teste";
+    private final Long CNPJ = 123456789000112L;
 
-    private Usuario getUsuario(String username) {
-        Usuario usuario = new Usuario();
-        usuario.setUsername(username);
-        usuario.setNome(NOME);
-        usuario.setEnabled(true);
-        usuario.setCpf(88888888888L);
-        usuario.setDataCadastro(LocalDateTime.now());
-        usuario.setPassword("{bcrypt}$2a$10$ihm/8JoWWmtRakCeI7eT2e5tyTFRVR2mVkvdukKK47SKTW1k210qy");
-        usuario.setPerfis(new ArrayList<>());
-
+    private Empresa getEmpresa(Long id) {
         Empresa empresa = new Empresa();
-        empresa.setId(10L);
-        empresa.setRazaoSocial("Empresa testes");
-        empresa.setCnpj(111111111L);
-        empresa.setTelefone("5555555555");
-
-        Sistema sistema = new Sistema();
-        sistema.setId(100L);
-        sistema.setDescricao("Sistema Sistema01");
-        sistema.setIdentificador("sistema.01");
-        sistema.setEmpresa(empresa);
-
-        PerfilSistema perfilSistema = new PerfilSistema();
-        perfilSistema.setAuthority("ROLE_Sistema01_Perfil01");
-        perfilSistema.setSistema(sistema);
-        perfilSistema.setDescricao("Perfil Teste");
-
-        usuario.getPerfis().add(perfilSistema);
-
-        return usuario;
+        if (id != null)
+            empresa.setId(id);
+        empresa.setDataCadastro(LocalDateTime.now());
+        empresa.setUsuarioCadastro("admin");
+        empresa.setRazaoSocial(RAZAO_SOCIAL);
+        empresa.setCnpj(CNPJ);
+        empresa.setTelefone("123123123");
+        return empresa;
     }
 
-    private String getJsonUsuario(String username) throws Exception {
-        return objectMapper.writeValueAsString(getUsuario(username));
+    private String getJsonEmpresa(Long id) throws Exception {
+        return objectMapper.writeValueAsString(getEmpresa(id));
     }
-
-    /*private Jwt getJwt() {
-        Jwt.Builder jwtBuilder = Jwt.withTokenValue("token").header("alg", "none")
-            .claim(JwtClaimNames.SUB, "user")
-            .issuer("https://issuer-host/auth/realms/test")
-            .claim("perfis", getPerfil());
-        return jwtBuilder.build();
-    }*/
 
     private OAuth2AuthenticationToken getToken() {
         OidcIdToken idToken = new OidcIdToken(
@@ -135,105 +108,116 @@ class UsuarioResourceTest {
     }
 
     @Test
-    @DisplayName("Listar todos usuários")
+    @DisplayName("Listar todas empresas")
     void testListar() throws Exception {
-        String json = mockMvc.perform(get("/usuarios")
+        String json = mockMvc.perform(get("/empresas")
                 .with(authentication(getToken()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()
             .getContentAsString();
-        List<Usuario> lista = objectMapper.readValue(json, new TypeReference<List<Usuario>>() {});
-        assertEquals(lista.size(), 3);
+        List<Empresa> lista = objectMapper.readValue(json, new TypeReference<>() {});
+        assertEquals(2, lista.size());
     }
 
     @Test
-    @DisplayName("Buscar usuário por username")
+    @DisplayName("Buscar empresa por ID")
     void testBuscar() throws Exception {
-        String json = mockMvc.perform(get("/usuarios/teste01")
+        mockMvc.perform(get("/empresas/100")
                 .with(authentication(getToken()))
                 .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
-        Usuario usuario = objectMapper.readValue(json, new TypeReference<Usuario>() {});
-        assertEquals(usuario.getPerfis().size(), 1);
-
-        mockMvc.perform(get("/usuarios/usuarioNaoExiste")
+            .andExpect(status().isOk());
+        mockMvc.perform(get("/empresas/999")
                 .with(authentication(getToken()))
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
 
     @Test
-    @DisplayName("Incluir usuário")
+    @DisplayName("Incluir nova empresa")
     void testIncluir() throws Exception {
-        String json = mockMvc.perform(post("/usuarios")
+        String json = mockMvc.perform(post("/empresas")
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonUsuario(USERNAME)))
+                .content(getJsonEmpresa(-1L)))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()
             .getContentAsString();
-        Usuario usuarioNovo = objectMapper.readValue(json, Usuario.class);
-        assertEquals(usuarioNovo.getNome(), NOME);
+        Empresa empresaNovo = objectMapper.readValue(json, Empresa.class);
+        assertEquals(empresaNovo.getRazaoSocial(), RAZAO_SOCIAL);
+        assertNotNull(empresaNovo.getId());
 
         // Sem dados obrigatórios
-        mockMvc.perform(post("/usuarios")
+        mockMvc.perform(post("/empresas")
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new Usuario())))
+                .content(objectMapper.writeValueAsString(new Empresa())))
+            .andExpect(status().isUnprocessableEntity())
+            .andExpect(ex -> assertTrue(Objects.requireNonNull(ex.getResolvedException()).getMessage().contains("é um campo obrigatório")));
+
+        // CNPJ duplicado
+        mockMvc.perform(post("/empresas")
+                .with(authentication(getToken()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(getJsonEmpresa(-1L)))
+            .andExpect(status().isUnprocessableEntity())
+            .andExpect(ex -> assertTrue(Objects.requireNonNull(ex.getResolvedException()).getMessage().contains("já se encontra cadastrado")));
+    }
+
+    @Test
+    @DisplayName("Alterar empresa existente")
+    void testAlterar() throws Exception {
+        String json = mockMvc.perform(put("/empresas/100")
+                .with(authentication(getToken()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(getJsonEmpresa(100L)))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+        Empresa empresaAlterado = objectMapper.readValue(json, Empresa.class);
+        assertEquals(empresaAlterado.getRazaoSocial(), RAZAO_SOCIAL);
+        assertEquals(100, empresaAlterado.getId());
+
+        mockMvc.perform(put("/empresas/999")
+                .with(authentication(getToken()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(getJsonEmpresa(100L)))
+            .andExpect(status().isNotFound())
+            .andExpect(ex -> assertTrue(Objects.requireNonNull(ex.getResolvedException()).getMessage().contains("não encontrada")));
+
+        mockMvc.perform(put("/empresas/100")
+                .with(authentication(getToken()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(getJsonEmpresa(300L)))
+            .andExpect(status().isConflict())
+            .andExpect(ex -> assertTrue(Objects.requireNonNull(ex.getResolvedException()).getMessage().contains("porém enviado dados da empresa")));
+
+        mockMvc.perform(put("/empresas/100")
+                .with(authentication(getToken()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(new Empresa())))
             .andExpect(status().isUnprocessableEntity())
             .andExpect(ex -> assertTrue(Objects.requireNonNull(ex.getResolvedException()).getMessage().contains("é um campo obrigatório")));
     }
 
     @Test
-    @DisplayName("Alterar usuário")
-    void testAlterar() throws Exception {
-        String json = mockMvc.perform(put("/usuarios/teste01")
-                .with(authentication(getToken()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonUsuario("teste01")))
-            .andExpect(status().isOk())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
-        Usuario usuarioAlterado = objectMapper.readValue(json, Usuario.class);
-        assertEquals(usuarioAlterado.getNome(), NOME);
-
-        mockMvc.perform(put("/usuarios/naoExiste")
-                .with(authentication(getToken()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonUsuario("naoExiste")))
-            .andExpect(status().isNotFound())
-            .andExpect(ex -> assertTrue(ex.getResolvedException().getMessage().contains("não encontrado")));
-
-        mockMvc.perform(put("/usuarios/dadosIncompletos")
-                .with(authentication(getToken()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new Usuario())))
-            .andExpect(status().isUnprocessableEntity())
-            .andExpect(ex -> assertTrue(ex.getResolvedException().getMessage().contains("é um campo obrigatório")));
-    }
-
-    @Test
-    @DisplayName("Excluir usuário")
+    @DisplayName("Excluir empresa existente")
     void testExcluir() throws Exception {
-        mockMvc.perform(delete("/usuarios/teste02")
+        mockMvc.perform(delete("/empresas/200")
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
-        /*mockMvc.perform(delete("/usuarios/naoExiste")
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());*/
     }
+
 }

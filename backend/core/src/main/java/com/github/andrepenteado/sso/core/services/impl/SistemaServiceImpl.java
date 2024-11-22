@@ -35,7 +35,6 @@ public class SistemaServiceImpl implements SistemaService {
     @Override
     public Sistema incluirOuAlterar(Sistema sistema, BindingResult validacao) {
         String erros = CoreUtil.validateModel(validacao);
-
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 

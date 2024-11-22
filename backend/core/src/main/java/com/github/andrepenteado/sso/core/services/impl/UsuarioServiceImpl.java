@@ -38,7 +38,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario incluir(Usuario usuario, BindingResult validacao) {
         String erros = CoreUtil.validateModel(validacao);
-
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 
@@ -58,7 +57,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario alterar(Usuario usuario, String username, BindingResult validacao) {
         String erros = CoreUtil.validateModel(validacao);
-
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 

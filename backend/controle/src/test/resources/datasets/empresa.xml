@@ -1,0 +1,75 @@
+<dataset>
+
+    <empresa
+        id="100"
+        data_cadastro="[now]"
+        usuario_cadastro="admin"
+        razao_social="Empresa 100"
+        cnpj="000000000000100"
+        telefone="100100100"
+    />
+
+    <empresa
+        id="200"
+        data_cadastro="[now]"
+        usuario_cadastro="admin"
+        razao_social="Empresa 200"
+        cnpj="000000000000200"
+        telefone="200200200" />
+
+    <sistema
+        id="1000"
+        nome="Sistema 1000"
+        identificador="sistema.1000"
+        fk_empresa="100" />
+    <sistema
+        id="2000"
+        nome="Sistema 2000"
+        identificador="sistema.2000"
+        fk_empresa="200" />
+
+    <perfil_sistema
+        authority="ROLE_Sistema1000_X"
+        fk_sistema="1000"
+        descricao="Perfil X" />
+    <perfil_sistema
+        authority="ROLE_Sistema1000_Y"
+        fk_sistema="1000"
+        descricao="Perfil Y" />
+    <perfil_sistema
+        authority="ROLE_Sistema2000_X"
+        fk_sistema="2000"
+        descricao="Perfil X" />
+    <perfil_sistema
+        authority="ROLE_Sistema2000_Y"
+        fk_sistema="2000"
+        descricao="Perfil Y" />
+
+    <oauth2_registered_client
+        id="Ambiente01"
+        client_id="ID01"
+        client_id_issued_at="[now]"
+        client_name="Ambiente 01"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX"
+        url_acesso="http://localhost"
+        tipo="LOCAL"
+        fk_sistema="1000" />
+    <oauth2_registered_client
+        id="Ambiente02"
+        client_id="ID02"
+        client_id_issued_at="[now]"
+        client_name="Ambiente 01"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX"
+        url_acesso="http://localhost"
+        tipo="LOCAL"
+        fk_sistema="2000" />
+
+</dataset>
