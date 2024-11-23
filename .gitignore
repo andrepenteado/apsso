@@ -51,6 +51,16 @@ nbactions.xml
 /frontend/portal/*.iml
 /frontend/portal/.npmrc
 
+/backend/equipe/target/
+/backend/equipe/src/main/resources/static/
+/backend/equipe/*.iml
+
+/frontend/equipe/node_modules/
+/frontend/equipe/dist/
+/frontend/equipe/.angular/
+/frontend/equipe/*.iml
+/frontend/equipe/.npmrc
+
 /backend/core/target/
 
 .ansible/ansible.log
