@@ -6,8 +6,7 @@
         usuario_cadastro="admin"
         razao_social="Empresa 100"
         cnpj="000000000000100"
-        telefone="100100100"
-    />
+        telefone="100100100" />
 
     <empresa
         id="200"

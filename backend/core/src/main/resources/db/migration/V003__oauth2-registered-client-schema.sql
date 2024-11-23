@@ -16,12 +16,57 @@ CREATE TABLE empresa (
   bairro text,
   cidade text,
   estado varchar(2),
-  url_sso varchar(100),
   fk_empresa_matriz bigint,
   fk_upload UUID,
   primary key (id),
   constraint fk_empresamatriz_empresa foreign key (fk_empresa_matriz) references empresa (id),
   constraint un_empresa_cnpj unique (cnpj)
+);
+
+CREATE TABLE unidade_administrativa (
+  id bigserial not null,
+  nome text not null,
+  tipo varchar(50) not null,
+  fk_empresa bigint not null,
+  fk_colaborador_responsavel bigint null,
+  fk_unidade_administrativa_superior bigint null,
+  primary key (id),
+  constraint fk_unidadeadministrativa_empresa foreign key (fk_empresa) references empresa (id),
+  constraint fk_unidadeadministrativa_unidadeadministrativasuperior foreign key (fk_unidade_administrativa_superior) references unidade_administrativa (id)
+);
+
+CREATE TABLE cargo (
+  id bigserial not null,
+  nome text not null,
+  fk_empresa bigint not null,
+  primary key (id),
+  constraint fk_cargo_empresa foreign key (fk_empresa) references empresa (id)
+);
+
+CREATE TABLE colaborador (
+  id bigserial NOT NULL,
+  data_cadastro timestamp,
+  data_ultima_atualizacao timestamp,
+  usuario_cadastro varchar(50),
+  usuario_ultima_atualizacao varchar(50),
+  nome text not null,
+  cpf bigint not null,
+  telefone varchar(15),
+  email varchar(50),
+  cep bigint,
+  logradouro text,
+  complemento text,
+  numero_logradouro bigint,
+  bairro text,
+  cidade text,
+  estado varchar(2),
+  fk_unidade_administrativa bigint,
+  fk_cargo bigint,
+  fk_upload UUID,
+  primary key (id),
+  constraint fk_colaborador_unidadeadministrativa foreign key (fk_unidade_administrativa) references unidade_administrativa (id),
+  constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id),
+  constraint un_colaborador_cpf unique (cpf)
 );
 
 CREATE TABLE sistema (

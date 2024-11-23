@@ -1,0 +1,4 @@
+com\github\andrepenteado\sso\equipe\EquipeApplication.class
+com\github\andrepenteado\sso\equipe\resources\UnidadeAdministrativaResource.class
+com\github\andrepenteado\sso\equipe\resources\CargoResource.class
+com\github\andrepenteado\sso\equipe\resources\ColaboradorResource.class

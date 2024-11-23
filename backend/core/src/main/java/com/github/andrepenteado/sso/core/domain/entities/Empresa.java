@@ -54,8 +54,6 @@ public class Empresa {
 
     private String estado;
 
-    private String urlSso;
-
     @ManyToOne
     @JoinColumn(name = "fk_empresa_matriz")
     private Empresa matriz;

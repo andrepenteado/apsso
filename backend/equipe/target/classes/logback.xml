@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <!-- Nome da aplicação -->
+    <contextName>equipe</contextName>
+
+    <property name="APP" value="apsso" />
+    <property name="MODULE" value="equipe" />
+
+    <include resource="logback-common.xml"/>
+
+</configuration>

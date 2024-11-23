@@ -6,7 +6,6 @@ import com.github.andrepenteado.sso.core.domain.repositories.AmbienteSistemaRepo
 import com.github.andrepenteado.sso.core.services.AmbienteSistemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,11 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor

@@ -141,7 +141,7 @@ public class EmpresaResourceTest {
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonEmpresa(-1L)))
+                .content(getJsonEmpresa(null)))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()

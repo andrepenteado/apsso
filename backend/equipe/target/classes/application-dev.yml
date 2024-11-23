@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db-server/apsso-dbname
+
+  security:
+    oauth2:
+      client:
+        provider:
+          "[com.github.andrepenteado.sso.portal]":
+            issuer-uri: http://localhost:30000
+
+management:
+  tracing:
+    enabled: false
+
+frontend:
+  pagina-inicial: http://localhost:4200/equipe/pagina-inicial

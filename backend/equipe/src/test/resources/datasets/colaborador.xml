@@ -1,0 +1,66 @@
+<dataset>
+
+    <empresa
+        id="10"
+        data_cadastro="[now]"
+        usuario_cadastro="admin"
+        razao_social="Empresa 10"
+        cnpj="000000000000010"
+        telefone="100100100" />
+
+    <sistema
+        id="1000"
+        nome="Sistema 1000"
+        identificador="sistema.1000"
+        fk_empresa="10" />
+
+    <perfil_sistema
+        authority="ROLE_Sistema1000_X"
+        fk_sistema="1000"
+        descricao="Perfil X" />
+
+    <oauth2_registered_client
+        id="Ambiente01"
+        client_id="ID01"
+        client_id_issued_at="[now]"
+        client_name="Ambiente 01"
+        client_authentication_methods="XXXX"
+        authorization_grant_types="XXXX"
+        scopes="XXXX"
+        client_settings="XXXX"
+        token_settings="XXXX"
+        url_acesso="http://localhost"
+        tipo="LOCAL"
+        fk_sistema="1000" />
+
+    <unidade_administrativa
+        id="10"
+        nome="Unidade administrativa 10"
+        fk_empresa="10"
+        tipo="DIRETORIA" />
+
+    <cargo
+        id="10"
+        nome="Cargo 10"
+        fk_empresa="10" />
+
+    <colaborador
+        id="100"
+        data_cadastro="[now]"
+        usuario_cadastro="admin"
+        nome="Colaborador 100"
+        cpf="000000000100"
+        telefone="100100100"
+        fk_unidade_administrativa="10"
+        fk_cargo="10" />
+    <colaborador
+        id="200"
+        data_cadastro="[now]"
+        usuario_cadastro="admin"
+        nome="Colaborador 200"
+        cpf="000000000200"
+        telefone="200200200"
+        fk_unidade_administrativa="10"
+        fk_cargo="10" />
+
+</dataset>

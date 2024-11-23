@@ -1,9 +1,9 @@
 package com.github.andrepenteado.sso.core.services.impl;
 
 import br.unesp.fc.andrepenteado.core.common.CoreUtil;
-import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.github.andrepenteado.sso.core.domain.repositories.UsuarioRepository;
+import com.github.andrepenteado.sso.core.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
