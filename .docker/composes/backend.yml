@@ -35,6 +35,18 @@ services:
     networks:
       - docker-host-network
 
+  equipe-backend:
+    image: ghcr.io/andrepenteado/apsso/equipe-backend
+    container_name: equipe-backend
+    hostname: equipe-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      AUTHORIZATION_SERVER_URL: http://login:30000
+    ports:
+      - 30003:8080
+    networks:
+      - docker-host-network
+
 networks:
   docker-host-network:
     external: true

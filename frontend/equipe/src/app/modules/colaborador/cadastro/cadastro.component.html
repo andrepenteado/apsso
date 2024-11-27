@@ -1,0 +1,142 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/colaborador/pesquisar">Colaboradores</a></li>
+    <li class="breadcrumb-item active">Cadastro</li>
+  </ol>
+</nav>
+
+<div class="container">
+  <div class="col-12 col-md-8 offset-md-2">
+    <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
+      <div class="card border border-primary rounded shadow-lg">
+        <div class="card-header">
+          <nav class="nav nav-pills" id="nav-principal">
+            <button class="nav-link active fw-bold"
+                    id="nav-principal-dados-cadastrais"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-conteudo-dados-cadastrais"
+                    type="button"
+                    role="tab">
+              DADOS CADASTRAIS
+            </button>
+          </nav>
+          <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
+            Incluído por {{ colaborador?.usuarioCadastro }} em {{ colaborador?.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+            <span *ngIf="colaborador?.dataUltimaAtualizacao != null">
+            Alterado por {{ colaborador.usuarioUltimaAtualizacao }} em {{ colaborador.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+          </span>
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="tab-content" id="nav-conteudo">
+            <div class="tab-pane fade show active"
+                 id="nav-conteudo-dados-cadastrais"
+                 role="tabpanel"
+                 aria-labelledby="nav-conteudo-dados-cadastrais">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Nome</label>
+                  <input type="text" name="nome" formControlName="nome" class="form-control" required="true">
+                  <div class="invalid-feedback">Nome é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>* CPF</label>
+                  <input type="text" name="cpf" formControlName="cpf" class="form-control" required="true" mask="000.000.000-00">
+                  <div class="invalid-feedback">CPF é um campo obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-4">
+                  <label>* Empresa</label>
+                  <select [compareWith]="empresaService.compareFn" formControlName="empresa" class="form-select" required>
+                    <option *ngFor="let empresa of listaEmpresas" [ngValue]="empresa">
+                      {{ empresa.nomeFantasia }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">Empresa é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <label>* Unidade Administrativa</label>
+                  <select [compareWith]="unidadeAdministrativaService.compareFn" formControlName="unidadeAdministrativa" class="form-select" required>
+                    <option *ngFor="let unidadeAdministrativa of listaUnidadesAdministrativas" [ngValue]="unidadeAdministrativa">
+                      {{ unidadeAdministrativa.nome }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">Unidade Administrativa é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <label>* Cargo</label>
+                  <select [compareWith]="cargoService.compareFn" formControlName="cargo" class="form-select" required>
+                    <option *ngFor="let cargo of listaCargos" [ngValue]="cargo">
+                      {{ cargo.nome }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">Cargo é um campo obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>* Telefone</label>
+                  <input type="text" name="telefone" formControlName="telefone" class="form-control" required="true" mask="(00) 00000-0000">
+                  <div class="invalid-feedback">Telefone é um campo obrigatório</div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label>E-mail</label>
+                  <input type="email" name="email" formControlName="email" class="form-control">
+                  <div class="invalid-feedback">Digite um e-mail válido</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-4">
+                  <label>CEP</label>
+                  <div class="input-group">
+                    <input #cep type="text" name="cep" formControlName="cep" class="form-control" mask="00000-000">
+                    <div class="input-group-append">
+                      <button class="btn btn-light" type="submit" (click)="consultaCep(cep.value)"><i class="bi bi-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-6">
+                  <label>Logradouro</label>
+                  <input type="text" name="logradouro" formControlName="logradouro" class="form-control" readonly>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <label>Complemento</label>
+                  <input type="text" name="complemento" formControlName="complemento" class="form-control">
+                </div>
+                <div class="form-group col-12 col-md-2">
+                  <label>Número</label>
+                  <input type="number" name="numeroLogradouro" formControlName="numeroLogradouro" class="form-control">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-5">
+                  <label>Bairro</label>
+                  <input type="text" name="bairro" formControlName="bairro" class="form-control" readonly>
+                </div>
+                <div class="form-group col-12 col-md-5">
+                  <label>Cidade</label>
+                  <input type="text" name="cidade" formControlName="cidade" class="form-control" readonly>
+                </div>
+                <div class="form-group col-12 col-md-2">
+                  <label>Estado</label>
+                  <input type="text" name="estado" formControlName="estado" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+    </form>
+  </div>
+</div>

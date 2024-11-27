@@ -29,7 +29,7 @@ spring:
             provider: com.github.andrepenteado.sso.portal
             client-name: Portal de Sistemas
             client-id: com.github.andrepenteado.sso.portal
-            client-secret: portal-secret
+            client-secret: 3c2c2001-5a07-4424-acf8-3488c8cde2e2
             authorization-grant-type: authorization_code
             scope: openid
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
@@ -59,4 +59,4 @@ management:
       endpoint: http://sistemas.apcode.com.br:9411
 
 frontend:
-  pagina-inicial: https://portal.apcode.com.br
+  pagina-inicial: https://sistemas.apcode.com.br/portal/pagina-inicial

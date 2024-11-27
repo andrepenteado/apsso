@@ -9,7 +9,7 @@ spring:
     password: apsso-dbpasswd
     driver-class-name: org.postgresql.Driver
     hikari:
-      pool-name: admin-pool
+      pool-name: equipe-pool
 
   jpa:
     show-sql: true
@@ -29,7 +29,7 @@ spring:
             provider: com.github.andrepenteado.sso.portal
             client-name: Gestão de Equipes
             client-id: com.github.andrepenteado.sso.equipe
-            client-secret: equipe-secret
+            client-secret: b72fa3f1-9dc5-47c9-882c-8710e3565db5
             authorization-grant-type: authorization_code
             scope: openid
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
@@ -56,7 +56,7 @@ management:
       probability: 1.0
   zipkin:
     tracing:
-      endpoint: http://cluster.apcode.com.br:9411
+      endpoint: http://sistemas.apcode.com.br:9411
 
 frontend:
-  pagina-inicial: https://equipe.apcode.com.br
+  pagina-inicial: https://sistemas.apcode.com.br/equipe/pagina-inicial

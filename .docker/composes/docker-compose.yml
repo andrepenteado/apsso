@@ -1,6 +1,6 @@
 services:
 
-  dbserver:
+  db-server:
     image: postgres:16
     container_name: apsso-db
     hostname: apsso-db
@@ -15,7 +15,7 @@ services:
     networks:
       - docker-host-network
 
-  dbserver-test:
+  db-server-test:
     image: postgres:16
     container_name: apsso-db-test
     hostname: apsso-db-test
@@ -80,6 +80,27 @@ services:
     hostname: portal-frontend
     ports:
       - 40002:80
+    networks:
+      - docker-host-network
+
+  equipe-backend:
+    image: ghcr.io/andrepenteado/apsso/equipe-backend
+    container_name: equipe-backend
+    hostname: equipe-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      AUTHORIZATION_SERVER_URL: http://login:30000
+    ports:
+      - 30003:8080
+    networks:
+      - docker-host-network
+
+  equipe-frontend:
+    image: ghcr.io/andrepenteado/apsso/portal-equipe:dev
+    container_name: equipe-frontend
+    hostname: equipe-frontend
+    ports:
+      - 40003:80
     networks:
       - docker-host-network
 

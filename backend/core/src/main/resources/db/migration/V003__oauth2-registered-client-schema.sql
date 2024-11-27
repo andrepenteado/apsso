@@ -7,7 +7,7 @@ CREATE TABLE empresa (
   razao_social text not null,
   cnpj bigint not null,
   telefone varchar(15),
-  nome_fantasia text,
+  nome_fantasia text not null,
   email varchar(50),
   cep bigint,
   logradouro text,

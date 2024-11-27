@@ -67,7 +67,7 @@
     </dependencies>
 
     <build>
-        <finalName>controle</finalName>
+        <finalName>equipe</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

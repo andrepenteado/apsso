@@ -36,6 +36,7 @@ public class Empresa {
 
     private String telefone;
 
+    @NotNull(message = "Nome fantasia é um campo obrigatório")
     private String nomeFantasia;
 
     private String email;

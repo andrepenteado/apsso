@@ -29,7 +29,7 @@ spring:
             provider: com.github.andrepenteado.sso.portal
             client-name: Módulo de Controle
             client-id: com.github.andrepenteado.sso.controle
-            client-secret: controle-secret
+            client-secret: 9c9dcb57-c306-494b-bb83-47565e1163a4
             authorization-grant-type: authorization_code
             scope: openid
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
@@ -59,4 +59,4 @@ management:
       endpoint: http://sistemas.apcode.com.br:9411
 
 frontend:
-  pagina-inicial: https://controle.apcode.com.br
+  pagina-inicial: https://sistemas.apcode.com.br/controle/pagina-inicial

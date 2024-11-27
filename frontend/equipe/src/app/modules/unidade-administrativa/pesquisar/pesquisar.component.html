@@ -1,0 +1,44 @@
+<apcore-widget-floating-button (click)="incluir()"><i class="bi bi-plus-lg fs-2"></i></apcore-widget-floating-button>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+    <li class="breadcrumb-item active">Unidades Administrativas</li>
+  </ol>
+</nav>
+
+<div class="container">
+
+  <div class="card border border-primary rounded shadow-lg">
+
+    <ngx-loading [show]="aguardar" [config]="{ primaryColour: '#dd0031', secondaryColour: '#fff', animationType: ngxLoadingAnimationTypes.doubleBounce }"></ngx-loading>
+
+    <div class="card-body custom-datatable table-responsive table-border-radius">
+      <table id="datatable-pesquisar-unidades-administrativas" class="table table-styling table-striped align-middle nowrap w-100">
+        <thead>
+        <tr>
+          <th scope="col" class="text-center">Ações</th>
+          <th scope="col" class="text-center">#</th>
+          <th scope="col" class="text-center">Tipo</th>
+          <th scope="col" class="text-start">Nome</th>
+          <th scope="col" class="text-center">Empresa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let unidadeAdministrativa of this.lista ">
+          <td class="text-center">
+            <div class="btn-group">
+              <button class="btn btn-success btn-sm" (click)="editar(unidadeAdministrativa)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-danger btn-sm" (click)="excluir(unidadeAdministrativa)"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+          <td class="text-center">{{ unidadeAdministrativa.id }}</td>
+          <td class="text-center">{{ unidadeAdministrativa.tipo }}</td>
+          <td class="text-start">{{ unidadeAdministrativa.nome }}</td>
+          <td class="text-center">{{ unidadeAdministrativa.empresa.nomeFantasia }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

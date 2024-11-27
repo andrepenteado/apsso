@@ -1,6 +1,6 @@
 services:
 
-  dbserver:
+  db-server:
     image: postgres:17
     container_name: apsso-db
     hostname: apsso-db
@@ -15,7 +15,7 @@ services:
     networks:
       - docker-host-network
 
-  dbserver-test:
+  db-server-test:
     image: postgres:17
     container_name: apsso-db-test
     hostname: apsso-db-test

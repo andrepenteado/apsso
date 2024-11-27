@@ -111,3 +111,60 @@ spec:
       targetPort: 8080
   selector:
     <<: *selector
+
+# Gestão de Equipes
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-equipe-backend
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: equipe-backend
+    apcode.com.br/version: 1.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/equipe-backend
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1G
+          #              cpu: 8000m
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AUTHORIZATION_SERVER_URL
+              value: https://login.apcode.com.br
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apsso-equipe-backend
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: equipe-backend
+    apcode.com.br/version: 1.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: equipe-back
+      port: 8080
+      targetPort: 8080
+  selector:
+    <<: *selector

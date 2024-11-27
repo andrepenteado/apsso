@@ -105,3 +105,57 @@ spec:
       targetPort: 80
   selector:
     <<: *selector
+
+# Gestão de Equipes
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &name apsso-equipe-frontend
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: controle-equipe
+    apcode.com.br/version: 1.0.0
+    apcode.com.br/env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *selector
+  template:
+    metadata:
+      labels:
+        <<: *selector
+    spec:
+      containers:
+        - name: *name
+          image: ghcr.io/andrepenteado/apsso/equipe-frontend
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1G
+          #              cpu: 8000m
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: github-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apsso-equipe-frontend
+  namespace: apsso
+  labels: &selector
+    apcode.com.br/app: apsso
+    apcode.com.br/module: equipe-frontend
+    apcode.com.br/version: 1.0.0
+    apcode.com.br/env: prod
+spec:
+  type: LoadBalancer
+  ports:
+    - name: equipe-front
+      port: 80
+      targetPort: 80
+  selector:
+    <<: *selector

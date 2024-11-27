@@ -15,6 +15,8 @@ switch($exec) {
         docker build -f .docker/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
         docker build -f .docker/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
         docker build -f .docker/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
+        docker build -f .docker/dockerfiles/backend.equipe -t ghcr.io/andrepenteado/apsso/controle-equipe -t ghcr.io/andrepenteado/apsso/equipe-backend:$VERSAO .
+        docker build -f .docker/dockerfiles/frontend.equipe -t ghcr.io/andrepenteado/apsso/controle-equipe -t ghcr.io/andrepenteado/apsso/equipe-frontend:$VERSAO .
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/controle-backend
@@ -25,12 +27,19 @@ switch($exec) {
         docker push ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/portal-frontend
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/equipe-backend
+        docker push ghcr.io/andrepenteado/apsso/equipe-backend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/equipe-frontend
+        docker push ghcr.io/andrepenteado/apsso/equipe-frontend:$VERSAO
         cd ./frontend/controle/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
         docker build -f .docker/dockerfiles/frontend.controle --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
         cd ./frontend/portal/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
         docker build -f .docker/dockerfiles/frontend.portal --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
+        cd ./frontend/equipe/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+        docker build -f .docker/dockerfiles/frontend.equipe --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/equipe-frontend:dev .
+        docker push ghcr.io/andrepenteado/apsso/equipe-frontend:dev
         docker logout ghcr.io
     }
     "build-login" {
@@ -72,6 +81,22 @@ switch($exec) {
         cd ./frontend/portal/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
         docker build -f .docker/dockerfiles/frontend.portal --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
         docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
+        docker logout ghcr.io
+    }
+    "build-equipe" {
+        $VERSAO = mvn help:evaluate '-Dexpression=project.version' '-q' '-DforceStdout' '-f' './backend/pom.xml'
+        cd ./frontend/equipe/ && ng build --configuration=production --output-path=dist/production && cd ../..
+        mvn -U -f ./backend/pom.xml clean package --projects services,equipe -DskipTests
+        docker build -f .docker/dockerfiles/backend.equipe -t ghcr.io/andrepenteado/apsso/controle-equipe -t ghcr.io/andrepenteado/apsso/equipe-backend:$VERSAO .
+        docker build -f .docker/dockerfiles/frontend.equipe -t ghcr.io/andrepenteado/apsso/controle-equipe -t ghcr.io/andrepenteado/apsso/equipe-frontend:$VERSAO .
+        Get-Content 'C:\Users\andrepenteado\ownCloud\Particular\token-github.txt' | docker login ghcr.io --username andrepenteado --password-stdin
+        docker push ghcr.io/andrepenteado/apsso/equipe-backend
+        docker push ghcr.io/andrepenteado/apsso/equipe-backend:$VERSAO
+        docker push ghcr.io/andrepenteado/apsso/equipe-frontend
+        docker push ghcr.io/andrepenteado/apsso/equipe-frontend:$VERSAO
+        cd ./frontend/equipe/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+        docker build -f .docker/dockerfiles/frontend.equipe --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/equipe-frontend:dev .
+        docker push ghcr.io/andrepenteado/apsso/equipe-frontend:dev
         docker logout ghcr.io
     }
     "start" {

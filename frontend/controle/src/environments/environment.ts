@@ -2,12 +2,12 @@ export const environment = {
 
   production: true,
 
-  urlBackend: "https://api-controle.apcode.com.br",
+  urlBackend: "https://api.apcode.com.br/controle-backend",
 
-  urlLogin: "https://api-controle.apcode.com.br/auth?redirectUrl=https://controle.apcode.com.br/authorized",
+  urlLogin: "https://api.apcode.com.br/controle-backend/auth?redirectUrl=https://sistemas.apcode.com.br/controle/authorized",
 
-  urlLogout: "https://api-controle.apcode.com.br/logout",
+  urlLogout: "https://api.apcode.com.br/controle-backend/logout",
 
-  urlUserLogin: "https://api-controle.apcode.com.br/auth/usuario-logado"
+  urlUserLogin: "https://api.apcode.com.br/controle-backend/auth/usuario-logado"
 
 };

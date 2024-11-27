@@ -1,0 +1,46 @@
+<apcore-widget-floating-button (click)="incluir()"><i class="bi bi-plus-lg fs-2"></i></apcore-widget-floating-button>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/pagina-inicial"><i class="bi bi-house-door"></i></a></li>
+    <li class="breadcrumb-item active">Colaboradores</li>
+  </ol>
+</nav>
+
+<div class="container">
+
+  <div class="card border border-primary rounded shadow-lg">
+
+    <ngx-loading [show]="aguardar" [config]="{ primaryColour: '#dd0031', secondaryColour: '#fff', animationType: ngxLoadingAnimationTypes.doubleBounce }"></ngx-loading>
+
+    <div class="card-body custom-datatable table-responsive table-border-radius">
+      <table id="datatable-pesquisar-colaboradores" class="table table-styling table-striped align-middle nowrap w-100">
+        <thead>
+        <tr>
+          <th scope="col" class="text-center">Ações</th>
+          <th scope="col" class="text-center">#</th>
+          <th scope="col" class="text-start">Nome</th>
+          <th scope="col" class="text-center">Telefone</th>
+          <th scope="col" class="text-center">Cargo</th>
+          <th scope="col" class="text-center">Unidade Administrativa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let colaborador of this.lista ">
+          <td class="text-center">
+            <div class="btn-group">
+              <button class="btn btn-success btn-sm" (click)="editar(colaborador)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-danger btn-sm" (click)="excluir(colaborador)"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+          <td class="text-center">{{ colaborador.id }}</td>
+          <td class="text-start">{{ colaborador.nome }}</td>
+          <td class="text-center">{{ colaborador.telefone }}</td>
+          <td class="text-center">{{ colaborador.cargo.nome }}</td>
+          <td class="text-center">{{ colaborador.unidadeAdministrativa.empresa.nomeFantasia }} - {{ colaborador.unidadeAdministrativa.nome }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

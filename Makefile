@@ -10,6 +10,8 @@ build-all:
 	docker build -f .docker/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$(VERSAO_APP) .
 	docker build -f .docker/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$(VERSAO_APP) .
 	docker build -f .docker/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$(VERSAO_APP) .
+	docker build -f .docker/dockerfiles/backend.equipe -t ghcr.io/andrepenteado/apsso/equipe-backend -t ghcr.io/andrepenteado/apsso/equipe-backend:$(VERSAO_APP) .
+	docker build -f .docker/dockerfiles/frontend.equipe -t ghcr.io/andrepenteado/apsso/equipe-frontend -t ghcr.io/andrepenteado/apsso/equipe-frontend:$(VERSAO_APP) .
 	docker push ghcr.io/andrepenteado/apsso/login
 	docker push ghcr.io/andrepenteado/apsso/login:$(VERSAO_APP)
 	docker push ghcr.io/andrepenteado/apsso/controle-backend
@@ -20,12 +22,19 @@ build-all:
 	docker push ghcr.io/andrepenteado/apsso/portal-backend:$(VERSAO_APP)
 	docker push ghcr.io/andrepenteado/apsso/portal-frontend
 	docker push ghcr.io/andrepenteado/apsso/portal-frontend:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/equipe-backend
+	docker push ghcr.io/andrepenteado/apsso/equipe-backend:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/equipe-frontend
+	docker push ghcr.io/andrepenteado/apsso/equipe-frontend:$(VERSAO_APP)
 	cd ./frontend/controle/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
 	docker build -f .docker/dockerfiles/frontend.controle --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
 	docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
 	cd ./frontend/portal/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
 	docker build -f .docker/dockerfiles/frontend.portal --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/portal-frontend:dev .
 	docker push ghcr.io/andrepenteado/apsso/portal-frontend:dev
+	cd ./frontend/equipe/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+	docker build -f .docker/dockerfiles/frontend.equipe --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/equipe-frontend:dev .
+	docker push ghcr.io/andrepenteado/apsso/equipe-frontend:dev
 	docker logout ghcr.io
 
 build-login:
@@ -49,6 +58,21 @@ build-controle:
 	cd ./frontend/controle/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
 	docker build -f .docker/dockerfiles/frontend.controle --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/controle-frontend:dev .
 	docker push ghcr.io/andrepenteado/apsso/controle-frontend:dev
+	docker logout ghcr.io
+
+build-equipe:
+	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
+	cd ./frontend/equipe/ && ng build --configuration=production --output-path=dist/production && cd ../..
+	mvn -U -f ./backend/pom.xml clean package --projects services,equipe -DskipTests
+	docker build -f .docker/dockerfiles/backend.equipe -t ghcr.io/andrepenteado/apsso/equipe-backend -t ghcr.io/andrepenteado/apsso/equipe-backend:$(VERSAO_APP) .
+	docker build -f .docker/dockerfiles/frontend.equipe -t ghcr.io/andrepenteado/apsso/equipe-frontend -t ghcr.io/andrepenteado/apsso/equipe-frontend:$(VERSAO_APP) .
+	docker push ghcr.io/andrepenteado/apsso/equipe-backend
+	docker push ghcr.io/andrepenteado/apsso/equipe-backend:$(VERSAO_APP)
+	docker push ghcr.io/andrepenteado/apsso/equipe-frontend
+	docker push ghcr.io/andrepenteado/apsso/equipe-frontend:$(VERSAO_APP)
+	cd ./frontend/equipe/ && ng build --configuration=localhost --output-path=dist/localhost && cd ../..
+	docker build -f .docker/dockerfiles/frontend.equipe --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/equipe-frontend:dev .
+	docker push ghcr.io/andrepenteado/apsso/equipe-frontend:dev
 	docker logout ghcr.io
 
 build-portal:
@@ -86,6 +110,9 @@ update:
 	docker image pull ghcr.io/andrepenteado/apsso/portal-backend
 	docker image pull ghcr.io/andrepenteado/apsso/portal-frontend
 	docker image pull ghcr.io/andrepenteado/apsso/portal-frontend:dev
+	docker image pull ghcr.io/andrepenteado/apsso/equipe-backend
+	docker image pull ghcr.io/andrepenteado/apsso/equipe-frontend
+	docker image pull ghcr.io/andrepenteado/apsso/equipe-frontend:dev
 	docker logout ghcr.io
 	$(MAKE) start
 

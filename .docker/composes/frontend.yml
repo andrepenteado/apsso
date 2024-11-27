@@ -1,26 +1,29 @@
 services:
 
-  controle-backend:
-    image: ghcr.io/andrepenteado/apsso/controle-frontend
-    container_name: controle-backend
-    hostname: controle-backend
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-      AUTHORIZATION_SERVER_URL: http://login:30000
+  controle-frontend:
+    image: ghcr.io/andrepenteado/apsso/controle-frontend:dev
+    container_name: controle-frontend
+    hostname: controle-frontend
     ports:
-      - 30001:8080
+      - 40001:80
     networks:
       - docker-host-network
 
-  portal-backend:
-    image: ghcr.io/andrepenteado/apsso/portal-frontend
-    container_name: portal-backend
-    hostname: portal-backend
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-      AUTHORIZATION_SERVER_URL: http://login:30000
+  portal-frontend:
+    image: ghcr.io/andrepenteado/apsso/portal-frontend:dev
+    container_name: portal-frontend
+    hostname: portal-frontend
     ports:
-      - 30002:8080
+      - 40002:80
+    networks:
+      - docker-host-network
+
+  equipe-frontend:
+    image: ghcr.io/andrepenteado/apsso/portal-equipe:dev
+    container_name: equipe-frontend
+    hostname: equipe-frontend
+    ports:
+      - 40003:80
     networks:
       - docker-host-network
 

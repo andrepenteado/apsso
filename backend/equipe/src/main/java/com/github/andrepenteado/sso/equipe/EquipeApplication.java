@@ -44,7 +44,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 )
 public class EquipeApplication {
 
-    public static final String PERFIL_GESTOR = "ROLE_com.github.andrepenteado.equipe_GESTOR";
+    public static final String PERFIL_GESTOR = "ROLE_com.github.andrepenteado.sso.equipe_GESTOR";
 
     public static void main(String[] args) {
         SpringApplication.run(EquipeApplication.class, args);
