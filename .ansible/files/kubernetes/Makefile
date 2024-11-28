@@ -25,6 +25,9 @@ log-portal:
 log-controle:
 	kubectl logs -n apsso service/apsso-controle-backend -f
 
+log-equipe:
+	kubectl logs -n apsso service/apsso-equipe-backend -f
+
 log-login:
 	kubectl logs -n apsso service/apsso-login -f
 
@@ -43,6 +46,14 @@ update-controle:
 	kubectl rollout status deployment apsso-controle-frontend -n apsso
 	kubectl rollout history deployment apsso-controle-backend -n apsso
 	kubectl rollout history deployment apsso-controle-frontend -n apsso
+
+update-equipe:
+	kubectl rollout restart deployment apsso-equipe-backend -n apsso
+	kubectl rollout restart deployment apsso-equipe-frontend -n apsso
+	kubectl rollout status deployment apsso-equipe-backend -n apsso
+	kubectl rollout status deployment apsso-equipe-frontend -n apsso
+	kubectl rollout history deployment apsso-equipe-backend -n apsso
+	kubectl rollout history deployment apsso-equipe-frontend -n apsso
 
 update-login:
 	kubectl rollout restart deployment apsso-login -n apsso

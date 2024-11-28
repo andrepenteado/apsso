@@ -16,8 +16,8 @@ switch($exec) {
         docker build -f .deploy/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend -t ghcr.io/andrepenteado/apsso/controle-frontend:$VERSAO .
         docker build -f .deploy/dockerfiles/backend.portal -t ghcr.io/andrepenteado/apsso/portal-backend -t ghcr.io/andrepenteado/apsso/portal-backend:$VERSAO .
         docker build -f .deploy/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend -t ghcr.io/andrepenteado/apsso/portal-frontend:$VERSAO .
-        docker build -f .deploy/dockerfiles/backend.equipe -t ghcr.io/andrepenteado/apsso/controle-equipe -t ghcr.io/andrepenteado/apsso/equipe-backend:$VERSAO .
-        docker build -f .deploy/dockerfiles/frontend.equipe -t ghcr.io/andrepenteado/apsso/controle-equipe -t ghcr.io/andrepenteado/apsso/equipe-frontend:$VERSAO .
+        docker build -f .deploy/dockerfiles/backend.equipe -t ghcr.io/andrepenteado/apsso/equipe-backend -t ghcr.io/andrepenteado/apsso/equipe-backend:$VERSAO .
+        docker build -f .deploy/dockerfiles/frontend.equipe -t ghcr.io/andrepenteado/apsso/equipe-frontend -t ghcr.io/andrepenteado/apsso/equipe-frontend:$VERSAO .
         docker push ghcr.io/andrepenteado/apsso/login
         docker push ghcr.io/andrepenteado/apsso/login:$VERSAO
         docker push ghcr.io/andrepenteado/apsso/controle-backend
