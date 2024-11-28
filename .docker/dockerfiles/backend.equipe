@@ -1,5 +1,0 @@
-FROM amazoncorretto:21
-WORKDIR /app
-COPY backend/equipe/target/equipe.jar /app/equipe.jar
-ENTRYPOINT [ "java", "-jar", "/app/equipe.jar" ]
-EXPOSE 8080

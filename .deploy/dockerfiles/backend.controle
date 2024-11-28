@@ -1,5 +1,14 @@
 FROM amazoncorretto:21
+
 WORKDIR /app
+
+# Timezone
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
+    echo "America/Sao_Paulo" > /etc/timezone
+
 COPY backend/controle/target/controle.jar /app/controle.jar
+
 ENTRYPOINT [ "java", "-jar", "/app/controle.jar" ]
+
 EXPOSE 8080

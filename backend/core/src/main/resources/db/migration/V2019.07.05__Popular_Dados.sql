@@ -6,7 +6,7 @@ INSERT INTO public.oauth2_registered_client (
   authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
   gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/controle', 'http://localhost:30000', 'LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
-  '{bcrypt}$2a$10$5LIt4KfAlzt78c/FvaKXGejNkBWbJIm7jnJizvZxhSwOlkOarpQ76', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
+  '{bcrypt}$2a$10$GgObVloKFqYDsfr2RGLtae0S0nWbypa6p73mZdMO3KLBvBO0Z/D7e', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
   'http://localhost:8080/controle-backend/authorized,http://localhost:8080/controle-backend/login/oauth2/code/com.github.andrepenteado.sso.controle', 'http://localhost:8080/controle-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",900.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}'
@@ -30,7 +30,7 @@ INSERT INTO public.oauth2_registered_client (
   authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
   gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/portal', 'http://localhost:30000','LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
-  '{bcrypt}$2a$10$xfxYJswuh3wHCKCyH9PfFOZprAyALhvAu3vpkPSZvuWxjFZqtha5G', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
+  '{bcrypt}$2a$10$v8qAdIL15OI0w6U3Z7eORObmm50Do1LG/JaDdsTEQzgazF3kmAM8y', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
   'http://localhost:8080/portal-backend/authorized,http://localhost:8080/portal-backend/login/oauth2/code/com.github.andrepenteado.sso.portal', 'http://localhost:8080/portal-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",900.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}'
@@ -54,7 +54,7 @@ INSERT INTO public.oauth2_registered_client (
   authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
   gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/equipe', 'http://localhost:30000','LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.equipe', '2023-01-01 00:00:00.000000',
-  '{bcrypt}$2a$10$hbJqfQAp.8Q5bpOG/OgWp.xSrxfuYiYpYOtBpqtP0yCUp2Hm8G5JS', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
+  '{bcrypt}$2a$10$ouqKfDtW4LClapVVHX2wvOc07ru6gCXy2MiN.eZKi1eIVFfFvDL2W', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
   'http://localhost:8080/equipe-backend/authorized,http://localhost:8080/equipe-backend/login/oauth2/code/com.github.andrepenteado.sso.equipe', 'http://localhost:8080/equipe-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",900.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}'

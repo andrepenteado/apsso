@@ -52,7 +52,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build da imagem docker do frontend do módulo de controle
-        run: docker build -f .docker/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend:latest -t ghcr.io/andrepenteado/apsso/controle-frontend:${{ env.VERSAO }} .
+        run: docker build -f .deploy/dockerfiles/frontend.controle -t ghcr.io/andrepenteado/apsso/controle-frontend:latest -t ghcr.io/andrepenteado/apsso/controle-frontend:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do frontend do módulo de controle
         run: |
@@ -60,7 +60,7 @@ jobs:
           docker push ghcr.io/andrepenteado/apsso/controle-frontend:${{ env.VERSAO }}
 
       - name: Build da imagem docker do frontend do portal de sistemas
-        run: docker build -f .docker/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend:latest -t ghcr.io/andrepenteado/apsso/portal-frontend:${{ env.VERSAO }} .
+        run: docker build -f .deploy/dockerfiles/frontend.portal -t ghcr.io/andrepenteado/apsso/portal-frontend:latest -t ghcr.io/andrepenteado/apsso/portal-frontend:${{ env.VERSAO }} .
 
       - name: Push da imagem docker do frontend do portal de sistemas
         run: |

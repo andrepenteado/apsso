@@ -65,8 +65,7 @@ CREATE TABLE colaborador (
   fk_upload UUID,
   primary key (id),
   constraint fk_colaborador_unidadeadministrativa foreign key (fk_unidade_administrativa) references unidade_administrativa (id),
-  constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id),
-  constraint un_colaborador_cpf unique (cpf)
+  constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id)
 );
 
 CREATE TABLE sistema (

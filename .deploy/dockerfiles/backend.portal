@@ -1,5 +1,14 @@
 FROM amazoncorretto:21
+
 WORKDIR /portal
+
+# Timezone
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
+    echo "America/Sao_Paulo" > /etc/timezone
+
 COPY backend/portal/target/portal.jar /portal/portal.jar
+
 ENTRYPOINT [ "java", "-jar", "/portal/portal.jar" ]
+
 EXPOSE 8080

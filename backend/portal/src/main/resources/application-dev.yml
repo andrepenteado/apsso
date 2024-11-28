@@ -5,6 +5,16 @@ spring:
   security:
     oauth2:
       client:
+        registration:
+          "[com.github.andrepenteado.sso.controle]":
+            provider: com.github.andrepenteado.sso.portal
+            client-name: Portal de Sistemas
+            client-id: com.github.andrepenteado.sso.portal
+            client-secret: aee552d9-a08c-4489-b1ad-dcc93631682a
+            authorization-grant-type: authorization_code
+            scope: openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-authentication-method: client_secret_basic
         provider:
           "[com.github.andrepenteado.sso.portal]":
             issuer-uri: http://localhost:30000

@@ -1,8 +1,8 @@
 package com.github.andrepenteado.sso.login.config;
 
-import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.github.andrepenteado.sso.core.domain.entities.PerfilSistema;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
+import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -34,12 +34,12 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.security.KeyStore;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -57,17 +57,16 @@ public class AuthorizationServer {
         http
             .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
             .oidc(Customizer.withDefaults());
-
-        http
-            .cors(Customizer.withDefaults());
-
         http
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
                     new LoginUrlAuthenticationEntryPoint("/login"))
-            )
+            );
+        http
             .oauth2ResourceServer(
-                oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults())
+                oauth2ResourceServer ->
+                    oauth2ResourceServer.jwt(Customizer.withDefaults()
+                )
             );
 
         return http.build();
@@ -143,34 +142,19 @@ public class AuthorizationServer {
             context.getClaims().claims(claims ->
                 claims.put("authorities", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())));
 
-            final Usuario userEntity = usuarioService.buscar(userDetails.getUsername()).orElseThrow();
+            final Usuario usuario = usuarioService.buscar(userDetails.getUsername()).orElseThrow();
 
             Map<String, String> perfis = new HashMap<>();
-            for (PerfilSistema perfil : userEntity.getPerfis()) {
+            for (PerfilSistema perfil : usuario.getPerfis()) {
                 perfis.put(perfil.getAuthority(), perfil.getDescricao());
             }
 
-            context.getClaims().claim("login", userEntity.getUsername());
-            context.getClaims().claim("nome", userEntity.getNome());
-            context.getClaims().claim("cpf", Objects.isNull(userEntity.getCpf()) ? "" : Long.toString(userEntity.getCpf()));
-            context.getClaims().claim("uuidFoto", Objects.isNull(userEntity.getFoto()) ? "" : userEntity.getFoto().toString());
+            context.getClaims().claim("login", usuario.getUsername());
+            context.getClaims().claim("nome", usuario.getNome());
+            context.getClaims().claim("cpf", Objects.isNull(usuario.getCpf()) ? "" : Long.toString(usuario.getCpf()));
+            context.getClaims().claim("uuidFoto", Objects.isNull(usuario.getFoto()) ? "" : usuario.getFoto().toString());
             context.getClaims().claim("perfis", perfis);
         };
-    }
-
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
-        configuration.addAllowedOriginPattern("*");
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("*"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return new CorsFilter(source);
     }
 
 }
