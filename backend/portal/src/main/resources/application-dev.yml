@@ -6,7 +6,7 @@ spring:
     oauth2:
       client:
         registration:
-          "[com.github.andrepenteado.sso.controle]":
+          "[com.github.andrepenteado.sso.portal]":
             provider: com.github.andrepenteado.sso.portal
             client-name: Portal de Sistemas
             client-id: LOCAL-portal
