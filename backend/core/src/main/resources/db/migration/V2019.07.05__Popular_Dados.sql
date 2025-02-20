@@ -5,7 +5,7 @@ INSERT INTO public.oauth2_registered_client (
   id, client_name, url_acesso, uri_provider, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
   authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-  gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/controle', 'http://localhost:30000', 'LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
+  gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/controle', 'http://localhost:30000', 'LOCAL', currval('sistema_id_seq'), 'LOCAL-controle', '2023-01-01 00:00:00.000000',
   '{bcrypt}$2a$10$GgObVloKFqYDsfr2RGLtae0S0nWbypa6p73mZdMO3KLBvBO0Z/D7e', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
   'http://localhost:8080/controle-backend/authorized,http://localhost:8080/controle-backend/login/oauth2/code/com.github.andrepenteado.sso.controle', 'http://localhost:8080/controle-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -15,7 +15,7 @@ INSERT INTO public.oauth2_registered_client (
     id, client_name, url_acesso, uri_provider, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-  gen_random_uuid(), 'Servidor de Produção', 'https://sistemas.apcode.com.br/controle', 'https://login.apcode.com.br', 'PRODUCAO', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.controle', '2023-01-01 00:00:00.000000',
+  gen_random_uuid(), 'Servidor de Produção', 'https://sistemas.apcode.com.br/controle', 'https://login.apcode.com.br', 'PRODUCAO', currval('sistema_id_seq'), 'PRODUCAO-controle', '2023-01-01 00:00:00.000000',
   '{bcrypt}$2a$10$5LIt4KfAlzt78c/FvaKXGejNkBWbJIm7jnJizvZxhSwOlkOarpQ76', null, 'client_secret_basic',  'refresh_token,client_credentials,authorization_code',
   'https://api.apcode.com.br/controle-backend/authorized,https://api.apcode.com.br/controle-backend/login/oauth2/code/com.github.andrepenteado.sso.controle', 'https://api.apcode.com.br/controle-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -29,7 +29,7 @@ INSERT INTO public.oauth2_registered_client (
   id, client_name, url_acesso, uri_provider, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
   authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-  gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/portal', 'http://localhost:30000','LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
+  gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/portal', 'http://localhost:30000','LOCAL', currval('sistema_id_seq'), 'LOCAL-portal', '2023-01-01 00:00:00.000000',
   '{bcrypt}$2a$10$v8qAdIL15OI0w6U3Z7eORObmm50Do1LG/JaDdsTEQzgazF3kmAM8y', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
   'http://localhost:8080/portal-backend/authorized,http://localhost:8080/portal-backend/login/oauth2/code/com.github.andrepenteado.sso.portal', 'http://localhost:8080/portal-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -39,7 +39,7 @@ INSERT INTO public.oauth2_registered_client (
     id, client_name, url_acesso, uri_provider, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-  gen_random_uuid(), 'Servidor de Produção', 'https://sistemas.apcode.com.br/portal', 'https://login.apcode.com.br','PRODUCAO', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.portal', '2023-01-01 00:00:00.000000',
+  gen_random_uuid(), 'Servidor de Produção', 'https://sistemas.apcode.com.br/portal', 'https://login.apcode.com.br','PRODUCAO', currval('sistema_id_seq'), 'PRODUCAO-portal', '2023-01-01 00:00:00.000000',
   '{bcrypt}$2a$10$xfxYJswuh3wHCKCyH9PfFOZprAyALhvAu3vpkPSZvuWxjFZqtha5G', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
   'https://api.apcode.com.br/portal-backend/authorized,https://api.apcode.com.br/portal-backend/login/oauth2/code/com.github.andrepenteado.sso.portal', 'https://api.apcode.com.br/portal-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -53,7 +53,7 @@ INSERT INTO public.oauth2_registered_client (
   id, client_name, url_acesso, uri_provider, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
   authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-  gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/equipe', 'http://localhost:30000','LOCAL', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.equipe', '2023-01-01 00:00:00.000000',
+  gen_random_uuid(), 'Máquina Local', 'http://localhost:4200/equipe', 'http://localhost:30000','LOCAL', currval('sistema_id_seq'), 'LOCAL-equipe', '2023-01-01 00:00:00.000000',
   '{bcrypt}$2a$10$ouqKfDtW4LClapVVHX2wvOc07ru6gCXy2MiN.eZKi1eIVFfFvDL2W', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
   'http://localhost:8080/equipe-backend/authorized,http://localhost:8080/equipe-backend/login/oauth2/code/com.github.andrepenteado.sso.equipe', 'http://localhost:8080/equipe-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',
@@ -63,7 +63,7 @@ INSERT INTO public.oauth2_registered_client (
     id, client_name, url_acesso, uri_provider, tipo, fk_sistema, client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_authentication_methods,
     authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes, client_settings, token_settings)
 VALUES (
-  gen_random_uuid(), 'Servidor de Produção', 'https://sistemas.apcode.com.br/equipe', 'https://login.apcode.com.br','PRODUCAO', currval('sistema_id_seq'), 'com.github.andrepenteado.sso.equipe', '2023-01-01 00:00:00.000000',
+  gen_random_uuid(), 'Servidor de Produção', 'https://sistemas.apcode.com.br/equipe', 'https://login.apcode.com.br','PRODUCAO', currval('sistema_id_seq'), 'PRODUCAO-equipe', '2023-01-01 00:00:00.000000',
   '{bcrypt}$2a$10$hbJqfQAp.8Q5bpOG/OgWp.xSrxfuYiYpYOtBpqtP0yCUp2Hm8G5JS', null, 'client_secret_basic', 'refresh_token,client_credentials,authorization_code',
   'https://api.apcode.com.br/equipe-backend/authorized,https://api.apcode.com.br/equipe-backend/login/oauth2/code/com.github.andrepenteado.sso.equipe', 'https://api.apcode.com.br/equipe-backend/logout', 'openid',
   '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":false}',

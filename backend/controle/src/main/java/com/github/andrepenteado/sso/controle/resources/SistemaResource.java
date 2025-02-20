@@ -119,9 +119,9 @@ public class SistemaResource {
 
     @PostMapping("/ambiente")
     @Secured({ PERFIL_ARQUITETO })
-    public AmbienteSistema incluirAmbiente(@RequestBody @Valid AmbienteSistema ambienteSistema, BindingResult validacao) {
+    public AmbienteSistema incluirOuAlterarAmbiente(@RequestBody @Valid AmbienteSistema ambienteSistema, BindingResult validacao) {
         log.info("Incluir novo ambiente de sistema {}", ambienteSistema);
-        return ambienteSistemaService.incluir(ambienteSistema, validacao);
+        return ambienteSistemaService.incluirOuAlterar(ambienteSistema, validacao);
     }
 
     @DeleteMapping("/ambiente/{id}")

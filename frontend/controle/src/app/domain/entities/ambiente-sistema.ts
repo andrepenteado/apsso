@@ -6,11 +6,11 @@ export class AmbienteSistema {
   id: string;
   descricao: string;
   urlAcesso: string;
+  urlLogin: string;
   tipo: TipoAmbiente;
   sistema: Sistema;
   clientId: string;
   clientSecretPlain: string;
-  uriProvider: string;
   redirectUris: string;
   postLogoutRedirectUris: string;
 

@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -22,9 +23,6 @@ import java.util.UUID;
 public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
 
     private final AmbienteSistemaRepository ambienteSistemaRepository;
-
-    @Value("${spring.security.oauth2.client.provider.[com.github.andrepenteado.sso.portal].issuer-uri:http://localhost:30000}")
-    private String issuerUri;
 
     @Override
     public List<AmbienteSistema> listar() {
@@ -42,28 +40,44 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
     }
 
     @Override
-    public AmbienteSistema incluir(AmbienteSistema ambienteSistema, BindingResult validacao) {
+    public AmbienteSistema incluirOuAlterar(AmbienteSistema ambienteSistema, BindingResult validacao) {
         String erros = CoreUtil.validateModel(validacao);
+
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 
-        AmbienteSistema ambienteSistemaAlterar = novoAmbiente();
+        AmbienteSistema ambienteSistemaAlterar;
+        String senhaPlain = "********** (inalterada)";
 
-        ambienteSistemaAlterar.setId(UUID.randomUUID().toString());
+        if (ambienteSistema.getId() == null) {
+            ambienteSistemaAlterar = novoAmbiente();
+            ambienteSistemaAlterar.setId(UUID.randomUUID().toString());
+
+            senhaPlain = UUID.randomUUID().toString();
+            ambienteSistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(senhaPlain));
+
+            // Gera uma string do tipo PRODUCAO-H8623bh
+            ambienteSistemaAlterar.setClientId(ambienteSistema.getTipo().toString()
+                .concat(new Random().ints(6, 33, 127)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                    .toString()
+                )
+            );
+        }
+        else {
+            ambienteSistemaAlterar = buscar(ambienteSistema.getId()).orElseThrow();
+        }
+
         ambienteSistemaAlterar.setDescricao(ambienteSistema.getDescricao());
         ambienteSistemaAlterar.setTipo(ambienteSistema.getTipo());
-        ambienteSistemaAlterar.setClientId(ambienteSistema.getSistema().getIdentificador());
         ambienteSistemaAlterar.setUrlAcesso(ambienteSistema.getUrlAcesso());
+        ambienteSistemaAlterar.setUrlLogin(ambienteSistema.getUrlLogin());
         ambienteSistemaAlterar.setRedirectUris(ambienteSistema.getRedirectUris());
         ambienteSistemaAlterar.setPostLogoutRedirectUris(ambienteSistema.getPostLogoutRedirectUris());
-        ambienteSistemaAlterar.setUriProvider(this.issuerUri);
         ambienteSistemaAlterar.setSistema(ambienteSistema.getSistema());
 
-        String novaSenha = UUID.randomUUID().toString();
-        ambienteSistemaAlterar.setClientSecret("{bcrypt}" + new BCryptPasswordEncoder().encode(novaSenha));
-
         AmbienteSistema result = ambienteSistemaRepository.save(ambienteSistemaAlterar);
-        result.setClientSecretPlain(novaSenha);
+        result.setClientSecretPlain(senhaPlain);
 
         return result;
     }

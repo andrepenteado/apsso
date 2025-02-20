@@ -18,7 +18,7 @@ export class AmbienteSistemaService {
     return this.http.get<AmbienteSistema[]>(`${environment.urlBackend}${API_SISTEMAS}/${idSistema}/ambientes`);
   }
 
-  public incluir(ambienteSistema: any): Observable<AmbienteSistema> {
+  public incluirOuAlterar(ambienteSistema: any): Observable<AmbienteSistema> {
     return this.http.post<AmbienteSistema>(`${environment.urlBackend}${API_SISTEMAS}/ambiente`, ambienteSistema);
   }
 

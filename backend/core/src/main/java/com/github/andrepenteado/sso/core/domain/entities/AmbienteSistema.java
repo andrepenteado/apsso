@@ -22,6 +22,9 @@ public class AmbienteSistema {
     @NotNull(message = "URL do sistema é um campo obrigatório")
     private String urlAcesso;
 
+    @Column(name = "uri_provider")
+    private String urlLogin;
+
     @NotNull(message = "Tipo do ambiente é um campo obrigatório")
     @Enumerated(EnumType.STRING)
     private TipoAmbiente tipo;
@@ -37,8 +40,6 @@ public class AmbienteSistema {
 
     @Transient
     private String clientSecretPlain;
-
-    private String uriProvider;
 
     private String redirectUris;
 

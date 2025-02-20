@@ -14,7 +14,7 @@ public interface AmbienteSistemaService {
 
     Optional<AmbienteSistema> buscar(String id);
 
-    AmbienteSistema incluir(AmbienteSistema ambienteSistema, BindingResult validacao);
+    AmbienteSistema incluirOuAlterar(AmbienteSistema ambienteSistema, BindingResult validacao);
 
     void excluir(String id);
 

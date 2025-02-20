@@ -9,7 +9,7 @@ spring:
           "[com.github.andrepenteado.sso.equipe]":
             provider: com.github.andrepenteado.sso.portal
             client-name: Gestão de Equipes
-            client-id: com.github.andrepenteado.sso.equipe
+            client-id: LOCAL-equipe
             client-secret: 82f6a88a-4c7c-4432-937b-3997aa621675
             authorization-grant-type: authorization_code
             scope: openid

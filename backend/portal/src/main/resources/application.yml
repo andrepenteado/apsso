@@ -28,7 +28,7 @@ spring:
           "[com.github.andrepenteado.sso.portal]":
             provider: com.github.andrepenteado.sso.portal
             client-name: Portal de Sistemas
-            client-id: com.github.andrepenteado.sso.portal
+            client-id: PRODUCAO-portal
             client-secret: 3c2c2001-5a07-4424-acf8-3488c8cde2e2
             authorization-grant-type: authorization_code
             scope: openid

@@ -28,7 +28,7 @@ spring:
           "[com.github.andrepenteado.sso.controle]":
             provider: com.github.andrepenteado.sso.portal
             client-name: Módulo de Controle
-            client-id: com.github.andrepenteado.sso.controle
+            client-id: PRODUCAO-controle
             client-secret: 9c9dcb57-c306-494b-bb83-47565e1163a4
             authorization-grant-type: authorization_code
             scope: openid

@@ -177,6 +177,13 @@
               </div>
               <div class="row mb-3">
                 <div class="form-group col-12 col-md-12">
+                  <label>* URL de Login</label>
+                  <input type="text" name="urlLogin" formControlName="urlLogin" class="form-control" required>
+                  <div class="invalid-feedback">Campo url do formulário de login é obrigatório</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
                   <label>* Redirect URIs</label>
                   <input type="text" name="redirectUris" formControlName="redirectUris" class="form-control" required>
                   <div class="form-text fst-italic">Cliente do spring-boot: http://servidor/authorized,http://servidor/login/oauth2/code/{{ sistema.identificador }}</div>
@@ -210,15 +217,15 @@ spring:
             client-authentication-method: client_secret_basic
         provider:
           "[com.github.andrepenteado.sso.portal]":
-            issuer-uri: {{ ambienteAtual.uriProvider }}}
+            issuer-uri: {{ ambienteAtual.urlLogin }}}
                   </textarea>
                   <div class="form-text fst-italic">Usando a dependência spring-boot-starter-oauth2-client</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="col-12 text-center p-2">
-                  <button class="btn btn-primary mx-2" (click)="gravarAmbiente()"><i class="bi bi-floppy"></i> Adicionar</button>
-                  <button class="btn btn-light mx-2" type="reset"><i class="bi bi-eraser"></i> Limpar</button>
+                  <button class="btn btn-primary mx-2" (click)="gravarAmbiente()"><i class="bi bi-floppy"></i> Gravar</button>
+                  <button class="btn btn-light mx-2" (click)="novoAmbiente()"><i class="bi bi-plus-circle"></i> Novo</button>
                 </div>
               </div>
               <br>
@@ -236,7 +243,7 @@ spring:
                       <tr *ngFor="let ambiente of this.ambientes">
                         <td class="text-center">
                           <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm" (click)="consultarAmbiente(ambiente)"><i class="bi bi-search"></i></button>
+                            <button class="btn btn-success btn-sm" (click)="editarAmbiente(ambiente)"><i class="bi bi-pencil"></i></button>
                             <button class="btn btn-danger btn-sm" (click)="excluirAmbiente(ambiente)"><i class="bi bi-trash"></i></button>
                           </div>
                         </td>

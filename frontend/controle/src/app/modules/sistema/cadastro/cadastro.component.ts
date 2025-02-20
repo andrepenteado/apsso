@@ -22,6 +22,7 @@ import { TipoAmbiente } from "../../../domain/enums/tipo-ambiente";
 export class CadastroComponent implements OnInit {
 
   incluir = true;
+  incluirAmbiente = true;
   formEnviado = false;
   formPerfilEnviado = false;
   formAmbienteEnviado = false;
@@ -68,6 +69,7 @@ export class CadastroComponent implements OnInit {
   tipoAmbiente = new FormControl(null, Validators.required);
   descricaoAmbiente = new FormControl(null, Validators.required);
   urlAcesso = new FormControl(null, Validators.required);
+  urlLogin = new FormControl(null, Validators.required);
   redirectUris = new FormControl(null, Validators.required);
   postLogoutRedirectUris = new FormControl(null, Validators.required);
   formAmbiente = new FormGroup({
@@ -76,6 +78,7 @@ export class CadastroComponent implements OnInit {
     sistema: this.sistemaAmbiente,
     descricao: this.descricaoAmbiente,
     urlAcesso: this.urlAcesso,
+    urlLogin: this.urlLogin,
     redirectUris: this.redirectUris,
     postLogoutRedirectUris: this.postLogoutRedirectUris
   });
@@ -229,16 +232,23 @@ export class CadastroComponent implements OnInit {
     this.formAmbiente.controls.sistema.setValue(this.sistema);
 
     if (this.formAmbiente.valid) {
-      this.ambienteSistemaService.incluir(this.formAmbiente.value).subscribe({
+      this.ambienteSistemaService.incluirOuAlterar(this.formAmbiente.value).subscribe({
         next: ambiente => {
-          this.ambientes.unshift(ambiente);
+          if (this.incluirAmbiente)
+            this.ambientes.unshift(ambiente);
+          else {
+            let indice = this.ambientes.findIndex(objetoAmbiente => objetoAmbiente.id === ambiente.id);
+            if (indice >= 0) {
+              this.ambientes.splice(indice, 1, ambiente);
+            }
+          }
           this.formAmbiente.reset();
           this.formAmbienteEnviado = false;
           this.exibirMensagem.showAlert(
-            `Anote a senha a seguir porque após fechar
-            essa janela não é mais possível recupera-lá:
-            ${ambiente.clientSecretPlain}`,
-            "Ambiente de sistema incluído com sucesso",
+            `Anote as credenciais a seguir:<br><br>
+            Client ID: ${ambiente.clientId}<br>
+            Client Secret: ${ambiente.clientSecretPlain}`,
+            "Ambiente de sistema gravado com sucesso",
             DecoracaoMensagem.SUCESSO
           );
         }
@@ -265,7 +275,14 @@ export class CadastroComponent implements OnInit {
       });
   }
 
-  consultarAmbiente(ambiente: AmbienteSistema) {
+  novoAmbiente() {
+    this.incluirAmbiente = true;
+    this.ambienteAtual = new AmbienteSistema();
+    this.formAmbiente.reset();
+  }
+
+  editarAmbiente(ambiente: AmbienteSistema) {
+    this.incluirAmbiente = false;
     this.ambienteAtual = ambiente;
     this.formAmbiente.patchValue(ambiente);
   }
