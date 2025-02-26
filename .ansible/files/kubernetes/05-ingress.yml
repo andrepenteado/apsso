@@ -20,7 +20,7 @@ spec:
                 name: apsso-login
                 port:
                   name: apsso-login
-    - host: api.apcode.com.br
+    - host: sistemas.apcode.com.br
       http:
         paths:
           - pathType: Prefix
@@ -30,7 +30,7 @@ spec:
                 name: apsso-controle-backend
                 port:
                   name: control-back
-    - host: api.apcode.com.br
+    - host: sistemas.apcode.com.br
       http:
         paths:
           - pathType: Prefix
@@ -40,7 +40,7 @@ spec:
                 name: apsso-portal-backend
                 port:
                   name: portal-back
-    - host: api.apcode.com.br
+    - host: sistemas.apcode.com.br
       http:
         paths:
           - pathType: Prefix

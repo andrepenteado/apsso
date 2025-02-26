@@ -87,7 +87,7 @@
                   <input type="file" class="form-control" (change)="atualizarIcone($event)" accept="image/*" id="formFile"/>
                 </div>
                 <div class="col-3 text-center">
-                  <img src="{{ this.iconeUpload.base64 && this.iconeUpload.base64.length > 0 ? this.iconeUpload.base64 : '/assets/images/sem-imagem.gif' }}" width="60" height="60" class="rounded-circle">
+                  <img src="{{ this.iconeUpload.base64 && this.iconeUpload.base64.length > 0 ? this.iconeUpload.base64 : 'assets/images/sem-imagem.gif' }}" width="60" height="60" class="rounded-circle">
                 </div>
               </div>
               <div class="row mb-3">

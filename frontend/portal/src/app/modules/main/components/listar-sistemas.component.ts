@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AmbienteSistemaService } from "../../../services/ambiente-sistema.service";
 import { UploadService } from "@andre.penteado/ngx-apcore";
-import { lastValueFrom } from "rxjs"
 import { AmbienteSistema } from "../../../domain/entities/ambiente-sistema";
 
 @Component({
@@ -16,10 +15,7 @@ import { AmbienteSistema } from "../../../domain/entities/ambiente-sistema";
     <br>
     <div class="my-gallery card-body row gallery-with-description text-center" itemscope="" gallerize>
       <figure class="col-6 col-md-4" itemprop="associatedMedia" *ngFor="let ambientePorSistema of sistemasAgrupados">
-        <img *ngIf="ambientePorSistema.sistema.icone" class="img-fluid float-right rounded-circle"
-             id="image-{{ ambientePorSistema.sistema.icone }}" style="width: 120px; height: 120px;"/>
-        <img *ngIf="!ambientePorSistema.sistema.icone" class="img-fluid float-right rounded-circle"
-             src="/assets/images/sem-imagem.gif" style="width: 120px; height: 120px;"/>
+        <img class="img-fluid float-right rounded-circle" [src]="iconesCarregados.get(ambientePorSistema.sistema.icone) || 'assets/images/sem-imagem.gif'" style="width: 120px; height: 120px;"/>
         <div class="caption">
           <h3>{{ ambientePorSistema.sistema.nome }}</h3>
           <p class="form-text">{{ ambientePorSistema.sistema.descricao }}</p>
@@ -36,6 +32,7 @@ import { AmbienteSistema } from "../../../domain/entities/ambiente-sistema";
 export class ListarSistemasComponent implements OnInit {
 
   lista: AmbienteSistema[] = [];
+  iconesCarregados: Map<string, string> = new Map();
 
   constructor(
     private service: AmbienteSistemaService,
@@ -46,16 +43,20 @@ export class ListarSistemasComponent implements OnInit {
     this.pesquisar();
   }
 
-  async pesquisar() {
-    this.lista = await lastValueFrom(this.service.listar());
-    this.lista.forEach((ambiente: AmbienteSistema) => {
-      if (ambiente.sistema.icone) {
-        this.uploadService.buscar(ambiente.sistema.icone).subscribe(upload => {
-          document
-            .getElementById(`image-${ambiente.sistema.icone}`)
-            .setAttribute('src', upload.base64);
-        });
-      }
+  pesquisar() {
+    this.service.listar().subscribe(lista => {
+      this.lista = lista;
+      this.lista.forEach(ambiente => {
+        if (ambiente.sistema.icone) {
+          this.carregarIcone(ambiente.sistema.icone);
+        }
+      });
+    });
+  }
+
+  carregarIcone(nomeIcone: string) {
+    this.uploadService.buscar(nomeIcone).subscribe(upload => {
+      this.iconesCarregados.set(nomeIcone, upload.base64); // Armazena o ícone carregado
     });
   }
 

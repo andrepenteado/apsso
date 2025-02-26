@@ -39,6 +39,7 @@ registerLocaleData(localePT);
         urlLogin: environment.urlLogin,
         urlLogout: environment.urlLogout,
         urlUserLogin: environment.urlUserLogin,
+        urlPortal: environment.urlPortal,
         prefixoPerfil: PREFIXO_PERFIL_SISTEMA
       }
     },

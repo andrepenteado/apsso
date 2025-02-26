@@ -8,6 +8,8 @@ export const environment = {
 
   urlLogout: "http://localhost:8080/controle-backend/logout",
 
-  urlUserLogin: "http://localhost:8080/controle-backend/auth/usuario-logado"
+  urlUserLogin: "http://localhost:8080/controle-backend/auth/usuario-logado",
+
+  urlPortal: "http://localhost:4200/portal/login"
 
 };
