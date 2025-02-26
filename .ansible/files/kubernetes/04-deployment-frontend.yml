@@ -115,7 +115,7 @@ metadata:
   namespace: apsso
   labels: &selector
     apcode.com.br/app: apsso
-    apcode.com.br/module: controle-equipe
+    apcode.com.br/module: equipe-frontend
     apcode.com.br/version: 1.0.0
     apcode.com.br/env: prod
 spec:
