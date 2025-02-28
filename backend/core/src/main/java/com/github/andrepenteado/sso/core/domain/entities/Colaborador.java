@@ -63,6 +63,10 @@ public class Colaborador {
     @NotNull(message = "Cargo é um campo obrigatório")
     private Cargo cargo;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario")
+    private Usuario usuario;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -43,6 +43,7 @@
     <modules>
         <module>core</module>
         <module>login</module>
+        <module>api</module>
         <module>controle</module>
         <module>portal</module>
         <module>equipe</module>

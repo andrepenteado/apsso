@@ -36,3 +36,30 @@ create table group_members (
     group_id bigint not null,
     constraint fk_group_members_group foreign key(group_id) references groups(id)
 );
+
+CREATE TABLE colaborador (
+    id bigserial NOT NULL,
+    data_cadastro timestamp,
+    data_ultima_atualizacao timestamp,
+    usuario_cadastro varchar(50),
+    usuario_ultima_atualizacao varchar(50),
+    nome text not null,
+    cpf bigint not null,
+    telefone varchar(15),
+    email varchar(50),
+    cep bigint,
+    logradouro text,
+    complemento text,
+    numero_logradouro bigint,
+    bairro text,
+    cidade text,
+    estado varchar(2),
+    fk_unidade_administrativa bigint,
+    fk_cargo bigint,
+    fk_upload UUID,
+    fk_usuario varchar(50),
+    primary key (id),
+    constraint fk_colaborador_unidadeadministrativa foreign key (fk_unidade_administrativa) references unidade_administrativa (id),
+    constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id),
+    constraint fk_colaborador_usuario foreign key (fk_usuario) references users (username)
+);

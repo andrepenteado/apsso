@@ -43,31 +43,6 @@ CREATE TABLE cargo (
   constraint fk_cargo_empresa foreign key (fk_empresa) references empresa (id)
 );
 
-CREATE TABLE colaborador (
-  id bigserial NOT NULL,
-  data_cadastro timestamp,
-  data_ultima_atualizacao timestamp,
-  usuario_cadastro varchar(50),
-  usuario_ultima_atualizacao varchar(50),
-  nome text not null,
-  cpf bigint not null,
-  telefone varchar(15),
-  email varchar(50),
-  cep bigint,
-  logradouro text,
-  complemento text,
-  numero_logradouro bigint,
-  bairro text,
-  cidade text,
-  estado varchar(2),
-  fk_unidade_administrativa bigint,
-  fk_cargo bigint,
-  fk_upload UUID,
-  primary key (id),
-  constraint fk_colaborador_unidadeadministrativa foreign key (fk_unidade_administrativa) references unidade_administrativa (id),
-  constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id)
-);
-
 CREATE TABLE sistema (
   id bigserial not null,
   identificador text not null,

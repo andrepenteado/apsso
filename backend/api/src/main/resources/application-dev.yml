@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db-server/apsso-dbname
+
+management:
+  tracing:
+    enabled: false

@@ -39,7 +39,7 @@ public class EmpresaResource {
     public Empresa buscar(@PathVariable Long id) {
         log.info("Buscar empresa por ID #{}", id);
         return service.buscar(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Empresa de ID #%n não encontrada", id)));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Empresa de ID #%s não encontrada", id)));
     }
 
     @PostMapping

@@ -39,8 +39,8 @@ public class UsuarioResource {
     public Usuario buscar(@PathVariable String username) {
         log.info("Buscar usuário {}", username);
         return usuarioService.buscar(username)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("Usuário ID %s não encontrado", username)));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+            String.format("Usuário ID %s não encontrado", username)));
     }
 
     @PostMapping
