@@ -97,8 +97,8 @@ export class CadastroComponent implements OnInit {
     this.colaboradorService.buscar(id).subscribe(colaborador => {
       this.colaborador = colaborador;
       this.form.patchValue(colaborador);
-      this.form.get("empresa").setValue(this.colaborador.unidadeAdministrativa.empresa);
-      this.form.get("unidadeAdministrativa").setValue(this.colaborador.unidadeAdministrativa);
+      this.form.get("empresa").setValue(this.colaborador.cargo.empresa);
+      this.form.get("unidadeAdministrativa").setValue(this.colaborador.unidadesAdministrativas[0]);
       this.form.get("cargo").setValue(this.colaborador.cargo);
     });
   }
@@ -144,7 +144,7 @@ export class CadastroComponent implements OnInit {
           this.incluir = false;
           this.form.reset();
           this.form.patchValue(colaborador);
-          this.form.get("empresa").setValue(colaborador.unidadeAdministrativa.empresa);
+          this.form.get("empresa").setValue(colaborador.cargo.empresa);
           this.exibirMensagem.showMessage(
             `Dados do colaborador ${colaborador.nome} gravados com sucesso`,
             "Gravar colaborador",

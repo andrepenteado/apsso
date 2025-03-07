@@ -23,26 +23,6 @@ CREATE TABLE empresa (
   constraint un_empresa_cnpj unique (cnpj)
 );
 
-CREATE TABLE unidade_administrativa (
-  id bigserial not null,
-  nome text not null,
-  tipo varchar(50) not null,
-  fk_empresa bigint not null,
-  fk_colaborador_responsavel bigint null,
-  fk_unidade_administrativa_superior bigint null,
-  primary key (id),
-  constraint fk_unidadeadministrativa_empresa foreign key (fk_empresa) references empresa (id),
-  constraint fk_unidadeadministrativa_unidadeadministrativasuperior foreign key (fk_unidade_administrativa_superior) references unidade_administrativa (id)
-);
-
-CREATE TABLE cargo (
-  id bigserial not null,
-  nome text not null,
-  fk_empresa bigint not null,
-  primary key (id),
-  constraint fk_cargo_empresa foreign key (fk_empresa) references empresa (id)
-);
-
 CREATE TABLE sistema (
   id bigserial not null,
   identificador text not null,

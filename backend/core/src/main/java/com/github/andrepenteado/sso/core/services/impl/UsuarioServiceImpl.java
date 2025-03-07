@@ -2,6 +2,7 @@ package com.github.andrepenteado.sso.core.services.impl;
 
 import br.unesp.fc.andrepenteado.core.common.CoreUtil;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
+import com.github.andrepenteado.sso.core.domain.repositories.ColaboradorRepository;
 import com.github.andrepenteado.sso.core.domain.repositories.UsuarioRepository;
 import com.github.andrepenteado.sso.core.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final ColaboradorRepository colaboradorRepository;
+
     @Override
     public List<Usuario> listar() {
         return usuarioRepository.findAll();
@@ -31,7 +34,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Optional<Usuario> buscar(String username) {
-        return usuarioRepository.findById(username);
+        Usuario usuario = usuarioRepository.findById(username).orElse(null);
+        if (!Objects.isNull(usuario))
+            usuario.setColaboradores(colaboradorRepository.listarPorCpf(usuario.getCpf()));
+        return Optional.ofNullable(usuario);
     }
 
     @Override

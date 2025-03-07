@@ -44,10 +44,6 @@ public class Usuario {
     @Column(name = "fk_upload")
     private UUID foto;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_usuario")
-    private List<Usuario> usuarios;
-
     @ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities",
                joinColumns = { @JoinColumn(name = "username") },

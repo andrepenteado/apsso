@@ -1,5 +1,6 @@
 import { TipoUnidadeAdministrativa } from "../enums/tipo-unidade-administrativa";
 import { Empresa } from "./empresa";
+import { Colaborador } from "./colaborador";
 
 export class UnidadeAdministrativa {
 
@@ -8,5 +9,6 @@ export class UnidadeAdministrativa {
   tipo: TipoUnidadeAdministrativa;
   empresa: Empresa;
   unidadeAdministrativaSuperior: UnidadeAdministrativa;
+  colaboradores: Colaborador[];
 
 }

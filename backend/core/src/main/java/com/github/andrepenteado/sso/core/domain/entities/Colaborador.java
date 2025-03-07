@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -63,9 +64,13 @@ public class Colaborador {
     @NotNull(message = "Cargo é um campo obrigatório")
     private Cargo cargo;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_usuario")
-    private Usuario usuario;
+    @ManyToMany
+    @JoinTable(
+        name = "colaborador_unidade_administrativa",
+        joinColumns = @JoinColumn(name = "fk_colaborador"),
+        inverseJoinColumns = @JoinColumn(name = "fk_unidade_administrativa")
+    )
+    private List<UnidadeAdministrativa> unidadesAdministrativas;
 
     @Override
     public boolean equals(Object o) {

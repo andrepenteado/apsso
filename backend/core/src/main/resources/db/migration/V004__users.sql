@@ -37,6 +37,26 @@ create table group_members (
     constraint fk_group_members_group foreign key(group_id) references groups(id)
 );
 
+CREATE TABLE cargo (
+  id bigserial not null,
+  nome text not null,
+  fk_empresa bigint not null,
+  primary key (id),
+  constraint fk_cargo_empresa foreign key (fk_empresa) references empresa (id)
+);
+
+CREATE TABLE unidade_administrativa (
+  id bigserial not null,
+  nome text not null,
+  tipo varchar(50) not null,
+  fk_empresa bigint not null,
+  fk_colaborador_responsavel bigint null,
+  fk_unidade_administrativa_superior bigint null,
+  primary key (id),
+  constraint fk_unidadeadministrativa_empresa foreign key (fk_empresa) references empresa (id),
+  constraint fk_unidadeadministrativa_unidadeadministrativasuperior foreign key (fk_unidade_administrativa_superior) references unidade_administrativa (id)
+);
+
 CREATE TABLE colaborador (
     id bigserial NOT NULL,
     data_cadastro timestamp,
@@ -54,12 +74,15 @@ CREATE TABLE colaborador (
     bairro text,
     cidade text,
     estado varchar(2),
-    fk_unidade_administrativa bigint,
     fk_cargo bigint,
     fk_upload UUID,
-    fk_usuario varchar(50),
     primary key (id),
-    constraint fk_colaborador_unidadeadministrativa foreign key (fk_unidade_administrativa) references unidade_administrativa (id),
-    constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id),
-    constraint fk_colaborador_usuario foreign key (fk_usuario) references users (username)
+    constraint fk_colaborador_cargo foreign key (fk_cargo) references cargo (id)
+);
+
+CREATE TABLE colaborador_unidade_administrativa (
+  fk_colaborador bigint not null,
+  fk_unidade_administrativa bigint not null,
+  constraint fk_colaboradorunidadeadministrativa_colaborador foreign key (fk_colaborador) references colaborador (id),
+  constraint fk_colaboradorunidadeadministrativa_unidadeadministrativa foreign key (fk_unidade_administrativa) references unidade_administrativa (id)
 );

@@ -20,6 +20,6 @@ export class Colaborador {
   cidade: string;
   estado: string;
   cargo: Cargo;
-  unidadeAdministrativa: UnidadeAdministrativa;
+  unidadesAdministrativas: UnidadeAdministrativa[];
 
 }

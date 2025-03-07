@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -36,6 +37,9 @@ public class UnidadeAdministrativa {
     @ManyToOne
     @JoinColumn(name = "fk_unidade_administrativa_superior")
     private UnidadeAdministrativa unidadeAdministrativaSuperior;
+
+    @ManyToMany(mappedBy = "unidadesAdministrativas")
+    private List<Colaborador> colaboradores;
 
     @Override
     public boolean equals(Object o) {

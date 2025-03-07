@@ -1,6 +1,5 @@
 package com.github.andrepenteado.sso.api.resources;
 
-import br.unesp.fc.andrepenteado.core.web.dto.UserLogin;
 import com.github.andrepenteado.sso.api.ApiApplication;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.github.andrepenteado.sso.core.services.UsuarioService;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +29,7 @@ public class UsuariosResource {
         log.info("Buscar usuário {}", username);
         return service.buscar(username)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-            String.format("Usuário ID %s não encontrado", username)));
+            String.format("Usuário %s não encontrado", username)));
     }
 
 }

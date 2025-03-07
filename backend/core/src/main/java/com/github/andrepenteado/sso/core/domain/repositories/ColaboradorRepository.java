@@ -14,6 +14,9 @@ public interface ColaboradorRepository extends JpaRepository<Colaborador, Long> 
 
     List<Colaborador> findAllByOrderByNomeAsc();
 
+    @Query("FROM Colaborador c WHERE c.cpf = :cpf")
+    List<Colaborador> listarPorCpf(@Param("cpf") Long cpf);
+
     @Query("FROM Colaborador c WHERE c.cpf = :cpf AND c.unidadeAdministrativa.empresa.id = :idEmpresa")
     Optional<Colaborador> buscarPorCpfEmpresa(@Param("cpf") Long cpf, @Param("idEmpresa") Long idEmpresa);
 

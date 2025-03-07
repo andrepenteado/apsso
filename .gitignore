@@ -62,5 +62,6 @@ nbactions.xml
 /frontend/equipe/.npmrc
 
 /backend/core/target/
+/backend/api/target/
 
 .ansible/ansible.log
