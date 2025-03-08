@@ -24,7 +24,6 @@ export class CadastroComponent implements OnInit {
   colaborador = new Colaborador();
 
   listaEmpresas: Empresa[] = []
-  listaUnidadesAdministrativas: UnidadeAdministrativa[] = [];
   listaCargos: Cargo[] = [];
 
   id = new FormControl(null);
@@ -34,7 +33,6 @@ export class CadastroComponent implements OnInit {
   usuarioUltimaAtualizacao = new FormControl(null);
   nome = new FormControl(null, Validators.required);
   empresa = new FormControl(null);
-  unidadeAdministrativa = new FormControl(null);
   cargo = new FormControl(null);
   cpf = new FormControl(null, Validators.required);
   telefone = new FormControl(null, Validators.required);
@@ -54,7 +52,6 @@ export class CadastroComponent implements OnInit {
     usuarioUltimaAtualizacao: this.usuarioUltimaAtualizacao,
     nome: this.nome,
     empresa: this.empresa,
-    unidadeAdministrativa: this.unidadeAdministrativa,
     cargo: this.cargo,
     cpf: this.cpf,
     telefone: this.telefone,
@@ -81,7 +78,6 @@ export class CadastroComponent implements OnInit {
   ngOnInit() {
     this.pesquisarEmpresas();
     this.form.get("empresa").valueChanges.subscribe(empresa => {
-      this.pesquisarUnidadesAdministrativasPorEmpresa(empresa.id);
       this.pesquisarCargosPorEmpresa(empresa.id);
     });
     this.activedRoute.params.subscribe(params => {
@@ -98,7 +94,6 @@ export class CadastroComponent implements OnInit {
       this.colaborador = colaborador;
       this.form.patchValue(colaborador);
       this.form.get("empresa").setValue(this.colaborador.cargo.empresa);
-      this.form.get("unidadeAdministrativa").setValue(this.colaborador.unidadesAdministrativas[0]);
       this.form.get("cargo").setValue(this.colaborador.cargo);
     });
   }
@@ -107,14 +102,6 @@ export class CadastroComponent implements OnInit {
     this.empresaService.listar().subscribe({
       next: listaEmpresas => {
         this.listaEmpresas = listaEmpresas;
-      }
-    });
-  }
-
-  pesquisarUnidadesAdministrativasPorEmpresa(idEmpresa: number): void {
-    this.unidadeAdministrativaService.listarPorEmpresa(idEmpresa).subscribe({
-      next: listaUnidadesAdministrativas => {
-        this.listaUnidadesAdministrativas = listaUnidadesAdministrativas;
       }
     });
   }

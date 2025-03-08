@@ -105,7 +105,6 @@ public class ColaboradorResourceTest {
         colaborador.setNome(NOME);
         colaborador.setCpf(CPF);
         colaborador.setTelefone("123123123");
-        colaborador.setUnidadeAdministrativa(getUnidadeAdministrativa());
         colaborador.setCargo(getCargo());
         return colaborador;
     }

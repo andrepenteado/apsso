@@ -5,6 +5,7 @@
         data_cadastro="[now]"
         usuario_cadastro="admin"
         razao_social="Empresa 10"
+        nome_fantasia="Empresa 10"
         cnpj="000000000000010"
         telefone="100100100" />
 

@@ -3,6 +3,7 @@
     <empresa
         id="10"
         razao_social="Empresa Teste"
+        nome_fantasia="Empresa Teste"
         cnpj="0000000000"
         telefone="1111111111" />
 

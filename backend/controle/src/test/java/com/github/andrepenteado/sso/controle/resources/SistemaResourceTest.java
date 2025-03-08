@@ -73,6 +73,7 @@ public class SistemaResourceTest {
         Empresa empresa = new Empresa();
         empresa.setId(10L);
         empresa.setRazaoSocial("Empresa testes");
+        empresa.setNomeFantasia("Empresa testes");
         empresa.setCnpj(111111111L);
         empresa.setTelefone("5555555555");
 
@@ -295,7 +296,7 @@ public class SistemaResourceTest {
                 .with(authentication(getToken()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(getJsonAmbiente(UUID.randomUUID().toString())))
+                .content(getJsonAmbiente(null)))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()

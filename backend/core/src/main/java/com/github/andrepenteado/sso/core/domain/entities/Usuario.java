@@ -50,6 +50,9 @@ public class Usuario {
                inverseJoinColumns = { @JoinColumn(name = "authority") })
     private List<PerfilSistema> perfis;
 
+    @Transient
+    private List<Colaborador> colaboradores;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

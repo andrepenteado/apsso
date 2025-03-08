@@ -48,7 +48,7 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <div class="form-group col-12 col-md-4">
+                <div class="form-group col-12 col-md-6">
                   <label>* Empresa</label>
                   <select [compareWith]="empresaService.compareFn" formControlName="empresa" class="form-select" required>
                     <option *ngFor="let empresa of listaEmpresas" [ngValue]="empresa">
@@ -57,16 +57,7 @@
                   </select>
                   <div class="invalid-feedback">Empresa é um campo obrigatório</div>
                 </div>
-                <div class="form-group col-12 col-md-4">
-                  <label>* Unidade Administrativa</label>
-                  <select [compareWith]="unidadeAdministrativaService.compareFn" formControlName="unidadeAdministrativa" class="form-select" required>
-                    <option *ngFor="let unidadeAdministrativa of listaUnidadesAdministrativas" [ngValue]="unidadeAdministrativa">
-                      {{ unidadeAdministrativa.nome }}
-                    </option>
-                  </select>
-                  <div class="invalid-feedback">Unidade Administrativa é um campo obrigatório</div>
-                </div>
-                <div class="form-group col-12 col-md-4">
+                <div class="form-group col-12 col-md-6">
                   <label>* Cargo</label>
                   <select [compareWith]="cargoService.compareFn" formControlName="cargo" class="form-select" required>
                     <option *ngFor="let cargo of listaCargos" [ngValue]="cargo">

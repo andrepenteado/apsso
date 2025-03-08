@@ -55,11 +55,6 @@ public class Colaborador {
     private String estado;
 
     @ManyToOne
-    @JoinColumn(name = "fk_unidade_administrativa")
-    @NotNull(message = "Unidade administrativa é um campo obrigatório")
-    private UnidadeAdministrativa unidadeAdministrativa;
-
-    @ManyToOne
     @JoinColumn(name = "fk_cargo")
     @NotNull(message = "Cargo é um campo obrigatório")
     private Cargo cargo;

@@ -38,7 +38,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         if (erros != null)
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, erros);
 
-        if (Objects.nonNull(repository.buscarPorCpfEmpresa(colaborador.getCpf(), colaborador.getUnidadeAdministrativa().getEmpresa().getId())))
+        if (repository.buscarPorCpfEmpresa(colaborador.getCpf(), colaborador.getCargo().getEmpresa().getId()).isPresent())
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, String.format("CPF %d já se encontra cadastrado", colaborador.getCpf()));
 
         return repository.save(colaborador);

@@ -77,6 +77,7 @@ class UsuarioResourceTest {
         Empresa empresa = new Empresa();
         empresa.setId(10L);
         empresa.setRazaoSocial("Empresa testes");
+        empresa.setNomeFantasia("Empresa testes");
         empresa.setCnpj(111111111L);
         empresa.setTelefone("5555555555");
 

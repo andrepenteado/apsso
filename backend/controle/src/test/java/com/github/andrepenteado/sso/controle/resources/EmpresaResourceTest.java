@@ -72,6 +72,7 @@ public class EmpresaResourceTest {
         empresa.setDataCadastro(LocalDateTime.now());
         empresa.setUsuarioCadastro("admin");
         empresa.setRazaoSocial(RAZAO_SOCIAL);
+        empresa.setNomeFantasia(RAZAO_SOCIAL);
         empresa.setCnpj(CNPJ);
         empresa.setTelefone("123123123");
         return empresa;

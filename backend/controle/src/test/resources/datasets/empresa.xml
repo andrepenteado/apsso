@@ -5,6 +5,7 @@
         data_cadastro="[now]"
         usuario_cadastro="admin"
         razao_social="Empresa 100"
+        nome_fantasia="Empresa 100"
         cnpj="000000000000100"
         telefone="100100100" />
 
@@ -13,6 +14,7 @@
         data_cadastro="[now]"
         usuario_cadastro="admin"
         razao_social="Empresa 200"
+        nome_fantasia="Empresa 200"
         cnpj="000000000000200"
         telefone="200200200" />
 
