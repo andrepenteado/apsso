@@ -36,9 +36,7 @@ registerLocaleData(localePT);
         menu: MENU,
         sistema: MODULO,
         urlBackend: environment.urlBackend,
-        urlLogin: environment.urlLogin,
-        urlLogout: environment.urlLogout,
-        urlUserLogin: environment.urlUserLogin,
+        urlFrontend: environment.urlFrontend,
         urlPortal: environment.urlPortal,
         prefixoPerfil: PREFIXO_PERFIL_SISTEMA
       }

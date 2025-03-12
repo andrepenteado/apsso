@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DECORATED_ROUTES, NO_DECORATED_ROUTES } from './config/routes';
 import {
-  AuthorizedComponent,
   LayoutPadraoComponent,
   LoginComponent,
   LogoutComponent,
   SemLayoutComponent
 } from "@andre.penteado/ngx-apcore"
+import { AuthorizedComponent } from "./login/authorized.component";
 
 const routes: Routes = [
 

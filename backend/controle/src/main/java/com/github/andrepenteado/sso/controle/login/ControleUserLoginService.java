@@ -1,8 +1,7 @@
-package com.github.andrepenteado.sso.equipe.login;
+package com.github.andrepenteado.sso.controle.login;
 
 import br.unesp.fc.andrepenteado.core.upload.Upload;
 import br.unesp.fc.andrepenteado.core.upload.UploadRepository;
-import com.github.andrepenteado.sso.core.services.EmpresaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -19,17 +18,14 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class EquipeUserLoginService extends OidcUserService {
-
-    private final EmpresaService empresaService;
+public class ControleUserLoginService extends OidcUserService {
 
     private final UploadRepository uploadRepository;
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("Carregando informações do usuario");
-        EquipeUserLogin userLogin = new EquipeUserLogin((DefaultOidcUser) super.loadUser(userRequest));
-        userLogin.setEmpresas(empresaService.listarPorCpfColaborador(Long.parseLong(userLogin.getCpf())));
+        ControleUserLogin userLogin = new ControleUserLogin((DefaultOidcUser) super.loadUser(userRequest));
         Upload foto = uploadRepository.findById(UUID.fromString(userLogin.getUuidFoto())).orElse(null);
         if (foto != null)
             userLogin.setFotoBase64(foto.getBase64());

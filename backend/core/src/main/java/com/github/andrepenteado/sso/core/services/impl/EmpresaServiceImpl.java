@@ -28,6 +28,11 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
 
     @Override
+    public List<Empresa> listarPorCpfColaborador(Long cpf) {
+        return repository.listarPorCpfColaborador(cpf);
+    }
+
+    @Override
     public Optional<Empresa> buscar(Long id) {
         return repository.findById(id);
     }

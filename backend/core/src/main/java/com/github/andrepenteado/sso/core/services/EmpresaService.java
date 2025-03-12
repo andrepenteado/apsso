@@ -10,6 +10,8 @@ public interface EmpresaService {
 
     List<Empresa> listar();
 
+    List<Empresa> listarPorCpfColaborador(Long cpf);
+
     Optional<Empresa> buscar(Long id);
 
     Empresa incluir(Empresa empresa, BindingResult validacao);

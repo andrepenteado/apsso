@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { lastValueFrom, Observable } from "rxjs"
-import { DecoracaoMensagem, ExibirMensagemService, LoginService, Upload, UploadService, UserLogin } from "@andre.penteado/ngx-apcore"
+import {
+  DecoracaoMensagem,
+  ExibirMensagemService,
+  LoginService,
+  Upload,
+  UploadService,
+  UserLogin
+} from "@andre.penteado/ngx-apcore"
 
 @Component({
   selector: 'app-meus-dados',
@@ -34,7 +41,9 @@ export class MeusDadosComponent implements OnInit {
 
   async ngOnInit() {
     this.userLogin = await this.loginService.getUserLogin();
-    this.foto = LoginService.fotoPerfil;
+    this.uploadService.buscar(this.userLogin.uuidFoto).subscribe({
+      next: uploadFoto => this.foto = uploadFoto
+    });
   }
 
   descricaoPerfis(): string {
@@ -99,7 +108,6 @@ export class MeusDadosComponent implements OnInit {
     this.service.atualizarFoto(upload.uuid).subscribe({
       next: obj => {
         this.userLogin.uuidFoto = upload.uuid;
-        LoginService.fotoPerfil = upload;
         this.exibirMensagem.showMessage(
           "Foto atualizada com sucesso",
           "Atualizar Foto",

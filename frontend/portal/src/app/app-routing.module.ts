@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DECORATED_ROUTES, NO_DECORATED_ROUTES } from './config/routes';
 import {
   AuthorizedComponent,
-  LayoutPadraoComponent,
+  LayoutSimplesComponent,
   LoginComponent,
   LogoutComponent,
   SemLayoutComponent
@@ -21,7 +21,7 @@ const routes: Routes = [
 
   {
     path: "",
-    component: LayoutPadraoComponent,
+    component: LayoutSimplesComponent,
     children: DECORATED_ROUTES
   },
 
