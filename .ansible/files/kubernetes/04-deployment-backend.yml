@@ -30,9 +30,6 @@ spec:
 #              cpu: 8000m
           ports:
             - containerPort: 8080
-          env:
-            - name: AUTHORIZATION_SERVER_URL
-              value: https://login.apcode.com.br
       imagePullSecrets:
         - name: github-secret
 ---
@@ -87,9 +84,6 @@ spec:
 #              cpu: 8000m
           ports:
             - containerPort: 8080
-          env:
-            - name: AUTHORIZATION_SERVER_URL
-              value: https://login.apcode.com.br
       imagePullSecrets:
         - name: github-secret
 ---
@@ -144,9 +138,6 @@ spec:
           #              cpu: 8000m
           ports:
             - containerPort: 8080
-          env:
-            - name: AUTHORIZATION_SERVER_URL
-              value: https://login.apcode.com.br
       imagePullSecrets:
         - name: github-secret
 ---

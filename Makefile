@@ -57,30 +57,4 @@ build-portal:
 	docker buildx build -f .deploy/dockerfiles/frontend.portal --build-arg AMBIENTE=localhost -t ghcr.io/andrepenteado/apsso/portal-frontend:dev --push .
 	docker logout ghcr.io
 
-start:
-	docker compose -f .deploy/composes/docker-compose.yml up -d
-
-stop:
-	docker compose -f .deploy/composes/docker-compose.yml down
-
-log:
-	docker compose -f .deploy/composes/docker-compose.yml logs -f
-
-update:
-	echo $(GITHUB_TOKEN) | docker login ghcr.io --username andrepenteado --password-stdin
-	$(MAKE) stop
-	docker image pull postgres:16
-	docker image pull ghcr.io/andrepenteado/apsso/login
-	docker image pull ghcr.io/andrepenteado/apsso/controle-backend
-	docker image pull ghcr.io/andrepenteado/apsso/controle-frontend
-	docker image pull ghcr.io/andrepenteado/apsso/controle-frontend:dev
-	docker image pull ghcr.io/andrepenteado/apsso/portal-backend
-	docker image pull ghcr.io/andrepenteado/apsso/portal-frontend
-	docker image pull ghcr.io/andrepenteado/apsso/portal-frontend:dev
-	docker image pull ghcr.io/andrepenteado/apsso/equipe-backend
-	docker image pull ghcr.io/andrepenteado/apsso/equipe-frontend
-	docker image pull ghcr.io/andrepenteado/apsso/equipe-frontend:dev
-	docker logout ghcr.io
-	$(MAKE) start
-
 # mvn clean spring-boot:run -D spring-boot.run.profiles=dev -D spring-boot.run.jvmArguments="-DAUTHORIZATION_SERVER_URL=http://login:30000 -Dserver.port=30002"
