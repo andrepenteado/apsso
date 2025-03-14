@@ -25,7 +25,7 @@
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0">Seja bem-vindo!</h3>
           <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
-          <p class="mb-0 text-center">Não tem usuário cadastrado? <a href="#!" class="link-secondary text-decoration-none">Crie seu login agora</a></p>
+          <p class="mb-0 text-center">Não tem usuário cadastrado? <a href="<c:url value='novo-usuario'/>" class="link-secondary text-decoration-none">Crie seu login agora</a></p>
         </div>
       </div>
       <div class="col-12 col-md-6 bsb-tpl-bg-lotion">
@@ -82,7 +82,7 @@
             <div class="col-12">
               <hr class="mt-5 mb-4 border-secondary-subtle">
               <div class="text-end">
-                <a href="#!" class="link-secondary text-decoration-none">Esqueci minha senha</a>
+                <a href="<c:url value='/esqueci-minha-senha'/>" class="link-secondary text-decoration-none">Esqueci minha senha</a>
               </div>
             </div>
           </div>

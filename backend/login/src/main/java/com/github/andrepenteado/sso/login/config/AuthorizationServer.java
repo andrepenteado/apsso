@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,6 +35,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 import java.security.KeyStore;
 import java.util.Collection;
@@ -51,22 +53,28 @@ public class AuthorizationServer {
     @Bean
     @Order(1)
     SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration
-            .applyDefaultSecurity(http);
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
 
         http
-            .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-            .oidc(Customizer.withDefaults());
-        http
-            .exceptionHandling((exceptions) -> exceptions
-                .authenticationEntryPoint(
-                    new LoginUrlAuthenticationEntryPoint("/login"))
-            );
-        http
-            .oauth2ResourceServer(
-                oauth2ResourceServer ->
-                    oauth2ResourceServer.jwt(Customizer.withDefaults()
+            .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+            .authorizeHttpRequests(authorize -> authorize
+                .anyRequest().authenticated()
+            )
+            .with(
+                authorizationServerConfigurer, (authorizationServer) -> authorizationServer.oidc(Customizer.withDefaults())
+            )
+            .csrf(
+                csrf -> csrf.ignoringRequestMatchers(authorizationServerConfigurer.getEndpointsMatcher())
+            )
+            .exceptionHandling(
+                exceptions -> exceptions
+                .defaultAuthenticationEntryPointFor(
+                    new LoginUrlAuthenticationEntryPoint("/login"),
+                    new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                 )
+            )
+            .oauth2ResourceServer(
+                oauth2 -> oauth2.jwt(Customizer.withDefaults())
             );
 
         return http.build();
@@ -152,6 +160,7 @@ public class AuthorizationServer {
             context.getClaims().claim("login", usuario.getUsername());
             context.getClaims().claim("nome", usuario.getNome());
             context.getClaims().claim("cpf", Objects.isNull(usuario.getCpf()) ? "" : Long.toString(usuario.getCpf()));
+            context.getClaims().claim("email", usuario.getEmail());
             context.getClaims().claim("uuidFoto", Objects.isNull(usuario.getFoto()) ? "" : usuario.getFoto().toString());
             context.getClaims().claim("perfis", perfis);
         };

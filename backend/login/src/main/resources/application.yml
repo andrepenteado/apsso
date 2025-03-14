@@ -30,6 +30,19 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
+  mail:
+    host: in-v3.mailjet.com
+    port: 587
+    username: 5ba7d7997e4cef51d595cceec0bdd8d3
+    password: e0b3fbe2f18e2c746ff2e62ae0d246fa
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 server:
   forward-headers-strategy: framework
   error:

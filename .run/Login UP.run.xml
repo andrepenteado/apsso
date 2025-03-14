@@ -2,7 +2,6 @@
   <configuration default="false" name="Login UP" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="JDK 21 Amazon Corretto">
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="COMMON_VM_ARGUMENTS" value="-Dspring.profiles.active=dev" />
-    <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
       <artifact name="login:war exploded">
         <settings>

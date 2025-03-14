@@ -39,6 +39,19 @@ create table group_members (
     constraint fk_group_members_group foreign key(group_id) references groups(id)
 );
 
+CREATE TABLE token (
+  id bigserial not null,
+  token uuid not null,
+  tipo text not null,
+  data_criacao timestamp not null,
+  data_expiracao timestamp not null,
+  utilizado boolean not null,
+  fk_usuario varchar(50) not null,
+  primary key (id),
+  constraint fk_token_usuario foreign key (fk_usuario) references users (username),
+  constraint un_token_token unique (token)
+);
+
 CREATE TABLE cargo (
   id bigserial not null,
   nome text not null,
