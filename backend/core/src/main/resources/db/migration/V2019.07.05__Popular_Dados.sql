@@ -74,9 +74,9 @@ VALUES ('ROLE_com.github.andrepenteado.sso.equipe_GESTOR', currval('sistema_id_s
 
 INSERT INTO sistema (data_cadastro, usuario_cadastro, identificador, nome, descricao, fk_empresa) VALUES (now(), 'Arquiteto do Sistema', 'com.github.andrepenteado.sso.api', 'API de Consulta', 'API Rest de consultaa usuários e sistemas', currval('empresa_id_seq'));
 INSERT INTO perfil_sistema (authority, fk_sistema, descricao)
-VALUES ('ROLE_com.github.andrepenteado.sso.api_CONSULTAR_API', currval('sistema_id_seq'), 'Gestor de Equipes');
+VALUES ('ROLE_com.github.andrepenteado.sso.api_CONSULTAR_API', currval('sistema_id_seq'), 'Permissão de Consulta');
 
-INSERT INTO users (username, password, enabled, data_cadastro, usuario_cadastro, nome, cpf) VALUES ('arquiteto', '{bcrypt}$2a$10$kGE18ss4rjWDDbomByVRVejkbVt2rjXpTkW.hLWl1uOav.DTuO0Mu', true, now(), 'Arquiteto do Sistema', 'Arquiteto do Sistema', 11111111100);
+INSERT INTO users (username, password, enabled, data_cadastro, usuario_cadastro, nome, cpf, email) VALUES ('arquiteto', '{bcrypt}$2a$10$kGE18ss4rjWDDbomByVRVejkbVt2rjXpTkW.hLWl1uOav.DTuO0Mu', true, now(), 'Arquiteto do Sistema', 'Arquiteto do Sistema', 11111111100, 'arquiteto@apcode.com.br');
 INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_com.github.andrepenteado.sso.controle_ARQUITETO');
 INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_com.github.andrepenteado.sso.portal_USUARIO');
 INSERT INTO authorities (username, authority) VALUES ('arquiteto', 'ROLE_com.github.andrepenteado.sso.equipe_GESTOR');

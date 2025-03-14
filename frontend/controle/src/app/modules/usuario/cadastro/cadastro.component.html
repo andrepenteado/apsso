@@ -7,90 +7,105 @@
 </nav>
 
 <div class="container">
-  <div class="card border border-primary rounded shadow-lg">
-    <div class="card-header">
-      <nav class="nav nav-pills" id="nav-principal">
-        <button class="nav-link active fw-bold"
-                id="nav-principal-dados-cadastrais"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-conteudo-dados-cadastrais"
-                type="button"
-                role="tab">
-          DADOS CADASTRAIS
-        </button>
-        <button class="nav-link fw-bold {{ this.incluir ? 'disabled' : '' }}"
-                id="nav-principal-perfis"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-conteudo-perfis"
-                type="button"
-                role="tab">
-          PERFIS
-        </button>
-      </nav>
-      <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
-        Incluído por {{ usuario.usuarioCadastro }} em {{ usuario.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
-        <span *ngIf="usuario.dataUltimaAtualizacao != null">
-          Alterado por {{ usuario.usuarioUltimaAtualizacao }} em {{ usuario.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
-        </span>
-      </p>
-      <div class="card-body">
-        <div class="tab-content" id="nav-conteudo">
-          <div class="tab-pane fade show active"
-               id="nav-conteudo-dados-cadastrais"
-               role="tabpanel"
-               aria-labelledby="nav-conteudo-dados-cadastrais">
-            <form [formGroup]="formUsuario" [ngClass]="{'was-validated': !formUsuario.valid && formEnviado}">
-              <div class="row mb-3">
-                <div class="form-group col-12 col-md-6">
-                  <label>* Login</label>
-                  <input type="text" name="username" formControlName="username" class="form-control" required="true">
-                  <div class="invalid-feedback">Campo login é obrigatório</div>
-                </div>
-                <div class="form-group col-12 col-md-6">
-                  <label>Senha</label>
-                  <div class="input-group">
-                    <input type="password" name="password" formControlName="password" class="form-control" required="true">
-                    <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarSenha()"><i class="bi bi-unlock"></i></button>
-                    <div class="invalid-feedback">Senha é um campo obrigatório</div>
+  <div class="col-12 col-md-6 offset-md-3">
+    <div class="card border border-primary rounded shadow-lg">
+      <div class="card-header">
+        <nav class="nav nav-pills" id="nav-principal">
+          <button class="nav-link active fw-bold"
+                  id="nav-principal-dados-cadastrais"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-dados-cadastrais"
+                  type="button"
+                  role="tab">
+            DADOS CADASTRAIS
+          </button>
+          <button class="nav-link fw-bold {{ this.incluir ? 'disabled' : '' }}"
+                  id="nav-principal-perfis"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-perfis"
+                  type="button"
+                  role="tab">
+            PERFIS
+          </button>
+        </nav>
+        <p class="form-text ms-1 fst-italic" *ngIf="!incluir">
+          Incluído por {{ usuario.usuarioCadastro }} em {{ usuario.dataCadastro | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}<br/>
+          <span *ngIf="usuario.dataUltimaAtualizacao != null">
+            Alterado por {{ usuario.usuarioUltimaAtualizacao }} em {{ usuario.dataUltimaAtualizacao | date: "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm" }}
+          </span>
+        </p>
+        <div class="card-body">
+          <div class="tab-content" id="nav-conteudo">
+            <div class="tab-pane fade show active"
+                 id="nav-conteudo-dados-cadastrais"
+                 role="tabpanel"
+                 aria-labelledby="nav-conteudo-dados-cadastrais">
+              <form [formGroup]="formUsuario" [ngClass]="{'was-validated': !formUsuario.valid && formEnviado}">
+                <div class="row mb-3">
+                  <div class="form-group col-12 col-md-6">
+                    <label>* Login</label>
+                    <input type="text" name="username" formControlName="username" class="form-control" required="true">
+                    <div class="invalid-feedback">Campo login é obrigatório</div>
+                  </div>
+                  <div class="form-group col-12 col-md-6">
+                    <label>Senha</label>
+                    <div class="input-group">
+                      <input type="password" name="password" formControlName="password" class="form-control" required="true">
+                      <button class="btn btn-outline-primary" type="button" id="btn-habilitar-client-secret" (click)="habilitarSenha()"><i class="bi bi-unlock"></i></button>
+                      <div class="invalid-feedback">Senha é um campo obrigatório</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <div class="form-group col-12 col-md-6">
-                  <label>Nome</label>
-                  <input type="text" name="nome" formControlName="nome" class="form-control">
-                </div>
-                <div class="form-group col-12 col-md-6">
-                  <label>CPF</label>
-                  <input type="text" name="cpf" formControlName="cpf" class="form-control">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-12 text-center">
-                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="tab-pane fade show"
-               id="nav-conteudo-perfis"
-               role="tabpanel"
-               aria-labelledby="nav-conteudo-perfis">
-            <form [formGroup]="formPerfis">
-              <div class="row mb-3" *ngFor="let control of this.arrayPerfis.controls; let i = index">
-                <div class="col-12">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" [formControl]="$any(control)" role="switch" id="perfil_{{ this.listaPerfis[i].authority }}">
-                    <label class="form-check-label" for="perfil_{{ this.listaPerfis[i].authority }}">{{ this.listaPerfis[i].sistema.id }}: {{ this.listaPerfis[i].descricao }}</label>
+                <div class="row mb-3">
+                  <div class="form-group col-12 col-md-6">
+                    <label>CPF</label>
+                    <input type="text" name="cpf" formControlName="cpf" class="form-control">
+                  </div>
+                  <div class="form-group col-12 col-md-6">
+                    <label>E-mail</label>
+                    <input type="text" name="email" formControlName="email" class="form-control">
                   </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-12 text-center">
-                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                <div class="row mb-3">
+                  <div class="form-group col-12 col-md-8">
+                    <label>Nome</label>
+                    <input type="text" name="nome" formControlName="nome" class="form-control">
+                  </div>
+                  <div class="form-group col-12 col-md-4">
+                    <label>Ativo?</label>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="enabled" formControlName="enabled">
+                      <label class="form-check-label" for="enabled">{{ formUsuario.get("enabled")?.value ? "Sim" : "Não" }}</label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </form>
+                <div class="row mb-3">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane fade show"
+                 id="nav-conteudo-perfis"
+                 role="tabpanel"
+                 aria-labelledby="nav-conteudo-perfis">
+              <form [formGroup]="formPerfis">
+                <div class="row mb-3" *ngFor="let control of this.arrayPerfis.controls; let i = index">
+                  <div class="col-12">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" [formControl]="$any(control)" role="switch" id="perfil_{{ this.listaPerfis[i].authority }}">
+                      <label class="form-check-label" for="perfil_{{ this.listaPerfis[i].authority }}">{{ this.listaPerfis[i].sistema.nome }}: {{ this.listaPerfis[i].descricao }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

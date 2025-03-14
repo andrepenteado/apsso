@@ -4,12 +4,14 @@ create table users(
     enabled boolean not null,
     nome text not null,
     cpf bigint not null,
+    email text not null,
     data_cadastro timestamp,
     data_ultima_atualizacao timestamp,
     usuario_cadastro varchar(50),
     usuario_ultima_atualizacao varchar(50),
     fk_upload UUID NULL,
-    constraint un_users_cpf unique (cpf)
+    constraint un_users_cpf unique (cpf),
+    constraint un_users_email unique (email)
 );
 
 create table authorities (

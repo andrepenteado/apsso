@@ -10,6 +10,7 @@ export class Usuario {
   password: string;
   nome: string;
   cpf: number;
+  email: string;
   enabled: boolean;
   perfis: PerfilSistema[];
 

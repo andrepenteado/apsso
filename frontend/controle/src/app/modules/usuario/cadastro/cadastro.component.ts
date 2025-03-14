@@ -26,14 +26,18 @@ export class CadastroComponent implements OnInit {
   // Campos do formulário
   username = new FormControl(null, Validators.required);
   password = new FormControl({value: '', disabled: true});
-  nome = new FormControl(null);
-  cpf = new FormControl(null);
+  cpf = new FormControl(null, Validators.required);
+  email = new FormControl(null, Validators.required);
+  nome = new FormControl(null, Validators.required);
+  enabled = new FormControl(false);
 
   formUsuario = new FormGroup({
     username: this.username,
     password: this.password,
+    cpf: this.cpf,
+    email: this.email,
     nome: this.nome,
-    cpf: this.cpf
+    enabled: this.enabled,
   });
   formPerfis = new FormGroup({
     perfis: new FormArray([])

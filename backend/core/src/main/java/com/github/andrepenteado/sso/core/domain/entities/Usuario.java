@@ -38,6 +38,9 @@ public class Usuario {
     @NotNull(message = "CPF do usuário é um campo obrigatório")
     private Long cpf;
 
+    @NotNull(message = "E-mail do usuário é um campo obrigatório")
+    private String email;
+
     @NotNull(message = "É obrigatório informar se o login do usuário está ativo ou inativo")
     private Boolean enabled;
 
