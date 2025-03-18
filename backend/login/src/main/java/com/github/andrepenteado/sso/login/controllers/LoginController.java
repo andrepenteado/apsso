@@ -20,7 +20,9 @@ public class LoginController {
     public String customLogin(Model model, HttpServletRequest request) {
         log.info("Acessando login");;
 
-        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(request.getServerName());
+        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+            request.getRequestURL().toString().replace(request.getRequestURI(), "")
+        );
         if (logotipo != null) {
             model.addAttribute("logotipo", logotipo);
         }

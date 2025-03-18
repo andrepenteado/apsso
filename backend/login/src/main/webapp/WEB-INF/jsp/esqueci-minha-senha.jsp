@@ -54,7 +54,12 @@
       <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0 text-center">Solicitar alteração de senha</h3>
-          <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="Esqueci minha senha">
+          <c:if test="${empty logotipo}">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+          </c:if>
+          <c:if test="${not empty logotipo}">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="${logotipo.base64}" width="300" alt="Logotipo empresa">
+          </c:if>
           <p class="mb-0 text-center">É um usuário cadastrado? <a href="<c:url value='/login'/>" class="link-secondary text-decoration-none">Faça aqui seu login</a></p>
         </div>
       </div>

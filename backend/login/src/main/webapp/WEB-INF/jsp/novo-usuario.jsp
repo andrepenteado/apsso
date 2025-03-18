@@ -42,38 +42,38 @@
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>Login</label>
-                <input type="text" name="username" id="username" class="form-control">
+                <input type="text" name="username" id="username" value="${username}" class="form-control">
                 <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-12">
                 <label>Nome</label>
-                <input type="text" name="nome" id="nome" class="form-control">
+                <input type="text" name="nome" id="nome" value="${nome}" class="form-control">
                 <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>Senha</label>
-                <input type="password" name="senha" id="senha" class="form-control">
+                <input type="password" name="senha" id="senha" value="${senha}" class="form-control">
                 <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-12 col-md-6">
                 <label>Confirme sua senha</label>
-                <input type="password" name="confirmar_senha" id="confirmar_senha" class="form-control">
+                <input type="password" name="confirmar_senha" id="confirmar_senha" value="${confirmar_senha}" class="form-control">
                 <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>CPF</label>
-                <input type="number" name="cpf" id="cpf" class="form-control">
+                <input type="number" name="cpf" id="cpf" value="${cpf}" class="form-control">
                 <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-12 col-md-6">
                 <label>E-mail</label>
-                <input type="email" name="email" id="email" class="form-control">
+                <input type="email" name="email" id="email" value="${email}" class="form-control">
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -88,7 +88,12 @@
       <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0">Solicitação de criação de usuário</h3>
-          <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="Novo usuário">
+          <c:if test="${empty logotipo}">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+          </c:if>
+          <c:if test="${not empty logotipo}">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="${logotipo.base64}" width="300" alt="Logotipo empresa">
+          </c:if>
           <p class="mb-0 text-center">É um usuário cadastrado? <a href="<c:url value='/login'/>" class="link-secondary text-decoration-none">Faça aqui seu login</a></p>
         </div>
       </div>
@@ -132,7 +137,6 @@
         $(element).addClass('is-valid').removeClass('is-invalid');
       },
       submitHandler: function(form) {
-        alert('Formulário enviado com sucesso!');
         form.submit();
       }
     } );

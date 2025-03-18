@@ -1,8 +1,10 @@
 package com.github.andrepenteado.sso.login.controllers;
 
+import br.unesp.fc.andrepenteado.core.upload.Upload;
 import com.github.andrepenteado.sso.core.domain.entities.Token;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.github.andrepenteado.sso.core.domain.enums.TipoToken;
+import com.github.andrepenteado.sso.core.domain.repositories.EmpresaRepository;
 import com.github.andrepenteado.sso.core.domain.repositories.TokenRepository;
 import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.github.andrepenteado.sso.login.services.EmailService;
@@ -26,13 +28,24 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    private final EmpresaRepository empresaRepository;
+
     private final TokenRepository tokenRepository;
 
     private final EmailService emailService;
 
     @GetMapping("/novo-usuario")
-    public String novoUsuario() {
+    public String novoUsuario(Model model, HttpServletRequest request) {
         log.info("Abrir cadastro de novo usuário");
+
+        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+            request.getRequestURL().toString().replace(request.getRequestURI(), "")
+        );
+        if (logotipo != null) {
+            log.info("Logotipo: {}", logotipo);
+            model.addAttribute("logotipo", logotipo);
+        }
+
         return "novo-usuario";
     }
 
@@ -40,10 +53,14 @@ public class UsuarioController {
     public String gravarNovoUsuario(Model model, HttpServletRequest request) {
         log.info("Gravar novo usuário");
 
+        String username = request.getParameter("username");
+        String nome = request.getParameter("nome");
+        String senha = request.getParameter("senha");
+        String confirmarSenha = request.getParameter("confirmar_senha");
+        String cpf = request.getParameter("cpf");
+        String email = request.getParameter("email");
+
         try {
-            String senha = request.getParameter("senha");
-            String confirmarSenha = request.getParameter("confirmar_senha");
-            String cpf = request.getParameter("cpf");
             if (!senha.equals(confirmarSenha)) {
                 throw new Exception("Senhas não conferem");
             }
@@ -55,11 +72,11 @@ public class UsuarioController {
             }
 
             Usuario usuario = new Usuario();
-            usuario.setUsername(request.getParameter("username"));
+            usuario.setUsername(username);
             usuario.setPassword(senha);
-            usuario.setNome(request.getParameter("nome"));
+            usuario.setNome(nome);
             usuario.setCpf(Long.parseLong(cpf));
-            usuario.setEmail(request.getParameter("email"));
+            usuario.setEmail(email);
             usuario.setDataCadastro(LocalDateTime.now());
             usuario.setUsuarioCadastro("Portal de Sistemas");
             usuario.setEnabled(false);
@@ -80,6 +97,12 @@ public class UsuarioController {
         }
         catch (Exception ex) {
             model.addAttribute("mensagemErro", ex.getMessage());
+            model.addAttribute("username", username);
+            model.addAttribute("nome", nome);
+            model.addAttribute("senha", senha);
+            model.addAttribute("confirmar_senha", confirmarSenha);
+            model.addAttribute("cpf", cpf);
+            model.addAttribute("email", email);
             return "novo-usuario";
         }
 
@@ -116,8 +139,16 @@ public class UsuarioController {
     }
 
     @RequestMapping("/esqueci-minha-senha")
-    public String esqueciMinhaSenha() {
+    public String esqueciMinhaSenha(Model model, HttpServletRequest request) {
         log.info("Abrir formulário de esqueci minha senha");
+
+        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+            request.getRequestURL().toString().replace(request.getRequestURI(), "")
+        );
+        if (logotipo != null) {
+            model.addAttribute("logotipo", logotipo);
+        }
+
         return "esqueci-minha-senha";
     }
 
@@ -128,8 +159,16 @@ public class UsuarioController {
     }
 
     @GetMapping("/confirmar-esqueci-minha-senha")
-    public String confirmarEsqueciMinhaSenha() {
+    public String confirmarEsqueciMinhaSenha(Model model, HttpServletRequest request) {
         log.info("Confirmar e-mail para alterar senha");
+
+        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+            request.getRequestURL().toString().replace(request.getRequestURI(), "")
+        );
+        if (logotipo != null) {
+            model.addAttribute("logotipo", logotipo);
+        }
+
         return "alterar-senha";
     }
 

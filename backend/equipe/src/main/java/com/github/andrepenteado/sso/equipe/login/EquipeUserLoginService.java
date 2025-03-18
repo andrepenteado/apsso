@@ -30,9 +30,11 @@ public class EquipeUserLoginService extends OidcUserService {
         log.info("Carregando informações do usuario");
         EquipeUserLogin userLogin = new EquipeUserLogin((DefaultOidcUser) super.loadUser(userRequest));
         userLogin.setEmpresas(empresaService.listarPorCpfColaborador(Long.parseLong(userLogin.getCpf())));
-        Upload foto = uploadRepository.findById(UUID.fromString(userLogin.getUuidFoto())).orElse(null);
-        if (foto != null)
-            userLogin.setFotoBase64(foto.getBase64());
+        if (userLogin.getUuidFoto() != null && !userLogin.getUuidFoto().isEmpty()) {
+            uploadRepository
+                .findById(UUID.fromString(userLogin.getUuidFoto()))
+                .ifPresent(foto -> userLogin.setFotoBase64(foto.getBase64()));
+        }
         return userLogin;
     }
 }

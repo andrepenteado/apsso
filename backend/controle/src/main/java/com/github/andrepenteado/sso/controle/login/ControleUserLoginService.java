@@ -1,6 +1,5 @@
 package com.github.andrepenteado.sso.controle.login;
 
-import br.unesp.fc.andrepenteado.core.upload.Upload;
 import br.unesp.fc.andrepenteado.core.upload.UploadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +25,11 @@ public class ControleUserLoginService extends OidcUserService {
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("Carregando informações do usuario");
         ControleUserLogin userLogin = new ControleUserLogin((DefaultOidcUser) super.loadUser(userRequest));
-        Upload foto = uploadRepository.findById(UUID.fromString(userLogin.getUuidFoto())).orElse(null);
-        if (foto != null)
-            userLogin.setFotoBase64(foto.getBase64());
+        if (userLogin.getUuidFoto() != null && !userLogin.getUuidFoto().isEmpty()) {
+            uploadRepository
+                .findById(UUID.fromString(userLogin.getUuidFoto()))
+                .ifPresent(foto -> userLogin.setFotoBase64(foto.getBase64()));
+        }
         return userLogin;
     }
 }

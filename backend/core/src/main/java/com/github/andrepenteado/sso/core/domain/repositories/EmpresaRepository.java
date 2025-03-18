@@ -19,7 +19,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
     Empresa findByCnpj(Long cnpj);
 
-    @Query("SELECT e.logotipo FROM Empresa e WHERE e.urlLogin = :urlLogin")
+    @Query("SELECT u FROM Upload u WHERE u.uuid = (SELECT e.logotipo FROM Empresa e WHERE e.urlLogin = :urlLogin)")
     Upload buscarLogotipoEmpresaPorUrlLogin(@Param("urlLogin") String urlLogin);
 
 }
