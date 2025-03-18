@@ -12,7 +12,7 @@
   <meta name="author" content="pixelstrap">
   <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
   <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
-  <title>:: Login ::</title>
+  <title>:: Atenção ::</title>
   <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 </head>
@@ -22,7 +22,8 @@
     <div class="row">
       <div class="col-12 col-md-12 bsb-tpl-bg-platinum">
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
-          <h3 class="m-0">Prezado usuário,</h3>
+          <h3 class="m-0 text-center">${mensagemInfo}</h3>
+          <br><br>
           <p class="mb-0 text-center">Para voltar ao login, <a href="<c:url value='/login'/>" class="link-secondary text-decoration-none">clique aqui</a></p>
         </div>
       </div>

@@ -12,12 +12,14 @@
   <meta name="author" content="pixelstrap">
   <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
   <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
-  <title>:: Login ::</title>
+  <title>:: Novo Usuário ::</title>
   <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+  <script type="text/javascript" src="assets/js/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="assets/js/messages_pt_BR.min.js"></script>
 </head>
 <body style="background-color: dimgray">
-<!-- Login 3 - Bootstrap Brain Component -->
 <section class="p-3 p-md-4 p-xl-5">
   <div class="container">
     <div class="row">
@@ -35,43 +37,49 @@
               <strong>Atenção!</strong> ${mensagemErro}
             </div>
           </c:if>
-          <form method="POST" action="<c:url value='/gravar-novo-usuario'/>">
+          <form method="POST" action="<c:url value='/gravar-novo-usuario'/>" id="form-novo-usuario">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>Login</label>
-                <input type="text" name="username" class="form-control">
+                <input type="text" name="username" id="username" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-12">
                 <label>Nome</label>
-                <input type="text" name="nome" class="form-control">
+                <input type="text" name="nome" id="nome" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>Senha</label>
-                <input type="password" name="nome" class="form-control">
+                <input type="password" name="senha" id="senha" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-12 col-md-6">
                 <label>Confirme sua senha</label>
-                <input type="password" name="nome" class="form-control">
+                <input type="password" name="confirmar_senha" id="confirmar_senha" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>CPF</label>
-                <input type="text" name="cpf" class="form-control">
+                <input type="number" name="cpf" id="cpf" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-12 col-md-6">
                 <label>E-mail</label>
-                <input type="text" name="email" class="form-control">
+                <input type="email" name="email" id="email" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col-12 text-center">
-                <button class="btn btn-primary">Gravar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
               </div>
             </div>
           </form>
@@ -87,5 +95,48 @@
     </div>
   </div>
 </section>
+<script type="text/javascript">
+  $( document ).ready( function () {
+    $("#form-novo-usuario" ).validate( {
+      rules: {
+        username: "required",
+        nome: "required",
+        senha: {
+          required: true,
+          minlength: 6
+        },
+        confirmar_senha: {
+          required: true,
+          minlength: 6,
+          equalTo: "#senha"
+        },
+        cpf: {
+          required: true,
+          maxlength: 11,
+          minlength: 11,
+        },
+        email: {
+          required: true,
+          email: true
+        },
+      },
+      errorElement: 'div',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.col-12').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid').removeClass('is-valid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-valid').removeClass('is-invalid');
+      },
+      submitHandler: function(form) {
+        alert('Formulário enviado com sucesso!');
+        form.submit();
+      }
+    } );
+  } );
+</script>
 </body>
 </html>

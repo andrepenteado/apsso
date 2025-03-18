@@ -12,7 +12,7 @@
   <meta name="author" content="pixelstrap">
   <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
   <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
-  <title>:: Login ::</title>
+  <title>:: Esqueci Minha Senha ::</title>
   <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 </head>

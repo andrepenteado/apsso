@@ -41,6 +41,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Optional<Usuario> buscarEmail(String email) {
+        Usuario usuario = (Usuario) usuarioRepository.findByEmail(email).orElse(null);
+        if (!Objects.isNull(usuario))
+            usuario.setColaboradores(colaboradorRepository.listarPorCpf(usuario.getCpf()));
+        return Optional.ofNullable(usuario);
+    }
+
+    @Override
     public Usuario incluir(Usuario usuario, BindingResult validacao) {
         String erros = CoreUtil.validateModel(validacao);
         if (erros != null)
@@ -49,12 +57,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (buscar(usuario.getUsername()).isPresent())
             throw new ResponseStatusException(HttpStatus.FOUND, String.format("Usuário %s já está cadastrado", usuario.getUsername()));
 
+        if (buscarEmail(usuario.getEmail()).isPresent())
+            throw new ResponseStatusException(HttpStatus.FOUND, String.format("E-mail %s já está cadastrado", usuario.getEmail()));
+
         if (usuario.getPassword() != null)
             usuario.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(usuario.getPassword()));
         else
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Senha é um campo obrigatório");
-
-        usuario.setEnabled(true);
 
         return usuarioRepository.save(usuario);
     }

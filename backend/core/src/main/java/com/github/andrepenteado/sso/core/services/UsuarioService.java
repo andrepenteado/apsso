@@ -13,6 +13,8 @@ public interface UsuarioService {
 
     Optional<Usuario> buscar(String username);
 
+    Optional<Usuario> buscarEmail(String email);
+
     Usuario incluir(Usuario usuario, BindingResult validacao);
 
     Usuario alterar(Usuario usuario, String username, BindingResult validacao);
