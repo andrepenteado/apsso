@@ -16,6 +16,7 @@ CREATE TABLE empresa (
   bairro text,
   cidade text,
   estado varchar(2),
+  url_login text,
   fk_empresa_matriz bigint,
   fk_upload UUID,
   primary key (id),

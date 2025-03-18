@@ -1,13 +1,30 @@
 package com.github.andrepenteado.sso.login.controllers;
 
+import br.unesp.fc.andrepenteado.core.upload.Upload;
+import com.github.andrepenteado.sso.core.domain.repositories.EmpresaRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class LoginController {
 
+    private final EmpresaRepository empresaRepository;
+
     @RequestMapping("/login")
-    public String customLogin() {
+    public String customLogin(Model model, HttpServletRequest request) {
+        log.info("Acessando login");;
+
+        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(request.getServerName());
+        if (logotipo != null) {
+            model.addAttribute("logotipo", logotipo);
+        }
+
         return "login";
     }
 

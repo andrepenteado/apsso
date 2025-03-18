@@ -1,5 +1,6 @@
 package com.github.andrepenteado.sso.core.domain.repositories;
 
+import br.unesp.fc.andrepenteado.core.upload.Upload;
 import com.github.andrepenteado.sso.core.domain.entities.Empresa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +18,8 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     List<Empresa> listarPorCpfColaborador(@Param("cpf") Long cpf);
 
     Empresa findByCnpj(Long cnpj);
+
+    @Query("SELECT e.logotipo FROM Empresa e WHERE e.urlLogin = :urlLogin")
+    Upload buscarLogotipoEmpresaPorUrlLogin(@Param("urlLogin") String urlLogin);
 
 }

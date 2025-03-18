@@ -24,7 +24,12 @@
       <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0">Seja bem-vindo!</h3>
-          <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+          <c:if test="${empty logotipo}">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+          </c:if>
+          <c:if test="${not empty logotipo}">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="${logotipo.base64}" width="300" alt="APcode Logo">
+          </c:if>
           <p class="mb-0 text-center">Não tem usuário cadastrado? <a href="<c:url value='novo-usuario'/>" class="link-secondary text-decoration-none">Crie seu login agora</a></p>
         </div>
       </div>
