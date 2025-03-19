@@ -1,6 +1,7 @@
 package com.github.andrepenteado.sso.core.services.impl;
 
 import br.unesp.fc.andrepenteado.core.common.CoreUtil;
+import br.unesp.fc.andrepenteado.core.upload.Upload;
 import com.github.andrepenteado.sso.core.domain.entities.Empresa;
 import com.github.andrepenteado.sso.core.domain.repositories.EmpresaRepository;
 import com.github.andrepenteado.sso.core.services.EmpresaService;
@@ -74,6 +75,11 @@ public class EmpresaServiceImpl implements EmpresaService {
         catch (EmptyResultDataAccessException ex) {
             throw new ResponseStatusException((HttpStatus.NOT_FOUND));
         }
+    }
+
+    @Override
+    public Upload buscarLogotipoEmpresaPorUrlLogin(String urlLogin) {
+        return repository.buscarLogotipoEmpresaPorUrlLogin(urlLogin);
     }
 
 }

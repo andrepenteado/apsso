@@ -75,6 +75,12 @@
                 </div>
               </div>
               <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
+                  <label>* URL de Login</label>
+                  <input type="text" name="urlLogin" formControlName="urlLogin" class="form-control">
+                </div>
+              </div>
+              <div class="row mb-3">
                 <div class="form-group col-12 col-md-4">
                   <label>CEP</label>
                   <div class="input-group">
@@ -111,6 +117,15 @@
                 <div class="form-group col-12 col-md-2">
                   <label>Estado</label>
                   <input type="text" name="estado" formControlName="estado" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="row mb-3 align-items-end">
+                <div class="col-9">
+                  <label for="formFile" class="form-label">Ícone</label>
+                  <input type="file" class="form-control" (change)="atualizarLogotipo($event)" accept="image/*" id="formFile"/>
+                </div>
+                <div class="col-3 text-center">
+                  <img src="{{ this.logotipoUpload.base64 && this.logotipoUpload.base64.length > 0 ? this.logotipoUpload.base64 : 'assets/images/sem-imagem.gif' }}" width="60" height="60">
                 </div>
               </div>
               <div class="row mb-3">

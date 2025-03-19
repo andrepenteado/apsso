@@ -17,6 +17,8 @@ export class Empresa {
   bairro: string;
   cidade: string;
   estado: string;
+  urlLogin: string;
+  logotipo: string;
   matriz: Empresa;
 
 }

@@ -4,8 +4,8 @@ import br.unesp.fc.andrepenteado.core.upload.Upload;
 import com.github.andrepenteado.sso.core.domain.entities.Token;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.github.andrepenteado.sso.core.domain.enums.TipoToken;
-import com.github.andrepenteado.sso.core.domain.repositories.EmpresaRepository;
 import com.github.andrepenteado.sso.core.domain.repositories.TokenRepository;
+import com.github.andrepenteado.sso.core.services.EmpresaService;
 import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.github.andrepenteado.sso.login.services.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    private final EmpresaRepository empresaRepository;
+    private final EmpresaService empresaService;
 
     private final TokenRepository tokenRepository;
 
@@ -38,7 +38,7 @@ public class UsuarioController {
     public String novoUsuario(Model model, HttpServletRequest request) {
         log.info("Abrir cadastro de novo usuário");
 
-        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+        Upload logotipo = empresaService.buscarLogotipoEmpresaPorUrlLogin(
             request.getRequestURL().toString().replace(request.getRequestURI(), "")
         );
         if (logotipo != null) {
@@ -104,7 +104,7 @@ public class UsuarioController {
             model.addAttribute("cpf", cpf);
             model.addAttribute("email", email);
 
-            Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+            Upload logotipo = empresaService.buscarLogotipoEmpresaPorUrlLogin(
                 request.getRequestURL().toString().replace(request.getRequestURI(), "")
             );
             if (logotipo != null) {
@@ -150,7 +150,7 @@ public class UsuarioController {
     public String esqueciMinhaSenha(Model model, HttpServletRequest request) {
         log.info("Abrir formulário de esqueci minha senha");
 
-        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+        Upload logotipo = empresaService.buscarLogotipoEmpresaPorUrlLogin(
             request.getRequestURL().toString().replace(request.getRequestURI(), "")
         );
         if (logotipo != null) {
@@ -168,8 +168,8 @@ public class UsuarioController {
         if (usuario == null) {
             model.addAttribute("mensagemErro", "E-mail não encontrado");
 
-            Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
-                    request.getRequestURL().toString().replace(request.getRequestURI(), "")
+            Upload logotipo = empresaService.buscarLogotipoEmpresaPorUrlLogin(
+                request.getRequestURL().toString().replace(request.getRequestURI(), "")
             );
             if (logotipo != null) {
                 model.addAttribute("logotipo", logotipo);
@@ -210,7 +210,7 @@ public class UsuarioController {
             model.addAttribute("mensagemInfo", "Token utilizado");
         }
         else {
-            Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+            Upload logotipo = empresaService.buscarLogotipoEmpresaPorUrlLogin(
                 request.getRequestURL().toString().replace(request.getRequestURI(), "")
             );
             if (logotipo != null) {

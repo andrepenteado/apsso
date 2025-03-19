@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { EmpresaService } from "../../../services/empresa.service";
-import { Observable } from "rxjs"
+import { lastValueFrom, Observable } from "rxjs"
 import { Empresa } from "../../../domain/entities/empresa";
-import { DecoracaoMensagem, ExibirMensagemService, ViaCepService } from "@andre.penteado/ngx-apcore";
+import {
+  DecoracaoMensagem,
+  ExibirMensagemService,
+  Upload,
+  UploadService,
+  ViaCepService
+} from "@andre.penteado/ngx-apcore";
 
 @Component({
   selector: 'admin-empresa-cadastro',
@@ -18,6 +24,7 @@ export class CadastroComponent implements OnInit {
   formEnviado = false;
   empresa = new Empresa();
   listaEmpresas: Empresa[] = [];
+  logotipoUpload: Upload = new Upload();
 
   id = new FormControl(null);
   dataCadastro = new FormControl(null);
@@ -36,6 +43,8 @@ export class CadastroComponent implements OnInit {
   bairro = new FormControl(null);
   cidade = new FormControl(null);
   estado = new FormControl(null);
+  urlLogin = new FormControl(null);
+  logotipo = new FormControl(null);
   matriz = new FormControl(null);
   form = new FormGroup({
     id: this.id,
@@ -55,12 +64,15 @@ export class CadastroComponent implements OnInit {
     bairro: this.bairro,
     cidade: this.cidade,
     estado: this.estado,
+    urlLogin: this.urlLogin,
+    logotipo: this.logotipo,
     matriz: this.matriz
   });
 
   constructor(
     private activedRoute: ActivatedRoute,
     protected empresaService: EmpresaService,
+    private uploadService: UploadService,
     private viaCepService: ViaCepService,
     private exibirMensagem: ExibirMensagemService
   ) { }
@@ -81,6 +93,11 @@ export class CadastroComponent implements OnInit {
       this.empresa = empresa;
       this.form.patchValue(empresa);
       this.form.get("matriz").setValue(empresa.matriz);
+      if (empresa.logotipo) {
+        this.uploadService.buscar(this.empresa.logotipo).subscribe(upload => {
+          this.logotipoUpload = upload;
+        });
+      }
     });
   }
 
@@ -92,10 +109,38 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  gravar() {
+  atualizarLogotipo(event: any): void {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.logotipoUpload.base64 = reader.result as string;
+      this.logotipoUpload.nome = file.name;
+      this.logotipoUpload.descricao = "Logotipo da empresa " + this.empresa.nomeFantasia;
+      this.logotipoUpload.tipoMime = file.type;
+      this.logotipoUpload.tamanho = file.size;
+    };
+
+    if (file)
+      reader.readAsDataURL(file);
+  }
+
+  async gravar() {
     this.formEnviado = true;
 
     if (this.form.valid) {
+      if (this.logotipoUpload.nome) {
+        let upload$: Observable<Upload>;
+
+        if (this.empresa.logotipo)
+          upload$ = this.uploadService.alterar(this.logotipoUpload)
+        else
+          upload$ = this.uploadService.incluir(this.logotipoUpload);
+
+        let upload = await lastValueFrom(upload$);
+        this.form.controls.logotipo.setValue(upload.uuid);
+      }
+
       var empresaAtualizada: Observable<Empresa>;
 
       if (this.incluir)
