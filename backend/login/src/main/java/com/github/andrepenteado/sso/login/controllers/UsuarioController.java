@@ -103,6 +103,14 @@ public class UsuarioController {
             model.addAttribute("confirmar_senha", confirmarSenha);
             model.addAttribute("cpf", cpf);
             model.addAttribute("email", email);
+
+            Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+                request.getRequestURL().toString().replace(request.getRequestURI(), "")
+            );
+            if (logotipo != null) {
+                model.addAttribute("logotipo", logotipo);
+            }
+
             return "novo-usuario";
         }
 
@@ -153,28 +161,97 @@ public class UsuarioController {
     }
 
     @PostMapping("/gravar-esqueci-minha-senha")
-    public String gravarEsqueciMinhaSenha() {
+    public String gravarEsqueciMinhaSenha(Model model, HttpServletRequest request) {
         log.info("Gravar esqueci minha senha");
+
+        Usuario usuario = usuarioService.buscarPorEmail(request.getParameter("email")).orElse(null);
+        if (usuario == null) {
+            model.addAttribute("mensagemErro", "E-mail não encontrado");
+
+            Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+                    request.getRequestURL().toString().replace(request.getRequestURI(), "")
+            );
+            if (logotipo != null) {
+                model.addAttribute("logotipo", logotipo);
+            }
+
+            return "esqueci-minha-senha";
+        }
+
+        Token token = new Token();
+        token.setUsuario(usuario);
+        token.setToken(UUID.randomUUID());
+        token.setTipo(TipoToken.ESQUECI_MINHA_SENHA);
+        token.setDataCriacao(LocalDateTime.now());
+        token.setDataExpiracao(LocalDateTime.now().plusMinutes(30));
+        token.setUtilizado(false);
+        Token novoToken = tokenRepository.save(token);
+
+        emailService.esqueciMinhaSenha(novoToken);
+
+        model.addAttribute("mensagemInfo", "Solicitação de alteração de senha realizada com sucesso!<br><br>Em breve receberá um e-mail para completar a alteração da senha.");
+
         return "mensagem";
     }
 
-    @GetMapping("/confirmar-esqueci-minha-senha")
-    public String confirmarEsqueciMinhaSenha(Model model, HttpServletRequest request) {
+    @GetMapping("/confirmar-esqueci-minha-senha/{uuidToken}")
+    public String confirmarEsqueciMinhaSenha(Model model, HttpServletRequest request, @PathVariable String uuidToken) {
         log.info("Confirmar e-mail para alterar senha");
 
-        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
-            request.getRequestURL().toString().replace(request.getRequestURI(), "")
-        );
-        if (logotipo != null) {
-            model.addAttribute("logotipo", logotipo);
+        Token token = tokenRepository.findByToken(UUID.fromString(uuidToken));
+
+        if (token == null || token.getTipo() != TipoToken.ESQUECI_MINHA_SENHA) {
+            model.addAttribute("mensagemInfo", "Token inválido");
+        }
+        else if (token.getDataExpiracao().isBefore(LocalDateTime.now())) {
+            model.addAttribute("mensagemInfo", "Token expirado");
+        }
+        else if (token.getUtilizado()) {
+            model.addAttribute("mensagemInfo", "Token utilizado");
+        }
+        else {
+            Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
+                request.getRequestURL().toString().replace(request.getRequestURI(), "")
+            );
+            if (logotipo != null) {
+                model.addAttribute("logotipo", logotipo);
+            }
+
+            token.setUtilizado(true);
+            tokenRepository.save(token);
+
+            model.addAttribute("username", token.getUsuario().getUsername());
+
+            return "alterar-senha";
         }
 
-        return "alterar-senha";
+        return "mensagem";
     }
 
     @PostMapping("/gravar-alterar-senha")
-    public String gravarAlterarSenha() {
+    public String gravarAlterarSenha(Model model, HttpServletRequest request) {
         log.info("Gravar alterar senha");
+
+        String username = request.getParameter("username");
+        String senha = request.getParameter("senha");
+        String confirmarSenha = request.getParameter("confirmar_senha");
+
+        try {
+            if (!senha.equals(confirmarSenha)) {
+                throw new Exception("Senhas não conferem");
+            }
+            usuarioService.alterarSenha(username, senha);
+
+            model.addAttribute("mensagemInfo", "Senha alterada com sucesso!");
+        }
+        catch (Exception ex) {
+            model.addAttribute("mensagemErro", ex.getMessage());
+            model.addAttribute("username", username);
+            model.addAttribute("senha", senha);
+            model.addAttribute("confirmar_senha", confirmarSenha);
+            return "alterar-senha";
+        }
+
         return "mensagem";
     }
 

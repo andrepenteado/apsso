@@ -41,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Optional<Usuario> buscarEmail(String email) {
+    public Optional<Usuario> buscarPorEmail(String email) {
         Usuario usuario = (Usuario) usuarioRepository.findByEmail(email).orElse(null);
         if (!Objects.isNull(usuario))
             usuario.setColaboradores(colaboradorRepository.listarPorCpf(usuario.getCpf()));
@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (buscar(usuario.getUsername()).isPresent())
             throw new ResponseStatusException(HttpStatus.FOUND, String.format("Usuário %s já está cadastrado", usuario.getUsername()));
 
-        if (buscarEmail(usuario.getEmail()).isPresent())
+        if (buscarPorEmail(usuario.getEmail()).isPresent())
             throw new ResponseStatusException(HttpStatus.FOUND, String.format("E-mail %s já está cadastrado", usuario.getEmail()));
 
         if (usuario.getPassword() != null)

@@ -45,6 +45,27 @@ public class EmailService {
         }
     }
 
-    public void esqueciMinhaSenha() {}
+    public void esqueciMinhaSenha(Token token) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
+            mail.setTo(token.getUsuario().getEmail());
+            mail.setFrom("no-reply@apcode.com.br");
+            mail.setSubject("[Portal de Sistemas] Esqueci minha senha");
+            mail.setText(String.format(
+                """
+                Prezado %s,
+                
+                Copie e cole o link abaixo no navegador para alterar sua senha:
+                
+                %s/confirmar-esqueci-minha-senha/%s
+                """, token.getUsuario().getNome(), properties.getUri(), token.getToken()),
+            false);
+            mailSender.send(mimeMessage);
+            log.info("Enviado e-mail de esqueci minha senha");
+        } catch (MessagingException e) {
+            log.error("Não foi possível enviar e-mail de esqueci minha senha", e);
+        }
+    }
 
 }

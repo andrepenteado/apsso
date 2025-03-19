@@ -10,11 +10,11 @@
   <meta name="description" content="APcode: Portal de single sign on para acessos de usuários e sistemas">
   <meta name="keywords" content="apcode, portal, acessos, sistemas, usuarios, login, java, jsp, bootstrap, angular">
   <meta name="author" content="pixelstrap">
-  <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="icon" href="<%=request.getContextPath()%>/assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/imagens/favicon.png" type="image/x-icon">
   <title>:: Atenção ::</title>
-  <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/login.min.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/bootstrap.min.css">
 </head>
 <body style="background-color: dimgray">
 <section class="p-3 p-md-4 p-xl-5">

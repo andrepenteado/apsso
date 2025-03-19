@@ -10,11 +10,11 @@
   <meta name="description" content="APcode: Portal de single sign on para acessos de usuários e sistemas">
   <meta name="keywords" content="apcode, portal, acessos, sistemas, usuarios, login, java, jsp, bootstrap, angular">
   <meta name="author" content="pixelstrap">
-  <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="icon" href="<%=request.getContextPath()%>/assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/imagens/favicon.png" type="image/x-icon">
   <title>:: Login ::</title>
-  <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/login.min.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/bootstrap.min.css">
 </head>
 <body style="background-color: dimgray">
 <!-- Login 3 - Bootstrap Brain Component -->
@@ -25,7 +25,7 @@
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0">Seja bem-vindo!</h3>
           <c:if test="${empty logotipo}">
-            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src=""<%=request.getContextPath()%>/assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
           </c:if>
           <c:if test="${not empty logotipo}">
             <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="${logotipo.base64}" width="300" alt="APcode Logo">

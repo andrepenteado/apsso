@@ -10,14 +10,16 @@
   <meta name="description" content="APcode: Portal de single sign on para acessos de usuários e sistemas">
   <meta name="keywords" content="apcode, portal, acessos, sistemas, usuarios, login, java, jsp, bootstrap, angular">
   <meta name="author" content="pixelstrap">
-  <link rel="icon" href="assets/imagens/favicon.png" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="icon" href="<%=request.getContextPath()%>/assets/imagens/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/imagens/favicon.png" type="image/x-icon">
   <title>:: Alterar Senha ::</title>
-  <link rel="stylesheet" type="text/css" href="assets/css/login.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/login.min.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/bootstrap.min.css">
+  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/messages_pt_BR.min.js"></script>
 </head>
 <body style="background-color: dimgray">
-<!-- Login 3 - Bootstrap Brain Component -->
 <section class="p-3 p-md-4 p-xl-5">
   <div class="container">
     <div class="row">
@@ -35,21 +37,24 @@
               <strong>Atenção!</strong> ${mensagemErro}
             </div>
           </c:if>
-          <form method="POST" action="<c:url value='/gravar-alterar-senha'/>">
+          <form method="POST" action="<c:url value='/gravar-alterar-senha'/>" id="form-alterar-senha">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input type="hidden" name="username" value="${username}"/>
             <div class="row mb-3">
               <div class="form-group col-12 col-md-6">
                 <label>Senha</label>
-                <input type="password" name="nome" class="form-control">
+                <input type="password" name="senha" id="senha" value="${senha}" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-12 col-md-6">
                 <label>Confirme sua senha</label>
-                <input type="password" name="nome" class="form-control">
+                <input type="password" name="confirmar_senha" id="confirmar_senha" value="${confirmar_senha}" class="form-control">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col-12 text-center">
-                <button class="btn btn-primary">Gravar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
               </div>
             </div>
           </form>
@@ -59,7 +64,7 @@
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0 text-center">Alteração de senha</h3>
           <c:if test="${empty logotipo}">
-            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="<%=request.getContextPath()%>/assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
           </c:if>
           <c:if test="${not empty logotipo}">
             <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="${logotipo.base64}" width="300" alt="Logotipo empresa">
@@ -70,5 +75,36 @@
     </div>
   </div>
 </section>
+<script type="text/javascript">
+  $( document ).ready( function () {
+    $("#form-alterar-senha" ).validate( {
+      rules: {
+        senha: {
+          required: true,
+          minlength: 6
+        },
+        confirmar_senha: {
+          required: true,
+          minlength: 6,
+          equalTo: "#senha"
+        },
+      },
+      errorElement: 'div',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.col-12').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid').removeClass('is-valid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-valid').removeClass('is-invalid');
+      },
+      submitHandler: function(form) {
+        form.submit();
+      }
+    } );
+  } );
+</script>
 </body>
 </html>
