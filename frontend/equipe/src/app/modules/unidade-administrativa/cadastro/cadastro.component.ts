@@ -8,6 +8,8 @@ import { UnidadeAdministrativa } from "../../../domain/entities/unidade-administ
 import { Empresa } from "../../../domain/entities/empresa";
 import { TipoUnidadeAdministrativa } from "../../../domain/enums/tipo-unidade-administrativa";
 import { DecoracaoMensagem, ExibirMensagemService } from "@andre.penteado/ngx-apcore";
+import { Colaborador } from "../../../domain/entities/colaborador";
+import { ColaboradorService } from "../../../services/colaborador.service";
 
 @Component({
   selector: 'apadmin-unidade-administrativa-cadastro',
@@ -20,6 +22,7 @@ export class CadastroComponent implements OnInit {
   formEnviado = false;
   unidadeAdministrativa = new UnidadeAdministrativa();
   listaEmpresas: Empresa[] = [];
+  listaColaboradores: Colaborador[] = [];
 
   tipos = Object.keys(TipoUnidadeAdministrativa);
   enumTipo: { [key: string]: TipoUnidadeAdministrativa } = TipoUnidadeAdministrativa;
@@ -35,15 +38,22 @@ export class CadastroComponent implements OnInit {
     empresa: this.empresa
   });
 
+  colaborador = new FormControl(null, Validators.required);
+  formColaborador = new FormGroup({
+    colaborador: this.colaborador
+  });
+
   constructor(
     private activedRoute: ActivatedRoute,
     private unidadeAdministrativaService: UnidadeAdministrativaService,
     protected empresaService: EmpresaService,
+    private colaboradorService: ColaboradorService,
     private exibirMensagem: ExibirMensagemService
   ) { }
 
   ngOnInit() {
     this.pesquisarEmpresas();
+    this.pesquisarColaboradores();
     this.activedRoute.params.subscribe(params => {
       const id: number = params.id;
       if (id) {
@@ -67,6 +77,19 @@ export class CadastroComponent implements OnInit {
         this.listaEmpresas = listaEmpresas;
       }
     });
+  }
+
+  pesquisarColaboradores(): void {
+    this.colaboradorService.listar().subscribe({
+      next: listaColaboradores => {
+        this.listaColaboradores = listaColaboradores;
+      }
+    });
+  }
+
+  filtrarColaboradorPorNome(filtro: string, colaborador: Colaborador): boolean {
+    return colaborador.nome.toLowerCase().indexOf(filtro.toLowerCase()) >= 0 ||
+      colaborador.cargo.empresa.nomeFantasia.toLowerCase().indexOf(filtro.toLowerCase()) >= 0;
   }
 
   gravar() {

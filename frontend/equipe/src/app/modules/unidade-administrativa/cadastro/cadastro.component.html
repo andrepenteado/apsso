@@ -8,26 +8,35 @@
 
 <div class="container">
   <div class="col-12 col-md-8 offset-md-2">
-    <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
-      <div class="card border border-primary rounded shadow-lg">
-        <div class="card-header">
-          <nav class="nav nav-pills" id="nav-principal">
-            <button class="nav-link active fw-bold"
-                    id="nav-principal-dados-cadastrais"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-conteudo-dados-cadastrais"
-                    type="button"
-                    role="tab">
-              DADOS CADASTRAIS
-            </button>
-          </nav>
-        </div>
-        <div class="card-body">
-          <div class="tab-content" id="nav-conteudo">
-            <div class="tab-pane fade show active"
-                 id="nav-conteudo-dados-cadastrais"
-                 role="tabpanel"
-                 aria-labelledby="nav-conteudo-dados-cadastrais">
+    <div class="card border border-primary rounded shadow-lg">
+      <div class="card-header">
+        <nav class="nav nav-pills" id="nav-principal">
+          <button class="nav-link active fw-bold"
+                  id="nav-principal-dados-cadastrais"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-dados-cadastrais"
+                  type="button"
+                  role="tab">
+            DADOS CADASTRAIS
+          </button>
+          <button class="nav-link fw-bold"
+                  [disabled]="incluir"
+                  id="nav-principal-colaboradores"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-conteudo-colaboradores"
+                  type="button"
+                  role="tab">
+            COLABORADORES
+          </button>
+        </nav>
+      </div>
+      <div class="card-body">
+        <div class="tab-content" id="nav-conteudo">
+          <div class="tab-pane fade show active"
+               id="nav-conteudo-dados-cadastrais"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-dados-cadastrais">
+            <form [formGroup]="form" [ngClass]="{'was-validated': !form.valid && formEnviado}">
               <div class="row mb-3">
                 <div class="form-group col-12 col-md-8">
                   <label>* Nome</label>
@@ -61,11 +70,43 @@
                   <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-floppy"></i> Gravar</button>
                 </div>
               </div>
-            </div>
+            </form>
+          </div>
+          <div class="tab-pane fade show"
+               id="nav-conteudo-colaboradores"
+               role="tabpanel"
+               aria-labelledby="nav-conteudo-colaboradores">
+            <form [formGroup]="formColaborador">
+              <div class="row mb-3">
+                <div class="form-group col-12 col-md-12">
+                  <label>Colaborador</label>
+                  <ng-select
+                    clearAllText="Limpar"
+                    loadingText="Carregando..."
+                    notFoundText="Colaborador não encontrado"
+                    [items]="listaColaboradores"
+                    [searchFn]="filtrarColaboradorPorNome"
+                    bindLabel="nome"
+                    formControlName="colaborador">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{ item.nome }} - {{ item.cargo.empresa.nomeFantasia}}
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item">
+                      {{ item.nome }} - {{ item.cargo.empresa.nomeFantasia}}
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12 text-center">
+                  <button class="btn btn-primary" (click)="gravar()"><i class="bi bi-plus-lg"></i> Adicionar</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <br><br>
-    </form>
+    </div>
+    <br><br>
   </div>
 </div>

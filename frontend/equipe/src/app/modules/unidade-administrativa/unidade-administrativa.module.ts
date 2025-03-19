@@ -6,6 +6,7 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxLoadingModule } from "ngx-loading"
 import { FloatingButtonComponent } from "@andre.penteado/ngx-apcore";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FloatingButtonComponent } from "@andre.penteado/ngx-apcore";
     UnidadeAdministrativaRoutingModule,
     ReactiveFormsModule,
     NgxLoadingModule.forRoot({}),
-    FloatingButtonComponent
+    FloatingButtonComponent,
+    NgSelectModule
   ]
 })
 export class UnidadeAdministrativaModule { }
