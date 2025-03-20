@@ -18,7 +18,7 @@ export class UnidadeAdministrativaService {
     return this.http.get<UnidadeAdministrativa[]>(`${environment.urlBackend}${API_UNIDADES_ADMINISTRATIVAS}`);
   }
 
-  public listarPorEmpresa(idEmpresa: number): Observable<UnidadeAdministrativa[]> {
+  public pesquisarPorEmpresa(idEmpresa: number): Observable<UnidadeAdministrativa[]> {
     return this.http.get<UnidadeAdministrativa[]>(`${environment.urlBackend}${API_UNIDADES_ADMINISTRATIVAS}/empresa/${idEmpresa}`);
   }
 
@@ -38,7 +38,7 @@ export class UnidadeAdministrativaService {
     return this.http.delete(`${environment.urlBackend}${API_UNIDADES_ADMINISTRATIVAS}/${id}`);
   }
 
-  public compareFn(ua1: UnidadeAdministrativa, ua2: UnidadeAdministrativa): boolean {
+  compareFn(ua1: UnidadeAdministrativa, ua2: UnidadeAdministrativa): boolean {
     return ua1 && ua2 ? ua1.id === ua2.id : ua1 === ua2;
   }
 

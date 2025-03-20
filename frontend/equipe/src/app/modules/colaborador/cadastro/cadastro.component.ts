@@ -4,11 +4,9 @@ import { ActivatedRoute } from "@angular/router";
 import { EmpresaService } from "../../../services/empresa.service";
 import { Observable } from "rxjs";
 import { ColaboradorService } from "../../../services/colaborador.service";
-import { UnidadeAdministrativaService } from "../../../services/unidade-administrativa.service";
 import { CargoService } from "../../../services/cargo.service";
 import { Colaborador } from "../../../domain/entities/colaborador";
 import { Empresa } from "../../../domain/entities/empresa";
-import { UnidadeAdministrativa } from "../../../domain/entities/unidade-administrativa";
 import { Cargo } from "../../../domain/entities/cargo";
 import { DecoracaoMensagem, ExibirMensagemService, ViaCepService } from "@andre.penteado/ngx-apcore";
 
@@ -69,7 +67,6 @@ export class CadastroComponent implements OnInit {
     private activedRoute: ActivatedRoute,
     private colaboradorService: ColaboradorService,
     protected empresaService: EmpresaService,
-    protected unidadeAdministrativaService: UnidadeAdministrativaService,
     protected cargoService: CargoService,
     private viaCepService: ViaCepService,
     private exibirMensagem: ExibirMensagemService

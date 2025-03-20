@@ -1,5 +1,4 @@
 import { Cargo } from "./cargo";
-import { UnidadeAdministrativa } from "./unidade-administrativa";
 
 export class Colaborador {
 
@@ -20,6 +19,5 @@ export class Colaborador {
   cidade: string;
   estado: string;
   cargo: Cargo;
-  unidadesAdministrativas: UnidadeAdministrativa[];
 
 }

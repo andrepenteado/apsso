@@ -44,11 +44,11 @@
                 <div class="form-group col-12 col-md-4">
                   <label>Matriz</label>
                   <select [compareWith]="empresaService.compareFn" formControlName="matriz" class="form-select">
+                    <option [ngValue]="null">&nbsp;</option>
                     <option *ngFor="let empresa of listaEmpresas" [ngValue]="empresa">
                       {{ empresa.nomeFantasia }}
                     </option>
                   </select>
-                  <div class="invalid-feedback">Empresa é um campo obrigatório</div>
                 </div>
               </div>
               <div class="row mb-3">

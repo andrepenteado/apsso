@@ -38,7 +38,10 @@ public class UnidadeAdministrativa {
     @JoinColumn(name = "fk_unidade_administrativa_superior")
     private UnidadeAdministrativa unidadeAdministrativaSuperior;
 
-    @ManyToMany(mappedBy = "unidadesAdministrativas")
+    @ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+    @JoinTable(name = "colaborador_unidade_administrativa",
+        joinColumns = { @JoinColumn(name = "fk_unidade_administrativa") },
+        inverseJoinColumns = { @JoinColumn(name = "fk_colaborador") })
     private List<Colaborador> colaboradores;
 
     @Override

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { last, Observable } from "rxjs";
 import { UnidadeAdministrativaService } from "../../../services/unidade-administrativa.service";
@@ -10,6 +10,7 @@ import { TipoUnidadeAdministrativa } from "../../../domain/enums/tipo-unidade-ad
 import { DecoracaoMensagem, ExibirMensagemService } from "@andre.penteado/ngx-apcore";
 import { Colaborador } from "../../../domain/entities/colaborador";
 import { ColaboradorService } from "../../../services/colaborador.service";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 @Component({
   selector: 'apadmin-unidade-administrativa-cadastro',
@@ -18,10 +19,15 @@ import { ColaboradorService } from "../../../services/colaborador.service";
 })
 export class CadastroComponent implements OnInit {
 
+  @ViewChild("comboColaboradores")
+  comboColaboradores: NgSelectComponent;
+
   incluir = true;
   formEnviado = false;
   unidadeAdministrativa = new UnidadeAdministrativa();
+  colaboradorSelecionado: Colaborador;
   listaEmpresas: Empresa[] = [];
+  listaUnidadesAdministrativas: UnidadeAdministrativa[] = [];
   listaColaboradores: Colaborador[] = [];
 
   tipos = Object.keys(TipoUnidadeAdministrativa);
@@ -31,21 +37,20 @@ export class CadastroComponent implements OnInit {
   nome = new FormControl(null, Validators.required);
   tipo = new FormControl(null, Validators.required);
   empresa = new FormControl(this.listaEmpresas[0], Validators.required);
+  unidadeAdministrativaSuperior = new FormControl(null);
+  colaboradores = new FormArray<FormControl<Colaborador>>([]);
   form = new FormGroup({
     id: this.id,
     nome: this.nome,
     tipo: this.tipo,
-    empresa: this.empresa
-  });
-
-  colaborador = new FormControl(null, Validators.required);
-  formColaborador = new FormGroup({
-    colaborador: this.colaborador
+    empresa: this.empresa,
+    unidadeAdministrativaSuperior: this.unidadeAdministrativaSuperior,
+    colaboradores: this.colaboradores
   });
 
   constructor(
     private activedRoute: ActivatedRoute,
-    private unidadeAdministrativaService: UnidadeAdministrativaService,
+    protected unidadeAdministrativaService: UnidadeAdministrativaService,
     protected empresaService: EmpresaService,
     private colaboradorService: ColaboradorService,
     private exibirMensagem: ExibirMensagemService
@@ -54,6 +59,9 @@ export class CadastroComponent implements OnInit {
   ngOnInit() {
     this.pesquisarEmpresas();
     this.pesquisarColaboradores();
+    this.form.get("empresa").valueChanges.subscribe(empresa => {
+      this.pesquisarUnidadesAdministrativasPorEmpresa(empresa.id);
+    });
     this.activedRoute.params.subscribe(params => {
       const id: number = params.id;
       if (id) {
@@ -68,6 +76,16 @@ export class CadastroComponent implements OnInit {
       this.unidadeAdministrativa = unidadeAdministrativa;
       this.form.patchValue(unidadeAdministrativa);
       this.form.get("empresa").setValue(unidadeAdministrativa.empresa);
+      this.form.get("unidadeAdministrativaSuperior").setValue(unidadeAdministrativa.unidadeAdministrativaSuperior);
+      this.form.setControl("colaboradores", new FormArray(unidadeAdministrativa.colaboradores.map(c => new FormControl(c))));
+    });
+  }
+
+  pesquisarUnidadesAdministrativasPorEmpresa(idEmpresa: number): void {
+    this.unidadeAdministrativaService.pesquisarPorEmpresa(idEmpresa).subscribe({
+      next: listaUnidadesAdministrativas => {
+        this.listaUnidadesAdministrativas = listaUnidadesAdministrativas;
+      }
     });
   }
 
@@ -90,6 +108,37 @@ export class CadastroComponent implements OnInit {
   filtrarColaboradorPorNome(filtro: string, colaborador: Colaborador): boolean {
     return colaborador.nome.toLowerCase().indexOf(filtro.toLowerCase()) >= 0 ||
       colaborador.cargo.empresa.nomeFantasia.toLowerCase().indexOf(filtro.toLowerCase()) >= 0;
+  }
+
+  selecionarColaborador(colaborador: Colaborador): void {
+    this.colaboradorSelecionado = colaborador;
+  }
+
+  get colaboradoresArray() {
+    return this.form.get("colaboradores") as FormArray<FormControl<Colaborador>>;
+  }
+
+  vincularColaborador() {
+    if (!this.colaboradorSelecionado) {
+      this.exibirMensagem.showMessage(
+        "Colaborador não selecionado",
+        "Atenção",
+        DecoracaoMensagem.ATENCAO
+      );
+      return;
+    }
+
+    this.colaboradoresArray.push(new FormControl(this.colaboradorSelecionado));
+    this.gravar();
+    this.colaboradorSelecionado = null;
+    this.comboColaboradores.clearModel();
+  }
+
+  desvincularColaborador(index: number) {
+    if (this.colaboradoresArray && index >= 0 && index < this.colaboradoresArray.length) {
+      this.colaboradoresArray.removeAt(index);
+      this.gravar();
+    }
   }
 
   gravar() {
