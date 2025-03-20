@@ -10,7 +10,9 @@ public interface AmbienteSistemaService {
 
     List<AmbienteSistema> listar();
 
-    List<AmbienteSistema> filtrarPorSistema(Long idSistema);
+    List<AmbienteSistema> pesquisarPorSistema(Long idSistema);
+
+    List<AmbienteSistema> pesquisarPorUsuario(String username);
 
     Optional<AmbienteSistema> buscar(String id);
 

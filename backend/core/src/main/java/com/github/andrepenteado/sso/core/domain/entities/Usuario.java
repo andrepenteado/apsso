@@ -49,8 +49,8 @@ public class Usuario {
 
     @ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities",
-               joinColumns = { @JoinColumn(name = "username") },
-               inverseJoinColumns = { @JoinColumn(name = "authority") })
+           joinColumns = { @JoinColumn(name = "username") },
+           inverseJoinColumns = { @JoinColumn(name = "authority") })
     private List<PerfilSistema> perfis;
 
     @Transient

@@ -30,8 +30,13 @@ public class AmbienteSistemaServiceImpl implements AmbienteSistemaService {
     }
 
     @Override
-    public List<AmbienteSistema> filtrarPorSistema(Long idSistema) {
+    public List<AmbienteSistema> pesquisarPorSistema(Long idSistema) {
         return ambienteSistemaRepository.findBySistemaIdOrderById(idSistema);
+    }
+
+    @Override
+    public List<AmbienteSistema> pesquisarPorUsuario(String username) {
+        return ambienteSistemaRepository.pesquisarPorUsuario(username);
     }
 
     @Override

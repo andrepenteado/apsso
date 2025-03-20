@@ -114,7 +114,7 @@ public class SistemaResource {
     @Secured({ PERFIL_ARQUITETO })
     public List<AmbienteSistema> listarAmbientesPorSistema(@PathVariable Long id) {
         log.info("Listar ambientes do sistema #{}", id);
-        return ambienteSistemaService.filtrarPorSistema(id);
+        return ambienteSistemaService.pesquisarPorSistema(id);
     }
 
     @PostMapping("/ambiente")

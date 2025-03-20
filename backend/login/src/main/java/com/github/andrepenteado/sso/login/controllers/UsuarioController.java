@@ -1,11 +1,13 @@
 package com.github.andrepenteado.sso.login.controllers;
 
 import br.unesp.fc.andrepenteado.core.upload.Upload;
+import com.github.andrepenteado.sso.core.domain.entities.PerfilSistema;
 import com.github.andrepenteado.sso.core.domain.entities.Token;
 import com.github.andrepenteado.sso.core.domain.entities.Usuario;
 import com.github.andrepenteado.sso.core.domain.enums.TipoToken;
 import com.github.andrepenteado.sso.core.domain.repositories.TokenRepository;
 import com.github.andrepenteado.sso.core.services.EmpresaService;
+import com.github.andrepenteado.sso.core.services.PerfilSistemaService;
 import com.github.andrepenteado.sso.core.services.UsuarioService;
 import com.github.andrepenteado.sso.login.services.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -28,11 +32,15 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    private final PerfilSistemaService perfilSistemaService;
+
     private final EmpresaService empresaService;
 
     private final TokenRepository tokenRepository;
 
     private final EmailService emailService;
+
+    private final String PERFIL_USUARIO = "ROLE_com.github.andrepenteado.sso.portal_USUARIO";
 
     @GetMapping("/novo-usuario")
     public String novoUsuario(Model model, HttpServletRequest request) {
@@ -133,8 +141,11 @@ public class UsuarioController {
             model.addAttribute("mensagemInfo", "Token utilizado");
         }
         else {
+            PerfilSistema perfilSistema = perfilSistemaService.buscar(this.PERFIL_USUARIO);
+
             Usuario usuario = token.getUsuario();
             usuario.setEnabled(true);
+            usuario.setPerfis(new ArrayList<>(List.of(perfilSistema)));
             usuarioService.alterar(usuario, usuario.getUsername(), null);
 
             token.setUtilizado(true);
