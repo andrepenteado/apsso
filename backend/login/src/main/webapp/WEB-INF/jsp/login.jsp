@@ -25,7 +25,7 @@
         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
           <h3 class="m-0">Seja bem-vindo!</h3>
           <c:if test="${empty logotipo}">
-            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src=""<%=request.getContextPath()%>/assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
+            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="<%=request.getContextPath()%>/assets/imagens/logo-apcode.png" width="300" alt="APcode Logo">
           </c:if>
           <c:if test="${not empty logotipo}">
             <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="${logotipo.base64}" width="300" alt="APcode Logo">

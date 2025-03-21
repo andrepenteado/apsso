@@ -18,14 +18,13 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String customLogin(Model model, HttpServletRequest request) {
-        log.info("Acessando login");;
+        String url = request.getRequestURL().toString().replaceFirst(request.getRequestURI() + "$", "");
 
-        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(
-            request.getRequestURL().toString().replace(request.getRequestURI(), "")
-        );
-        if (logotipo != null) {
+        log.info("Acessando login URL: {}", url);;
+
+        Upload logotipo = empresaRepository.buscarLogotipoEmpresaPorUrlLogin(url);
+        if (logotipo != null)
             model.addAttribute("logotipo", logotipo);
-        }
 
         return "login";
     }
