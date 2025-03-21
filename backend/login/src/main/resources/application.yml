@@ -64,6 +64,7 @@ management:
 # keytool.exe -genkeypair -alias apsso -keyalg RSA -keypass passwebra -keystore apsso.jks -storepass passwebra
 apsso:
   uri: https://login.apcode.com.br
+  urlPortal: https://sistemas.apcode.com.br/portal/login
   jks:
     keypass: passwebra
     storepass: passwebra

@@ -16,6 +16,9 @@ public class GlobalProperties {
     @Getter @Setter @NotBlank
     private String uri;
 
+    @Getter @Setter @NotBlank
+    private String urlPortal;
+
     @Getter @Setter @NotNull
     private JksProperties jks;
 

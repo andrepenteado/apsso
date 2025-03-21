@@ -82,7 +82,7 @@ public class AuthorizationServer {
 
     @Bean
     @Order(2)
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, GlobalProperties properties) throws Exception {
         http
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().permitAll()
@@ -90,11 +90,18 @@ public class AuthorizationServer {
             .cors(
                 Customizer.withDefaults()
             )
-            .formLogin(form -> {
+            .formLogin(form ->
                 form
                     .loginPage("/login")
-                    .permitAll();
-            });
+                    .defaultSuccessUrl(properties.getUrlPortal())
+                    .permitAll()
+            )
+            .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+            );
 
         return http.build();
     }

@@ -5,9 +5,14 @@ import com.github.andrepenteado.sso.core.domain.repositories.EmpresaRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,6 +32,13 @@ public class LoginController {
             model.addAttribute("logotipo", logotipo);
 
         return "login";
+    }
+
+    @RequestMapping("/logout")
+    public RedirectView logout(@RequestParam("redirectUrl") String redirectUrl, HttpServletRequest request) throws IOException {
+        request.getSession().invalidate();
+        new SecurityContextLogoutHandler().logout(request, null, null);
+        return new RedirectView(redirectUrl);
     }
 
 }

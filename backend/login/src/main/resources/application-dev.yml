@@ -8,3 +8,4 @@ management:
 
 apsso:
   uri: http://localhost:30000
+  urlPortal: http://localhost:4200/portal/login
